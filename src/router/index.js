@@ -28,117 +28,142 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
-    hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
-    }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: 'dashboard',
     children: [
       {
-        path: 'table',
-        name: 'Table',
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/monitoring',
+    component: Layout,
+    redirect: '/monitoring/table',
+    // redirect: '/example/table',
+    name: 'Monitoring',
+    meta: { title: 'Monitoring', icon: 'example' },
+    children: [
+      {
+        path: 'new_trip',
+        name: 'New Trip',
         component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: 'New Trip', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'programming',
+        name: 'Programming',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'Monitoring', icon: 'tree' }
+      },
+      {
+        path: 'convoy',
+        name: 'Convoy',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'Convoy', icon: 'tree' }
+      },
+      {
+        path: 'high_risk_group',
+        name: 'High Risk Group',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'High Risk Group', icon: 'tree' }
+      },
+      {
+        path: 'units',
+        name: 'Units',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'Units', icon: 'tree' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/catalogs',
     component: Layout,
+    redirect: '/monitoring/table',
+    // redirect: '/example/table',
+    name: 'Catalogs',
+    meta: { title: 'Catalogs', icon: 'example' },
     children: [
       {
         path: 'index',
-        name: 'Form',
+        name: 'Catalogs',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: 'Catalogs', icon: 'form' }
+      },
+      {
+        path: 'operators',
+        name: 'Operators',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Operators', icon: 'form' }
+      },
+      {
+        path: 'notifications',
+        name: 'Notifications',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Notifications', icon: 'form' }
+      },
+      {
+        path: 'units',
+        name: 'Units',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Units', icon: 'form' }
+      },
+      {
+        path: 'lines',
+        name: 'Lines',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Lines', icon: 'form' }
+      },
+      {
+        path: 'status',
+        name: 'Status',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Status', icon: 'form' }
+      },
+      {
+        path: 'notification_linking',
+        name: 'Notification Linking',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Notification Linking', icon: 'form' }
+      },
+      {
+        path: 'monitoring_assign',
+        name: 'Monitoring Assign',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Monitoring Assign', icon: 'form' }
       }
     ]
   },
-
   {
-    path: '/nested',
+    path: '/contacts',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/contacts/menu1',
+    name: 'Contacts',
     meta: {
-      title: 'Nested',
+      title: 'Contacts',
       icon: 'nested'
     },
     children: [
       {
-        path: 'menu1',
+        path: 'operators',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        name: 'Operators',
+        meta: { title: 'Operators' }
       }
     ]
   },
-
   {
-    path: 'external-link',
+    path: 'users',
     component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
+    redirect: '/contacts/menu1',
+    name: 'Users',
+    meta: {
+      title: 'Users',
+      icon: 'nested'
+    }
   },
 
   { path: '*', redirect: '/404', hidden: true }

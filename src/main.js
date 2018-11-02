@@ -9,10 +9,10 @@ import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import '@/styles/index.scss' // global css
 
 // test
-import '@/styles/bootstrap.min.css'
+ import '@/styles/bootstrap.min.css'  //make
 // import '@/styles/fontawesome-all.min.css'
-import '@/styles/iofrm-style.css'
-import '@/styles/iofrm-theme9.css'
+ import '@/styles/iofrm-style.css'  //make
+ import '@/styles/iofrm-theme9.css' //make
 
 import App from './App'
 import router from './router'
