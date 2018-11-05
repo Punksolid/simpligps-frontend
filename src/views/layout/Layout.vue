@@ -1,9 +1,11 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
-    <sidebar class="sidebar-container"/>
+    <navbar/>
+
     <div class="main-container">
-      <navbar/>
+      <sidebar class="sidebar-container"/>
+
       <app-main/>
     </div>
   </div>
@@ -49,13 +51,6 @@ export default {
   @import "src/styles/mixin.scss";
   .app-wrapper {
     @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    &.mobile.openSidebar{
-      position: fixed;
-      top: 0;
-    }
   }
   .drawer-bg {
     background: #000;
