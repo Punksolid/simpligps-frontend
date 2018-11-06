@@ -51,6 +51,14 @@ export default {
   @import "src/styles/mixin.scss";
   .app-wrapper {
     @include clearfix;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    &.mobile.openSidebar{
+      position: fixed;
+      top: 0;
+      left: 10px;
+    }
   }
   .drawer-bg {
     background: #000;
