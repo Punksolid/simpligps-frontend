@@ -36,7 +36,18 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
-
+  {
+    path: '/monitor',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Units',
+        component: () => import('@/views/monitor/units'),
+        meta: { title: 'Units', icon: 'example' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,

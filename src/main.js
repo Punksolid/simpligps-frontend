@@ -18,6 +18,14 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+// personalizado font-awesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faCoffee)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 // import './mock' // simulation data should be deleted on prod
 import '@/mock'
 
@@ -28,6 +36,7 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
+/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
