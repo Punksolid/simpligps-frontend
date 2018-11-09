@@ -1,5 +1,13 @@
 <template>
+<div>
+
   <el-menu class="navbar" mode="horizontal">
+ <div>
+      <img src="./img/logo.png">
+
+
+
+    </div>
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
@@ -19,6 +27,7 @@
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu>
+  </div>
 </template>
 
 <script>
@@ -59,7 +68,7 @@ export default {
     line-height: 58px;
     height: 50px;
     float: left;
-    padding: 0 10px;
+    margin-right: 1234px;
   }
   .screenfull {
     position: absolute;
