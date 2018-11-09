@@ -7,7 +7,6 @@
         <div class="info-holder">
           <h3>Welcome to TRM System.</h3>
           <p>Access to the most powerfull tool of unit monitoring by exception.</p>
-
         </div>
       </div>
       <div class="form-holder">
@@ -39,22 +38,24 @@
                   name="email"
                   placeholder="E-mail Address"
                   auto-complete="on"
-                  required/>
+                  required></el-input>
               </el-form-item>
-
               <el-input
                 v-model="loginForm.password"
                 class="form-control"
                 type="password"
                 name="password"
                 placeholder="Password"
-                required/>
+                required></el-input>
               <div class="form-button">
-                <el-button :loading="loading" class="ibtn" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Ingresar</el-button>
+                <router-link to="/" class="ibtn">
+                  Ingresar
+                </router-link>
+
+                <!--<el-button :loading="loading" class="ibtn" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Ingresar</el-button>-->
                 <a href="forget9.html">Forgot password?</a>
               </div>
             </el-form>
-
           </div>
         </div>
       </div>
@@ -71,21 +72,17 @@
       const validateUsername = (rule, value, callback) => {
         callback()
       }
-      const validatePass = (rule, value, callback) => {
-        if (value.length < 5) {
-          callback(new Error('validatepass'))
-        } else {
-          callback()
-        }
+      const validatePassword = (rule, value, callback) => {
+        callback()
       }
       return {
         loginForm: {
-          email: '',
-          password: ''
+          email: 'test@test.com',
+          password: 'testtest'
         },
         loginRules: {
           email: [{ required: true, trigger: 'blur', validator: validateUsername }],
-          password: [{ required: true, trigger: 'blur', validator: validatePass }]
+          password: [{ required: true, trigger: 'blur', validator: validatePassword }]
         },
         loading: false,
         pwdType: 'password',
@@ -112,8 +109,8 @@
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true
-            login(this.loginForm.email, this.loginForm.password)
-            this.$store.dispatch('Login', this.loginForm).then(() => {
+            // this.$store.dispatch('Login', this.loginForm).then(() => {
+            this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
               this.loading = false
               this.$router.push({ path: this.redirect || '/' })
             }).catch(() => {

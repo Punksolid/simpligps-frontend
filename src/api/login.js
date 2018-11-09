@@ -1,14 +1,14 @@
 import request from '@/utils/request'
 
-export function login(email, password) {
-  console.log(email, password)
+export function loginByUsername(email, password) {
+  const data = {
+    email: email,
+    password: password
+  }
   return request({
-    url: 'v1/login',
+    url: '/login',
     method: 'post',
-    data: {
-      email,
-      password
-    }
+    data
   })
 }
 
