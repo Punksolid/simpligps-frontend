@@ -30,5 +30,8 @@ export default {
       return false
     }
   },
-  logout: () => 'success'
+  logout: function() {
+    console.log('LOOOOGGGOUTUUUTT')
+    return 'success'
+  }
 }

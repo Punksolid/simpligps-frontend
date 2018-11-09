@@ -30,8 +30,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faCoffee)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-// import './mock' // simulation data should be deleted on prod
-import '@/mock'
+import './mock' // simulation data should be deleted on prod
 
 // import * as filters from './filters' // global filters
 
