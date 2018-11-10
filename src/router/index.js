@@ -39,7 +39,31 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/monitoring',
+    path: '/users',
+    component: Layout,
+    children: [
+      {
+        path: 'users',
+        component: () => import('@/views/users/index'),
+        name: 'Users',
+        meta: { title: 'Users', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/monitor',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Units',
+        component: () => import('@/views/monitor/units'),
+        meta: { title: 'Units', icon: 'example' }
+      }
+    ]
+  },
+  {
+    path: '/example',
     component: Layout,
     redirect: '/monitoring/table',
     // redirect: '/example/table',

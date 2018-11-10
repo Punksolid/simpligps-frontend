@@ -1,5 +1,13 @@
 <template>
+<div>
+
   <el-menu class="navbar" mode="horizontal">
+ <div>
+      <img src="./img/logo.png">
+
+
+
+    </div>
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
@@ -13,12 +21,19 @@
             Home
           </el-dropdown-item>
         </router-link>
-        <el-dropdown-item divided>
-          <span style="display:block;" @click="logout">LogOut</span>
-        </el-dropdown-item>
+        <!--<el-dropdown-item divided>-->
+        <!--@TODO ACTIVAR LOGOUT PROPIO-->
+          <!--<span style="display:block;" @click="logout">LogOut</span>-->
+        <!--</el-dropdown-item>-->
+        <router-link class="inlineBlock" to="/login">
+          <el-dropdown-item divided>
+            Logout
+          </el-dropdown-item>
+        </router-link>
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu>
+  </div>
 </template>
 
 <script>
@@ -59,7 +74,7 @@ export default {
     line-height: 58px;
     height: 50px;
     float: left;
-    padding: 0 10px;
+    margin-right: 1234px;
   }
   .screenfull {
     position: absolute;
@@ -76,6 +91,7 @@ export default {
       cursor: pointer;
       margin-top: 5px;
       position: relative;
+      line-height: initial;
       .user-avatar {
         width: 40px;
         height: 40px;

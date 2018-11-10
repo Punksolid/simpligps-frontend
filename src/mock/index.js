@@ -18,9 +18,9 @@ Mock.XHR.prototype.send = function() {
 //   timeout: '350-600'
 // })
 
-// 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
+// Relacionado con inicio de sesión
+Mock.mock(/\/v1\/login/, 'post', loginAPI.loginByUsername)
+Mock.mock(/\/v1\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
 
 // 文章相关

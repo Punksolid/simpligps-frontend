@@ -39,6 +39,22 @@ const user = {
         })
       })
     },
+    handleLogin() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+            this.loading = false
+            this.$router.push({ path: this.redirect || '/' })
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
 
     // 获取用户信息
     GetInfo({ commit, state }) {
@@ -60,7 +76,10 @@ const user = {
     },
 
     // 登出
-    LogOut({ commit, state }) {
+    LogOut: function({ commit, state }) {
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')

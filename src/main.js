@@ -22,11 +22,15 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-// import i18n from './lang' // Internationalization
-import './icons' // icon
-// import './errorLog' // error log
-import './permission' // permission control
-import './mock' // simulation data
+// personalizado font-awesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faCoffee)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+import './mock' // simulation data should be deleted on prod
 
 // import * as filters from './filters' // global filters
 
@@ -37,6 +41,7 @@ Vue.use(Element, {
 
 Vue.config.productionTip = false
 
+/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,

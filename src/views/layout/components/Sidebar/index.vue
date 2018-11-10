@@ -5,9 +5,9 @@
       :default-active="$route.path"
       :collapse="isCollapse"
       mode="vertical"
-      background-color="29a4bf"
-      text-color="#7d7d7d"
-      active-text-color="#000000"
+      background-color="#fbfbfb"
+      text-color="#282828"
+      active-text-color="#46859d"
     >
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
     </el-menu>
