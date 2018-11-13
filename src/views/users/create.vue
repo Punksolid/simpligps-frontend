@@ -1,6 +1,6 @@
 <template>
     <el-form ref="form" :model="form" label-width="200">
-      <label>Create User</label>
+      <label>Create user</label>
       <el-form-item label="Name">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
