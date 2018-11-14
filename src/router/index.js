@@ -118,12 +118,6 @@ export const constantRouterMap = [
         meta: { title: 'Catalogs', icon: 'form' }
       },
       {
-        path: 'operators',
-        name: 'Operators',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Operators', icon: 'form' }
-      },
-      {
         path: 'notifications',
         name: 'Notifications',
         component: () => import('@/views/form/index'),
@@ -173,7 +167,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'operators',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
+        component: () => import('@/views/operators/index'), // Parent router-view
         name: 'Operators',
         meta: { title: 'Operators' }
       }
