@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+// import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
 
@@ -16,6 +16,7 @@ service.interceptors.request.use(
     if (store.getters.token) {
       // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
       config.headers['X-Token'] = getToken()
+      config.headers['Authorization'] = 'Bearer ' + getToken()
     }
     return config
   },
