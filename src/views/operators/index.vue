@@ -1,17 +1,18 @@
 <template>
   <div>
-    <el-button @click="showCreateOperator">Create Operator</el-button>
+    <el-button @click="dialogVisible = true">Create Operator</el-button>
 
     <el-dialog
-      title="Tips"
+      title="Create Operator"
       :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>This is a message</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+      width="30%">
+      <span>
+            <CreateOperator></CreateOperator>
       </span>
+      <!--<span slot="footer" class="dialog-footer">-->
+        <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
+        <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
+      <!--</span>-->
     </el-dialog>
 
     <el-table
@@ -65,13 +66,6 @@
       }
     },
     methods: {
-      handleClose(done) {
-        this.$confirm('Are you sure to close this dialog?')
-          .then(_ => {
-            done()
-          })
-          .catch(_ => {})
-      }
     }
   }
 </script>
