@@ -106,11 +106,18 @@ export const constantRouterMap = [
     meta: { title: 'Catalogs', icon: 'example' },
     children: [
       {
+        path: 'contact',
+        name: 'Contacts',
+        component: () => import('@/views/contacts/index'),
+        meta: { title: 'Contacts', icon: 'form' }
+      },
+      {
         path: 'notifications',
         name: 'Notifications',
         component: () => import('@/views/form/index'),
         meta: { title: 'Notifications', icon: 'form' }
       },
+
       {
         path: 'units',
         name: 'Units Catalog',
