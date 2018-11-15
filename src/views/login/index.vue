@@ -30,7 +30,7 @@
               class="login-form"
               auto-complete="on"
               label-position="left">
-              <el-form-item prop="username">
+              <el-form-item prop="email">
                 <el-input
                   v-model="loginForm.email"
                   class="form-control"
@@ -47,14 +47,11 @@
                 name="password"
                 placeholder="Password"
                 required></el-input>
-              <div class="form-button">
-                <router-link to="/" class="ibtn">
-                  Ingresar
-                </router-link>
-
-                <!--<el-button :loading="loading" class="ibtn" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Ingresar</el-button>-->
-                <a href="forget9.html">Forgot password?</a>
-              </div>
+              <el-form-item>
+                <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+                  Sign in
+                </el-button>
+              </el-form-item>
             </el-form>
           </div>
         </div>
@@ -110,7 +107,7 @@
           if (valid) {
             this.loading = true
             // this.$store.dispatch('Login', this.loginForm).then(() => {
-            this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+            this.$store.dispatch('Login', this.loginForm).then(() => {
               this.loading = false
               this.$router.push({ path: this.redirect || '/' })
             }).catch(() => {

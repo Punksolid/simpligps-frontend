@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
-import loginAPI from './login'
-import usersAPI from './users'
+// import loginAPI from './login'
+// import usersAPI from './users'
 
 // import articleAPI from './article'
 // import remoteSearchAPI from './remoteSearch'
@@ -21,12 +21,12 @@ Mock.XHR.prototype.send = function() {
 // })
 
 // Relacionado con inicio de sesión
-Mock.mock(/\/v1\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/v1\/logout/, 'post', loginAPI.logout)
-Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
+// Mock.mock(/\/v1\/login/, 'post', loginAPI.loginByUsername)
+// Mock.mock(/\/v1\/logout/, 'post', loginAPI.logout)
+// Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
 
 // Users
- Mock.mock(/\/v1\/users/, 'post', usersAPI.createUser)
+ // Mock.mock(/\/v1\/users/, 'post', usersAPI.createUser)
 
  // Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
 // Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
