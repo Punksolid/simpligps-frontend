@@ -1,25 +1,17 @@
 <template>
-<div>
-<el-autocomplete
-  v-model="state4"
-  :fetch-suggestions="querySearchAsync"
-  placeholder="Please input"
-  @select="handleSelect"
-></el-autocomplete>
-  </div>
-</template>
-
-<template>
 
   <el-table
     :data="tableUnits"
     stripe="true"
     style="width: 100%">
     <el-table-column
-      width="40"
+      width="60"
       type="expand">
       <!--<Details></Details> if possible pass to a subcomponent-->
       <template slot-scope="props">
+  <el-tabs type="border-card">
+  <el-tab-pane>
+    <span slot="label"><i class="el-icon-date"></i> Details</span>
         <el-table
           :data="props.row.details"
           style="width: auto"
@@ -53,17 +45,33 @@
             label="Situation"
           ></el-table-column>
         </el-table>
-      </template>
+  </el-tab-pane>
+  <el-tab-pane>
+    <span slot="label"><i class="el-icon-document"></i> Monitoring Log</span>
+    <card></card>
+    </el-tab-pane>
+    <el-tab-pane>
+    <span slot="label"><i class="el-icon-view"></i> New Monitoring</span>
+    </el-tab-pane>
+    <el-tab-pane>
+    <span slot="label"><i class="el-icon-info"></i> Truck & operator</span>
+    </el-tab-pane>
+    <el-tab-pane>
+    <span slot="label"><i class="el-icon-circle-plus"></i> Add Group Risk</span>
+    </el-tab-pane>
+</el-tabs>
+</template>
     </el-table-column>
     <el-table-column
       prop="unit_name"
       label="Units"
-      width="220">
+      width="230"
+      i class="el-icon-date">
     </el-table-column>
     <el-table-column
       prop="location"
       label="Location"
-      width="220">
+      width="230">
     </el-table-column>
     <el-table-column
       prop="one"
@@ -73,12 +81,12 @@
           v-model="search"
           size="mini"
           placeholder="Type to search"/>      </template>
-
-    </el-table-column>
+</el-table-column>
     <el-table-column
       prop="two"
       label="Two"
       width="70"
+
     >
     </el-table-column>
     <el-table-column
@@ -105,19 +113,19 @@
 
 
 <script>
-  // import Details from './unit_details.vue'
+import Card from '@/components/Card/card.vue'
 
   export default {
     name: 'UnitsVue',
     components: {
-      // Details
+      Card
     },
     data() {
       return {
         tableUnits: [
           {
             unit_name: 'Cosas imposibles A.C',
-            location: 'Localizacion',
+            location: 'Av. Progreso 1512 Culiacán, SIN, MX',
             one: 'ONE',
             two: 'ONE2',
             three: 'ONE3',
@@ -134,8 +142,8 @@
             }]
           },
           {
-            unit_name: 'Nombre2',
-            location: 'Localizacion2',
+            unit_name: 'Tecnocosas',
+            location: 'Av. Progreso 1512 Culiacán, SIN, MX',
             one: 'ONE',
             two: 'ONE2',
             three: 'ONE3',
@@ -152,8 +160,8 @@
             }]
           },
            {
-            unit_name: 'Nombre3',
-            location: 'Localizacion',
+            unit_name: 'Sanchez Trucking',
+            location: 'Av. Progreso 1512 Culiacán, SIN, MX',
             one: 'ONE',
             two: 'ONE2',
             three: 'ONE3',
@@ -170,8 +178,8 @@
             }]
           },
            {
-            unit_name: 'Nombre4',
-            location: 'Localizacion',
+            unit_name: 'Cucurucho y asociados',
+            location: 'Av. Progreso 1512 Culiacán, SIN, MX',
             one: 'ONE',
             two: 'ONE2',
             three: 'ONE3',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button @click="dialogVisible = true">Create Operator</el-button>
+    <el-button type="primary" @click="dialogVisible = true">Create Operator</el-button>
 
     <el-dialog
       title="Create Operator"
