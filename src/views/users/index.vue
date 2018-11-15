@@ -10,10 +10,7 @@
   <span>
     <create-user></create-user>
   </span>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">Cancel</el-button>
-    <el-button type="primary" @click="dialogVisible = false">Create</el-button>
-  </span>
+
   </el-dialog>
 
     <el-table

@@ -4,58 +4,35 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div>
       <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-        <div class="card-panel-icon-wrapper icon-people">
-          <i class="el-icon-info"></i>
-        </div>
+
         <div class="card-panel-description">
-          <h5>First time here?</h5>
-          <el-button type="primary" @click="dialogVisible = true">Check more!</el-button>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+          <h6>Operator</h6>
+          <h6>Id:1111</h6>
+          <p>Phone:6677 131415</p>
+
         </div>
       </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <i class="el-icon-loading"></i>
-        </div>
-        <div class="card-panel-description">
-          <h5>Active trips</h5>
-          <h6>Last actived trips:1</h6>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
-          <el-button type="primary" @click="dialogVisible = true">view all</el-button>
-        </div>
       </div>
     </el-col>
 
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <i class="el-icon-success"></i>
-        </div>
+      <div>
+      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+
         <div class="card-panel-description">
-          <h5>Finished trips</h5>
-          <h6>Last finished trips:1</h6>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num"/>
-          <el-button type="primary" @click="dialogVisible = true">view all</el-button>
+          <h6>Truck</h6>
+          <h6>Id:FL312</h6>
+          <p>Model:Kenworth</p>
+          <p>Color:White</p>
+          <p>Economic:T-770</p>
+          <p>Plate:LOM1512</p>
+          <p>GPS:http://tlmt.com</p>
+
         </div>
+      </div>
       </div>
     </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <i class="el-icon-error"></i>
-        </div>
-        <div class="card-panel-description">
-          <h5>Attention required!</h5>
-          <h6>Check Max alerts</h6>
-          <el-button type="danger" @click="dialogVisible = true">view alerts</el-button>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num"/>
-        </div>
-      </div>
-    </el-col>
   </el-row>
 
     </div>
@@ -78,11 +55,11 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .dashboard {
   &-container {
-    margin: 30px;
+    margin: 20px;
   }
   &-text {
-    font-size: 30px;
-    line-height: 46px;
+    font-size: 20px;
+    line-height: 26px;
   }
 }
 
@@ -90,33 +67,33 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .panel-group {
-  margin-top: 20px;
+  margin-top: 10px;
   .card-panel-col{
-    margin-bottom: 32px;
+    margin-bottom: 12px;
   }
   .el-icon-info {
-    font-size:30px;
+    font-size:10px;
   }
   .el-icon-loading {
-    font-size:30px;
+    font-size:10px;
   }
 
   .el-icon-error {
-    font-size:30px;
+    font-size:10px;
   }
   .el-icon-success {
-    font-size:30px;
+    font-size:10px;
   }
   //COLOR DE LA CAJA CONTENEDORA
 
   .card-panel {
-    height: 170px;
+    height: 250px;
+    width: 150px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     position: relative;
     overflow: hidden;
     color: #666;
-    background-image: linear-gradient(#b0f8ff, #fafeff);
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
     &:hover {
@@ -157,7 +134,7 @@ export default {
     }
     .card-panel-icon {
       float: left;
-      font-size: 48px;
+      font-size: 10px;
     }
     .card-panel-description {
       float: right;
@@ -171,9 +148,16 @@ export default {
         margin-bottom: 12px;
       }
       .card-panel-num {
-        font-size: 40px;
+        font-size: 10px;
       }
     }
   }
 }
 </style>
+
+
+<script>
+export default {
+  name: 'Card'
+}
+</script>
