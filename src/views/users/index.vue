@@ -1,6 +1,12 @@
 <template>
   <div>
-    <create-user></create-user>
+    <el-button @click="showDialog = true" type="primary">Create User</el-button>
+    <el-dialog
+      title="Create User"
+      :visible.sync="showDialog"
+      width="30%">
+      <create-user></create-user>
+    </el-dialog>
     <el-table
       :data="tableData4"
       style="width: 100%"
@@ -69,7 +75,8 @@
             'lastname': 'default',
             'email': 'molestiaecrawford.kunde@example.org',
             'username': 'defaultx'
-          }]
+          }],
+        showDialog: false
       }
     }
   }
