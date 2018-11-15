@@ -1,6 +1,21 @@
 <template>
   <div>
+    <el-button type="primary" @click="dialogVisible = true">Create user</el-button>
+
+    <el-dialog
+  title="Create user"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>
     <create-user></create-user>
+  </span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">Cancel</el-button>
+    <el-button type="primary" @click="dialogVisible = false">Create</el-button>
+  </span>
+  </el-dialog>
+
     <el-table
       :data="tableData4"
       style="width: 100%"
@@ -54,12 +69,30 @@
     methods: {
       deleteRow(index, rows) {
         rows.splice(index, 1)
+      },
+      open() {
+        this.$alert('This is a message', 'Title', {
+          confirmButtonText: 'OK',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+      },
+      handleClose(done) {
+        this.$confirm('Are you sure to close? Not saved data will be lost!')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
       }
     },
     data() {
       return {
         tableData4: [{
-          'name': 'Alvah Aufderhar',
+          'name': 'Allah Akhbar',
           'lastname': 'default',
           'email': 'commodijohann32@example.com',
           'username': 'defaultx'
@@ -69,7 +102,9 @@
             'lastname': 'default',
             'email': 'molestiaecrawford.kunde@example.org',
             'username': 'defaultx'
-          }]
+          }],
+          dialogVisible: false
+
       }
     }
   }

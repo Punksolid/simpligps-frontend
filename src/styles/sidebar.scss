@@ -2,7 +2,7 @@
   // 主体区域
   .main-container {
     min-height: 100%;
-    transition: margin-left .28s;
+    transition: margin-left .58s;
     margin-left: 180px;
     position: relative;
   }
@@ -140,4 +140,13 @@
       margin-right: 16px;
     }
   }
+}
+
+
+.el-icon-loading {
+  fill: currentColor;
+  height: 20px;
+  overflow: hidden;
+  vertical-align: -.15em;
+  width: 20px;
 }
