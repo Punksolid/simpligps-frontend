@@ -6,7 +6,7 @@ export function login(email, password) {
     password: password
   }
   return request({
-    url: '/login',
+    url: 'v1/login',
     method: 'post',
     data
   })
@@ -14,9 +14,9 @@ export function login(email, password) {
 
 export function getInfo(token) {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: 'v1/user/info',
+    method: 'get'
+    // params: { token }
   })
 }
 

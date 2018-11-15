@@ -9,5 +9,6 @@ export default {
       'email': 'commodijohann32@example.com',
       'username': 'defaultx'
       }
-  })
+  }),
+  logout: () => 'success'
 }
