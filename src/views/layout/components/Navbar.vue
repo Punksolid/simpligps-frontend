@@ -5,8 +5,6 @@
  <div>
       <img src="./img/logo.png">
 
-
-
     </div>
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />

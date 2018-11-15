@@ -18,13 +18,17 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Create User</el-button>
         <el-button>Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">Create User</el-button>
       </el-form-item>
     </el-form>
 </template>
 
 <script>
+  import { createUser } from '../../api/users'
+  import { Message } from 'element-ui'
+
+
   export default {
     name: 'CreateUser',
     data() {
@@ -33,13 +37,20 @@
           name: '',
           lastname: '',
           email: '',
-          username: ''
+          username: '',
+          password: ''
         }
       }
     },
     methods: {
       onSubmit() {
-        console.log('submit!')
+        createUser(this.form).then(response => {
+          Message({
+            message: 'User ' + response.data.data.name + ' created',
+            type: 'success',
+            duration: 10 * 1000
+          })
+        })
       }
     }
   }
