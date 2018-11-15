@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+// import { Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
 
@@ -16,6 +17,7 @@ service.interceptors.request.use(
     if (store.getters.token) {
       // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
       config.headers['X-Token'] = getToken()
+      config.headers['Authorization'] = 'Bearer ' + getToken()
     }
     return config
   },
@@ -28,15 +30,17 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-  response => response,
+  // response => response,
   /**
    * 下面的注释为通过在response里，自定义code来标示请求状态
    * 当code返回如下情况则说明权限有问题，登出并返回到登录页
    * 如想通过 xmlhttprequest 来状态码标识 逻辑可写在下面error中
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
-  //   response => {
-  //     const res = response.data
+    response => {
+      const res = response.data
+      console.log(res.code)
+      return response
   //     if (res.code !== 20000) {
   //       Message({
   //         message: res.message,
@@ -61,16 +65,16 @@ service.interceptors.response.use(
   //     } else {
   //       return response.data
   //     }
-  //   },
-  // error => {
-  //   console.log('err' + error) // for debug
-  //   Message({
-  //     message: error.message,
-  //     type: 'error',
-  //     duration: 5 * 1000
-  //   })
-  //   return Promise.reject(error)
-  // }
+    },
+  error => {
+    console.log('err' + error) // for debug
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(error)
+  }
 )
 
 export default service

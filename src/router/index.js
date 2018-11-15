@@ -33,7 +33,7 @@ export const constantRouterMap = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
+        name: 'dashboard',
         meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
       }
     ]
@@ -93,12 +93,6 @@ export const constantRouterMap = [
         name: 'High Risk Group',
         component: () => import('@/views/tree/index'),
         meta: { title: 'High Risk Group', icon: 'tree' }
-      },
-      {
-        path: 'units',
-        name: 'Units',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Units', icon: 'tree' }
       }
     ]
   },
@@ -112,18 +106,6 @@ export const constantRouterMap = [
     meta: { title: 'Catalogs', icon: 'example' },
     children: [
       {
-        path: 'index',
-        name: 'Catalogs',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Catalogs', icon: 'form' }
-      },
-      {
-        path: 'operators',
-        name: 'Operators',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Operators', icon: 'form' }
-      },
-      {
         path: 'notifications',
         name: 'Notifications',
         component: () => import('@/views/form/index'),
@@ -131,7 +113,7 @@ export const constantRouterMap = [
       },
       {
         path: 'units',
-        name: 'Units',
+        name: 'Units Catalog',
         component: () => import('@/views/form/index'),
         meta: { title: 'Units', icon: 'form' }
       },
@@ -173,23 +155,12 @@ export const constantRouterMap = [
     children: [
       {
         path: 'operators',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
+        component: () => import('@/views/operators/index'), // Parent router-view
         name: 'Operators',
         meta: { title: 'Operators' }
       }
     ]
   },
-  {
-    path: 'users',
-    component: Layout,
-    redirect: '/contacts/menu1',
-    name: 'Users',
-    meta: {
-      title: 'Users',
-      icon: 'nested'
-    }
-  },
-
   { path: '*', redirect: '/404', hidden: true }
 ]
 
