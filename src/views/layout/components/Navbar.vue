@@ -2,12 +2,11 @@
 <div>
 
   <el-menu class="navbar" mode="horizontal">
- <div>
-      <img src="./img/logo.png">
-
-
-
-    </div>
+      <!--<AquI va logotipo>-->
+      <logopanel>
+      <img src="./img/logo.png" a ref="/#">
+      </logopanel>
+      <!--<burger-->
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
@@ -33,6 +32,7 @@
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu>
+
   </div>
 </template>
 

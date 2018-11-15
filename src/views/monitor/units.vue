@@ -1,6 +1,19 @@
 <template>
+<div>
+<el-autocomplete
+  v-model="state4"
+  :fetch-suggestions="querySearchAsync"
+  placeholder="Please input"
+  @select="handleSelect"
+></el-autocomplete>
+  </div>
+</template>
+
+<template>
+
   <el-table
     :data="tableUnits"
+    stripe="true"
     style="width: 100%">
     <el-table-column
       width="40"
@@ -45,12 +58,12 @@
     <el-table-column
       prop="unit_name"
       label="Units"
-      width="180">
+      width="220">
     </el-table-column>
     <el-table-column
       prop="location"
       label="Location"
-      width="180">
+      width="220">
     </el-table-column>
     <el-table-column
       prop="one"
@@ -87,7 +100,9 @@
     >
     </el-table-column>
   </el-table>
+
 </template>
+
 
 <script>
   // import Details from './unit_details.vue'
@@ -101,7 +116,7 @@
       return {
         tableUnits: [
           {
-            unit_name: 'Nombre',
+            unit_name: 'Cosas imposibles A.C',
             location: 'Localizacion',
             one: 'ONE',
             two: 'ONE2',
@@ -135,6 +150,42 @@
               status: '22',
               situation: '22222'
             }]
+          },
+           {
+            unit_name: 'Nombre3',
+            location: 'Localizacion',
+            one: 'ONE',
+            two: 'ONE2',
+            three: 'ONE3',
+            four: 'ONE4',
+            five: 'ONE5',
+            details: [{
+              id: '11111',
+              trip: '1231',
+              monitor: '1231',
+              observation: '1231',
+              location: '1231',
+              status: '1231',
+              situation: '102830'
+            }]
+          },
+           {
+            unit_name: 'Nombre4',
+            location: 'Localizacion',
+            one: 'ONE',
+            two: 'ONE2',
+            three: 'ONE3',
+            four: 'ONE4',
+            five: 'ONE5',
+            details: [{
+              id: '11111',
+              trip: '1231',
+              monitor: '1231',
+              observation: '1231',
+              location: '1231',
+              status: '1231',
+              situation: '102830'
+            }]
           }
         ]
       }
@@ -145,3 +196,5 @@
 <style scoped>
 
 </style>
+
+

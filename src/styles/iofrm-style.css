@@ -1622,3 +1622,12 @@ html, body {
         padding: 125px 30px 60px;
     }
 }
+
+
+.el-icon-loading {
+  fill: currentColor;
+  height: 1em;
+  overflow: hidden;
+  vertical-align: -.15em;
+  width: 1em;
+}

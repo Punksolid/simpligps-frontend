@@ -1,70 +1,47 @@
-<template slot-scope="props">
+<template>
   <el-table
-    :data="details"
-    style="width: auto"
-  >
+    :data="tableData"
+    stripe
+    style="width: 100%">
     <el-table-column
-      prop="id"
-      label="ID"
-    ></el-table-column>
+      prop="date"
+      label="Fecha"
+      width="180">
+    </el-table-column>
     <el-table-column
-      prop="trip"
-      label="Trip"
-    ></el-table-column>
+      prop="name"
+      label="Nombre"
+      width="180">
+    </el-table-column>
     <el-table-column
-      prop="monitor"
-      label="Monitor"
-    ></el-table-column>
-    <el-table-column
-      prop="location"
-      label="Location"
-    ></el-table-column>
-    <el-table-column
-      prop="observations"
-      label="Observations"
-    ></el-table-column>
-    <el-table-column
-      prop="status"
-      label="Status"
-    ></el-table-column>
-    <el-table-column
-      prop="situation"
-      label="Situation"
-    ></el-table-column>
+      prop="address"
+      label="Dirección">
+    </el-table-column>
   </el-table>
 </template>
 
 <script>
   export default {
-    name: 'Details',
-    props: [
-      'details'
-    ],
-    // props: [
-    //   'id',
-    //   'trip',
-    //   'monitor',
-    //   'location',
-    //   'status',
-    //   'observations',
-    //   'situation'
-    // ],
     data() {
       return {
-        // details: [{
-          // id: 'asdfad',
-          // trip: 'asdfad',
-          // monitor: 'asdfad',
-          // location: 'asdfad',
-          // status: 'status',
-          // observations: 'asdfad',
-          // situation: 'situacion'
-        // }]
+        tableData: [{
+          date: '2016-05-03',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-02',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-04',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-01',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }]
       }
     }
   }
 </script>
-
-<style scoped>
-
-</style>
