@@ -17,6 +17,7 @@
 
     <el-table
       :data="contactsList"
+      stripe
       border
       style="width: 100%">
       <el-table-column
