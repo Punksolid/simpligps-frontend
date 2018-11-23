@@ -5,7 +5,7 @@
     <el-dialog
   title="Create user"
   :visible.sync="dialogVisible"
-  width="30%"
+  width="60%"
   :before-close="handleClose">
   <span>
     <create-user></create-user>

@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$message('submit!')
+      this.$message('done!')
     },
     onCancel() {
       this.$message({

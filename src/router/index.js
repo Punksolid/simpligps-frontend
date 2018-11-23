@@ -103,7 +103,7 @@ export const constantRouterMap = [
     redirect: '/monitoring/table',
     // redirect: '/example/table',
     name: 'Catalogs',
-    meta: { title: 'Catalogs', icon: 'example' },
+    meta: { title: 'Catalogs', icon: 'el-icon-tickets' },
     children: [
       {
         path: 'contact',
@@ -139,13 +139,13 @@ export const constantRouterMap = [
       {
         path: 'notification_linking',
         name: 'Notification Linking',
-        component: () => import('@/views/form/index'),
+        component: () => import('@/views/notification linking/notiflink'),
         meta: { title: 'Notification Linking', icon: 'form' }
       },
       {
         path: 'monitoring_assign',
         name: 'Monitoring Assign',
-        component: () => import('@/views/form/index'),
+        component: () => import('@/views/monitoring assing/assign'),
         meta: { title: 'Monitoring Assign', icon: 'form' }
       }
     ]
@@ -168,7 +168,20 @@ export const constantRouterMap = [
       }
     ]
   },
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: '/Report',
+    component: Layout,
+    redirect: 'Report',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/general report/genreport'),
+        name: 'General report',
+        meta: { title: 'General report', icon: 'report', noCache: true }
+      }
+    ]
+  },
+
 ]
 
 export default new Router({

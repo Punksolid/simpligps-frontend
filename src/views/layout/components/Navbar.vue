@@ -3,9 +3,7 @@
 
   <el-menu class="navbar" mode="horizontal">
       <!--<AquI va logotipo>-->
-      <logopanel>
-      <img src="./img/logo.png" a ref="/#">
-      </logopanel>
+
       <!--<burger-->
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
@@ -107,4 +105,5 @@ export default {
   }
 }
 </style>
+
 
