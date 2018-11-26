@@ -10,7 +10,7 @@
       <div class="bullshit">
         <div class="bullshit__oops">Error</div>
         <div class="bullshit__info">Missing Page
-          <a class="link-type" href="https://wallstreetcn.com" target="_blank">you're lost?</a>
+          <a class="link-type" href="dashboard" target="_blank">you're lost?</a>
         </div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">Verify that the URL you entered is correct. Click on the button below to return to the home page or send an error report.</div>

@@ -181,7 +181,19 @@ export const constantRouterMap = [
       }
     ]
   },
-
+  {
+    path: '/usersettings',
+    component: Layout,
+    redirect: 'usersettings',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/usersettings/usersettings'),
+        name: 'General report',
+        meta: { title: 'User Settings', icon: 'report', noCache: true }
+      }
+    ]
+  }
 ]
 
 export default new Router({

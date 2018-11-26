@@ -9,7 +9,7 @@
     <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
-        <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+        <img :src="avatar+'../src/assets/avatar.jpg'" class="user-avatar">
         <i class="el-icon-caret-bottom"/>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -25,6 +25,11 @@
         <router-link class="inlineBlock" to="/login">
           <el-dropdown-item divided>
             Logout
+          </el-dropdown-item>
+        </router-link>
+        <router-link class="inlineBlock" to="/">
+          <el-dropdown-item divided>
+            Settings
           </el-dropdown-item>
         </router-link>
       </el-dropdown-menu>
