@@ -1,5 +1,10 @@
 <template>
-  <el-scrollbar wrap-class="scrollbar-wrapper">
+  <el-scrollbar wrap-class="sidebar-inner scrollbar-wrapper">
+      <div class="logopanel">
+          <h1>
+            <a href="dashboard.html"></a>
+          </h1>
+  </div>
     <el-menu
       :show-timeout="200"
       :default-active="$route.path"
@@ -8,6 +13,7 @@
       background-color="#fbfbfb"
       text-color="#282828"
       active-text-color="#46859d"
+      class="nav nav-sidebar"
     >
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
     </el-menu>
