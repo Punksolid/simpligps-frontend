@@ -34,7 +34,7 @@ export const constantRouterMap = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
+        meta: { title: 'Dashboard', icon: 'home', noCache: true }
       }
     ]
   },
@@ -58,7 +58,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Units',
         component: () => import('@/views/monitor/units'),
-        meta: { title: 'Units', icon: 'example' }
+        meta: { title: 'Units', icon: 'truck' }
       }
     ]
   },
@@ -68,37 +68,37 @@ export const constantRouterMap = [
     redirect: '/monitoring/table',
     // redirect: '/example/table',
     name: 'Monitoring',
-    meta: { title: 'Monitoring', icon: 'example' },
+    meta: { title: 'Monitoring', icon: 'eye' },
     children: [
       {
         path: 'new_trip',
         name: 'New Trip',
         component: () => import('@/views/table/index'),
-        meta: { title: 'New Trip', icon: 'table' }
+        meta: { title: 'New Trip', icon: 'plus-circle' }
       },
       {
         path: 'programming',
         name: 'Programming',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Monitoring', icon: 'tree' }
+        meta: { title: 'Monitoring', icon: 'location-arrow' }
       },
       {
         path: 'convoy',
         name: 'Convoy',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Convoy', icon: 'tree' }
+        meta: { title: 'Convoy', icon: 'truck-moving' }
       },
       {
         path: 'high_risk_group',
         name: 'High Risk Group',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'High Risk Group', icon: 'tree' }
+        meta: { title: 'High Risk Group', icon: 'exclamation-triangle' }
       },
       {
         path: 'units',
         name: 'Units',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Units', icon: 'tree' }
+        meta: { title: 'Units', icon: 'truck' }
       }
     ]
   },
@@ -109,49 +109,49 @@ export const constantRouterMap = [
     redirect: '/monitoring/table',
     // redirect: '/example/table',
     name: 'Catalogs',
-    meta: { title: 'Catalogs', icon: 'example' },
+    meta: { title: 'Catalogs', icon: 'copy' },
     children: [
       {
         path: 'index',
         name: 'Catalogs',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Catalogs', icon: 'form' }
+        meta: { title: 'Catalogs', icon: 'copy' }
       },
       {
         path: 'notifications',
         name: 'Notifications',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Notifications', icon: 'form' }
+        meta: { title: 'Notifications', icon: 'comments' }
       },
       {
         path: 'units',
         name: 'Units',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Units', icon: 'form' }
+        meta: { title: 'Units', icon: 'truck' }
       },
       {
         path: 'lines',
         name: 'Lines',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Lines', icon: 'form' }
+        meta: { title: 'Lines', icon: 'exchange-alt' }
       },
       {
         path: 'status',
         name: 'Status',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Status', icon: 'form' }
+        meta: { title: 'Status', icon: 'clipboard-check' }
       },
       {
         path: 'notification_linking',
         name: 'Notification Linking',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Notification Linking', icon: 'form' }
+        meta: { title: 'Notification Linking', icon: 'link' }
       },
       {
         path: 'monitoring_assign',
         name: 'Monitoring Assign',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Monitoring Assign', icon: 'form' }
+        meta: { title: 'Monitoring Assign', icon: 'sign-in-alt' }
       }
     ]
   },
@@ -162,7 +162,7 @@ export const constantRouterMap = [
     name: 'Contacts',
     meta: {
       title: 'Contacts',
-      icon: 'nested'
+      icon: 'users'
     },
     children: [
       {
@@ -180,7 +180,7 @@ export const constantRouterMap = [
     name: 'Users',
     meta: {
       title: 'Users',
-      icon: 'nested'
+      icon: 'users'
     }
   },
 

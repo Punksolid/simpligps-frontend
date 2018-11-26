@@ -1,22 +1,3 @@
-@import "http://fonts.googleapis.com/css?family=Lato:300,400,700,900";
-@import "http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700";
-@import "../plugins/bootstrap/css/bootstrap.min.css";
-@import "../plugins/mcustom-scrollbar/mcustom_scrollbar.min.css";
-@import "../plugins/animation-css/animate.min.css";
-@import "icons/font-awesome/font-awesome.css";
-@import "icons/line-icons/line-icons.css";
-@import "icons/line-icons/simple-line-icons.css";
-@import "../plugins/select2/dist/css/select2.css";
-@import "../plugins/slick/slick.css";
-@import "../plugins/icheck/skins/all.css";
-@import "../plugins/bootstrap/css/jasny-bootstrap.css";
-@import "icons/rounded/style.css";
-@import "icons/octicons/octicons.css";
-@import "icons/weather/css/weather-icons.min.css";
-@import "../plugins/bootstrap-loading/lada.min.css";
-@import "../plugins/bootstrap-tags-input/bootstrap-tagsinput.css";
-@import "../plugins/bootstrap-editable/css/bootstrap-editable.css";
-@import "../plugins/prettify/prettify.css";
 /**** SIDEBAR  ****/
 /**** TOPBAR ****/
 /**** QUICKVIEW SIDEBAR ****/
@@ -55,7 +36,7 @@
 @font-face {
   font-family: 'weather';
   src: url('icons/weather/artill_clean_icons-webfont.eot');
-  src: url('icons/weather/artill_clean_icons-webfont.eot?#iefix') format('embedded-opentype'), url('icons/weather/artill_clean_icons-webfont.woff') format('woff'), url('icons/weather/artill_clean_icons-webfont.ttf') format('truetype'), url('icons/weather/weatherfont/artill_clean_icons-webfont.svg#artill_clean_weather_iconsRg') format('svg');
+  src: url('icons/weather/artill_clean_icons-webfont.eot?#iefix') format('embedded-opentype'), url('/icons/weather/artill_clean_icons-webfont.woff') format('woff'), url('icons/weather/artill_clean_icons-webfont.ttf') format('truetype'), url('/icons/weather/weatherfont/artill_clean_icons-webfont.svg#artill_clean_weather_iconsRg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -5310,7 +5291,7 @@ body:not(.fixed-topbar) .main-content .page-content {
   color: #ffffff;
 }
 .widget-weather .weather .weather-highlighted .icon-weather {
-  background: url(images/icons/weather-main.png) no-repeat;
+  background: url(/images/icons/weather-main.png) no-repeat;
   float: left;
   height: 57px;
   margin-top: 10px;
@@ -13238,4 +13219,3 @@ select:focus,
 .mCSB_scrollTools .mCSB_draggerRail, .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;}
 .mCSB_scrollTools {width: 5px;}
 .sidebar-widgets .progress {margin-top: 10px; }
-

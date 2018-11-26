@@ -1,39 +1,39 @@
 <template>
 <div>
-
-  <el-menu class="navbar" mode="horizontal">
- <div>
-      <img src="./img/logo.png">
-
-
-
-    </div>
-    <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-    <breadcrumb />
-    <el-dropdown class="avatar-container" trigger="click">
-      <div class="avatar-wrapper">
-        <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-        <i class="el-icon-caret-bottom"/>
-      </div>
-      <el-dropdown-menu slot="dropdown" class="user-dropdown">
-        <router-link class="inlineBlock" to="/">
-          <el-dropdown-item>
-            Home
-          </el-dropdown-item>
-        </router-link>
-        <!--<el-dropdown-item divided>-->
-        <!--@TODO ACTIVAR LOGOUT PROPIO-->
-          <!--<span style="display:block;" @click="logout">LogOut</span>-->
-        <!--</el-dropdown-item>-->
-        <router-link class="inlineBlock" to="/login">
-          <el-dropdown-item divided>
-            Logout
-          </el-dropdown-item>
-        </router-link>
-      </el-dropdown-menu>
-    </el-dropdown>
-  </el-menu>
+  <div class="header-left">
+    <el-menu class="topnav" mode="horizontal">
+      <a class="menutoggle" href="#">
+        <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="menu__handle"/>
+      </a>
+      <breadcrumb />
+      </el-menu>
   </div>
+      <div class="header-right">
+      <el-dropdown class="avatar-container" trigger="click">
+        <div class="avatar-wrapper">
+          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <i class="el-icon-caret-bottom"/>
+        </div>
+        <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <router-link class="inlineBlock" to="/">
+            <el-dropdown-item>
+              Home
+            </el-dropdown-item>
+          </router-link>
+          <!--<el-dropdown-item divided>-->
+          <!--@TODO ACTIVAR LOGOUT PROPIO-->
+            <!--<span style="display:block;" @click="logout">LogOut</span>-->
+          <!--</el-dropdown-item>-->
+          <router-link class="inlineBlock" to="/login">
+            <el-dropdown-item divided>
+              Login
+            </el-dropdown-item>
+          </router-link>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+
+</div>
 </template>
 
 <script>

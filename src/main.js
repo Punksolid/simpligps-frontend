@@ -1,8 +1,6 @@
 
 import Vue from 'vue'
-
 import Cookies from 'js-cookie'
-
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import Element from 'element-ui'
@@ -13,10 +11,16 @@ import '@/styles/index.scss' // global css
 // import '@/styles/style.css' // make GLOBAL
 // import '@/styles/theme.css' // make global
 // import '@/styles/ui.css' // make global
- import '@/styles/bootstrap.min.css' // make
+// import '@/styles/bootstrap.min.css' // make
 // import '@/styles/fontawesome-all.min.css'
- import '@/styles/iofrm-style.css' // make
- import '@/styles/iofrm-theme9.css' // make
+// import '@/styles/iofrm-style.css' // make
+// import '@/styles/iofrm-theme9.css' // make
+
+// Make Panel
+import '@/assets/global/css/style.css'
+import '@/assets/global/css/theme.css'
+import '@/assets/global/css/ui.css'
+
 
 import App from './App'
 import router from './router'
@@ -24,12 +28,15 @@ import store from './store'
 
 // personalizado font-awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faCoffee)
+library.add(fas)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.config.productionTip = false
+
 import './mock' // simulation data should be deleted on prod
 
 // import * as filters from './filters' // global filters
@@ -49,4 +56,3 @@ new Vue({
 
   render: h => h(App)
 })
-

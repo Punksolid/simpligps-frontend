@@ -1,14 +1,22 @@
 <template>
+  <section>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
-    <navbar/>
+      <sidebar class="sidebar sidebar-container">
+        <div class="logopanel">
+          <h1>
+            <a href="dashboard.html"></a>
+          </h1>
+        </div>
+      </sidebar>
+    <div class="main-container main-content">
+      <navbar class="topbar"/>
 
-    <div class="main-container">
-      <sidebar class="sidebar-container"/>
+      <app-main class="page-content"/>
 
-      <app-main/>
     </div>
   </div>
+</section>
 </template>
 
 <script>
