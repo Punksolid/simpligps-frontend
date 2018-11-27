@@ -90,7 +90,7 @@ export default {
     height: 250px;
     width: 150px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 7px;
     position: relative;
     overflow: hidden;
     color: #666;
