@@ -10,11 +10,15 @@ const app = {
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
+      const el = document.body
       if (state.sidebar.opened) {
         Cookies.set('sidebarStatus', 1)
+        el.classList.add('sidebar-collapsed')
       } else {
         Cookies.set('sidebarStatus', 0)
+        el.classList.remove('sidebar-collapsed')
       }
+
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
     },
