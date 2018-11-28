@@ -2602,7 +2602,7 @@
   background: #ffffff;
 }
 .theme-sltl.color-default .sidebar .logopanel h1 a {
-  background: url(../images/logo/t2.png) no-repeat;
+  background: url(../images/logo/t2.png) no-repeat center;
 }
 .theme-sltl.color-default .sidebar .sidebar-inner {
   background: #ffffff;
