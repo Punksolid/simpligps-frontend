@@ -2,6 +2,7 @@
   <section>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
+      
       <sidebar class="sidebar sidebar-container">
         <div class="logopanel">
           <h1>
@@ -9,6 +10,7 @@
           </h1>
         </div>
       </sidebar>
+
     <div class="main-container main-content">
       <navbar class="topbar"/>
 
@@ -57,17 +59,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "src/styles/mixin.scss";
-  .app-wrapper {
-    @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    &.mobile.openSidebar{
-      position: fixed;
-      top: 0;
-      left: 10px;
-    }
-  }
+
   .drawer-bg {
     background: #000;
     opacity: 0.3;
