@@ -26,14 +26,13 @@ export const constantRouterMap = [
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {
-    path: '/',
+    path: '/dashboard',
     component: Layout,
-    redirect: 'dashboard',
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
+        name: 'dashboard',
         meta: { title: 'Dashboard', icon: 'icon-home', noCache: true }
       }
     ]
@@ -43,9 +42,9 @@ export const constantRouterMap = [
     component: Layout,
     children: [
       {
-        path: 'users',
+        path: '',
         component: () => import('@/views/users/index'),
-        name: 'Users',
+        name: 'users',
         meta: { title: 'Users', icon: 'icon-users', noCache: true }
       }
     ]
@@ -55,8 +54,8 @@ export const constantRouterMap = [
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'Units',
+        path: '',
+        name: 'units',
         component: () => import('@/views/monitor/units'),
         meta: { title: 'Units', icon: 'icon-cursor' }
       }
