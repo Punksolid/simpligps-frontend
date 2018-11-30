@@ -187,13 +187,13 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/usersettings',
+    path: '/user_settings',
     component: Layout,
-    redirect: 'usersettings',
+    redirect: 'user_settings',
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/usersettings/usersettings'),
+        component: () => import('@/views/user_settings/user_settings'),
         name: 'General report',
         meta: { title: 'User Settings', icon: 'icon-settings', noCache: true }
       }

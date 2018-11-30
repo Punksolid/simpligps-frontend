@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 // import loginAPI from './login'
-// import usersAPI from './users'
+import usersAPI from './users'
 
 // import articleAPI from './article'
 // import remoteSearchAPI from './remoteSearch'
@@ -27,6 +27,7 @@ Mock.XHR.prototype.send = function() {
 
 // Users
  // Mock.mock(/\/v1\/users/, 'post', usersAPI.createUser)
+Mock.mock(/\/v1\/me\/settings/, 'post', usersAPI.updateSettings)
 
  // Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
 // Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
