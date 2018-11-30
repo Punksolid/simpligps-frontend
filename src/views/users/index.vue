@@ -64,6 +64,11 @@
     components: {
       CreateUser
     },
+    params: {
+      return: {
+        tableData4: []
+      }
+    },
     methods: {
       deleteRow(index, rows) {
         rows.splice(index, 1)
@@ -89,7 +94,7 @@
     },
     data() {
       return {
-        // tableData4: usersList,
+        tableData4: usersList,
         dialogVisible: false
       }
     }
