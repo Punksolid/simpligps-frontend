@@ -57,6 +57,7 @@
 
 <script>
   import CreateUser from './create.vue'
+  import { usersList } from '../../api/users'
 
   export default {
     name: 'Users',
@@ -74,34 +75,22 @@
             this.$message({
               type: 'info',
               message: `action: ${ action }`
-            });
+            })
           }
-        });
+        })
       },
       handleClose(done) {
         this.$confirm('Are you sure to close? Not saved data will be lost!')
           .then(_ => {
-            done();
+            done()
           })
-          .catch(_ => {});
+          .catch(_ => {})
       }
     },
     data() {
       return {
-        tableData4: [{
-          'name': 'Allah Akhbar',
-          'lastname': 'default',
-          'email': 'commodijohann32@example.com',
-          'username': 'defaultx'
-        },
-          {
-            'name': 'Liliane Weimann',
-            'lastname': 'default',
-            'email': 'molestiaecrawford.kunde@example.org',
-            'username': 'defaultx'
-          }],
-          dialogVisible: false
-
+        // tableData4: usersList,
+        dialogVisible: false
       }
     }
   }

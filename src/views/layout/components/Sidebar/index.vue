@@ -1,11 +1,12 @@
 <template>
-  <el-scrollbar wrap-class="sidebar-inner scrollbar-wrapper">
+  <div>
+  <div class="sidebar-inner">
       <div class="logopanel">
           <h1>
             <a href="dashboard.html"></a>
           </h1>
   </div>
-    <el-menu
+    <ul
       :show-timeout="200"
       :default-active="$route.path"
       :collapse="isCollapse"
@@ -16,8 +17,9 @@
       class="nav nav-sidebar"
     >
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
-    </el-menu>
-  </el-scrollbar>
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>

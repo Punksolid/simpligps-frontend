@@ -13,13 +13,14 @@ import '@/styles/index.scss' // global css
 // import '@/styles/ui.css' // make global
 // import '@/styles/bootstrap.min.css' // make
 // import '@/styles/fontawesome-all.min.css'
-// import '@/styles/iofrm-style.css' // make
-// import '@/styles/iofrm-theme9.css' // make
+import '@/styles/iofrm-style.css' // make
+import '@/styles/iofrm-theme9.css' // make
 
 // Make Panel
 import '@/assets/global/css/style.css'
 import '@/assets/global/css/theme.css'
 import '@/assets/global/css/ui.css'
+import '@/assets/global/css/icons/line-icons/simple-line-icons.css'
 import '@/assets/global/plugins/jquery/jquery-3.1.0.min.js'
 import '@/assets/admin/layout3/js/layout.js'
 
@@ -40,7 +41,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 
 import './mock' // simulation data should be deleted on prod
-// import '@/permission' // permission control, verifica que usuario tenga permisos
+import '@/permission' // permission control, verifica que usuario tenga permisos
 
 // import * as filters from './filters' // global filters
 

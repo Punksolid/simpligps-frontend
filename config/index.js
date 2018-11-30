@@ -18,6 +18,7 @@ module.exports = {
     errorOverlay: true,
     notifyOnErrors: false,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    disableHostCheck: true,   // That solved it
 
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and

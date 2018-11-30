@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
-// import loginAPI from './login'
-// import usersAPI from './users'
+import loginAPI from './login'
+import usersAPI from './users'
+import settingsAPI from './settings'
 
 // import articleAPI from './article'
 // import remoteSearchAPI from './remoteSearch'
@@ -26,9 +27,15 @@ Mock.XHR.prototype.send = function() {
 // Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
 
 // Users
- // Mock.mock(/\/v1\/users/, 'post', usersAPI.createUser)
+ Mock.mock(/\/v1\/users/, 'post', usersAPI.createUser)
+ Mock.mock(/\/v1\/users/, 'get', usersAPI.userList)
 
- // Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
+// ME
+Mock.mock(/\/v1\/me\/change_password/, 'post', usersAPI.changePassword)
+// Settings
+
+Mock.mock(/\/v1\/settings\/wialon_key/, 'post', settingsAPI.changePassword)
+
 // Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
 // Mock.mock(/\/article\/pv/, 'get', articleAPI.getPv)
 
