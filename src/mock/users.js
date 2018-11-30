@@ -10,5 +10,15 @@ export default {
       'username': 'defaultx'
       }
   }),
-  logout: () => 'success'
+  logout: () => 'success',
+  updateSettings: () => ({
+    data: {
+      'name': 'Jose Palazuelos'
+    }
+  }),
+  changePassword: () => ({
+    data: {
+      'message': 'Updated Succesfully'
+    }
+  })
 }

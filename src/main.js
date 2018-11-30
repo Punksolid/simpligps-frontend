@@ -20,6 +20,7 @@ import '@/styles/iofrm-theme9.css' // make
 import '@/assets/global/css/style.css'
 import '@/assets/global/css/theme.css'
 import '@/assets/global/css/ui.css'
+import '@/assets/global/css/icons/line-icons/simple-line-icons.css'
 import '@/assets/global/plugins/jquery/jquery-3.1.0.min.js'
 import '@/assets/admin/layout3/js/layout.js'
 
