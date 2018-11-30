@@ -7,3 +7,11 @@ export function createUser(params) {
     params
   })
 }
+
+export function usersList(params) {
+  return request({
+    url: 'v1/users',
+    method: 'get',
+    params
+  })
+}

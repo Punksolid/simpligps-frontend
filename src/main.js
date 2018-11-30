@@ -41,7 +41,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 
 import './mock' // simulation data should be deleted on prod
-// import '@/permission' // permission control, verifica que usuario tenga permisos
+import '@/permission' // permission control, verifica que usuario tenga permisos
 
 // import * as filters from './filters' // global filters
 

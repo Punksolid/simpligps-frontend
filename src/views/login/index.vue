@@ -75,7 +75,7 @@
       return {
         loginForm: {
           email: 'test@test.com',
-          password: 'testtest'
+          password: '12345678'
         },
         loginRules: {
           email: [{ required: true, trigger: 'blur', validator: validateUsername }],

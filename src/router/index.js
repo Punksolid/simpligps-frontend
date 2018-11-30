@@ -26,8 +26,11 @@ export const constantRouterMap = [
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {
-    path: '/dashboard',
+    path: '/',
     component: Layout,
+    redirect: '/dashboard',
+    name: 'Dashboard',
+    hidden: true,
     children: [
       {
         path: '',
@@ -196,6 +199,19 @@ export const constantRouterMap = [
         component: () => import('@/views/user_settings/user_settings'),
         name: 'General report',
         meta: { title: 'User Settings', icon: 'icon-settings', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/settings',
+    component: Layout,
+    redirect: 'settings',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/settings/settings'),
+        name: 'System Settings',
+        meta: { title: 'System Settings', icon: 'icon-settings', noCache: true }
       }
     ]
   }
