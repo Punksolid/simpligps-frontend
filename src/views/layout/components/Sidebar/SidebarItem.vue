@@ -4,16 +4,15 @@
       class="nav-active"
       v-bind:class="{ active: isActive(item.path), 'nav-hover': isHovering }"
       @mouseover="isHovering = true"
-      @mouseout="isHovering = false"
-    >
+      @mouseout="isHovering = false">
       <!-- ENLACE INDIVIDUAL -->
+
         <template
                 v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
             <app-link :to="resolvePath(onlyOneChild.path)" class="testing">
                 <div
                         :index="resolvePath(onlyOneChild.path)"
-                        :class="{'submenu-title-noDropdown':!isNest}"
-                        class="quees">
+                        :class="{'submenu-title-noDropdown':!isNest}">
                     <!--CUANDO COINCIDEN isActive regresa true, con v-bind se pone la clase extra -->
                     <!--{{ item.path }}-->
                     <!--{{ this.$route.path }}-->
@@ -26,30 +25,29 @@
             </app-link>
         </template><!-- FIN - ENLACE INDIVIDUAL -->
     </li>
-    <li class="nav-parent" v-else :index="resolvePath(item.path)">
-        <ul class="children collapse">
-            <template slot="title">
-                <a href="#" slot="title">
-                    <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title"/>
-                </a>
-            </template>
 
-            <li v-for="child in item.children" v-if="!child.hidden">
-                <sidebar-item
-                        v-if="child.children&&child.children.length>0"
-                        :is-nest="true"
-                        :item="child"
-                        :key="child.path"
-                        :base-path="resolvePath(child.path)"
-                        class="nested"/>
-                <app-link v-else :to="resolvePath(child.path)" :key="child.name">
-                    <el-menu-item :index="resolvePath(child.path)">
-                        <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title"/>
-                    </el-menu-item>
-                </app-link>
-            </li>
 
-        </ul>
+    <el-submenu v-else :index="resolvePath(item.path)">
+      <template slot="title">
+        <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
+      </template>
+
+      <template v-for="child in item.children" v-if="!child.hidden">
+        <sidebar-item
+          v-if="child.children&&child.children.length>0"
+          :is-nest="true"
+          :item="child"
+          :key="child.path"
+          :base-path="resolvePath(child.path)"
+          class="nest-menu" />
+        <app-link v-else :to="resolvePath(child.path)" :key="child.name">
+          <el-menu-item :index="resolvePath(child.path)">
+            <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
+          </el-menu-item>
+        </app-link>
+      </template>
+    </el-submenu>
+        
     </li>
 </template>
 
@@ -120,3 +118,23 @@
     }
   }
 </script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+.sidebar-collapsed .sidebar .sidebar-inner .nav-sidebar > li > a > div > span:not(.arrow) {
+    left: 40px;
+    min-width: 209px;
+    padding: 10px 10px 10px 5px;
+    position: absolute;
+    text-align: left;
+    top: 0;
+    z-index: 100;
+    -webkit-border-radius: 0 2px 0 0;
+    -moz-border-radius: 0 2px 0 0;
+    border-radius: 0 2px 0 0;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    -webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.03);
+    -moz-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.03);
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.03);
+  }
+</style>

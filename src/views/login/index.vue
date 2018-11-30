@@ -15,7 +15,7 @@
             <div class="website-logo-inside">
               <a href="index.html">
                 <div class="logo">
-                  <img class="logo-size" src="assets/t2-blanco.png" alt="">
+                  <img class="logo-size" src="src/assets/t2-blanco.png" alt="">
                 </div>
               </a>
             </div>
@@ -33,7 +33,7 @@
               <el-form-item prop="email">
                 <el-input
                   v-model="loginForm.email"
-                  class="form-control"
+                  class=""
                   type="text"
                   name="email"
                   placeholder="E-mail Address"
@@ -42,7 +42,7 @@
               </el-form-item>
               <el-input
                 v-model="loginForm.password"
-                class="form-control"
+                class=""
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+  import '@/styles/bootstrap.min.css' // make
   // import { login } from '@/api/login'
 
   export default {
@@ -122,3 +123,8 @@
     }
   }
 </script>
+<style type="text/scss" lang="scss" scoped>
+.el-form-item {
+  margin-bottom: 0px;
+}
+</style>
