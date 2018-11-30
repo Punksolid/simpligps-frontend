@@ -3,11 +3,13 @@
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
       
-      <sidebar class="sidebar sidebar-container">
+      <sidebar class="sidebar">
+        <div class="sidebar-container">
         <div class="logopanel">
           <h1>
             <a href="dashboard.html"></a>
           </h1>
+        </div>
         </div>
       </sidebar>
 
@@ -59,14 +61,4 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "src/styles/mixin.scss";
-
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-  }
 </style>
