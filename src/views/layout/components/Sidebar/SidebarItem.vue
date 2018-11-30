@@ -1,6 +1,12 @@
 <template>
-    <li v-if="!item.hidden&&item.children" class="nav-active" v-bind:class="{ active: isActive(item.path)}">
-        <!-- ENLACE INDIVIDUAL -->
+    <li
+      v-if="!item.hidden&&item.children"
+      class="nav-active"
+      v-bind:class="{ active: isActive(item.path), 'nav-hover': isHovering }"
+      @mouseover="isHovering = true"
+      @mouseout="isHovering = false"
+    >
+      <!-- ENLACE INDIVIDUAL -->
         <template
                 v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
             <app-link :to="resolvePath(onlyOneChild.path)" class="testing">
@@ -57,6 +63,7 @@
     name: 'SidebarItem',
     components: { Item, AppLink },
     props: {
+      isHovering: false,
       // route object
       item: {
         type: Object,
