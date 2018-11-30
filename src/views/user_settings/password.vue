@@ -1,16 +1,17 @@
 <template>
   <el-form ref="form" :model="form">
-    <div>
-      <el-input placeholder="Password" v-model="password"></el-input>
-    </div>
-    <div style="margin-top: 30px">
-      <el-input placeholder="Repeat Password" v-model="password_repeat"></el-input>
-    </div>
     <el-form-item>
-      <el-button>Cancel</el-button>
-      <el-button type="primary" @click="onSubmit">Create User</el-button>
-
-      <!--<el-button style="margin-top: 30px" type="primary" @click="onSubmit">Save changes</el-button>-->
+      <div>
+        <el-input placeholder="Password" v-model="password"></el-input>
+      </div>
+    </el-form-item>
+    <el-form-item>
+      <div style="margin-top: 30px">
+        <el-input placeholder="Repeat Password" v-model="password_confirm"></el-input>
+      </div>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit">Save changes</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -21,12 +22,16 @@
 
   export default {
     name: 'Password',
+    props: [
+      'password',
+      'password_confirm'
+    ],
     methods: {
       onSubmit() {
         changePassword(this.form).then(response => {
           Message({
-            type: 'success',
             message: response.data.data.message,
+            type: 'success',
             duration: 10 * 1000
           })
         })

@@ -27,7 +27,7 @@ Mock.XHR.prototype.send = function() {
 
 // Users
  // Mock.mock(/\/v1\/users/, 'post', usersAPI.createUser)
-Mock.mock(/\/v1\/me\/settings/, 'post', usersAPI.updateSettings)
+Mock.mock(/\/v1\/me\/change_password/, 'post', usersAPI.changePassword)
 
  // Mock.mock(/\/article\/list/, 'get', articleAPI.getList)
 // Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)

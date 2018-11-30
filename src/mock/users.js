@@ -16,7 +16,7 @@ export default {
       'name': 'Jose Palazuelos'
     }
   }),
-  updatePassword: () => ({
+  changePassword: () => ({
     data: {
       'message': 'Updated Succesfully'
     }

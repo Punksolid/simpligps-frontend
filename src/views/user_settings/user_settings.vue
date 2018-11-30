@@ -1,6 +1,5 @@
 <template>
   <div>
-    <span class="demonstration">User Level</span>
     <el-collapse accordion style="margin-top: 30px">
       <el-collapse-item name="1">
         <template slot="title">Password<i class="header-icon el-icon-information"></i></template>
@@ -46,13 +45,6 @@
         </div>
         <div>
           <el-button style="margin-top: 30px" type="primary">Save changes</el-button>
-        </div>
-      </el-collapse-item>
-      <el-collapse-item title="Accesibility" name="4">
-        <div>Decision making: giving advices about operations is acceptable, but do not make decisions for the users;
-        </div>
-        <div>Controlled consequences: users should be granted the freedom to operate, including canceling, aborting or
-          terminating current operation.
         </div>
       </el-collapse-item>
     </el-collapse>
