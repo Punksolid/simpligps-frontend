@@ -74,9 +74,9 @@
             this.$message({
               type: 'info',
               message: `action: ${ action }`
-            });
+            })
           }
-        });
+        })
       },
       handleClose(done) {
         this.$confirm('Are you sure to close? Not saved data will be lost!')

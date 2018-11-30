@@ -13,8 +13,8 @@ import '@/styles/index.scss' // global css
 // import '@/styles/ui.css' // make global
 // import '@/styles/bootstrap.min.css' // make
 // import '@/styles/fontawesome-all.min.css'
-// import '@/styles/iofrm-style.css' // make
-// import '@/styles/iofrm-theme9.css' // make
+import '@/styles/iofrm-style.css' // make
+import '@/styles/iofrm-theme9.css' // make
 
 // Make Panel
 import '@/assets/global/css/style.css'
