@@ -1,4 +1,6 @@
  <template>
+  <div style="background-color: #fff">
+
    <div>
     <span class="demonstration">User Level</span>
 <el-progress :percentage="60" status="success"></el-progress>
@@ -72,7 +74,7 @@
 
 
 
-
+</div>
  </template>
 
 <script>

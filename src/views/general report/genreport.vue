@@ -1,7 +1,13 @@
  <template>
-   <div class="block">
-    <span class="demonstration">Range</span>
-    <el-date-picker
+   <div class="block" style="background-color: #fff">
+
+    <div style="padding: 30px">
+
+
+
+<span>Range</span>
+    <div>
+<el-date-picker
       v-model="value1"
       type="datetime"
       placeholder="Start date and time">
@@ -11,6 +17,8 @@
       type="datetime"
       placeholder="End date and time">
     </el-date-picker>
+
+    </div>
 
   <div style="margin-top: 30px">
     <span>Monitoring tipe</span>
@@ -59,6 +67,10 @@
         <el-button type="success" @click="dialogVisible = true">Download</el-button>
 
 </div>
+
+
+    </div>
+
   </div>
 
 
@@ -125,4 +137,22 @@
       }
     }
   }
+</script>
+
+
+
+<script>
+export default {
+  data () {
+    return {
+      fields: [ 'first_name', 'last_name', 'show_details' ],
+      items: [
+        { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+        { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson', _showDetails: true },
+        { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+      ]
+    }
+  }
+}
 </script>
