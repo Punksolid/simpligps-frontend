@@ -3,18 +3,18 @@
     <el-button type="primary" @click="dialogVisible = true">Create user</el-button>
 
     <el-dialog
-  title="Create user"
-  :visible.sync="dialogVisible"
-  width="60%"
-  :before-close="handleClose">
+      title="Create user"
+      :visible.sync="dialogVisible"
+      width="60%"
+      :before-close="handleClose">
   <span>
     <create-user></create-user>
   </span>
 
-  </el-dialog>
+    </el-dialog>
 
     <el-table
-      :data="tableData4"
+      :data="usersListData"
       style="width: 100%"
       max-height="250">
       <el-table-column
@@ -79,7 +79,7 @@
           callback: action => {
             this.$message({
               type: 'info',
-              message: `action: ${ action }`
+              message: `action: ${action}`
             })
           }
         })
@@ -89,12 +89,23 @@
           .then(_ => {
             done()
           })
-          .catch(_ => {})
+          .catch(_ => {
+          })
+      },
+      fetchUsersList() {
+        this.listLoading = true
+        usersList(this.usersListData).then(response => {
+          this.usersListData = response.data.data
+          this.listLoading = false
+        })
       }
+    },
+    created() {
+      this.fetchUsersList()
     },
     data() {
       return {
-        tableData4: usersList,
+        usersListData: null,
         dialogVisible: false
       }
     }

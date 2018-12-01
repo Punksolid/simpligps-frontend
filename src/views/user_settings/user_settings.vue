@@ -1,11 +1,3 @@
-<<<<<<< HEAD:src/views/usersettings/usersettings.vue
- <template>
-  <div style="background-color: #fff">
-
-   <div>
-    <span class="demonstration">User Level</span>
-<el-progress :percentage="60" status="success"></el-progress>
-=======
 <template>
   <div>
     <el-collapse accordion style="margin-top: 30px">
@@ -56,23 +48,8 @@
         </div>
       </el-collapse-item>
     </el-collapse>
-
->>>>>>> develop:src/views/user_settings/user_settings.vue
-
-    <div style="margin-top: 30px">
-      <el-button type="primary" @click="open9">Save changes</el-button>
-      <el-button type="danger" @click="open8">Cancel</el-button>
-    </div>
   </div>
-
-
-<<<<<<< HEAD:src/views/usersettings/usersettings.vue
-
-</div>
- </template>
-=======
 </template>
->>>>>>> develop:src/views/user_settings/user_settings.vue
 
 <script>
   export default {

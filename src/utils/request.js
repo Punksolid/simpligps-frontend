@@ -1,6 +1,6 @@
 import axios from 'axios'
-// import { Message, MessageBox } from 'element-ui'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
+// import { Message } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
 
@@ -28,8 +28,31 @@ service.interceptors.request.use(
   }
 )
 
+// Add a response interceptor
+service.interceptors.response.use(function(response) {
+  // Do something with response data
+  return response
+}, function(error) {
+  // Do something with response error
+  console.log(error)
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    if (error.code === 422) {
+      Message({
+        message: error.response.data.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+
+    }
+  return Promise.reject(error)
+})
+
 // response interceptor
-service.interceptors.response.use(
+// service.interceptors.response.use(
   // response => response,
   /**
    * 下面的注释为通过在response里，自定义code来标示请求状态
@@ -37,10 +60,11 @@ service.interceptors.response.use(
    * 如想通过 xmlhttprequest 来状态码标识 逻辑可写在下面error中
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
-    response => {
-      const res = response.data
-      console.log(res.code)
-      return response
+    // response => {
+    //   const res = response.data
+    //   console.log(res.code)
+    //   console.log('<-codigo')
+    //   return response
   //     if (res.code !== 20000) {
   //       Message({
   //         message: res.message,
@@ -65,16 +89,18 @@ service.interceptors.response.use(
   //     } else {
   //       return response.data
   //     }
-    },
-  error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
-  }
-)
+  //   },
+  // error => {
+  //   console.log(error.message) // for debug
+  //   console.log('blabla') // for debug
+  //   console.log(error)
+  //   Message({
+  //     message: error.message,
+  //     type: 'error',
+  //     duration: 5 * 1000
+  //   })
+  //   return Promise.reject(error)
+  // }
+// )
 
 export default service

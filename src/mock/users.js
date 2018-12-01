@@ -8,7 +8,7 @@ export default {
       'lastname': 'default',
       'email': 'commodijohann32@example.com',
       'username': 'defaultx'
-      }
+    }
   }),
   logout: () => 'success',
   updateSettings: () => ({
@@ -21,23 +21,25 @@ export default {
       'message': 'Updated Succesfully'
     }
   }),
-  userList: function() {
-    return [{
+  userList: () => ({
+    data: [{
       'name': 'Allah Akhbar',
       'lastname': 'default',
       'email': 'commodijohann32@example.com',
       'username': 'defaultx'
-    },
+      },
       {
         'name': 'Liliane Weimann',
         'lastname': 'default',
         'email': 'molestiaecrawford.kunde@example.org',
         'username': 'defaultx'
-      }, {
+      },
+      {
         'name': 'aaa Weimann',
         'lastname': 'default',
         'email': 'molestiaecrdddawford.kunde@example.org',
         'username': 'defaultx'
-      }]
-  }
+      }
+    ]
+  })
 }
