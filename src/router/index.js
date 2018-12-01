@@ -214,6 +214,19 @@ export const constantRouterMap = [
         meta: { title: 'System Settings', icon: 'icon-settings', noCache: true }
       }
     ]
+  },
+  {
+    path: '/create_notification',
+    component: Layout,
+    redirect: 'create_notification',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/create_notification/index'),
+        name: 'Create notification',
+        meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
+      }
+    ]
   }
 ]
 
