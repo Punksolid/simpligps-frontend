@@ -13,11 +13,9 @@
         <div class="form-content">
           <div class="form-items">
             <div class="website-logo-inside">
-              <a href="index.html">
                 <div class="logo">
-                  <img class="logo-size" src="src/assets/t2-blanco.png" alt="">
+                  <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM"><span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
                 </div>
-              </a>
             </div>
             <div class="page-links">
               <a href="#" class="active">Login</a>
@@ -63,6 +61,7 @@
 <script>
   import '@/styles/bootstrap.min.css' // make
   // import { login } from '@/api/login'
+  import { checkStatus } from '../../api/general'
 
   export default {
     name: 'Login',
@@ -84,7 +83,8 @@
         },
         loading: false,
         pwdType: 'password',
-        redirect: undefined
+        redirect: undefined,
+        apiPingSuccess: false
       }
     },
     watch: {
@@ -103,6 +103,13 @@
           this.pwdType = 'password'
         }
       },
+      backendStatus() {
+        checkStatus().then(() => {
+          this.apiPingSuccess = true
+        }).catch(() => {
+          this.apiPingSuccess = false
+        })
+      },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
@@ -120,11 +127,21 @@
           }
         })
       }
+    },
+    created() {
+      this.backendStatus()
     }
   }
 </script>
 <style type="text/scss" lang="scss" scoped>
 .el-form-item {
   margin-bottom: 0px;
+}
+.dot {
+  height: 25px;
+  width: 25px;
+  /*background-color: RED;*/
+  border-radius: 50%;
+  display: inline-block;
 }
 </style>

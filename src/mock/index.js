@@ -34,7 +34,7 @@ Mock.XHR.prototype.send = function() {
 Mock.mock(/\/v1\/me\/change_password/, 'post', usersAPI.changePassword)
 // Settings
 
-Mock.mock(/\/v1\/settings\/wialon_key/, 'post', settingsAPI.updateAccessKey)
+// Mock.mock(/\/v1\/settings\/wialon_key/, 'post', settingsAPI.updateAccessKey)
 
 // Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle)
 // Mock.mock(/\/article\/pv/, 'get', articleAPI.getPv)

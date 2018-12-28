@@ -29,7 +29,7 @@
     },
     methods: {
       onSubmit() {
-        updateAccessKey().then(response => {
+        updateAccessKey(this.formInline).then(response => {
           Message({
             message: response.data.data.message,
             type: 'success',
