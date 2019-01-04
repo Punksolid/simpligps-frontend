@@ -25,10 +25,19 @@ const userMap = {
 }
 
 export default {
-  loginByUsername: config => {
-    const { username } = JSON.parse(config.body)
-    return userMap[username]
-  },
+  loginByUsername: () => ({
+    data: {
+      'message': '123123120917348572093570928458273495'
+    }
+  }),
+  //   return userMap[username]
+  //     [
+  //     'access_token' => $tokenResult->accessToken,
+  //     'token_type' => 'Bearer',
+  //     'expires_at' => Carbon::parse(
+  //     $tokenResult->token->expires_at
+  //   )->toDateTimeString()
+  // ]
   getUserInfo: config => {
     const { token } = param2Obj(config.url)
     if (userMap[token]) {

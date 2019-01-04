@@ -20,15 +20,11 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <!--<el-dropdown-item divided>-->
+          <el-dropdown-item divided>
           <!--@TODO ACTIVAR LOGOUT PROPIO-->
-            <!--<span style="display:block;" @click="logout">LogOut</span>-->
-          <!--</el-dropdown-item>-->
-          <router-link class="inlineBlock" to="/login">
-            <el-dropdown-item divided>
-              Login
-            </el-dropdown-item>
-          </router-link>
+            <span style="display:block;" @click="logout">Logout</span>
+          </el-dropdown-item>
+
         </el-dropdown-menu>
       </el-dropdown>
     </div>

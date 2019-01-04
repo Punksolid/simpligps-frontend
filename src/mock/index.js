@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
-import loginAPI from './login'
+// import loginAPI from './login'
 import usersAPI from './users'
-import settingsAPI from './settings'
+// import settingsAPI from './settings'
 
 // import articleAPI from './article'
 // import remoteSearchAPI from './remoteSearch'
