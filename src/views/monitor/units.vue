@@ -1,6 +1,12 @@
 <template>
-<div style="background-color:#fff">
-<div><input type="search" class="form-control input-sm" placeholder="Search a user..." aria-controls="table-editable" style="margin-top: 30px"></div>
+<div>
+
+  <el-autocomplete
+  v-model="state4"
+  :fetch-suggestions="querySearchAsync"
+  placeholder="Search unit"
+  @select="handleSelect"
+></el-autocomplete>
 
 <!--Wraper -->
 
@@ -15,8 +21,10 @@
             </div>
             </div>
 <!--TABLAS -->
+<div style="margin-top: 30px">
 
-            <table class="table table-hover dataTable no-footer" id="table-editable" role="grid" aria-describedby="table-editable_info">
+                    <div style="background-color: #fff">
+                    <table class="table table-hover dataTable no-footer" id="table-editable" role="grid" aria-describedby="table-editable_info">
                     <thead>
                       <tr role="row">
                         <th class="sorting_asc" rowspan="1" colspan="1" aria-label="First Name" style="width: 254px;">Units</th>
@@ -129,9 +137,12 @@
 
                       </tbody>
                   </table>
+              </div>
+</div>
 
 
-                  <div class="row"><div class="col-md-6"></div><div class="col-md-6"></div></div><div style="margin-top. 30px">
+
+                  <div class="row"><div class="col-md-6"></div><div class="col-md-6"></div></div><div style="margin-top: 20px" >
                     <el-pagination
   :page-size="20"
   :pager-count="11"
@@ -145,6 +156,51 @@
 </div>
 
 </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        links: [],
+        state4: '',
+        timeout:  null
+      };
+    },
+    methods: {
+      loadAll() {
+        return [
+          { "value": "Sanchez Trucking", "link": "https://github.com/vuejs/vue" },
+          { "value": "element Trucking", "link": "https://github.com/ElemeFE/element" },
+          { "value": "Cosas imposibles", "link": "https://github.com/ElemeFE/cooking" },
+          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
+          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
+          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
+          { "value": "babel", "link": "https://github.com/babel/babel" }
+         ];
+      },
+      querySearchAsync(queryString, cb) {
+        var links = this.links;
+        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(results);
+        }, 3000 * Math.random());
+      },
+      createFilter(queryString) {
+        return (link) => {
+          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
+      handleSelect(item) {
+        console.log(item);
+      }
+    },
+    mounted() {
+      this.links = this.loadAll();
+    }
+  };
+</script>
 
 
 <el-table-column type="expand">

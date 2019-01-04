@@ -14,7 +14,10 @@
           <div class="form-items">
             <div class="website-logo-inside">
                 <div class="logo">
-                  <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM"><span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
+                  <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM">
+                  <div style="margin-top:20px">
+                  <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
+                  </div>
                 </div>
             </div>
             <div class="page-links">
