@@ -13,7 +13,7 @@
         <el-input v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="Password">
-        <el-input v-model="form.password"></el-input>
+        <el-input v-model="form.password" type="password"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -51,7 +51,14 @@
           })
         })
       }
-    }
+    },
+    rules: {
+
+          password: [
+            { required: true, message: 'Please enter your password', trigger: 'blur' },
+            { min: 6, message: 'Your password is too short!' },
+          ]
+  }
   }
 </script>
 

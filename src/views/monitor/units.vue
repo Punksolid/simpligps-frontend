@@ -36,9 +36,8 @@
           <i class="el-icon-info"></i>
         </div>
         <div class="card-panel-description">
-          <h3>First time here?</h3>
-          <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+          <h3>Truck: Freightliner FL 200</h3>
+          <el-button type="success" @click="dialogVisible = true">View details</el-button>
         </div>
   </el-tab-pane>
   <el-tab-pane>
@@ -271,6 +270,7 @@
 
 
 <script>
+import { getUnits } from '../../api/units.js'
   export default {
     data() {
       return {
@@ -291,6 +291,16 @@
           { "value": "babel Trucking", "link": "https://github.com/babel/babel" }
          ];
       },
+      fetchUnitsList() {
+        this.listLoading = true
+        getUnits(this.unitsListData).then(response => {
+          this.unitsListData = response.data.data
+          this.listLoading = false
+        })
+
+    },
+
+
       querySearchAsync(queryString, cb) {
         var links = this.links;
         var results = queryString ? links.filter(this.createFilter(queryString)) : links;
@@ -311,6 +321,7 @@
     },
     mounted() {
       this.links = this.loadAll();
+      this.fetchUnitsList ();
     }
   };
 </script>
