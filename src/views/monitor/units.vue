@@ -1,12 +1,13 @@
 <template>
 <div>
-
-  <el-autocomplete
+<el-autocomplete
   v-model="state4"
   :fetch-suggestions="querySearchAsync"
   placeholder="Search unit"
   @select="handleSelect"
 ></el-autocomplete>
+
+
 
 <!--Wraper -->
 
@@ -21,6 +22,100 @@
             </div>
             </div>
 <!--TABLAS -->
+<div style="margin-top: 30px">
+
+  <el-table
+  data="operatorsList"
+    style="width: 100%">
+    <el-table-column type="expand">
+      <template slot-scope="props">
+       <el-tabs type="border-card">
+  <el-tab-pane>
+    <span slot="label"><i class="el-icon-date"></i> Details</span>
+    <div class="card-panel-icon-wrapper icon-people">
+          <i class="el-icon-info"></i>
+        </div>
+        <div class="card-panel-description">
+          <h3>First time here?</h3>
+          <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+        </div>
+  </el-tab-pane>
+  <el-tab-pane>
+    <span slot="label"><i class="el-icon-date"></i> Monitoring Route</span>
+    <div>
+<div class="block">
+  <div style="margin-top: 10px"> Operator 1
+    <el-cascader
+    :options="options"
+    v-model="selectedOptions"
+    @change="handleChange">
+  </el-cascader>
+  </div>
+<div style="margin-top: 10px"> Operator 2
+    <el-cascader
+    :options="options"
+    v-model="selectedOptions"
+    @change="handleChange">
+  </el-cascader>
+  </div>
+  <div style="margin-top: 10px"> Trailer 1
+    <el-cascader
+    :options="options"
+    v-model="selectedOptions"
+    @change="handleChange">
+  </el-cascader>
+  </div>
+  <div style="margin-top: 10px"> Trailer 2
+    <el-cascader
+    :options="options"
+    v-model="selectedOptions"
+    @change="handleChange">
+  </el-cascader>
+  </div>
+
+</div>
+    </div>
+  </el-tab-pane>
+  <el-tab-pane>
+    <span slot="label"><i class="el-icon-date"></i> Truck and operator</span>
+    <div class="card-panel-icon-wrapper icon-people">
+          <i class="el-icon-info"></i>
+        </div>
+        <div class="card-panel-description">
+          <h3>First time here?</h3>
+          <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+        </div>
+  </el-tab-pane>
+  <el-tab-pane>
+    <span slot="label"><i class="el-icon-date"></i> Route</span>
+    <div class="card-panel-icon-wrapper icon-people">
+          <i class="el-icon-info"></i>
+        </div>
+        <div class="card-panel-description">
+          <h3>First time here?</h3>
+          <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+        </div>
+  </el-tab-pane>
+
+</el-tabs>
+
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="Fecha"
+      prop="date">
+    </el-table-column>
+    <el-table-column
+      label="Nombre"
+      prop="name">
+    </el-table-column>
+  </el-table>
+
+</div>
+
 <div style="margin-top: 30px">
 
                     <div style="background-color: #fff">
@@ -43,10 +138,12 @@
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                          <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
                         </td>
                       </tr>
 
@@ -55,10 +152,12 @@
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                          <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
                         </td>
                       </tr>
 
@@ -67,10 +166,12 @@
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                          <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
                         </td>
                       </tr>
 
@@ -79,10 +180,12 @@
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                          <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
                         </td>
                       </tr>
 
@@ -91,10 +194,12 @@
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                          <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
                         </td>
                       </tr>
 
@@ -103,10 +208,12 @@
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                          <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
                         </td>
                       </tr>
 
@@ -115,21 +222,25 @@
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
+                          <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
                         </td>
                       </tr><tr role="row" class="even">
                         <td class="sorting_1">Sanchez trucking</td>
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
                         <td class="text-right">
+                        <el-row>
+                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        </el-row>
 
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>
-                          <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
                         </td>
                       </tr>
 
@@ -157,6 +268,8 @@
 
 </template>
 
+
+
 <script>
   export default {
     data() {
@@ -172,10 +285,10 @@
           { "value": "Sanchez Trucking", "link": "https://github.com/vuejs/vue" },
           { "value": "element Trucking", "link": "https://github.com/ElemeFE/element" },
           { "value": "Cosas imposibles", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
+          { "value": "Tecnocosas", "link": "https://github.com/ElemeFE/mint-ui" },
+          { "value": "Jager Trucking", "link": "https://github.com/vuejs/vuex" },
+          { "value": "Fresh Fruit co.", "link": "https://github.com/vuejs/vue-router" },
+          { "value": "babel Trucking", "link": "https://github.com/babel/babel" }
          ];
       },
       querySearchAsync(queryString, cb) {
@@ -201,13 +314,3 @@
     }
   };
 </script>
-
-
-<el-table-column type="expand">
-      <template slot-scope="props">
-        <p>Estado: {{ props.row.state }}</p>
-        <p>Ciudad: {{ props.row.city }}</p>
-        <p>Dirección: {{ props.row.address }}</p>
-        <p>Código postal: {{ props.row.zip }}</p>
-      </template>
-    </el-table-column>
