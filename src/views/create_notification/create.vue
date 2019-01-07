@@ -1,5 +1,5 @@
 <template>
-<el-form ref="form" :model="form" label-width="120px">
+<el-form ref="form" :model="form" label-width="100px">
   <el-form-item label="Resource_id">
     <el-input v-model="form.name"></el-input>
   </el-form-item>
@@ -32,6 +32,26 @@
           phone: '',
           active: ''
         }
+      }
+    },
+    methods: {
+      open9() {
+        this.$confirm('Are you sure you want save changes?', 'Save Changes', {
+          cancelButtonText: 'Cancel',
+          type: 'info'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Changes Saved'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Changes not saved'
+          });
+
+        });
+
       }
     }
   }

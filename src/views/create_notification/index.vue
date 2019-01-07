@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #fff">
+  <div>
 
     <el-button type="primary" @click="dialogVisible = true">Create notification</el-button>
     <div style="margin-top: 30px">
@@ -15,7 +15,7 @@
         <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
       <!--</span>-->
     </el-dialog>
-
+<div style="margin-top: 30px">
     <el-table
       :data="NotificationList"
       border
@@ -35,7 +35,7 @@
         label="Active">
       </el-table-column>
     </el-table>
-
+</div>
     </div>
 
   </div>

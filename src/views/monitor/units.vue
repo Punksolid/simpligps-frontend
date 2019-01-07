@@ -7,21 +7,6 @@
   @select="handleSelect"
 ></el-autocomplete>
 
-
-
-<!--Wraper -->
-
-<div id="table-editable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-  <div class="row">
-    <div class="col-md-6 filter-left">
-      <div id="table-editable_filter" class="dataTables_filter">
-
-          </div>
-          </div>
-          <div class="col-md-6">
-            </div>
-            </div>
-<!--TABLAS -->
 <div style="margin-top: 30px">
 
   <el-table
@@ -114,6 +99,21 @@
   </el-table>
 
 </div>
+
+<!--Wraper -->
+
+<div id="table-editable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+  <div class="row">
+    <div class="col-md-6 filter-left">
+      <div id="table-editable_filter" class="dataTables_filter">
+
+          </div>
+          </div>
+          <div class="col-md-6">
+            </div>
+            </div>
+<!--TABLAS -->
+
 
 <div style="margin-top: 30px">
 

@@ -13,12 +13,14 @@
         <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
         <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
       <!--</span>-->
+
     </el-dialog>
+<div style="margin-top: 30px">
 
     <el-table
       :data="operatorsList"
       border
-      style="width: 100%">
+      style="width: 80%">
       <el-table-column
         prop="name"
         label="Name"
@@ -34,6 +36,7 @@
         label="Active">
       </el-table-column>
     </el-table>
+  </div>
   </div>
 </template>
 

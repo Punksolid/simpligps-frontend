@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <el-collapse accordion style="margin-top: 30px">
+  <div style="background-color: #fff">
+
+    <div style="padding: 30px">
+      <el-collapse accordion>
       <el-collapse-item name="1">
         <template slot="title">Password<i class="header-icon el-icon-information"></i></template>
         <password></password>
@@ -48,6 +50,7 @@
         </div>
       </el-collapse-item>
     </el-collapse>
+  </div>
   </div>
 </template>
 

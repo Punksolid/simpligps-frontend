@@ -1,16 +1,23 @@
 <template>
-  <el-collapse v-model="activeName" accordion>
-    <el-collapse-item title="WIALON ACCESS KEY" name="1">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="Wialon Key">
-          <el-input v-model="formInline.wialon_key" placeholder="Wialon Key">{{ formInline.wialon_key }}</el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">Update Key</el-button>
-        </el-form-item>
-      </el-form>
-    </el-collapse-item>
-  </el-collapse>
+  <div style="background-color: #fff">
+
+    <div style="padding: 10px">
+
+          <el-collapse v-model="activeName" accordion>
+          <el-collapse-item title="WIALON ACCESS KEY" name="1">
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+              <el-form-item label="Wialon Key">
+                <el-input v-model="formInline.wialon_key" placeholder="Wialon Key">{{ formInline.wialon_key }}</el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">Update Key</el-button>
+              </el-form-item>
+            </el-form>
+          </el-collapse-item>
+        </el-collapse>
+      </div>
+  </div>
+
 </template>
 
 <script>

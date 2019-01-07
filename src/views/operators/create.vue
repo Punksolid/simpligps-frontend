@@ -10,7 +10,7 @@
     <el-switch v-model="form.active"></el-switch>
   </el-form-item>
   <el-form-item>
-    <el-button>Cancel</el-button>
+    <el-button type="danger" aria-label="close">Cancel</el-button>
     <el-button type="primary" @click="onSubmit">Create</el-button>
   </el-form-item>
 </el-form>
@@ -27,8 +27,10 @@
           active: ''
         }
       }
-    }
+    },
+
   }
+
 </script>
 
 <style scoped>

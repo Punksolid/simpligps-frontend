@@ -8,9 +8,9 @@
           <i class="el-icon-info"></i>
         </div>
         <div class="card-panel-description">
-          <h5>First time here?</h5>
-          <el-button type="primary" @click="dialogVisible = true">Check more!</el-button>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+          <h4>First time here?</h4>
+          <h6>Check all the new features</h6>
+          <el-button size="small" type="primary" @click="dialogVisible = true">Check more!</el-button>
         </div>
       </div>
       </div>
@@ -21,10 +21,9 @@
           <i class="el-icon-loading"></i>
         </div>
         <div class="card-panel-description">
-          <h5>Active trips</h5>
+          <h4>Active trips</h4>
           <h6>Last actived trips:1</h6>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
-          <el-button type="primary" @click="dialogVisible = true">view all</el-button>
+          <el-button size="small" type="primary" @click="dialogVisible = true">view all</el-button>
         </div>
       </div>
     </el-col>
@@ -35,10 +34,9 @@
           <i class="el-icon-success"></i>
         </div>
         <div class="card-panel-description">
-          <h5>Finished trips</h5>
+          <h4>Finished trips</h4>
           <h6>Last finished trips:1</h6>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num"/>
-          <el-button type="primary" @click="dialogVisible = true">view all</el-button>
+          <el-button size="small" type="primary" @click="dialogVisible = true">view all</el-button>
         </div>
       </div>
     </el-col>
@@ -49,10 +47,9 @@
           <i class="el-icon-error"></i>
         </div>
         <div class="card-panel-description">
-          <h5>Attention required!</h5>
+          <h4>Attention required!</h4>
           <h6>Check Max alerts</h6>
-          <el-button type="danger" @click="dialogVisible = true">view alerts</el-button>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num"/>
+          <el-button size="small" type="danger" @click="dialogVisible = true">view alerts</el-button>
         </div>
       </div>
     </el-col>
@@ -110,9 +107,9 @@ export default {
   //COLOR DE LA CAJA CONTENEDORA
 
   .card-panel {
-    height: 170px;
+    height: 190px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     position: relative;
     overflow: hidden;
     color: #666;
@@ -157,7 +154,7 @@ export default {
     }
     .card-panel-icon {
       float: left;
-      font-size: 48px;
+      font-size: 28px;
     }
     .card-panel-description {
       float: right;
@@ -171,7 +168,7 @@ export default {
         margin-bottom: 12px;
       }
       .card-panel-num {
-        font-size: 40px;
+        font-size: 30px;
       }
     }
   }

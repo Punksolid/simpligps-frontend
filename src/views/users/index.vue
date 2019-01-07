@@ -5,54 +5,55 @@
     <el-dialog
       title="Create user"
       :visible.sync="dialogVisible"
-      width="60%"
+      width="30%"
       :before-close="handleClose">
   <span>
     <create-user></create-user>
   </span>
 
     </el-dialog>
-
-    <el-table
-      :data="usersListData"
-      style="width: 100%"
-      max-height="250">
-      <el-table-column
-        fixed
-        prop="lastname"
-        label="Lastname"
-        width="150">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="Name"
-        width="150">
-      </el-table-column>
-      <el-table-column
-        prop="email"
-        label="Email"
-        width="400">
-      </el-table-column>
-      <el-table-column
-        prop="username"
-        label="City"
-        width="150">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        label="Operations"
-        width="150">
-        <template slot-scope="scope">
-          <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData4)"
-            type="text"
-            size="small">
-            Remove
-          </el-button>
-        </template>
+<div style="margin-top: 30px">
+      <el-table
+        :data="usersListData"
+        style="width: 100%"
+        max-height="250">
+        <el-table-column
+          fixed
+          prop="lastname"
+          label="Lastname"
+          width="150">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="Name"
+          width="150">
+        </el-table-column>
+        <el-table-column
+          prop="email"
+          label="Email"
+          width="400">
+        </el-table-column>
+        <el-table-column
+          prop="username"
+          label="City"
+          width="150">
+        </el-table-column>
+        <el-table-column
+          fixed="right"
+          label="Operations"
+          width="150">
+          <template slot-scope="scope">
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index, tableData4)"
+              type="text"
+              size="small">
+              Remove
+            </el-button>
+          </template>
       </el-table-column>
     </el-table>
-  </div>
+      </div>
+      </div>
 </template>
 
 <script>
