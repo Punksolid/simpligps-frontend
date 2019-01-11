@@ -2,9 +2,11 @@
   <li
     v-if="!item.hidden&&item.children"
     class="nav-active"
-    v-bind:class="{ active: isActive(item.path), 'nav-hover': isHovering, 'nav-parent': hasChilds(item) }"
+    v-bind:class="{ 'nav-hover': isHovering, 'nav-parent': hasChilds(item), active: isActive(item.path), active: isExpanded  }"
     @mouseover="isHovering = true"
-    @mouseout="isHovering = false">
+    @mouseout="isHovering = false"
+    @click="isExpanded = true"
+  >
 
     <!-- ENLACE INDIVIDUAL -->
     <template
@@ -30,7 +32,11 @@
     <template v-else :index="resolvePath(item.path)">
 
       <app-link :to="resolvePath(onlyOneChild.path)" class="subelementos">
-        <div><item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" /><span class="fa arrow"></span></div>
+        <div><item
+          v-if="item.meta"
+          :icon="item.meta.icon"
+          :title="item.meta.title"
+        /><span class="fa arrow"></span></div>
       </app-link>
 
       <ul class="children collapse">
@@ -44,6 +50,7 @@
             class="nest-menu"/>
           <app-link v-else :to="resolvePath(child.path)" :key="child.name">
             <div :index="resolvePath(child.path)">
+
               <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
             </div>
           </app-link>
@@ -57,7 +64,6 @@
 
 <script>
   import path from 'path'
-  import { isExternal } from '@/utils'
   import Item from './Item'
   import AppLink from './Link'
 
@@ -66,6 +72,7 @@
     components: { Item, AppLink },
     props: {
       isHovering: false,
+      isExpanded: false,
       // route object
       item: {
         type: Object,
@@ -120,7 +127,7 @@
         return false
       },
       hasChilds(item) {
-        if (item.children > 1) {
+        if (item.children.length > 1) {
           return true
         } else {
           return false
