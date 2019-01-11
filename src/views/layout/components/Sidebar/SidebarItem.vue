@@ -1,54 +1,58 @@
 <template>
-    <li
-      v-if="!item.hidden&&item.children"
-      class="nav-active"
-      v-bind:class="{ active: isActive(item.path), 'nav-hover': isHovering }"
-      @mouseover="isHovering = true"
-      @mouseout="isHovering = false">
-      <!-- ENLACE INDIVIDUAL -->
+  <li
+    v-if="!item.hidden&&item.children"
+    class="nav-active"
+    v-bind:class="{ active: isActive(item.path), 'nav-hover': isHovering, 'nav-parent': hasChilds(item) }"
+    @mouseover="isHovering = true"
+    @mouseout="isHovering = false">
 
-        <template
-                v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-            <app-link :to="resolvePath(onlyOneChild.path)" class="testing">
-                <div
-                        :index="resolvePath(onlyOneChild.path)"
-                        :class="{'submenu-title-noDropdown':!isNest}">
-                    <!--CUANDO COINCIDEN isActive regresa true, con v-bind se pone la clase extra -->
-                    <!--{{ item.path }}-->
-                    <!--{{ this.$route.path }}-->
-                    <!--{{ isActive(item.path) }}-->
-                    <item
-                            v-if="onlyOneChild.meta"
-                            :icon="onlyOneChild.meta.icon||item.meta.icon"
-                            :title="onlyOneChild.meta.title"/>
-                </div>
-            </app-link>
-        </template>FIN - ENLACE INDIVIDUAL -->
-    </li>
+    <!-- ENLACE INDIVIDUAL -->
+    <template
+      v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+      <app-link :to="resolvePath(onlyOneChild.path)" class="elemento">
+        <div
+          :index="resolvePath(onlyOneChild.path)"
+          :class="{'submenu-title-noDropdown':!isNest}">
+          <!--CUANDO COINCIDEN isActive regresa true, con v-bind se pone la clase extra -->
+          <!--{{ item.path }}-->
+          <!--{{ this.$route.path }}-->
+          <!--{{ isActive(item.path) }}-->
+          <item
+            v-if="onlyOneChild.meta"
+            :icon="onlyOneChild.meta.icon||item.meta.icon"
+            :title="onlyOneChild.meta.title"/>
+        </div>
+      </app-link>
+    </template>
+    <!-- FIN - ENLACE INDIVIDUAL -->
 
+    <!-- SubMenu -->
+    <template v-else :index="resolvePath(item.path)">
 
-    <el-submenu v-else :index="resolvePath(item.path)">
-      <template slot="title">
-        <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
-      </template>
+      <app-link :to="resolvePath(onlyOneChild.path)" class="subelementos">
+        <div><item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" /><span class="fa arrow"></span></div>
+      </app-link>
 
-      <template v-for="child in item.children" v-if="!child.hidden">
-        <sidebar-item
-          v-if="child.children&&child.children.length>0"
-          :is-nest="true"
-          :item="child"
-          :key="child.path"
-          :base-path="resolvePath(child.path)"
-          class="nest-menu" />
-        <app-link v-else :to="resolvePath(child.path)" :key="child.name">
-          <el-menu-item :index="resolvePath(child.path)">
-            <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
-          </el-menu-item>
-        </app-link>
-      </template>
-    </el-submenu>
+      <ul class="children collapse">
+        <li v-for="child in item.children" v-if="!child.hidden">
+          <item
+            v-if="child.children&&child.children.length>0"
+            :is-nest="true"
+            :item="child"
+            :key="child.path"
+            :base-path="resolvePath(child.path)"
+            class="nest-menu"/>
+          <app-link v-else :to="resolvePath(child.path)" :key="child.name">
+            <div :index="resolvePath(child.path)">
+              <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
+            </div>
+          </app-link>
+        </li>
+      </ul>
 
-    </li>
+    </template> <!-- Termina SubMenu -->
+
+  </li>
 </template>
 
 <script>
@@ -114,12 +118,19 @@
           return true
         }
         return false
+      },
+      hasChilds(item) {
+        if (item.children > 1) {
+          return true
+        } else {
+          return false
+        }
       }
     }
   }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-.sidebar-collapsed .sidebar .sidebar-inner .nav-sidebar > li > a > div > span:not(.arrow) {
+  .sidebar-collapsed .sidebar .sidebar-inner .nav-sidebar > li > a > div > span:not(.arrow) {
     left: 40px;
     min-width: 209px;
     padding: 10px 10px 10px 5px;
