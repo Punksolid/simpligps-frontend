@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import { createGeofence } from '../../api/geofences'
+  import { createGeofence, getResources } from '../../api/geofences'
   import { Message } from 'element-ui'
 
 
@@ -36,7 +36,7 @@
     data() {
       return {
         form: {
-          resource_id: '',
+          resources_list: '',
           name: '',
           latitude: '',
           longitude: '',
@@ -56,6 +56,11 @@
           })
         })
       }
+    },
+    mounted: function() {
+      getResources().then(response => {
+        this.resources_list = response.data.data
+      })
     }
   }
 </script>
