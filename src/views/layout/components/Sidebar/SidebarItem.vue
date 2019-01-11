@@ -23,7 +23,7 @@
                             :title="onlyOneChild.meta.title"/>
                 </div>
             </app-link>
-        </template><!-- FIN - ENLACE INDIVIDUAL -->
+        </template>FIN - ENLACE INDIVIDUAL -->
     </li>
 
 
@@ -47,7 +47,7 @@
         </app-link>
       </template>
     </el-submenu>
-        
+
     </li>
 </template>
 

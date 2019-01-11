@@ -227,20 +227,6 @@ export const constantRouterMap = [
         meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
       }
     ]
-  },
-
-  {
-    path: '/create_geofence',
-    component: Layout,
-    redirect: 'create_geofence',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/create_geofence/index'),
-        name: 'Create Geofence',
-        meta: { title: 'Create Geofence', icon: 'icon-settings', noCache: true }
-      }
-    ]
   }
 ]
 
