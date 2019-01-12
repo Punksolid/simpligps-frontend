@@ -2,13 +2,18 @@
   <li
     v-if="!item.hidden&&item.children"
     class="nav-active"
-    v-bind:class="{ 'nav-hover': isHovering, 'nav-parent': hasChilds(item), active: isActive(item.path), active: isExpanded  }"
+    v-bind:class="{
+      active: isActive(item.path),
+      'nav-hover': isHovering,
+      'nav-parent': hasChilds(item),
+      'active': isExpanded
+      }"
     @mouseover="isHovering = true"
     @mouseout="isHovering = false"
-    @click="isExpanded = true"
+    @click="expandCollapse"
   >
-
     <!-- ENLACE INDIVIDUAL -->
+
     <template
       v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link :to="resolvePath(onlyOneChild.path)" class="elemento">
@@ -25,39 +30,34 @@
             :title="onlyOneChild.meta.title"/>
         </div>
       </app-link>
-    </template>
-    <!-- FIN - ENLACE INDIVIDUAL -->
+    </template><!-- FIN - ENLACE INDIVIDUAL -->
 
-    <!-- SubMenu -->
+
+
     <template v-else :index="resolvePath(item.path)">
 
-      <app-link :to="resolvePath(onlyOneChild.path)" class="subelementos">
-        <div><item
-          v-if="item.meta"
-          :icon="item.meta.icon"
-          :title="item.meta.title"
-        /><span class="fa arrow"></span></div>
-      </app-link>
+      <a class="elementos">
+        <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
+      </a>
 
       <ul class="children collapse">
-        <li v-for="child in item.children" v-if="!child.hidden">
+        <template v-for="child in item.children" v-if="!child.hidden">
           <item
             v-if="child.children&&child.children.length>0"
             :is-nest="true"
             :item="child"
             :key="child.path"
             :base-path="resolvePath(child.path)"
-            class="nest-menu"/>
+            class="nest-menu" />
           <app-link v-else :to="resolvePath(child.path)" :key="child.name">
-            <div :index="resolvePath(child.path)">
-
+            <li :index="resolvePath(child.path)">
               <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
-            </div>
+            </li>
           </app-link>
-        </li>
+        </template>
       </ul>
 
-    </template> <!-- Termina SubMenu -->
+    </template>
 
   </li>
 </template>
@@ -132,7 +132,26 @@
         } else {
           return false
         }
+      },
+      expandCollapse() {
+        if (this.isExpanded) {
+          this.isExpanded = false
+        } else {
+          this.isExpanded = true
+        }
+      },
+      parentPath() {
+        const parent_path = this.$route.path.split('/')[1]
+        return parent_path
+      },
+      parentPathActive(item) {
+        if (item.path === this.parentPath()) {
+          return true
+        } else {
+          return false
+        }
       }
+
     }
   }
 </script>
