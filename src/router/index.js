@@ -30,7 +30,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/dashboard',
     name: 'Dashboard',
-    hidden: true,
+    hidden: false,
     children: [
       {
         path: '',
@@ -40,18 +40,18 @@ export const constantRouterMap = [
       }
     ]
   },
-  {
-    path: '/users',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/users/index'),
-        name: 'users',
-        meta: { title: 'Users', icon: 'icon-users', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/users',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/users/index'),
+  //       name: 'users',
+  //       meta: { title: 'Users', icon: 'icon-users', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/monitor',
     component: Layout,
@@ -70,7 +70,7 @@ export const constantRouterMap = [
     redirect: '/monitoring/table',
     // redirect: '/example/table',
     name: 'Monitoring',
-    meta: { title: 'Monitoring', icon: 'icon-eye' },
+    meta: { title: 'Monitoring has childs', icon: 'icon-eye' },
     children: [
       {
         path: 'new_trip',
@@ -111,14 +111,8 @@ export const constantRouterMap = [
     redirect: '/monitoring/table',
     // redirect: '/example/table',
     name: 'Catalogs',
-    meta: { title: 'Catalogs', icon: 'icon-docs' },
+    meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
     children: [
-      {
-        path: 'contact',
-        name: 'Contacts',
-        component: () => import('@/views/contacts/index'),
-        meta: { title: 'Contacts', icon: 'icon-form' }
-      },
       {
         path: 'notifications',
         name: 'Notifications',
@@ -147,13 +141,13 @@ export const constantRouterMap = [
       {
         path: 'notification_linking',
         name: 'Notification Linking',
-        component: () => import('@/views/notification linking/notiflink'),
+        component: () => import('@/views/notification_linking/notiflink'),
         meta: { title: 'Notification Linking', icon: 'icon-form' }
       },
       {
         path: 'monitoring_assign',
         name: 'Monitoring Assign',
-        component: () => import('@/views/monitoring assing/assign'),
+        component: () => import('@/views/monitoring_assign/assign'),
         meta: { title: 'Monitoring Assign', icon: 'icon-form' }
       }
     ]
@@ -195,9 +189,9 @@ export const constantRouterMap = [
     redirect: 'user_settings',
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: () => import('@/views/user_settings/user_settings'),
-        name: 'General report',
+        name: 'User Settings',
         meta: { title: 'User Settings', icon: 'icon-settings', noCache: true }
       }
     ]
@@ -216,13 +210,13 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/create_notification',
+    path: '/notifications',
     component: Layout,
-    redirect: 'create_notification',
+    redirect: 'notifications',
     children: [
       {
         path: '',
-        component: () => import('@/views/create_notification/index'),
+        component: () => import('@/views/notifications/index'),
         name: 'Create notification',
         meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
       }

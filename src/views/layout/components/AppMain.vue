@@ -28,4 +28,3 @@ export default {
   margin: 50px 1px;}
 </style>
 
-

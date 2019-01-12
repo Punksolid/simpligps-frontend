@@ -3,8 +3,6 @@
 
     <div style="padding: 30px">
 
-
-
 <span>Range</span>
     <div>
 <el-date-picker
@@ -68,16 +66,11 @@
 
 </div>
 
-
     </div>
 
   </div>
 
-
-
-
  </template>
-
 
   <script>
   export default {
@@ -87,30 +80,30 @@
           shortcuts: [{
             text: 'Today',
             onClick(picker) {
-              picker.$emit('pick', new Date());
+              picker.$emit('pick', new Date())
             }
           }, {
             text: 'Yesterday',
             onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24)
+              picker.$emit('pick', date)
             }
           }, {
             text: 'A week ago',
             onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', date)
             }
           }]
         },
         value1: '',
         value2: '',
         value3: ''
-      };
+      }
     }
-  };
+  }
 </script>
 
 <script>
@@ -138,8 +131,6 @@
     }
   }
 </script>
-
-
 
 <script>
 export default {

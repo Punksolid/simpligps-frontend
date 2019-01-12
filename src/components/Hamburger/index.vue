@@ -1,6 +1,7 @@
 <template>
   <span>
-    <div :class="{'is-active':isActive}"
+    <div
+      :class="{'is-active':isActive}"
       t="1492500959545"
       class="hamburger"
       style=""

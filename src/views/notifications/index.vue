@@ -41,7 +41,6 @@
   </div>
 </template>
 
-
 <script>
   import CreateNotification from './create.vue'
 
@@ -53,36 +52,36 @@
     data() {
       return {
         NotificationList: [{
-            "name": "Tecnocosas",
-            "company": "Kerluke Group",
-            "phone": "Max Alert",
-            "email": "hessel.selina@murphy.org",
-            "address": "457 Little Rue\nKadehaven, NH 67106",
-            "created_at": "2 weeks ago"
+            'name': 'Tecnocosas',
+            'company': 'Kerluke Group',
+            'phone': 'Max Alert',
+            'email': 'hessel.selina@murphy.org',
+            'address': '457 Little Rue\nKadehaven, NH 67106',
+            'created_at': '2 weeks ago'
         },
         {
-            "name": "Sanchez Trucking",
-            "company": "Dooley PLC",
-            "phone": "Max Alert",
-            "email": "alphonso06@yahoo.com",
-            "address": "46393 Deckow Views Apt. 033\nKamillechester, WV 53976",
-            "created_at": "2 weeks ago"
+            'name': 'Sanchez Trucking',
+            'company': 'Dooley PLC',
+            'phone': 'Max Alert',
+            'email': 'alphonso06@yahoo.com',
+            'address': '46393 Deckow Views Apt. 033\nKamillechester, WV 53976',
+            'created_at': '2 weeks ago'
         },
         {
-            "name": "Pelado Trucks",
-            "company": "Sr. Pelo PLC",
-            "phone": "Max Alert",
-            "email": "giacomoxd@yahoo.com",
-            "address": "46393 Deckow Views Apt. 033\nKamillechester, WV 53976",
-            "created_at": "1 week ago"
+            'name': 'Pelado Trucks',
+            'company': 'Sr. Pelo PLC',
+            'phone': 'Max Alert',
+            'email': 'giacomoxd@yahoo.com',
+            'address': '46393 Deckow Views Apt. 033\nKamillechester, WV 53976',
+            'created_at': '1 week ago'
         },
         {
-            "name": "Big old fashioned enterprisse del Noroeste",
-            "company": "Maggie's",
-            "phone": "Max Alert",
-            "email": "rooster@yahoo.com",
-            "address": "Iron River Ranch 1-A\nGarrison, CO 53976",
-            "created_at": "2 weeks ago"
+            'name': 'Big old fashioned enterprisse del Noroeste',
+            'company': "Maggie's",
+            'phone': 'Max Alert',
+            'email': 'rooster@yahoo.com',
+            'address': 'Iron River Ranch 1-A\nGarrison, CO 53976',
+            'created_at': '2 weeks ago'
         }],
         dialogVisible: false
       }
@@ -95,6 +94,4 @@
 <style scoped>
 
 </style>
-
-
 

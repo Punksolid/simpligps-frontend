@@ -10,10 +10,11 @@
       <el-collapse-item title="Notification settings" name="2">
         <div>
           <span>Notification on-screen</span>
-          <el-switch style="display: block"
-                     v-model="value3"
-                     active-text="On"
-                     inactive-text="Off">
+          <el-switch
+              style="display: block"
+              v-model="value3"
+              active-text="On"
+              inactive-text="Off">
           </el-switch>
         </div>
         <div style="margin-top: 30px">
@@ -30,21 +31,6 @@
         </div>
       </el-collapse-item>
       <el-collapse-item title="Profile customization" name="3">
-        <div>
-          <span>Upload profile photo</span>
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :file-list="fileList">
-            <el-button size="small" type="primary">Click to upload</el-button>
-            <div slot="tip" class="el-upload__tip">Only jpg/png files less than 500kb</div>
-          </el-upload>
-        </div>
         <div>
           <el-button style="margin-top: 30px" type="primary">Save changes</el-button>
         </div>
@@ -72,9 +58,7 @@
             type: 'info',
             message: 'Changes deleted'
           })
-
         })
-
       }
     }
   }

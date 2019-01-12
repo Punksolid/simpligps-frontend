@@ -2,7 +2,7 @@
   <section>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
-      
+
       <sidebar class="sidebar">
         <div class="sidebar-container">
         <div class="logopanel">

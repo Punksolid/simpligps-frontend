@@ -114,7 +114,6 @@
             </div>
 <!--TABLAS -->
 
-
 <div style="margin-top: 30px">
 
                     <div style="background-color: #fff">
@@ -127,12 +126,10 @@
                         </tr>
                     </thead>
 
-
                     <!--TABLA interior -->
                     <tbody>
                       <tr role="row" class="even">
                         <td class="sorting_1">Ramirez trucking</td>
-
 
                         <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
 
@@ -243,14 +240,10 @@
                         </td>
                       </tr>
 
-
-
                       </tbody>
                   </table>
               </div>
 </div>
-
-
 
                   <div class="row"><div class="col-md-6"></div><div class="col-md-6"></div></div><div style="margin-top: 20px" >
                     <el-pagination
@@ -262,12 +255,7 @@
                     </div></div>
 </div>
 
-
-</div>
-
 </template>
-
-
 
 <script>
 import { getUnits } from '../../api/units.js'
@@ -276,20 +264,20 @@ import { getUnits } from '../../api/units.js'
       return {
         links: [],
         state4: '',
-        timeout:  null
-      };
+        timeout: null
+      }
     },
     methods: {
       loadAll() {
         return [
-          { "value": "Sanchez Trucking", "link": "https://github.com/vuejs/vue" },
-          { "value": "element Trucking", "link": "https://github.com/ElemeFE/element" },
-          { "value": "Cosas imposibles", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "Tecnocosas", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "Jager Trucking", "link": "https://github.com/vuejs/vuex" },
-          { "value": "Fresh Fruit co.", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel Trucking", "link": "https://github.com/babel/babel" }
-         ];
+          { 'value': 'Sanchez Trucking', 'link': 'https://github.com/vuejs/vue' },
+          { 'value': 'element Trucking', 'link': 'https://github.com/ElemeFE/element' },
+          { 'value': 'Cosas imposibles', 'link': 'https://github.com/ElemeFE/cooking' },
+          { 'value': 'Tecnocosas', 'link': 'https://github.com/ElemeFE/mint-ui' },
+          { 'value': 'Jager Trucking', 'link': 'https://github.com/vuejs/vuex' },
+          { 'value': 'Fresh Fruit co.', 'link': 'https://github.com/vuejs/vue-router' },
+          { 'value': 'babel Trucking', 'link': 'https://github.com/babel/babel' }
+         ]
       },
       fetchUnitsList() {
         this.listLoading = true
@@ -297,31 +285,29 @@ import { getUnits } from '../../api/units.js'
           this.unitsListData = response.data.data
           this.listLoading = false
         })
-
     },
 
-
       querySearchAsync(queryString, cb) {
-        var links = this.links;
-        var results = queryString ? links.filter(this.createFilter(queryString)) : links;
+        var links = this.links
+        var results = queryString ? links.filter(this.createFilter(queryString)) : links
 
-        clearTimeout(this.timeout);
+        clearTimeout(this.timeout)
         this.timeout = setTimeout(() => {
-          cb(results);
-        }, 3000 * Math.random());
+          cb(results)
+        }, 3000 * Math.random())
       },
       createFilter(queryString) {
         return (link) => {
-          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
+          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+        }
       },
       handleSelect(item) {
-        console.log(item);
+        console.log(item)
       }
     },
     mounted() {
-      this.links = this.loadAll();
-      this.fetchUnitsList ();
+      this.links = this.loadAll()
+      this.fetchUnitsList()
     }
-  };
+  }
 </script>

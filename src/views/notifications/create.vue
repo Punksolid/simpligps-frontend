@@ -43,15 +43,13 @@
           this.$message({
             type: 'success',
             message: 'Changes Saved'
-          });
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: 'Changes not saved'
-          });
-
-        });
-
+          })
+        })
       }
     }
   }

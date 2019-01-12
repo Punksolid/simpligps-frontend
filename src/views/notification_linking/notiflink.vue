@@ -69,11 +69,6 @@
         label="Action"
         width="180">
       </el-table-column>
-
-            </el-table-column>
-
-      </el-table-column>
-
     </el-table>
     <div style="margin-top: 30px">
     <el-button type="primary" @click="dialogVisible = true">Save</el-button>
@@ -83,8 +78,6 @@
 </div>
 </div>
 </template>
-
-
 
 <script>
   export default {

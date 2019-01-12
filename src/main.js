@@ -24,7 +24,6 @@ import '@/assets/global/css/icons/line-icons/simple-line-icons.css'
 import '@/assets/global/plugins/jquery/jquery-3.1.0.min.js'
 import '@/assets/admin/layout3/js/layout.js'
 
-
 import App from './App'
 import router from './router'
 import store from './store'
