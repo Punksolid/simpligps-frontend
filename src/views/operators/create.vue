@@ -42,13 +42,10 @@
           })
         })
       }
-    },
+    }
 
   }
 </script>
-
-
-
 
 <style scoped>
 .user-form{

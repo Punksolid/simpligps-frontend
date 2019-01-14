@@ -2,7 +2,6 @@
     <div class="dashboard-container">
         <panel-group @handleSetLineChartData="handleSetLineChartData"/>
 
-
     <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div>
@@ -56,24 +55,17 @@
         </div>
       </div>
     </el-col>
-  </el-row>
-
-
-
+    </el-row>
 
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import TodoList from './Todolist/TodoList'
-
 
 export default {
-      TodoList,
   name: 'Dashboard',
-  components: {
-    TodoList},
+  components: {  },
   computed: {
     ...mapGetters([
       'name',

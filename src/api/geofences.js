@@ -16,10 +16,4 @@ export function getGeofence(params) {
   })
 }
 
-export function getResources(params) {
-  return request({
-    url: 'v1/wialon/resources',
-    method: 'get',
-    params
-  })
-}
+
