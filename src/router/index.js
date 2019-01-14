@@ -39,25 +39,31 @@ export const constantRouterMap = [
     },
     {
       path: '/catalogs',
-      component: Layout,
       // redirect: '/monitoring/table',
       name: 'Catalogs',
       meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
+      // component: Layout,
       children: [
         {
-          path: 'notifications',
+          path: '/catalogs/notifications',
           name: 'Notifications',
           component: () => import('@/views/form/index'),
           meta: { title: 'Notifications', icon: 'icon-comments' }
         },
         {
-          path: 'units',
+          path: '/catalogs/units',
           name: 'Units Catalog',
           component: () => import('@/views/form/index'),
           meta: { title: 'Units', icon: 'icon-truck' }
         }
       ]
-    }]
+    },
+      {
+        path: '/create_notification',
+        component: () => import('@/views/notifications/index'),
+        name: 'Create notification',
+        meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
+      }]
   }
 ]
 

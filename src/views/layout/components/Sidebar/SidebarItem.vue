@@ -1,8 +1,33 @@
 <template>
   <!-- el elemento li va SIEMPRE, sea link normal o sea elemento para submenú -->
-  <router-link tag="li" :to="item.path" exact active-class="active">
-    <a>{{ item.name }} - {{ hasChildren(item) }}</a>
-
+  <router-link v-if="!hasChildren(item)" tag="li" class="nav-active nav-parent" :to="item.path" active-class="active" exact>
+    <a
+      class="elemento"
+      :class="{ 'nav-parent': hasChildren(item) }"
+    >
+      <i :class="item.meta.icon"></i><span>{{ item.name }}</span>
+    </a>
+  </router-link>
+  <router-link v-else tag="li" class="nav-active nav-parent" :to="item.path" active-class="active">
+    <a
+      class="elementos"
+      :class="{ 'nav-parent': hasChildren(item) }"
+    >
+      <i :class="item.meta.icon"></i><span>{{ item.name }}</span>
+    </a>
+    <ul class="children collapse">
+      <router-link
+        v-for="child in item.children"
+        :key="child.name"
+        tag="li"
+        class="children collapse"
+        :to="child.path"
+        active-class="active">
+        <a>
+          <span>{{ child.name }}</span>
+        </a>
+      </router-link>
+    </ul>
   </router-link>
   <!--<li-->
     <!--class="nav nav-active"-->
