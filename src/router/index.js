@@ -32,7 +32,7 @@ export const constantRouterMap = [
     hidden: false,
     name: 'main',
     children: [{
-      path: '',
+      path: '/',
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'Dashboard', icon: 'icon-home', noCache: true },
       name: 'Dashboard'
@@ -42,7 +42,7 @@ export const constantRouterMap = [
       // redirect: '/monitoring/table',
       name: 'Catalogs',
       meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
-      // component: Layout,
+      component: Layout,
       children: [
         {
           path: '/catalogs/notifications',
@@ -55,6 +55,18 @@ export const constantRouterMap = [
           name: 'Units Catalog',
           component: () => import('@/views/form/index'),
           meta: { title: 'Units', icon: 'icon-truck' }
+        },
+        {
+          path: '/catalogs/notification_linking',
+          name: 'Notification Linking',
+          component: () => import('@/views/notification_linking/notiflink'),
+          meta: { title: 'Notification Linking', icon: 'icon-form' }
+        },
+        {
+          path: '/catalogs/monitoring_assign',
+          name: 'Monitoring Assign',
+          component: () => import('@/views/monitoring_assign/assign'),
+          meta: { title: 'Monitoring Assign', icon: 'icon-form' }
         }
       ]
     },
