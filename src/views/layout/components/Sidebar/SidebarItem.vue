@@ -2,10 +2,10 @@
   <!-- el elemento li va SIEMPRE, sea link normal o sea elemento para submenú -->
   <router-link v-if="hasChildren(item)&&hasOnlyOneChild(item)" tag="li" class="nav-active nav-parent" :to="item.path" active-class="active" exact>
     <a
-      class="elemento"
+      class="elementos"
       :class="{ 'nav-parent': hasOnlyOneChild(item) }"
     >
-      <i :class="item.meta.icon"></i><span>{{ item.name }}</span>
+      <i :class="item.hasOwnProperty('meta') ? item.meta.icon : item.children[0].meta.icon"></i><span>{{ item.name || item.children[0].name }}</span>
     </a>
   </router-link>
   <router-link v-else tag="li" class="nav-active nav-parent" :to="item.path" active-class="active">
@@ -21,7 +21,7 @@
         :key="child.name"
         tag="li"
         class="children collapse"
-        :to="child.path"
+        :to="item.path+'/'+child.path"
         active-class="active">
         <a>
           <span>{{ child.name }}</span>
