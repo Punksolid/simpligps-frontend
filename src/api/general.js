@@ -6,3 +6,11 @@ export function checkStatus(params) {
     method: 'GET'
   })
 }
+
+export function getResources(params) {
+  return request({
+    url: 'v1/wialon/resources',
+    method: 'get',
+    params
+  })
+}

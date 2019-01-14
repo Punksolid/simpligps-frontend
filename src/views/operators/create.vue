@@ -30,7 +30,7 @@
           active: ''
         }
       }
-    }
+    },
 
   methods: {
       onSubmit() {
@@ -42,13 +42,10 @@
           })
         })
       }
-    },
+    }
 
   }
 </script>
-
-
-
 
 <style scoped>
 .user-form{
