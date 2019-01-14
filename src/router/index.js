@@ -28,124 +28,46 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    // redirect: '/',
     name: 'Dashboard',
+    hidden: false,
+    meta: { title: 'Dashboard', icon: 'icon-home', noCache: true },
+
+    children: [{
+      path: '/',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'icon-home', noCache: true },
+      name: 'Dashboard'
+    }]
+  },
+  {
+    path: '/catalogs',
+    // redirect: '/catalogs/notifications',
+    name: 'Catalogs',
+    meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
+    component: Layout,
     hidden: false,
     children: [
       {
-        path: '',
-        component: () => import('@/views/dashboard/index'),
-        name: 'dashboard',
-        meta: { title: 'Dashboard', icon: 'icon-home', noCache: true }
-      }
-    ]
-  },
-  // {
-  //   path: '/users',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: () => import('@/views/users/index'),
-  //       name: 'users',
-  //       meta: { title: 'Users', icon: 'icon-users', noCache: true }
-  //     }
-  //   ]
-  // },
-  {
-    path: '/monitor',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'units',
-        component: () => import('@/views/monitor/units'),
-        meta: { title: 'Units', icon: 'icon-cursor' }
-      }
-    ]
-  },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/monitoring/table',
-    // redirect: '/example/table',
-    name: 'Monitoring',
-    meta: { title: 'Monitoring has childs', icon: 'icon-eye' },
-    children: [
-      {
-        path: 'new_trip',
-        name: 'New Trip',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'New Trip', icon: 'icon-plus-circle' }
-      },
-      {
-        path: 'programming',
-        name: 'Programming',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Monitoring', icon: 'icon-location-arrow' }
-      },
-      {
-        path: 'convoy',
-        name: 'Convoy',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Convoy', icon: 'icon-truck-moving' }
-      },
-      {
-        path: 'high_risk_group',
-        name: 'High Risk Group',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
-      },
-      {
-        path: 'units',
-        name: 'Units',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Units', icon: 'icon-cursor' }
-      }
-    ]
-  },
-
-  {
-    path: '/catalogs',
-    component: Layout,
-    redirect: '/monitoring/table',
-    // redirect: '/example/table',
-    name: 'Catalogs',
-    meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
-    children: [
-      {
-        path: 'notifications',
         name: 'Notifications',
         component: () => import('@/views/form/index'),
+        path: '/catalogs/notifications',
         meta: { title: 'Notifications', icon: 'icon-comments' }
       },
-
       {
-        path: 'units',
+        path: '/catalogs/units',
         name: 'Units Catalog',
         component: () => import('@/views/form/index'),
         meta: { title: 'Units', icon: 'icon-truck' }
       },
       {
-        path: 'lines',
-        name: 'Lines',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Lines', icon: 'icon-exchange-alt' }
-      },
-      {
-        path: 'status',
-        name: 'Status',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Status', icon: 'icon-clipboard-check' }
-      },
-      {
-        path: 'notification_linking',
+        path: '/catalogs/notification_linking',
         name: 'Notification Linking',
         component: () => import('@/views/notification_linking/notiflink'),
         meta: { title: 'Notification Linking', icon: 'icon-form' }
       },
       {
-        path: 'monitoring_assign',
+        path: '/catalogs/monitoring_assign',
         name: 'Monitoring Assign',
         component: () => import('@/views/monitoring_assign/assign'),
         meta: { title: 'Monitoring Assign', icon: 'icon-form' }
@@ -153,74 +75,18 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/contacts',
+    hidden: false,
+    path: '/create_notification',
     component: Layout,
-    redirect: '/contacts/menu1',
-    name: 'Contacts',
-    meta: {
-      title: 'Contacts',
-      icon: 'icon-users'
-    },
-    children: [
-      {
-        path: 'operators',
-        component: () => import('@/views/operators/index'), // Parent router-view
-        name: 'Operators',
-        meta: { title: 'Operators' }
-      }
-    ]
-  },
-  {
-    path: '/Report',
-    component: Layout,
-    redirect: 'Report',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/general report/genreport'),
-        name: 'General report',
-        meta: { title: 'General report', icon: 'icon-bar-chart', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/user_settings',
-    component: Layout,
-    redirect: 'user_settings',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/user_settings/user_settings'),
-        name: 'User Settings',
-        meta: { title: 'User Settings', icon: 'icon-settings', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/settings',
-    component: Layout,
-    redirect: 'settings',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/settings/settings'),
-        name: 'System Settings',
-        meta: { title: 'System Settings', icon: 'icon-settings', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/notifications',
-    component: Layout,
-    redirect: 'notifications',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/notifications/index'),
-        name: 'Create notification',
-        meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
-      }
-    ]
+    name: 'Create notification',
+    meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true },
+    children: [{
+      hidden: false,
+      path: '/create_notification',
+      component: () => import('@/views/notifications/index'),
+      name: 'Create notification',
+      meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
+    }]
   }
 ]
 
