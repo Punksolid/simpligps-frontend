@@ -26,56 +26,67 @@ export const constantRouterMap = [
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {
-    path: '',
+    path: '/',
     component: Layout,
-    redirect: '/',
+    // redirect: '/',
+    name: 'Dashboard',
     hidden: false,
-    name: 'main',
+    meta: { title: 'Dashboard', icon: 'icon-home', noCache: true },
+
     children: [{
       path: '/',
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'Dashboard', icon: 'icon-home', noCache: true },
       name: 'Dashboard'
-    },
-    {
-      path: '/catalogs',
-      // redirect: '/monitoring/table',
-      name: 'Catalogs',
-      meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
-      component: Layout,
-      children: [
-        {
-          path: '/catalogs/notifications',
-          name: 'Notifications',
-          component: () => import('@/views/form/index'),
-          meta: { title: 'Notifications', icon: 'icon-comments' }
-        },
-        {
-          path: '/catalogs/units',
-          name: 'Units Catalog',
-          component: () => import('@/views/form/index'),
-          meta: { title: 'Units', icon: 'icon-truck' }
-        },
-        {
-          path: '/catalogs/notification_linking',
-          name: 'Notification Linking',
-          component: () => import('@/views/notification_linking/notiflink'),
-          meta: { title: 'Notification Linking', icon: 'icon-form' }
-        },
-        {
-          path: '/catalogs/monitoring_assign',
-          name: 'Monitoring Assign',
-          component: () => import('@/views/monitoring_assign/assign'),
-          meta: { title: 'Monitoring Assign', icon: 'icon-form' }
-        }
-      ]
-    },
+    }]
+  },
+  {
+    path: '/catalogs',
+    // redirect: '/catalogs/notifications',
+    name: 'Catalogs',
+    meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
+    component: Layout,
+    hidden: false,
+    children: [
       {
-        path: '/create_notification',
-        component: () => import('@/views/notifications/index'),
-        name: 'Create notification',
-        meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
-      }]
+        name: 'Notifications',
+        component: () => import('@/views/form/index'),
+        path: '/catalogs/notifications',
+        meta: { title: 'Notifications', icon: 'icon-comments' }
+      },
+      {
+        path: '/catalogs/units',
+        name: 'Units Catalog',
+        component: () => import('@/views/form/index'),
+        meta: { title: 'Units', icon: 'icon-truck' }
+      },
+      {
+        path: '/catalogs/notification_linking',
+        name: 'Notification Linking',
+        component: () => import('@/views/notification_linking/notiflink'),
+        meta: { title: 'Notification Linking', icon: 'icon-form' }
+      },
+      {
+        path: '/catalogs/monitoring_assign',
+        name: 'Monitoring Assign',
+        component: () => import('@/views/monitoring_assign/assign'),
+        meta: { title: 'Monitoring Assign', icon: 'icon-form' }
+      }
+    ]
+  },
+  {
+    hidden: false,
+    path: '/create_notification',
+    component: Layout,
+    name: 'Create notification',
+    meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true },
+    children: [{
+      hidden: false,
+      path: '/create_notification',
+      component: () => import('@/views/notifications/index'),
+      name: 'Create notification',
+      meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
+    }]
   }
 ]
 

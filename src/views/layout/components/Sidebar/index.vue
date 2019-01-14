@@ -36,7 +36,9 @@
       ]),
       routes() {
         console.log(this.$router.options.routes)
-        return this.$router.options.routes[2].children
+        return this.$router.options.routes.filter(function(route) {
+          return !route.hidden
+        })
       },
       isCollapse() {
         return !this.sidebar.opened

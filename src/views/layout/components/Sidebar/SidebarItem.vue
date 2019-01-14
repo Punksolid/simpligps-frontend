@@ -1,9 +1,9 @@
 <template>
   <!-- el elemento li va SIEMPRE, sea link normal o sea elemento para submenú -->
-  <router-link v-if="!hasChildren(item)" tag="li" class="nav-active nav-parent" :to="item.path" active-class="active" exact>
+  <router-link v-if="hasChildren(item)&&hasOnlyOneChild(item)" tag="li" class="nav-active nav-parent" :to="item.path" active-class="active" exact>
     <a
       class="elemento"
-      :class="{ 'nav-parent': hasChildren(item) }"
+      :class="{ 'nav-parent': hasOnlyOneChild(item) }"
     >
       <i :class="item.meta.icon"></i><span>{{ item.name }}</span>
     </a>
@@ -73,6 +73,13 @@
       hasChildren(item) {
         if (item.hasOwnProperty('children')) {
           console.log('si tiene children')
+          return true
+        } else {
+          return false
+        }
+      },
+      hasOnlyOneChild(item){
+        if (item.children.length === 1) {
           return true
         } else {
           return false
