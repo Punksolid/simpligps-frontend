@@ -1,7 +1,14 @@
 <template>
     <el-form ref="form" :model="form" label-width="200">
             <el-form-item label="Resource_id">
-        <el-input v-model="form.resource_id"></el-input>
+      <el-select v-model="value" placeholder="Select Geofence">
+        <el-option
+          v-for="name in resources"
+          :key="name.value"
+          :label="name.label"
+          :value="name.value">
+        </el-option>
+      </el-select>
       </el-form-item>
       <el-form-item label="Name">
         <el-input v-model="form.name"></el-input>
@@ -30,22 +37,22 @@
   import { createGeofence, getResources } from '../../api/geofences'
   import { Message } from 'element-ui'
 
+    export default {
 
-  export default {
-    name: 'CreateGeofence',
-    data() {
+      name: 'CreateGeofence',
+      data() {
       return {
-        form: {
-          resources_list: '',
-          name: '',
-          latitude: '',
-          longitude: '',
-          radius: '',
-          type: ''
-        }
+      form: {
+      resources: '',
+      name: '',
+      latitude: '',
+      longitude: '',
+      radius: '',
+      type: ''
+      }
       }
     },
-    methods: {
+  methods: {
       onSubmit() {
         createGeofence(this.form).then(response => {
           console.log(response)
@@ -55,15 +62,22 @@
             duration: 10 * 1000
           })
         })
+      },
+      fillResourceList(){
+
       }
     },
-    mounted: function() {
+     mounted() {
       getResources().then(response => {
-        this.resources_list = response.data.data
-      })
-    }
+          this.resources=response.data.data.map(item => {
+        return { value: item, label: item }
+        })
+        })
+
+    },
   }
 </script>
+
 
 <style scoped>
 .user-form{

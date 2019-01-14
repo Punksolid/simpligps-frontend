@@ -11,7 +11,8 @@
 
   <el-table
   data="operatorsList"
-    style="width: 100%">
+    style="width: 90%">
+    asdasdsa
     <el-table-column type="expand">
       <template slot-scope="props">
        <el-tabs type="border-card">
@@ -30,28 +31,28 @@
     <div>
 <div class="block">
   <div style="margin-top: 10px"> Operator 1
-    <el-cascader
+    <el-cascader style="padding: 10px"
     :options="options"
     v-model="selectedOptions"
     @change="handleChange">
   </el-cascader>
   </div>
 <div style="margin-top: 10px"> Operator 2
-    <el-cascader
+    <el-cascader style="padding: 10px"
     :options="options"
     v-model="selectedOptions"
     @change="handleChange">
   </el-cascader>
   </div>
   <div style="margin-top: 10px"> Trailer 1
-    <el-cascader
+    <el-cascader style="padding: 10px"
     :options="options"
     v-model="selectedOptions"
     @change="handleChange">
   </el-cascader>
   </div>
   <div style="margin-top: 10px"> Trailer 2
-    <el-cascader
+    <el-cascader style="padding: 10px"
     :options="options"
     v-model="selectedOptions"
     @change="handleChange">
@@ -69,8 +70,7 @@
         <div class="card-panel-description">
           <h3>First time here?</h3>
           <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
-        </div>
+                  </div>
   </el-tab-pane>
   <el-tab-pane>
     <span slot="label"><i class="el-icon-date"></i> Route</span>
@@ -80,7 +80,6 @@
         <div class="card-panel-description">
           <h3>First time here?</h3>
           <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
         </div>
   </el-tab-pane>
 
@@ -259,6 +258,7 @@
 
 <script>
 import { getUnits } from '../../api/units.js'
+
   export default {
     data() {
       return {

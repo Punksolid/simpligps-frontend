@@ -4,10 +4,10 @@
     <el-input v-model="form.name"></el-input>
   </el-form-item>
   <el-form-item label="Phone">
-    <el-input v-model="form.name"></el-input>
+    <el-input v-model="form.phone"></el-input>
   </el-form-item>
-  <el-form-item label="Status">
-    <el-switch v-model="form.active"></el-switch>
+    <el-form-item label="Active">
+    <el-input v-model="form.active"></el-input>
   </el-form-item>
   <el-form-item>
     <el-button type="danger" aria-label="close">Cancel</el-button>
@@ -17,6 +17,9 @@
 </template>
 
 <script>
+ import { createOperator } from '../../api/catalogs'
+  import { Message } from 'element-ui'
+
   export default {
     name: 'CreateOperator',
     data() {
@@ -29,9 +32,32 @@
       }
     }
 
-  }
+  methods: {
+      onSubmit() {
+        createOperator(this.form).then(response => {
+          Message({
+            message: 'Operator ' + response.data.data.name + ' created',
+            type: 'success',
+            duration: 10 * 1000
+          })
+        })
+      }
+    },
 
+  }
 </script>
+
+
+
+
+<style scoped>
+.user-form{
+  width: 800px;
+}
+</style>
+
+
+
 
 <style scoped>
 

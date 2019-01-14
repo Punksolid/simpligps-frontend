@@ -42,6 +42,7 @@
 
 <script>
   import CreateOperator from './create.vue'
+  import { getOperators } from '../../api/catalogs'
 
   export default {
     name: 'OperatorsList',
@@ -50,27 +51,30 @@
     },
     data() {
       return {
-        operatorsList: [{
-          'name': 'Prof. Mohammed Romaguera',
-          'phone': '+1-652-821-7766',
-          'active': true
-        },
-          {
-            'name': 'Idella Yost IV',
-            'phone': '615-361-0625 x38969',
-            'active': false
-          },
-          {
-            'name': 'Maxwell Jones',
-            'phone': '+13376475107',
-            'active': false
-          }],
+        operatorsList: [],
         dialogVisible: false
       }
     },
+    params: {
+      return: {
+        tableData4: []
+      }
+    },
     methods: {
+      fetchOperatorsList() {
+        this.listLoading = true
+        getOperators(this.operatorsListData).then(response => {
+          console.log (response.data.data)
+          this.operatorsListData = response.data.data
+          this.listLoading = false
+        })
+      }
+    },
+    created() {
+      this.fetchOperatorsList()
+    },
     }
-  }
+
 </script>
 
 <style scoped>
