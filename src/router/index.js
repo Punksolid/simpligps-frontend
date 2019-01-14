@@ -40,7 +40,7 @@ export const constantRouterMap = [
     {
       path: '/catalogs',
       component: Layout,
-      redirect: '/monitoring/table',
+      // redirect: '/monitoring/table',
       name: 'Catalogs',
       meta: { title: 'Catalogs has childs', icon: 'icon-docs' },
       children: [

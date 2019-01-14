@@ -1,25 +1,26 @@
 <template>
   <!-- el elemento li va SIEMPRE, sea link normal o sea elemento para submenú -->
-  <li
-    class="nav nav-active"
-    v-if="!item.hidden"
-    :class="{ 'nav-parent':hasChildren(item)}"
-  >
+  <router-link tag="li" :to="item.path" exact active-class="active">
+    <a>{{ item.name }} - {{ hasChildren(item) }}</a>
 
-    <a class="testing">
-      <div index="/users" class="submenu-title-noDropdown">
-        <i class="icon-users"></i>
-        <span>
-        <router-link :to="item.path" class="testing" active-class="active">
-          {{ item.name }} - {{ hasChildren(item) }}
-        </router-link>
-        </span>
-      </div>
-    </a>
-    <ul v-if="hasChildren(item)">
-      <li v-for="child in item.children" :key="id">{{ child.name }}</li>
-    </ul>
-  </li>
+  </router-link>
+  <!--<li-->
+    <!--class="nav nav-active"-->
+    <!--v-if="!item.hidden"-->
+    <!--:class="{ 'nav-parent':hasChildren(item)}"-->
+  <!--&gt;-->
+    <!--<a class="testing">-->
+        <!--<i class="icon-users"></i>-->
+        <!--<span>-->
+        <!--<router-link :to="item.path" class="testing active" active-class="active">-->
+          <!--<span>{{ item.name }} - {{ hasChildren(item) }}ee</span>-->
+        <!--</router-link>-->
+        <!--</span>-->
+    <!--</a>-->
+    <!--<ul class="children" v-if="hasChildren(item)">-->
+      <!--exito-->
+    <!--</ul>-->
+  <!--</li>-->
 </template>
 
 <script>
