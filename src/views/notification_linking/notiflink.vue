@@ -1,5 +1,6 @@
 <template>
 <div>
+
   <el-select v-model="value" placeholder="Accounts / Lines">
     <el-option
       v-for="item in options"
@@ -8,23 +9,33 @@
       :value="item.value">
     </el-option>
   </el-select>
-<div style="margin-top: 20px">
+
+<div style="margin-top: 10px">
+
+    <div style="background-color: #fff">
+
+
+<div style="padding: 10px">
+
+<div style="margin-top: 3px">
+
+
  <el-checkbox v-model="checked3" label="Panic button" border></el-checkbox>
 </div>
 
-<div style="margin-top: 3px">
+<div style="margin-top: 7px">
  <el-checkbox v-model="checked3" label="Jammer" border></el-checkbox>
 </div>
 
-<div style="margin-top: 3px">
+<div style="margin-top: 7px">
  <el-checkbox v-model="checked3" label="Route deviation" border></el-checkbox>
 </div>
 
-<div style="margin-top: 3px">
+<div style="margin-top: 7px">
  <el-checkbox v-model="checked3" label="Speeding" border></el-checkbox>
 </div>
 
-<div style="margin-top: 3px">
+<div style="margin-top: 7px">
  <el-checkbox v-model="checked3" label="Temp out of range" border></el-checkbox>
 </div>
 
@@ -37,7 +48,7 @@
       :data="NotifList"
       stripe
       border
-      style="width: 100%">
+      style="width: 80%">
       <el-table-column
         prop="name"
         label="Name"
@@ -77,6 +88,10 @@
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+
 </template>
 
 <script>

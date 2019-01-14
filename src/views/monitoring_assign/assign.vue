@@ -10,6 +10,9 @@
   </el-select>
 
 <div style="margin-top: 20px">
+  <div>
+
+<div style="margin-top: 20px">
  <el-checkbox v-model="checked3" label="Role 1" border></el-checkbox>
 </div>
 
@@ -27,6 +30,9 @@
 
 </div>
 </div>
+</div>
+</div>
+
 </template>
 
 <script>

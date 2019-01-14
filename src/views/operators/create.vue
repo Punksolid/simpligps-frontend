@@ -30,7 +30,7 @@
           active: ''
         }
       }
-    }
+    },
 
   methods: {
       onSubmit() {
