@@ -13,7 +13,9 @@
   data="operatorsList"
     style="width: 90%">
     asdasdsa
-    <el-table-column type="expand">
+    <el-table-column       :data="NotificationList"
+ type="expand">
+
       <template slot-scope="props">
        <el-tabs type="border-card">
   <el-tab-pane>

@@ -65,7 +65,7 @@
         this.listLoading = true
         getOperators(this.operatorsListData).then(response => {
           console.log (response.data.data)
-          this.operatorsListData = response.data.data
+          this.operatorsList = response.data.data
           this.listLoading = false
         })
       }

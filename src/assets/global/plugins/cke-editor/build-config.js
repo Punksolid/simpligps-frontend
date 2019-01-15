@@ -153,7 +153,7 @@ var CKBUILDER_CONFIG = {
 		'ug' : 1,
 		'uk' : 1,
 		'vi' : 1,
-		'zh' : 1,
-		'zh-cn' : 1
+		'zh' : 0,
+		'zh-cn' : 0
 	}
 };

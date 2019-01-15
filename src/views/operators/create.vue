@@ -6,9 +6,15 @@
   <el-form-item label="Phone">
     <el-input v-model="form.phone"></el-input>
   </el-form-item>
-    <el-form-item label="Active">
-    <el-input v-model="form.active"></el-input>
-  </el-form-item>
+<el-form-item label="Active">
+<el-switch
+  v-model="form.active"
+  active-color="#13ce66"
+  inactive-color="#ff4949"
+  active-value="1"
+  inactive-value="0">
+</el-switch>
+</el-form-item>
   <el-form-item>
     <el-button type="danger" aria-label="close">Cancel</el-button>
     <el-button type="primary" @click="onSubmit">Create</el-button>
@@ -27,8 +33,8 @@
         form: {
           name: '',
           phone: '',
-          active: ''
-        }
+          active: '1'
+          },
       }
     },
 
@@ -42,10 +48,13 @@
           })
         })
       }
-    }
+    },
 
   }
 </script>
+
+
+
 
 <style scoped>
 .user-form{
