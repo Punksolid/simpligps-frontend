@@ -10,56 +10,30 @@
 <div style="margin-top: 30px">
 
   <el-table
-  data="operatorsList"
-    style="width: 90%">
-    asdasdsa
-    <el-table-column       :data="NotificationList"
- type="expand">
+  data="operatorsList" style="width: 100%">
+
+    <el-table-column data="NotificationList" type="expand">
+
 
       <template slot-scope="props">
+
        <el-tabs type="border-card">
-  <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> Details</span>
-    <div class="card-panel-icon-wrapper icon-people">
-          <i class="el-icon-info"></i>
-        </div>
-        <div class="card-panel-description">
-          <h3>Truck: Freightliner FL 200</h3>
-          <el-button type="success" @click="dialogVisible = true">View details</el-button>
-        </div>
-  </el-tab-pane>
-  <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> Monitoring Route</span>
-    <div>
-<div class="block">
-  <div style="margin-top: 10px"> Operator 1
-    <el-cascader style="padding: 10px"
-    :options="options"
-    v-model="selectedOptions"
-    @change="handleChange">
-  </el-cascader>
-  </div>
-<div style="margin-top: 10px"> Operator 2
-    <el-cascader style="padding: 10px"
-    :options="options"
-    v-model="selectedOptions"
-    @change="handleChange">
-  </el-cascader>
-  </div>
-  <div style="margin-top: 10px"> Trailer 1
-    <el-cascader style="padding: 10px"
-    :options="options"
-    v-model="selectedOptions"
-    @change="handleChange">
-  </el-cascader>
-  </div>
-  <div style="margin-top: 10px"> Trailer 2
-    <el-cascader style="padding: 10px"
-    :options="options"
-    v-model="selectedOptions"
-    @change="handleChange">
-  </el-cascader>
-  </div>
+
+        <el-tab-pane>
+
+          <span slot="label"><i class="el-icon-date"></i> Details</span>
+          <div class="card-panel-icon-wrapper icon-people">
+                <i class="el-icon-info"></i>
+              </div>
+              <div class="card-panel-description">
+                <h3>Truck: Freightliner FL 200</h3>
+                <el-button type="success" @click="dialogVisible = true">View details</el-button>
+              </div>
+        </el-tab-pane>
+        <el-tab-pane>
+          <span slot="label"><i class="el-icon-date"></i> Monitoring Route</span>
+          <div>
+
 
 </div>
     </div>
@@ -70,8 +44,8 @@
           <i class="el-icon-info"></i>
         </div>
         <div class="card-panel-description">
-          <h3>First time here?</h3>
-          <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+          <h1>this is another tab!</h1>
+          <el-button type="success" @click="dialogVisible = true">Check stats!</el-button>
                   </div>
   </el-tab-pane>
   <el-tab-pane>
@@ -90,161 +64,24 @@
       </template>
     </el-table-column>
     <el-table-column
-      label="Fecha"
-      prop="date">
+      label="Units"
+      prop="units"
+      >
     </el-table-column>
     <el-table-column
-      label="Nombre"
-      prop="name">
+      label="Location"
+      prop="location">
+    </el-table-column>
+    <el-table-column
+      label="Action"
+      prop="action"
+      width="100">
     </el-table-column>
   </el-table>
 
 </div>
 
-<!--Wraper -->
 
-<div id="table-editable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-  <div class="row">
-    <div class="col-md-6 filter-left">
-      <div id="table-editable_filter" class="dataTables_filter">
-
-          </div>
-          </div>
-          <div class="col-md-6">
-            </div>
-            </div>
-<!--TABLAS -->
-
-<div style="margin-top: 30px">
-
-                    <div style="background-color: #fff">
-                    <table class="table table-hover dataTable no-footer" id="table-editable" role="grid" aria-describedby="table-editable_info">
-                    <thead>
-                      <tr role="row">
-                        <th class="sorting_asc" rowspan="1" colspan="1" aria-label="First Name" style="width: 254px;">Units</th>
-                        <th class="sorting" tabindex="0" aria-controls="table-editable" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 331px;">Location</th>
-                        <th class="text-right sorting" tabindex="0" aria-controls="table-editable" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 266px;">Action</th>
-                        </tr>
-                    </thead>
-
-                    <!--TABLA interior -->
-                    <tbody>
-                      <tr role="row" class="even">
-                        <td class="sorting_1">Ramirez trucking</td>
-
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                          <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-                        </td>
-                      </tr>
-
-                      <tr role="row" class="even">
-                        <td class="sorting_1">Sanchez trucking</td>
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                          <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-                        </td>
-                      </tr>
-
-                      <tr role="row" class="even">
-                        <td class="sorting_1">Viajes imposibles</td>
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                          <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-                        </td>
-                      </tr>
-
-                      <tr role="row" class="even">
-                        <td class="sorting_1">Fresh Fruit Co.</td>
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                          <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-                        </td>
-                      </tr>
-
-                      <tr role="row" class="even">
-                        <td class="sorting_1">Panzer trailers Co.</td>
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                          <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-                        </td>
-                      </tr>
-
-                      <tr role="row" class="even">
-                        <td class="sorting_1">Jager trucking</td>
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                          <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-                        </td>
-                      </tr>
-
-                      <tr role="row" class="even">
-                        <td class="sorting_1">Sanchez trucking</td>
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                          <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-                        </td>
-                      </tr><tr role="row" class="even">
-                        <td class="sorting_1">Sanchez trucking</td>
-                        <td>Parque El Trebol 1512 Culiacán, SIN. MEX.</td>
-
-                        <td class="text-right">
-                        <el-row>
-                            <el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-                        </el-row>
-
-                        </td>
-                      </tr>
-
-                      </tbody>
-                  </table>
-              </div>
-</div>
 
                   <div class="row"><div class="col-md-6"></div><div class="col-md-6"></div></div><div style="margin-top: 20px" >
                     <el-pagination
@@ -253,7 +90,8 @@
   layout="prev, pager, next"
   :total="100">
 </el-pagination>
-                    </div></div>
+                    </div>
+                    </div>
 </div>
 
 </template>
@@ -272,13 +110,13 @@ import { getUnits } from '../../api/units.js'
     methods: {
       loadAll() {
         return [
-          { 'value': 'Sanchez Trucking', 'link': 'https://github.com/vuejs/vue' },
-          { 'value': 'element Trucking', 'link': 'https://github.com/ElemeFE/element' },
-          { 'value': 'Cosas imposibles', 'link': 'https://github.com/ElemeFE/cooking' },
-          { 'value': 'Tecnocosas', 'link': 'https://github.com/ElemeFE/mint-ui' },
-          { 'value': 'Jager Trucking', 'link': 'https://github.com/vuejs/vuex' },
-          { 'value': 'Fresh Fruit co.', 'link': 'https://github.com/vuejs/vue-router' },
-          { 'value': 'babel Trucking', 'link': 'https://github.com/babel/babel' }
+          { 'value': 'Sanchez Trucking', 'link': 'http://localhost:9528/#/monitor' },
+          { 'value': 'element Trucking', 'link': 'http://localhost:9528/#/monitor' },
+          { 'value': 'Cosas imposibles', 'link': 'http://localhost:9528/#/monitor' },
+          { 'value': 'Tecnocosas', 'link': 'http://localhost:9528/#/monitor' },
+          { 'value': 'Jager Trucking', 'link': 'http://localhost:9528/#/monitor' },
+          { 'value': 'Fresh Fruit co.', 'link': 'http://localhost:9528/#/monitor' },
+          { 'value': 'babel Trucking', 'link': 'http://localhost:9528/#/monitor' }
          ]
       },
       fetchUnitsList() {
