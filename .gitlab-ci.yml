@@ -17,12 +17,6 @@ build site:
 #    - npm run unit
 
 deploy:
-  image: alpine
   stage: deploy
   script:
-    - apk add --no-cache rsync openssh
-    - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_dsa
-    - chmod 600 ~/.ssh/id_dsa
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - rsync -rav --delete dist/ user@server.com:/your/project/path/
+    - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master https://forge.laravel.com/servers/222171/sites/652441/deploy/http?token=703GMBDLBa4bCi5FgLRrjlr8QLfi1ylWxOhmuPfq
