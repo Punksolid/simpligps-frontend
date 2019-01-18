@@ -125,10 +125,10 @@ export const constantRouterMap = [
         meta: { title: 'Notifications', icon: 'icon-comments' }
       },
       {
-        path: 'lines',
-        name: 'Lines',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Lines', icon: 'icon-exchange-alt' }
+        path: 'carriers',
+        name: 'Carriers',
+        component: () => import('@/views/carriers/index'),
+        meta: { title: 'Carriers', icon: 'icon-exchange-alt' }
       },
       {
         path: 'status',

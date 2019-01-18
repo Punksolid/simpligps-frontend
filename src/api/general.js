@@ -37,3 +37,18 @@ export function deleteUser(user_id) {
     method: 'DELETE'
   })
 }
+
+export function getCarriers(params) {
+  return request({
+    url: 'v1/carriers',
+    method: 'GET',
+    params
+  })
+}
+export function createCarrier(params) {
+  return request({
+    url: 'v1/carriers',
+    method: 'post',
+    params
+  })
+}
