@@ -15,8 +15,18 @@ export function getResources(params) {
   })
 }
 
-// export function createNotification(params) {
-//   return request({
-//     url: 'v1/'
-//   })
-// }
+export function createContacts(params) {
+  return request({
+    url: 'v1/contacts',
+    method: 'post',
+    params
+  })
+}
+
+export function getContacts(params) {
+  return request({
+    url: 'v1/contacts',
+    method: 'get',
+    params
+  })
+}

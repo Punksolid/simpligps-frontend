@@ -24,21 +24,35 @@
 </template>
 
 <script>
-  export default {
-    name: 'CreateOperator',
-    data() {
-      return {
-        form: {
-          name: '',
-          phone: '',
-          company: '',
-          email: '',
-          address: ''
+  import { createContacts } from '@/api/general'
+  import { Message } from 'element-ui'
 
-        }
+export default {
+  name: 'CreateContact',
+  data() {
+    return {
+      form: {
+        name: '',
+        phone: '',
+        company: '',
+        email: '',
+        address: ''
+
       }
     }
+  },
+  methods: {
+    onSubmit() {
+      createContacts(this.form).then(response => {
+        Message({
+          message: 'Contact ' + response.data.data.name + ' created',
+          type: 'success',
+          duration: 10 * 1000
+        })
+      })
+    }
   }
+}
 </script>
 
 <style scoped>
