@@ -14,3 +14,9 @@ export function getResources(params) {
     params
   })
 }
+
+// export function createNotification(params) {
+//   return request({
+//     url: 'v1/'
+//   })
+// }

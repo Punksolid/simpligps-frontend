@@ -41,14 +41,16 @@ import { getResources } from '@/api/general'
             value: '',
             label: ''
           }],
-          name: '',
-          phone: '',
-          active: ''
+          geofence_id: '',
+          unit_id: '',
+          activate: '',
+          name: ''
+
         }
       }
     },
     methods: {
-      open9() {
+      onSubmit() {
         this.$confirm('Are you sure you want save changes?', 'Save Changes', {
           cancelButtonText: 'Cancel',
           type: 'info'
