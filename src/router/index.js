@@ -71,12 +71,12 @@ export const constantRouterMap = [
     redirect: '/monitoring/new_trip',
     // redirect: '/example/table',
     name: 'Monitoring',
-    meta: { title: 'Monitoring has childs', icon: 'icon-eye' },
+    meta: { title: 'Monitoring', icon: 'icon-eye' },
     children: [
       {
         path: 'new_trip',
         name: 'New Trip',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/monitoring/index'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
       },
       {
@@ -105,14 +105,19 @@ export const constantRouterMap = [
       }
     ]
   },
-
   {
     path: '/catalogs',
     component: Layout,
-    redirect: '/catalogs/notifications',
+    redirect: '/catalogs/operators',
     name: 'Catalogs',
     meta: { title: 'Catalogs', icon: 'icon-docs' },
     children: [
+      {
+        path: 'operators',
+        name: 'Operators',
+        component: () => import('@/views/catalogs/index'), // Parent router-view,
+        meta: { title: 'Operators', icon: 'icon-comments' }
+      },
       {
         path: 'notifications',
         name: 'Notifications',
@@ -148,30 +153,23 @@ export const constantRouterMap = [
   {
     path: '/contacts',
     component: Layout,
-    redirect: '/contacts',
-    name: 'Contacts',
-    meta: {
-      title: 'Contacts',
-      icon: 'icon-users'
-    },
+    //redirect: '/contacts/operators',
     children: [
       {
-        path: '/contacts',
-        component: () => import('@/views/operators/index'), // Parent router-view
-        name: 'Operators',
-        meta: { title: 'Operators' }
+        path: '',
+        name: 'Contacts',
+        component: () => import('@/views/contacts/index'), // Parent router-view
+        meta: { title: 'Contacts', icon: 'icon-users' }
       }
     ]
   },
   {
     path: '/report',
     component: Layout,
-    redirect: 'Report',
-    meta: { title: 'General report', icon: 'icon-bar-chart', noCache: true },
-    name: 'General Report',
+    // redirect: 'report',
     children: [
       {
-        path: 'principal',
+        path: '',
         component: () => import('@/views/general_report/genreport'),
         name: 'General report',
         meta: { title: 'General report', icon: 'icon-bar-chart', noCache: true }
@@ -181,7 +179,7 @@ export const constantRouterMap = [
   {
     path: '/user_settings',
     component: Layout,
-    redirect: 'user_settings',
+    // redirect: 'user_settings',
     children: [
       {
         path: '',
@@ -194,7 +192,7 @@ export const constantRouterMap = [
   {
     path: '/settings',
     component: Layout,
-    redirect: 'settings',
+    // redirect: 'settings',
     children: [
       {
         path: '',

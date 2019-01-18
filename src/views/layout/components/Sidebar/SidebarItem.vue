@@ -29,13 +29,14 @@
       :class="{ 'nav-parent': hasChildren(item) }"
     >
       <i :class="item.meta.icon"></i><span>{{ item.name }}</span>
+      <i class="fa arrow"></i>
     </a>
     <ul class="children collapse">
       <router-link
         v-for="child in item.children"
         :key="child.name"
         tag="li"
-        class="children collapse"
+        class=""
         :to="item.path+'/'+child.path"
         active-class="active">
         <a>

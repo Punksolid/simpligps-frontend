@@ -3,7 +3,7 @@
     <div class="sidebar-inner">
       <div class="logopanel">
         <h1>
-          <a href="dashboard.html"></a>
+          <router-link to="/"></router-link>
         </h1>
       </div>
       <ul
@@ -16,7 +16,6 @@
         text-color="#282828"
         active-text-color="#409EFF"
       >
-
         <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"></sidebar-item>
       </ul>
     </div>

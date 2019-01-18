@@ -8,11 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import '@/styles/index.scss' // global css
 
-// import '@/styles/style.css' // make GLOBAL
-// import '@/styles/theme.css' // make global
-// import '@/styles/ui.css' // make global
 // import '@/styles/bootstrap.min.css' // make
-// import '@/styles/fontawesome-all.min.css'
+
+import '@/assets/global/css/fontawesome-all.css'
 import '@/styles/iofrm-style.css' // make
 import '@/styles/iofrm-theme9.css' // make
 
@@ -29,13 +27,15 @@ import router from './router'
 import store from './store'
 
 // personalizado font-awesome
+/* FontAwesome component
 import { library } from '@fortawesome/fontawesome-svg-core'
+
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(fas)
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon) */
 
 Vue.config.productionTip = false
 
