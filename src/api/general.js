@@ -37,3 +37,10 @@ export function deleteUser(user_id) {
     method: 'DELETE'
   })
 }
+
+export function getWialonNotifications() {
+  return request({
+    url: 'v1/wialon/notifications',
+    method: 'GET'
+  })
+}
