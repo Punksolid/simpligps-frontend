@@ -30,3 +30,10 @@ export function getContacts(params) {
     params
   })
 }
+
+export function deleteUser(user_id) {
+  return request({
+    url: 'v1/users/' + user_id,
+    method: 'DELETE'
+  })
+}
