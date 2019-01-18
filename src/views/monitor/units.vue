@@ -1,118 +1,117 @@
 <template>
   <div>
-    <el-autocomplete
-      v-model="search"
-      :fetch-suggestions="querySearchAsync"
-      placeholder="Search unit"
-      @select="handleSelect"
-    ></el-autocomplete>
+    <el-autocomplete v-model="search" :fetch-suggestions="querySearchAsync" placeholder="Search unit" @select="handleSelect"></el-autocomplete>
 
     <div style="margin-top: 30px">
-
       <el-table
-        data="operatorsList"
-        style="width: 90%">
-        asdasdsa
-        <el-table-column
-                        :data="units"
-                         type="expand">
+      :data="unitsList"
+          style="width: 100%">
+        <el-table-column type="expand">
 
           <template slot-scope="props">
             <el-tabs type="border-card">
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Details</span>
-                <div class="card-panel-icon-wrapper icon-people">
-                  <i class="el-icon-info"></i>
-                </div>
-                <div class="card-panel-description">
-                  <h3>Truck: Freightliner FL 200</h3>
-                  <el-button type="success" @click="dialogVisible = true">View details</el-button>
-                </div>
-              </el-tab-pane>
-              <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Monitoring Route</span>
-                <div>
-                  <div class="block">
-                    <div style="margin-top: 10px"> Operator 1
-                      <el-cascader
-style="padding: 10px"
-                                   :options="options"
-                                   v-model="selectedOptions"
-                                   @change="handleChange">
-                      </el-cascader>
-                    </div>
-                    <div style="margin-top: 10px"> Operator 2
-                      <el-cascader
-style="padding: 10px"
-                                   :options="options"
-                                   v-model="selectedOptions"
-                                   @change="handleChange">
-                      </el-cascader>
-                    </div>
-                    <div style="margin-top: 10px"> Trailer 1
-                      <el-cascader
-style="padding: 10px"
-                                   :options="options"
-                                   v-model="selectedOptions"
-                                   @change="handleChange">
-                      </el-cascader>
-                    </div>
-                    <div style="margin-top: 10px"> Trailer 2
-                      <el-cascader
-style="padding: 10px"
-                                   :options="options"
-                                   v-model="selectedOptions"
-                                   @change="handleChange">
-                      </el-cascader>
-                    </div>
-
-</div>
-    </div>
-  </el-tab-pane>
-  <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> Truck and operator</span>
-    <div class="card-panel-icon-wrapper icon-people">
-          <i class="el-icon-info"></i>
-        </div>
-        <div class="card-panel-description">
-          <h3>First time here?</h3>
-          <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+                  <div class="card-panel-icon-wrapper icon-people">
+                    <i class="el-icon-info"></i>
                   </div>
-                </div>
+                  <div class="card-panel-description">
+                      <h3>Truck: Freightliner FL 200</h3>
+                      <el-button type="success" @click="dialogVisible = true">View details</el-button>
+                  </div>
               </el-tab-pane>
               <el-tab-pane>
+                          <span slot="label"><i class="el-icon-date"></i> Monitoring Route</span>
+                <div>
+                      <div class="block">
+                        <div style="margin-top: 10px"> Operator 1
+                          <el-cascader style="padding: 10px"
+                            :options="options"
+                            v-model="selectedOptions"
+                            @change="handleChange">
+                          </el-cascader>
+                        </div>
+                      <div style="margin-top: 10px"> Operator 2
+                          <el-cascader style="padding: 10px"
+                            :options="options"
+                            v-model="selectedOptions"
+                            @change="handleChange">
+                          </el-cascader>
+                        </div>
+                        <div style="margin-top: 10px"> Trailer 1
+                          <el-cascader style="padding: 10px"
+                            :options="options"
+                            v-model="selectedOptions"
+                            @change="handleChange">
+                          </el-cascader>
+                        </div>
+                        <div style="margin-top: 10px"> Trailer 2
+                          <el-cascader style="padding: 10px"
+                            :options="options"
+                            v-model="selectedOptions"
+                            @change="handleChange">
+                          </el-cascader>
+                        </div>
+
+                  </div>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Truck and operator</span>
                 <div class="card-panel-icon-wrapper icon-people">
-                  <i class="el-icon-info"></i>
-                </div>
-                <div class="card-panel-description">
-                  <h3>First time here?</h3>
-                  <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+                      <i class="el-icon-info"></i>
+                    </div>
+                    <div class="card-panel-description">
+                      <h3>First time here?</h3>
+                      <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
                 </div>
               </el-tab-pane>
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Route</span>
                 <div class="card-panel-icon-wrapper icon-people">
-                  <i class="el-icon-info"></i>
-                </div>
-                <div class="card-panel-description">
-                  <h3>First time here?</h3>
-                  <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
-                </div>
+                      <i class="el-icon-info"></i>
+                    </div>
+                    <div class="card-panel-description">
+                      <h3>First time here?</h3>
+                      <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+                    </div>
               </el-tab-pane>
 
             </el-tabs>
-
           </template>
         </el-table-column>
         <el-table-column
-          label="Fecha"
-          prop="date">
+          prop="name"
+          label="Name"
+          width="180">
         </el-table-column>
         <el-table-column
-          label="Nombre"
-          prop="name">
+          prop="measure_units"
+          label="Measure Units"
+          width="180">
         </el-table-column>
+        <el-table-column
+          prop="position.lat"
+          label="Latitude">
+        </el-table-column>
+        <el-table-column
+          prop="position.lon"
+          label="Longitude">
+        </el-table-column>
+        <el-table-column
+      label="Action">>
+
+        <el-row>
+
+<el-button type="info" disabled icon="el-icon-edit" circle></el-button>
+                            <el-button type="success" icon="el-icon-check" circle></el-button>
+                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+        </el-row>
+
+      </el-table-column>
+    </el-table>
+
       </el-table>
 
     </div>
@@ -135,7 +134,13 @@ style="padding: 10px"
         <div class="col-md-6"></div>
         <div class="col-md-6"></div>
       </div>
-      <div style="margin-top: 20px">
+
+  </div>
+
+    <!--PAGER-->
+
+
+  <div style="margin-top: 20px">
         <el-pagination
           :page-size="20"
           :pager-count="11"
@@ -145,33 +150,6 @@ style="padding: 10px"
       </div>
     </div>
 
-    <!--INICIO CODIGO @author Chema se trata de que se revise como funciona para implementar en la vista final-->
-    <el-table
-      :data="unitsList"
-      style="width: 100%">
-      <el-table-column
-        prop="name"
-        label="Name"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="measure_units"
-        label="Measure Units"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="position.lat"
-        label="Latitude">
-      </el-table-column>
-      <el-table-column
-        prop="position.lon"
-        label="Longitude">
-      </el-table-column>
-    </el-table>
-
-    <!--FIN CODIGO CHEMA-->
-
-  </div>
 
 </template>
 
@@ -238,7 +216,7 @@ style="padding: 10px"
 
       setInterval(function() {
         this.fetchUnitsList()
-      }.bind(this), 10000) // milisegundos
+      }.bind(this), 30000) // milisegundos
     }
   }
 </script>
