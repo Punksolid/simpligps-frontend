@@ -38,6 +38,21 @@ export function deleteUser(user_id) {
   })
 }
 
+export function getCarriers(params) {
+  return request({
+    url: 'v1/carriers',
+    method: 'GET',
+    params
+  })
+}
+export function createCarrier(params) {
+  return request({
+    url: 'v1/carriers',
+    method: 'post',
+    params
+  })
+}
+
 export function getWialonNotifications() {
   return request({
     url: 'v1/wialon/notifications',

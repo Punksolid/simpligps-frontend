@@ -76,6 +76,46 @@
                       <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
                     </div>
               </el-tab-pane>
+              <el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i> Add group risk</span>
+                <div class="card-panel-icon-wrapper icon-people">
+
+                    </div>
+                    <div class="card-panel-description">
+                      <template>
+                          <el-table
+                            ref="multipleTable"
+                            :data="mockTable"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                            <el-table-column
+                              type="selection"
+                              width="55">
+                            </el-table-column>
+                            <el-table-column
+                              property="id_group"
+                              label="ID group"
+                              width="120">
+                              <template slot-scope="scope">{{ scope.row.date }}</template>
+                            </el-table-column>
+                            <el-table-column
+                              property="hour"
+                              label="Hour"
+                              width="120">
+                            </el-table-column>
+                            <el-table-column
+                              property="extern_monitor"
+                              label="Extern Monitor"
+                              show-overflow-tooltip>
+                            </el-table-column>
+                          </el-table>
+                          <div style="margin-top: 20px">
+                            <el-button @click="toggleSelection([tableData3[1], tableData3[2]])">Apply</el-button>
+                            <el-button @click="toggleSelection()">Clean Selection</el-button>
+                          </div>
+                        </template>
+                    </div>
+              </el-tab-pane>
 
             </el-tabs>
           </template>
@@ -99,17 +139,15 @@
           label="Longitude">
         </el-table-column>
         <el-table-column
-      label="Action">>
+      label="Action">
+              <template slot-scope="scope">
 
-        <el-row>
-
-<el-button type="info" disabled icon="el-icon-edit" circle></el-button>
-                            <el-button type="success" icon="el-icon-check" circle></el-button>
-                            <el-button type="success" icon="el-icon-star-off" circle></el-button>
-                            <el-button type="danger" icon="el-icon-delete" circle></el-button>
-        </el-row>
-
-      </el-table-column>
+          <el-button type="info" disabled icon="el-icon-edit" size="mini" circle></el-button>
+          <el-button type="success" icon="el-icon-check" size="mini" circle></el-button>
+          <el-button type="success" icon="el-icon-star-off" size="mini" circle></el-button>
+                            <el-button type="danger" icon="el-icon-delete" size="mini" circle ></el-button>
+          </template>
+        </el-table-column>
     </el-table>
 
       </el-table>
@@ -153,12 +191,31 @@
 
 </template>
 
+
+
+
+
 <script>
   import { getUnits } from '../../api/units.js'
 
   export default {
     data() {
       return {
+        mockTable: [{
+          id_group: '2016-05-03',
+          hour: 'Tom',
+          extern_monitor: 'No. 189, Grove St, Los Angeles'
+        },
+        {
+          id_group: '2016-05-03',
+          hour: 'Tom',
+          extern_monitor: 'No. 189, Grove St, Los Angeles'
+        },
+        {
+          id_group: '2016-05-03',
+          hour: 'Tom',
+          extern_monitor: 'No. 189, Grove St, Los Angeles'
+        }],
         unitsList: [{
           name: '',
           id: '',
@@ -171,6 +228,8 @@
         search: '',
         timeout: null
       }
+
+
     },
     methods: {
       loadAll() {

@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" label-width="120px">
+    <div style="background-color: #fff">
+      <div style="padding: 10px">
+<el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name"/>
       </el-form-item>
@@ -44,6 +46,11 @@
         <el-button @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
+
+    </div>
+        </div>
+
+
   </div>
 </template>
 
