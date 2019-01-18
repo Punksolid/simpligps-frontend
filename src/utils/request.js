@@ -3,6 +3,7 @@ import { Message } from 'element-ui'
 // import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
+import { ErrorsHandling } from './errors_handling'
 
 // create an axios instance
 const service = axios.create({
@@ -34,20 +35,8 @@ service.interceptors.response.use(function(response) {
   return response
 }, function(error) {
   // Do something with response error
-  console.log(error)
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    if (error.code === 422) {
-      Message({
-        message: error.response.data.message,
-        type: 'error',
-        duration: 5 * 1000
-      })
-    }
-  return Promise.reject(error)
+  return ErrorsHandling(error)
+// eeee
 })
 
 // response interceptor

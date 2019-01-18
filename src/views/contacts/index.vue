@@ -1,113 +1,90 @@
 <template>
   <div>
-    <el-button type="primary" @click="dialogVisible = true">Create Contact</el-button>
+    <el-button type="primary" @click="dialogVisible = true">Create Contacts</el-button>
 
     <el-dialog
-      title="Create Contact"
+      title="Create Contacts"
       :visible.sync="dialogVisible"
       width="30%">
       <span>
-            <CreateOperator></CreateOperator>
+            <CreateContacts></CreateContacts>
       </span>
       <!--<span slot="footer" class="dialog-footer">-->
-        <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
-        <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
+      <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
+      <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
       <!--</span>-->
+
     </el-dialog>
+    <div style="margin-top: 30px">
 
-    <el-table
-      :data="contactsList"
-      stripe
-      border
-      style="width: 100%">
-      <el-table-column
-        prop="name"
-        label="Name"
-        width="180">
-      </el-table-column>
-       <el-table-column
-        prop="company"
-        label="Company"
-        width="180">
-      </el-table-column>
-       <el-table-column
-        prop="phone"
-        label="Phone"
-        width="180">
-      </el-table-column>
-
-      <el-table-column
-        prop="email"
-        label="E-mail"
-        width="180">
+      <el-table
+        :data="operatorsList"
+        border
+        style="width: 80%">
+        <el-table-column
+          prop="name"
+          label="Name"
+          width="180">
         </el-table-column>
-         <el-table-column
-        prop="address"
-        label="Adress"
-        width="180">
+        <el-table-column
+          prop="company"
+          label="Company"
+          width="180">
         </el-table-column>
-         <el-table-column
-        prop="created_at"
-        label="Created at"
-        width="180">
-      </el-table-column>
-
-            </el-table-column>
-
-      </el-table-column>
-
-    </el-table>
+        <el-table-column
+          prop="phone"
+          label="Phone"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="email"
+          label="E-Mail"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="active"
+          label="Active">
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
 <script>
-  import CreateOperator from './create.vue'
+  import CreateContacts from './create.vue'
+  import { getContacts } from '@/api/general'
 
   export default {
-    name: 'OperatorsList',
+    name: 'ContactsList',
     components: {
-      CreateOperator
+      CreateContacts
     },
     data() {
       return {
-        contactsList: [{
-            "name": "Dr. Tabitha Connelly DDS",
-            "company": "Kerluke Group",
-            "phone": "1-660-432-1055 x46628",
-            "email": "hessel.selina@murphy.org",
-            "address": "457 Little Rue\nKadehaven, NH 67106",
-            "created_at": "2 weeks ago"
-        },
-        {
-            "name": "Rosie Beier",
-            "company": "Dooley PLC",
-            "phone": "+1 (386) 587-7308",
-            "email": "alphonso06@yahoo.com",
-            "address": "46393 Deckow Views Apt. 033\nKamillechester, WV 53976",
-            "created_at": "2 weeks ago"
-        },
-        {
-            "name": "Giacomo Puccini",
-            "company": "Sr. Pelo PLC",
-            "phone": "+1 (386) 587-7308",
-            "email": "giacomoxd@yahoo.com",
-            "address": "46393 Deckow Views Apt. 033\nKamillechester, WV 53976",
-            "created_at": "1 week ago"
-        },
-        {
-            "name": "Arturo Chacón",
-            "company": "Maggie's",
-            "phone": "+1 (386) 587-7308",
-            "email": "rooster@yahoo.com",
-            "address": "Iron River Ranch 1-A\nGarrison, CO 53976",
-            "created_at": "2 weeks ago"
-        }],
+        operatorsList: [],
         dialogVisible: false
       }
     },
+    params: {
+      return: {
+        tableData4: []
+      }
+    },
     methods: {
-    }
+      fetchContactList() {
+        this.listLoading = true
+        getContacts().then(response => {
+          console.log (response.data.data)
+          this.operatorsList = response.data.data
+          this.listLoading = false
+        })
+      }
+    },
+    created() {
+      this.fetchContactList()
+    },
   }
+
 </script>
 
 <style scoped>

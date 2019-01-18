@@ -12,7 +12,7 @@
   </span>
 
     </el-dialog>
-<div style="margin-top: 30px">
+    <div style="margin-top: 30px">
       <el-table
         :data="usersListData"
         style="width: 100%"
@@ -44,21 +44,22 @@
           width="150">
           <template slot-scope="scope">
             <el-button
-              @click.native.prevent="deleteRow(scope.$index, tableData4)"
+              @click.native.prevent="deleteRow(scope.$index, usersListData)"
               type="text"
               size="small">
               Remove
             </el-button>
           </template>
-      </el-table-column>
-    </el-table>
-      </div>
-      </div>
+        </el-table-column>
+      </el-table>
+    </div>
+  </div>
 </template>
 
 <script>
   import CreateUser from './create.vue'
   import { usersList } from '../../api/users'
+  import { deleteUser } from '../../api/general'
 
   export default {
     name: 'Users',
@@ -67,12 +68,13 @@
     },
     params: {
       return: {
-        tableData4: []
+        usersListData: []
       }
     },
     methods: {
-      deleteRow(index, rows) {
-        rows.splice(index, 1)
+      deleteRow(index, userListData) {
+        deleteUser(userListData[index].id)
+        this.fetchUsersList()
       },
       open() {
         this.$alert('This is a message', 'Title', {

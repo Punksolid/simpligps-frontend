@@ -15,8 +15,9 @@
             <div class="website-logo-inside">
                 <div class="logo">
                   <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM">
-                  <div style="margin-top:20px">
-                  <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
+                  <div class="status">
+                    <span class="label">STATUS:</span>
+                    <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
                   </div>
                 </div>
             </div>
@@ -137,14 +138,61 @@
   }
 </script>
 <style type="text/scss" lang="scss" scoped>
+.form-content .form-items {
+  display: block;
+}
+.website-logo-inside {
+    margin-bottom: 30px;
+}
+.website-logo-inside .logo {
+    display: flex;
+}
+.website-logo-inside .logo img {
+    width: auto;
+    margin-right: 20px;
+    height: 75px;
+    order: 1;
+}
+.status {
+    margin-top: 4px;
+    order: 2;
+    border: 1px solid #ffffff80;
+    padding: 3px 10px 0px;
+}
+.status .label {
+    font-size: 10px;
+    color: #fff;
+    background: #074e88;
+    padding: 0px 10px;
+    vertical-align: top;
+    position: relative;
+    top: -10px;
+}
 .el-form-item {
   margin-bottom: 0px;
 }
 .dot {
-  height: 25px;
-  width: 25px;
-  /*background-color: RED;*/
-  border-radius: 50%;
-  display: inline-block;
+    height: 20px;
+    width: 35px;
+    margin: auto;
+    border-radius: 0px;
+    display: block;
+}
+@media (max-width: 480px) {
+.form-holder .form-content {
+    padding: 100px 45px 45px;
+}
+.status {
+  margin-top: 25px;
+}
+.dot {
+    height: 10px;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+.website-logo-inside .logo {
+      flex-direction: column;
+   }
 }
 </style>

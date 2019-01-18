@@ -14,3 +14,26 @@ export function getResources(params) {
     params
   })
 }
+
+export function createContacts(params) {
+  return request({
+    url: 'v1/contacts',
+    method: 'post',
+    params
+  })
+}
+
+export function getContacts(params) {
+  return request({
+    url: 'v1/contacts',
+    method: 'get',
+    params
+  })
+}
+
+export function deleteUser(user_id) {
+  return request({
+    url: 'v1/users/' + user_id,
+    method: 'DELETE'
+  })
+}

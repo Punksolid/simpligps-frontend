@@ -33,7 +33,7 @@ export const constantRouterMap = [
     hidden: false,
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
         meta: { title: 'Dashboard', icon: 'icon-home', noCache: true }
@@ -48,7 +48,7 @@ export const constantRouterMap = [
       {
         path: '',
         component: () => import('@/views/users/index'),
-        name: 'users',
+        name: 'Users',
         meta: { title: 'Users', icon: 'icon-users', noCache: true }
       }
     ]
@@ -59,24 +59,24 @@ export const constantRouterMap = [
     children: [
       {
         path: '',
-        name: 'units',
+        name: 'Units',
         component: () => import('@/views/monitor/units'),
         meta: { title: 'Units', icon: 'icon-cursor' }
       }
     ]
   },
   {
-    path: '/example',
+    path: '/monitoring',
     component: Layout,
-    redirect: '/monitoring/table',
+    redirect: '/monitoring/new_trip',
     // redirect: '/example/table',
     name: 'Monitoring',
-    meta: { title: 'Monitoring has childs', icon: 'icon-eye' },
+    meta: { title: 'Monitoring', icon: 'icon-eye' },
     children: [
       {
         path: 'new_trip',
         name: 'New Trip',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/monitoring/index'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
       },
       {
@@ -105,14 +105,19 @@ export const constantRouterMap = [
       }
     ]
   },
-
   {
     path: '/catalogs',
     component: Layout,
-    redirect: '/catalogs/notifications',
+    redirect: '/catalogs/operators',
     name: 'Catalogs',
     meta: { title: 'Catalogs', icon: 'icon-docs' },
     children: [
+      {
+        path: 'operators',
+        name: 'Operators',
+        component: () => import('@/views/catalogs/index'), // Parent router-view,
+        meta: { title: 'Operators', icon: 'icon-comments' }
+      },
       {
         path: 'notifications',
         name: 'Notifications',
@@ -148,29 +153,24 @@ export const constantRouterMap = [
   {
     path: '/contacts',
     component: Layout,
-    redirect: '/contacts',
-    name: 'Contacts',
-    meta: {
-      title: 'Contacts',
-      icon: 'icon-users'
-    },
+    //redirect: '/contacts/operators',
     children: [
       {
-        path: '/contacts',
-        component: () => import('@/views/operators/index'), // Parent router-view
-        name: 'Operators',
-        meta: { title: 'Operators' }
+        path: '',
+        name: 'Contacts',
+        component: () => import('@/views/contacts/index'), // Parent router-view
+        meta: { title: 'Contacts', icon: 'icon-users' }
       }
     ]
   },
   {
-    path: '/Report',
+    path: '/report',
     component: Layout,
-    redirect: 'Report',
+    // redirect: 'report',
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/general report/genreport'),
+        path: '',
+        component: () => import('@/views/general_report/genreport'),
         name: 'General report',
         meta: { title: 'General report', icon: 'icon-bar-chart', noCache: true }
       }
@@ -179,7 +179,7 @@ export const constantRouterMap = [
   {
     path: '/user_settings',
     component: Layout,
-    redirect: 'user_settings',
+    // redirect: 'user_settings',
     children: [
       {
         path: '',
@@ -192,7 +192,7 @@ export const constantRouterMap = [
   {
     path: '/settings',
     component: Layout,
-    redirect: 'settings',
+    // redirect: 'settings',
     children: [
       {
         path: '',

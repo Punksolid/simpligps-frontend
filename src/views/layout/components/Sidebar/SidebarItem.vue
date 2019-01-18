@@ -1,6 +1,14 @@
 <template>
   <!-- el elemento li va SIEMPRE, sea link normal o sea elemento para submenú -->
-  <router-link v-if="hasChildren(item)&&hasOnlyOneChild(item)" tag="li" class="nav-active nav-parent" :to="item.path" active-class="active" exact>
+  <router-link v-if="hasChildren(item)&&hasOnlyOneChild(item)"
+              tag="li"
+              class="nav-active nav-parent"
+              :to="item.path"
+              @mouseover.native="hover = true"
+              @mouseleave.native="hover = false"
+              :class="{'nav-hover': hover}"
+              active-class="active"
+              exact>
     <a
       class="elementos"
       :class="{ 'nav-parent': hasOnlyOneChild(item) }"
@@ -8,19 +16,27 @@
       <i :class="item.hasOwnProperty('meta') ? item.meta.icon : item.children[0].meta.icon"></i><span>{{ item.name || item.children[0].name }}</span>
     </a>
   </router-link>
-  <router-link v-else tag="li" class="nav-active nav-parent" :to="item.path" active-class="active">
+  <router-link v-else
+                class="nav-active nav-parent"
+                :to="item.path"
+                tag="li"
+                @mouseover.native="hover = true"
+                @mouseleave.native="hover = false"
+                :class="{'nav-hover': hover}"
+                active-class="active">
     <a
       class="elementos"
       :class="{ 'nav-parent': hasChildren(item) }"
     >
       <i :class="item.meta.icon"></i><span>{{ item.name }}</span>
+      <i class="fa arrow"></i>
     </a>
     <ul class="children collapse">
       <router-link
         v-for="child in item.children"
         :key="child.name"
         tag="li"
-        class="children collapse"
+        class=""
         :to="item.path+'/'+child.path"
         active-class="active">
         <a>
@@ -66,7 +82,8 @@
     },
     data() {
       return {
-        onlyOneChild: null // @todo innescesario pero no supe como poner un default
+        onlyOneChild: null, // @todo innescesario pero no supe como poner un default
+        hover: false
       }
     },
     methods: {
