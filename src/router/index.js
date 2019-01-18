@@ -164,13 +164,15 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/Report',
+    path: '/report',
     component: Layout,
     redirect: 'Report',
+    meta: { title: 'General report', icon: 'icon-bar-chart', noCache: true },
+    name: 'General Report',
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/general report/genreport'),
+        path: 'principal',
+        component: () => import('@/views/general_report/genreport'),
         name: 'General report',
         meta: { title: 'General report', icon: 'icon-bar-chart', noCache: true }
       }
