@@ -190,6 +190,19 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/notifications',
+    component: Layout,
+    redirect: 'notifications',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/notifications/index'),
+        name: 'Notifications',
+        meta: { title: 'Notifications', icon: 'icon-settings', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/settings',
     component: Layout,
     // redirect: 'settings',
@@ -199,19 +212,6 @@ export const constantRouterMap = [
         component: () => import('@/views/settings/settings'),
         name: 'System Settings',
         meta: { title: 'System Settings', icon: 'icon-settings', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/notifications',
-    component: Layout,
-    redirect: 'notifications',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/notifications/index'),
-        name: 'Create notification',
-        meta: { title: 'Create Notification', icon: 'icon-settings', noCache: true }
       }
     ]
   }

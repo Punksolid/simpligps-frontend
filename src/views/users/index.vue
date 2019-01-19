@@ -35,7 +35,7 @@
         </el-table-column>
         <el-table-column
           prop="username"
-          label="City"
+          label="Username"
           width="150">
         </el-table-column>
         <el-table-column
