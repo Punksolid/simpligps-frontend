@@ -16,10 +16,9 @@
     <el-input v-model="form.address"></el-input>
   </el-form-item>
 
-  <el-form-item>
-    <el-button>Cancel</el-button>
-    <el-button type="primary" @click="onSubmit">Create</el-button>
-  </el-form-item>
+  <!--<el-form-item>
+    <el-button type="primary">Create</el-button>
+  </el-form-item>-->
 </el-form>
 </template>
 
@@ -42,8 +41,9 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    onSubmit: function() {
       createContacts(this.form).then(response => {
+        this.$emit('toparent')
         Message({
           message: 'Contact ' + response.data.data.name + ' created',
           type: 'success',

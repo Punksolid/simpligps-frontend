@@ -1,15 +1,6 @@
 <template>
-  <span>
-    <div
-      :class="{'is-active':isActive}"
-      t="1492500959545"
-      class="hamburger"
-      style=""
-      width="64"
-      height="64"
-      @click="toggleClick">
-      <span></span>
-    </div>
+  <span :class="{'is-active':isActive}" class="hamburger" @click="toggleClick">
+    <span>Menu</span>
   </span>
 </template>
 
@@ -30,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-.hamburger {
+/*.hamburger {
   display: inline-block;
   cursor: pointer;
   width: 20px;
@@ -40,5 +31,5 @@ export default {
 }
 .hamburger.is-active {
   transform: rotate(0deg);
-}
+}*/
 </style>
