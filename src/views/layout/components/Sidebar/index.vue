@@ -34,7 +34,6 @@
         'sidebar'
       ]),
       routes() {
-        console.log(this.$router.options.routes)
         return this.$router.options.routes.filter(function(route) {
           return !route.hidden
         })

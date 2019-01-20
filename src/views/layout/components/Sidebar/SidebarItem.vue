@@ -1,6 +1,7 @@
 <template>
   <!-- el elemento li va SIEMPRE, sea link normal o sea elemento para submenú -->
-  <router-link v-if="hasChildren(item)&&hasOnlyOneChild(item)"
+  <router-link
+              v-if="hasChildren(item)&&hasOnlyOneChild(item)"
               tag="li"
               class="nav-active nav-parent"
               :to="item.path"
@@ -16,7 +17,8 @@
       <i :class="item.hasOwnProperty('meta') ? item.meta.icon : item.children[0].meta.icon"></i><span>{{ item.name || item.children[0].name }}</span>
     </a>
   </router-link>
-  <router-link v-else
+  <router-link
+                v-else
                 class="nav-active nav-parent"
                 :to="item.path"
                 tag="li"
@@ -45,23 +47,7 @@
       </router-link>
     </ul>
   </router-link>
-  <!--<li-->
-    <!--class="nav nav-active"-->
-    <!--v-if="!item.hidden"-->
-    <!--:class="{ 'nav-parent':hasChildren(item)}"-->
-  <!--&gt;-->
-    <!--<a class="testing">-->
-        <!--<i class="icon-users"></i>-->
-        <!--<span>-->
-        <!--<router-link :to="item.path" class="testing active" active-class="active">-->
-          <!--<span>{{ item.name }} - {{ hasChildren(item) }}ee</span>-->
-        <!--</router-link>-->
-        <!--</span>-->
-    <!--</a>-->
-    <!--<ul class="children" v-if="hasChildren(item)">-->
-      <!--exito-->
-    <!--</ul>-->
-  <!--</li>-->
+
 </template>
 
 <script>
@@ -89,13 +75,12 @@
     methods: {
       hasChildren(item) {
         if (item.hasOwnProperty('children')) {
-          console.log('si tiene children')
           return true
         } else {
           return false
         }
       },
-      hasOnlyOneChild(item){
+      hasOnlyOneChild(item) {
         if (item.children.length === 1) {
           return true
         } else {

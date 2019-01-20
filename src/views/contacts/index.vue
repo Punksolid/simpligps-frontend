@@ -83,19 +83,19 @@
       fetchContactList() {
         this.listLoading = true
         getContacts().then(response => {
-          console.log (response.data.data)
+          console.log(response.data.data)
           this.operatorsList = response.data.data
           this.listLoading = false
         })
       },
-      buttonDeleteContact(contact_id,row) {
+      buttonDeleteContact(contact_id, row) {
         console.log(contact_id, row)
         deleteContact(contact_id)
       }
     },
     created() {
       this.fetchContactList()
-    },
+    }
   }
 
 </script>

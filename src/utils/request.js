@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
 // import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
@@ -36,7 +35,6 @@ service.interceptors.response.use(function(response) {
 }, function(error) {
   // Do something with response error
   return ErrorsHandling(error)
-// eeee
 })
 
 // response interceptor

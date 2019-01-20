@@ -1,60 +1,20 @@
 <template>
     <div class="dashboard-container">
-        <panel-group @handleSetLineChartData="handleSetLineChartData"/>
 
     <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div>
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-        <div class="card-panel-icon-wrapper icon-people">
-          <i class="el-icon-info"></i>
-        </div>
-        <div class="card-panel-description">
-          <h4>First time here?</h4>
-          <h6>Check all the new features</h6>
-          <el-button size="small" type="primary" @click="dialogVisible = true">Check more!</el-button>
-        </div>
-      </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <i class="el-icon-loading"></i>
-        </div>
-        <div class="card-panel-description">
-          <h4>Active trips</h4>
-          <h6>Last actived trips:1</h6>
-          <el-button size="small" type="primary" @click="dialogVisible = true">view all</el-button>
-        </div>
-      </div>
-    </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <i class="el-icon-success"></i>
+      <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+        <div class="card-panel">
+          <div class="card-panel-icon-wrapper icon-shopping">
+            <i class="el-icon-error"></i>
+          </div>
+          <div class="card-panel-description">
+            <h4>Attention required!</h4>
+            <h6>Check Max alerts</h6>
+            <el-button size="small" type="danger" @click="dialogVisible = true">view alerts</el-button>
+          </div>
         </div>
-        <div class="card-panel-description">
-          <h4>Finished trips</h4>
-          <h6>Last finished trips:1</h6>
-          <el-button size="small" type="primary" @click="dialogVisible = true">view all</el-button>
-        </div>
-      </div>
-    </el-col>
-
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <i class="el-icon-error"></i>
-        </div>
-        <div class="card-panel-description">
-          <h4>Attention required!</h4>
-          <h6>Check Max alerts</h6>
-          <el-button size="small" type="danger" @click="dialogVisible = true">view alerts</el-button>
-        </div>
-      </div>
-    </el-col>
+      </el-col>
     </el-row>
 
     </div>
@@ -65,7 +25,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
-  components: {  },
   computed: {
     ...mapGetters([
       'name',

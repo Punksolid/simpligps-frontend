@@ -54,18 +54,6 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/monitor',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'Units',
-        component: () => import('@/views/monitor/units'),
-        meta: { title: 'Units', icon: 'icon-cursor' }
-      }
-    ]
-  },
-  {
     path: '/monitoring',
     component: Layout,
     redirect: '/monitoring/new_trip',
@@ -73,6 +61,12 @@ export const constantRouterMap = [
     name: 'Monitoring',
     meta: { title: 'Monitoring', icon: 'icon-eye' },
     children: [
+      {
+        path: '',
+        name: 'Units',
+        component: () => import('@/views/monitor/units'),
+        meta: { title: 'Units', icon: 'icon-cursor' }
+      },
       {
         path: 'new_trip',
         name: 'New Trip',
@@ -96,12 +90,6 @@ export const constantRouterMap = [
         name: 'High Risk Group',
         component: () => import('@/views/tree/index'),
         meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
-      },
-      {
-        path: 'units',
-        name: 'Units',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Units', icon: 'icon-cursor' }
       }
     ]
   },
@@ -115,14 +103,8 @@ export const constantRouterMap = [
       {
         path: 'operators',
         name: 'Operators',
-        component: () => import('@/views/catalogs/index'), // Parent router-view,
+        component: () => import('@/views/catalogs/operators/index'), // Parent router-view,
         meta: { title: 'Operators', icon: 'icon-comments' }
-      },
-      {
-        path: 'notifications',
-        name: 'Notifications',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Notifications', icon: 'icon-comments' }
       },
       {
         path: 'carriers',
@@ -153,7 +135,6 @@ export const constantRouterMap = [
   {
     path: '/contacts',
     component: Layout,
-    //redirect: '/contacts/operators',
     children: [
       {
         path: '',

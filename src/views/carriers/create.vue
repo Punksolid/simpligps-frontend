@@ -26,7 +26,7 @@
   import { Message } from 'element-ui'
 
   export default {
-    name: 'createCarrier',
+    name: 'CreateCarrier',
     data() {
       return {
         form: {
@@ -34,7 +34,7 @@
           contact_name: '',
           phone: '',
           email: ''
-          },
+          }
       }
     },
 
@@ -48,13 +48,10 @@
           })
         })
       }
-    },
+    }
 
   }
 </script>
-
-
-
 
 <style scoped>
 .user-form{
@@ -62,9 +59,3 @@
 }
 </style>
 
-
-
-
-<style scoped>
-
-</style>
