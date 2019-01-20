@@ -69,7 +69,7 @@
       fetchCarriersList() {
         this.listLoading = true
         getCarriers(this.carriersListData).then(response => {
-          console.log (response.data.data)
+          console.log(response.data.data)
           this.carriersList = response.data.data
           this.listLoading = false
         })
@@ -77,7 +77,7 @@
     },
     created() {
       this.fetchCarriersList()
-    },
+    }
     }
 
 </script>

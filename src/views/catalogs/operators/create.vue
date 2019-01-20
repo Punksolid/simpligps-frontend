@@ -23,7 +23,7 @@
 </template>
 
 <script>
- import { createOperator } from '../../api/catalogs'
+ import { createOperator } from '../../../api/catalogs'
   import { Message } from 'element-ui'
 
   export default {
@@ -34,7 +34,7 @@
           name: '',
           phone: '',
           active: '1'
-          },
+          }
       }
     },
 
@@ -48,22 +48,16 @@
           })
         })
       }
-    },
+    }
 
   }
 </script>
-
-
-
 
 <style scoped>
 .user-form{
   width: 800px;
 }
 </style>
-
-
-
 
 <style scoped>
 

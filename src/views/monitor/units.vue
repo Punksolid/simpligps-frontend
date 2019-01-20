@@ -25,28 +25,32 @@
                 <div>
                       <div class="block">
                         <div style="margin-top: 10px"> Operator 1
-                          <el-cascader style="padding: 10px"
+                          <el-cascader
+style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
                           </el-cascader>
                         </div>
                       <div style="margin-top: 10px"> Operator 2
-                          <el-cascader style="padding: 10px"
+                          <el-cascader
+style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
                           </el-cascader>
                         </div>
                         <div style="margin-top: 10px"> Trailer 1
-                          <el-cascader style="padding: 10px"
+                          <el-cascader
+style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
                           </el-cascader>
                         </div>
                         <div style="margin-top: 10px"> Trailer 2
-                          <el-cascader style="padding: 10px"
+                          <el-cascader
+style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
@@ -150,8 +154,6 @@
         </el-table-column>
     </el-table>
 
-      </el-table>
-
     </div>
 
     <!--Wraper -->
@@ -177,7 +179,6 @@
 
     <!--PAGER-->
 
-
   <div style="margin-top: 20px">
         <el-pagination
           :page-size="20"
@@ -188,12 +189,7 @@
       </div>
     </div>
 
-
 </template>
-
-
-
-
 
 <script>
   import { getUnits } from '../../api/units.js'
@@ -228,8 +224,6 @@
         search: '',
         timeout: null
       }
-
-
     },
     methods: {
       loadAll() {
@@ -266,7 +260,6 @@
         }
       },
       handleSelect(item) {
-        console.log(item)
       }
     },
     mounted() {
