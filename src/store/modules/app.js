@@ -14,8 +14,10 @@ const app = {
       if (state.sidebar.opened) {
         Cookies.set('sidebarStatus', 1)
         el.classList.add('sidebar-collapsed')
+        el.classList.remove('sidebar-show')
       } else {
         Cookies.set('sidebarStatus', 0)
+        el.classList.add('sidebar-show')
         el.classList.remove('sidebar-collapsed')
       }
 

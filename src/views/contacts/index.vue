@@ -9,10 +9,10 @@
       <span>
             <CreateContacts></CreateContacts>
       </span>
-      <!--<span slot="footer" class="dialog-footer">-->
-      <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
-      <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
-      <!--</span>-->
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="dialogVisible = false">Cancel</el-button>
+      <el-button type="primary" @toparent="onSubmit()">Create</el-button>
+      </span>
 
     </el-dialog>
     <div style="margin-top: 30px">
@@ -20,7 +20,7 @@
       <el-table
         :data="operatorsList"
         border
-        style="width: 80%">
+        style="width: 100%">
         <el-table-column
           prop="name"
           label="Name"
@@ -42,8 +42,17 @@
           width="180">
         </el-table-column>
         <el-table-column
-          prop="active"
-          label="Active">
+          label="Operaciones"
+          width="200">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="buttonDeleteContact(scope.$index, scope.row)">Delete</el-button>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -52,7 +61,7 @@
 
 <script>
   import CreateContacts from './create.vue'
-  import { getContacts } from '@/api/general'
+  import { getContacts, deleteContact } from '@/api/general'
 
   export default {
     name: 'ContactsList',
@@ -78,6 +87,10 @@
           this.operatorsList = response.data.data
           this.listLoading = false
         })
+      },
+      buttonDeleteContact(contact_id,row) {
+        console.log(contact_id, row)
+        deleteContact(contact_id)
       }
     },
     created() {

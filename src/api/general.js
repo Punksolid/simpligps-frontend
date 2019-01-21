@@ -30,6 +30,14 @@ export function getContacts(params) {
     params
   })
 }
+export function deleteContact(contact_id) {
+  console.log(contact_id)
+  console.log('contact')
+  return request({
+    url: 'v1/contacts/' + contact_id,
+    method: 'DELETE'
+  })
+}
 
 export function deleteUser(user_id) {
   return request({
@@ -50,5 +58,12 @@ export function createCarrier(params) {
     url: 'v1/carriers',
     method: 'post',
     params
+  })
+}
+
+export function getWialonNotifications() {
+  return request({
+    url: 'v1/wialon/notifications',
+    method: 'GET'
   })
 }
