@@ -4,6 +4,7 @@
 
     <div style="margin-top: 30px">
       <el-table
+      stripe
       :data="unitsList"
           style="width: 100%">
         <el-table-column type="expand">
