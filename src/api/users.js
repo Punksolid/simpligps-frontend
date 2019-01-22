@@ -15,3 +15,9 @@ export function usersList(params) {
     params
   })
 }
+export function loggedUser() {
+  return request({
+    url: 'v1/me',
+    method: 'GET',
+  })
+}

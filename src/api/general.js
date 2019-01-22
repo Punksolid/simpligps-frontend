@@ -67,3 +67,10 @@ export function getWialonNotifications() {
     method: 'GET'
   })
 }
+
+export function getTotalDevices() {
+  return request({
+    url: 'v1/devices',
+    method: 'GET'
+  })
+}

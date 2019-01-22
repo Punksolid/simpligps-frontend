@@ -11,12 +11,19 @@
 
   <div class="header-right">
     <ul class="header-menu nav navbar-nav">
-      <li id="user-header">
+
+      <notifications/>
+
+      <li class="dropdown" id="user-header">
+        <router-link to="">
+
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+            <span class="username">Hi, {{ logged_user }}</span>
             <i class="el-icon-caret-bottom"/>
           </div>
+
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
             <router-link class="inlineBlock" to="/">
               <el-dropdown-item>
@@ -29,6 +36,8 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+
+        </router-link>
       </li>
     </ul>
   </div>
@@ -40,11 +49,16 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { loggedUser } from '../../../api/users'
+import App from '../../../App'
+import Notifications from '@/views/layout/components/Notifications'
 
 export default {
   components: {
+    App,
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    Notifications
   },
   computed: {
     ...mapGetters([
@@ -52,15 +66,29 @@ export default {
       'avatar'
     ])
   },
+  data() {
+    return {
+      logged_user: ''
+    }
+  },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar')
+    },
+    fetchName() {
+      loggedUser().then(response => {
+        this.logged_user = response.data.data.name
+        console.log(response.data.data)
+      })
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
     }
+  },
+  created() {
+    this.fetchName()
   }
 }
 </script>
@@ -84,8 +112,7 @@ export default {
   .avatar-container {
     height: 50px;
     display: inline-block;
-    position: absolute;
-    right: 35px;
+    margin-right: 20px;
 
     .avatar-wrapper {
       cursor: pointer;
