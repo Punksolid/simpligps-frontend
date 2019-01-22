@@ -74,3 +74,10 @@ export function getTotalDevices() {
     method: 'GET'
   })
 }
+
+export function getDatabaseNotifications() {
+  return request({
+    url: 'v1/me/notifications',
+    method: 'GET'
+  })
+}
