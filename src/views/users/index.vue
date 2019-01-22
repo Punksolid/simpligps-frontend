@@ -13,25 +13,31 @@
 
     </el-dialog>
     <div style="margin-top: 30px">
+      <div style="margin-bottom: 30px">
+      <el-button @click="resetDateFilter">Clear date filter</el-button>
+  <el-button @click="clearFilter">Clear all filters</el-button>
+        </div>
+
       <el-table
         :data="usersListData"
+        stripe
         style="width: 100%"
-        max-height="250">
+        max-height="100%">
+        <el-table-column
+          prop="name"
+          label="Name"
+          width="180">
+        </el-table-column>
         <el-table-column
           fixed
           prop="lastname"
           label="Lastname"
-          width="150">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="Name"
-          width="150">
+          width="180">
         </el-table-column>
         <el-table-column
           prop="email"
           label="Email"
-          width="400">
+          width="350">
         </el-table-column>
         <el-table-column
           prop="username"
@@ -41,7 +47,7 @@
         <el-table-column
           fixed="right"
           label="Operations"
-          width="150">
+          width="100">
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="deleteRow(scope.$index, usersListData)"
