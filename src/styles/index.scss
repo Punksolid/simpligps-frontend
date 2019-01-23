@@ -69,10 +69,55 @@ a:hover {
 }
 
 //main-container
-.app-main{
-  min-height: 100%
-}
 
+.app-main {
+  min-height: calc(100vh - 30px);
+  position: relative;
+  overflow: hidden;
+  margin: 30px 1px;
+}
 .app-container {
   padding: 20px;
+}
+
+// Custom TRM Styles
+.topbar .avatar-container .avatar-wrapper {
+  display: flex;
+  align-items: center;
+  span {
+    padding: 0px 10px;
+  }
+}// HEADER
+.main-content .page-content {
+  margin-top: 30px !important;
+  .header {
+    width: 120%;
+    margin-bottom: 20px;
+    background: #2a9cb6;
+    padding: 5px 0px 5px 20px !important;
+    left: -50px;
+    color: #FFF !important;
+    > h2 {
+      font-weight: 500 !important;
+      color: #FFF !important
+    }
+  }
+}
+// FIN - HEADER
+.panel .number h1 {
+  text-align: center;
+  span {
+    font-weight: 800;
+  }
+}
+.panel .panel-footer {
+  opacity: .6;
+}
+.panel .panel-footer h3 {
+  text-align: right;
+}
+@media (max-width: 990px) {
+  .main-content .page-content .header {
+    left: -20px;
+  }
 }

@@ -1,84 +1,83 @@
 <template>
-    <div class="dashboard-container">
-        <panel-group @handleSetLineChartData="handleSetLineChartData"/>
+  <div>
 
-    <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div>
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-        <div class="card-panel-icon-wrapper icon-people">
-          <i class="el-icon-info"></i>
-        </div>
-        <div class="card-panel-description">
-          <h4>First time here?</h4>
-          <h6>Check all the new features</h6>
-          <el-button size="small" type="primary" @click="dialogVisible = true">Check more!</el-button>
-        </div>
-      </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <i class="el-icon-loading"></i>
-        </div>
-        <div class="card-panel-description">
-          <h4>Active trips</h4>
-          <h6>Last actived trips:1</h6>
-          <el-button size="small" type="primary" @click="dialogVisible = true">view all</el-button>
-        </div>
-      </div>
+  <el-row>
+    <el-col class="panel" :xs="24" :sm="12" :lg="12">
+
+      <el-col class="panel-header"><h3><b>Dashboard</b></h3></el-col>
+
+      <el-col :xs="12" :sm="12" :lg="12">
+          <img src="@/assets/dashboard.png" width="90%"/>
+      </el-col>
+
+      <el-col :xs="12" :sm="12" :lg="12">
+        <h2><b>First time here?</b></h2>
+        <p>Congratulations! Please, let us tell you what can be done with TRM System. Sit comfy and check it out!</p>
+      </el-col>
+
     </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <i class="el-icon-success"></i>
-        </div>
-        <div class="card-panel-description">
-          <h4>Finished trips</h4>
-          <h6>Last finished trips:1</h6>
-          <el-button size="small" type="primary" @click="dialogVisible = true">view all</el-button>
-        </div>
-      </div>
-    </el-col>
-
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <i class="el-icon-error"></i>
-        </div>
-        <div class="card-panel-description">
-          <h4>Attention required!</h4>
-          <h6>Check Max alerts</h6>
-          <el-button size="small" type="danger" @click="dialogVisible = true">view alerts</el-button>
-        </div>
-      </div>
-    </el-col>
     </el-row>
 
-    </div>
+    <el-row type="flex">
+      <el-col class="panel bg-blue" :xs="24" :sm="12" :md="12" :lg="12">
+        <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-cursor"></i>Active <b>Devices</b></h3></el-col>
+        <el-col class="number"><h1><span>{{ total_devices }}</span> Devices</h1></el-col>
+        <el-col class="panel-footer bg-gray-light"><h3>Ver Todo</h3></el-col>
+      </el-col>
+      <el-col class="panel bg-red" :xs="24" :sm="12" :md="12" :lg="12">
+        <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-user"></i>Active <b>Users</b></h3></el-col>
+        <el-col class="number"><h1><span>{{ total_users }}</span> Users</h1></el-col>
+        <el-col class="panel-footer bg-gray-light"><h3>Ver Todo</h3></el-col>
+      </el-col>
+    </el-row>
 
-
+  </div>
 </template>
 
 
 <script>
 import { mapGetters } from 'vuex'
+import { getTotalDevices } from '../../api/general'
+import { usersList } from '../../api/users'
 
 export default {
   name: 'Dashboard',
-  components: {  },
   computed: {
     ...mapGetters([
       'name',
       'roles'
     ])
+  },
+  data() {
+    return {
+      total_devices: 0,
+      total_users: 0
+    }
+  },
+  methods: {
+      fetchTotalDevices() {
+        getTotalDevices().then(response => {
+          this.total_devices = response.data.meta.total
+        })
+      },
+    fetchTotalUsers() {
+      usersList().then(response => {
+        this.total_users = response.data.meta.total
+      })
+    }
+  },
+  created() {
+    this.fetchTotalDevices(),
+    this.fetchTotalUsers()
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.panel {
+  margin: 0px 5px;
+}
 .dashboard {
   &-container {
     margin: 30px;

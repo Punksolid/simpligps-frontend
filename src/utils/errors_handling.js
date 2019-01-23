@@ -6,12 +6,12 @@ export function ErrorsHandling(error) {
       message: error.response.data.errors.message,
       type: 'error'
     })
+
     var composed_message = ''
 
     for (var [key_errors, errors] of Object.entries(error.response.data.errors)) {
       let errors_explanations = ''
-
-      for (var [key, error_detail] of Object.entries(errors)) {
+      for (var error_detail of errors) {
         errors_explanations += `<li>${error_detail}</li>`
       }
       composed_message += `
@@ -23,10 +23,9 @@ export function ErrorsHandling(error) {
     }
     Message({
       dangerouslyUseHTMLString: true,
-      message: composed_message
-
+      message: composed_message,
+      type: 'error'
     })
-
   }
   if (error.response.status === 401) { // Authentication error
     Message({

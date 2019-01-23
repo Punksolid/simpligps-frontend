@@ -42,7 +42,7 @@
         </el-table-column>
         <el-table-column
           prop="username"
-          label="User name"
+          label="Username"
           width="150">
         </el-table-column>
         <el-table-column

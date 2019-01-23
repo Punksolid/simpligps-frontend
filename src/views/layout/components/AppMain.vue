@@ -1,5 +1,6 @@
 <template>
   <section class="app-main">
+    <div class="header"><h2>{{ path }}</h2></div>
     <transition name="fade-transform" mode="out-in">
       <!-- or name="fade" -->
       <!-- <router-view :key="key"></router-view> -->
@@ -9,22 +10,21 @@
 </template>
 
 <script>
-export default {
-  name: 'AppMain',
-  computed: {
-    // key() {
-    //   return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
-    // }
+
+  import Breadcrumb from '@/components/Breadcrumb'
+
+  export default {
+    name: 'AppMain',
+    components: { Breadcrumb },
+    computed: {
+    path() {
+       return this.$route.name
+     }
   }
 }
 </script>
 
 <style scoped>
-.app-main {
-  /*50 = navbar  */
-  min-height: calc(100vh - 50px);
-  position: relative;
-  overflow: hidden;
-  margin: 50px 1px;}
+
 </style>
 

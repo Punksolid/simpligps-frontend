@@ -1646,6 +1646,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   padding: 10px 0;
 }
 .sidebar .sidebar-inner .nav-sidebar {
+  flex-direction: column !important;
   margin-bottom: 30px;
 }
 .sidebar .sidebar-inner .nav-sidebar .arrow {
@@ -13193,11 +13194,11 @@ html .form-group .select2-container--default.select2-container--open.select2-con
 html .form-group .select2-container--default.select2-container--focus .select2-selection--multiple {border:none !important}
 .select2-container{z-index: 900000;}
 
-textarea:hover, 
-input:hover, 
-textarea:active, 
-input:active, 
-textarea:focus, 
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
 input:focus,
 button:focus,
 button:active,
