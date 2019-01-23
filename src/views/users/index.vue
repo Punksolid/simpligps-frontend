@@ -21,8 +21,9 @@
       <el-table
         :data="usersListData"
         stripe
+        border
         style="width: 100%"
-        max-height="100%">
+        max-height="300">
         <el-table-column
           prop="name"
           label="Name"

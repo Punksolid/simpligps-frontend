@@ -20,6 +20,7 @@
       <el-table
         :data="operatorsList"
         border
+        stripe
         style="width: 100%">
         <el-table-column
           prop="name"
