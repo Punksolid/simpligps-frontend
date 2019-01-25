@@ -38,22 +38,44 @@
       </div>
     </div>
 
+     <el-button type="warning" @click="centerDialogVisible = true">Span Alert</el-button>
+    <el-dialog
+  :visible.sync="centerDialogVisible"
+  width="40%"
+  center>
+  <el-col class="panel bg-red">
+        <el-col class="panel-header"><h3><i class="el-icon-warning"></i>MAX <b>ALERT</b></h3></el-col>
+        <el-col class="number"><h1><b>Route deviation</b></h1></el-col>
+        <el-col class="number"><h1>UNIT: FREIGHTLINER FL200 TECNOCOSAS 33</h1></el-col>
+
+      </el-col>
+
+  <span slot="footer" class="dialog-footer">
+    <el-button type="danger" @click="centerDialogVisible = false">Ignore</el-button>
+    <el-button type="primary" @click="centerDialogVisible = false">Attend</el-button>
+  </span>
+      </el-dialog>
+
   </div>
 </template>
 
 <script>
+
+  import AlertDialog from '../../components/Alert/index.vue'
   import CreateNotification from './create.vue'
   import { getWialonNotifications } from '../../api/general'
 
   export default {
     name: 'NotificationsList',
     components: {
-      CreateNotification
+      CreateNotification,
+      AlertDialog
     },
     data() {
       return {
         notifications_list: [],
-        dialogVisible: false
+        dialogVisible: false,
+        centerDialogVisible: false
       }
     },
     methods: {

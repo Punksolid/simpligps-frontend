@@ -22,18 +22,17 @@
         :data="usersListData"
         stripe
         border
-        style="width: 100%"
-        max-height="300">
+        style="width: 80%"
+        max-height="100%">
         <el-table-column
           prop="name"
           label="Name"
-          width="180">
+          width="280">
         </el-table-column>
         <el-table-column
-          fixed
           prop="lastname"
           label="Lastname"
-          width="180">
+          width="280">
         </el-table-column>
         <el-table-column
           prop="email"
@@ -43,17 +42,16 @@
         <el-table-column
           prop="username"
           label="Username"
-          width="150">
+          width="280">
         </el-table-column>
         <el-table-column
-          fixed="right"
           label="Operations"
           width="100">
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="deleteRow(scope.$index, usersListData)"
-              type="text"
-              size="small">
+              type="danger"
+              size="mini">
               Remove
             </el-button>
           </template>

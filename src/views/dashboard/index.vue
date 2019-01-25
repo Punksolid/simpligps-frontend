@@ -7,12 +7,14 @@
       <el-col class="panel-header"><h3><b>Dashboard</b></h3></el-col>
 
       <el-col :xs="12" :sm="12" :lg="12">
-          <img src="@/assets/dashboard.png" width="90%"/>
+          <img src="@/assets/dashboard.png" width="85%"/>
       </el-col>
 
       <el-col :xs="12" :sm="12" :lg="12">
         <h2><b>First time here?</b></h2>
-        <p>Congratulations! Please, let us tell you what can be done with TRM System. Sit comfy and check it out!</p>
+        <p style="padding: 10px">Congratulations! Please, let us tell you what can be done with TRM System. Sit comfy and check it out!</p>
+          <el-button style="padding: 10px" type="primary">Check more!</el-button>
+
       </el-col>
 
     </el-col>
@@ -23,12 +25,12 @@
       <el-col class="panel bg-blue" :xs="24" :sm="12" :md="12" :lg="12">
         <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-cursor"></i>Active <b>Devices</b></h3></el-col>
         <el-col class="number"><h1><span>{{ total_devices }}</span> Devices</h1></el-col>
-        <el-col class="panel-footer bg-gray-light"><h3>Ver Todo</h3></el-col>
+        <el-col class="panel-footer bg-gray-light"><h3>See all</h3></el-col>
       </el-col>
       <el-col class="panel bg-red" :xs="24" :sm="12" :md="12" :lg="12">
         <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-user"></i>Active <b>Users</b></h3></el-col>
         <el-col class="number"><h1><span>{{ total_users }}</span> Users</h1></el-col>
-        <el-col class="panel-footer bg-gray-light"><h3>Ver Todo</h3></el-col>
+        <el-col class="panel-footer bg-gray-light"><h3>See all</h3></el-col>
       </el-col>
     </el-row>
 

@@ -43,7 +43,7 @@
           width="180">
         </el-table-column>
         <el-table-column
-          label="Operaciones"
+          label="Actions"
           width="200">
           <template slot-scope="scope">
             <el-button
