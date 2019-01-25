@@ -47,9 +47,9 @@
     created() {
       this.getNotifications()
 
-      setInterval(function() {
-        this.getNotifications()
-      }.bind(this), 10000) // milisegundos
+      // setInterval(function() {
+      //   this.getNotifications()
+      // }.bind(this), 10000) // milisegundos
     }
   }
 

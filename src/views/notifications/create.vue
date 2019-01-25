@@ -13,8 +13,15 @@
     <el-form-item label="Geofence_id">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="Unit_id">
-      <el-input v-model="form.name"></el-input>
+    <el-form-item label="Units">
+      <el-select v-model="form.unit_default" multiple placeholder="Select">
+        <el-option
+          v-for="unit in form.units"
+          :key="unit.value"
+          :label="unit.label"
+          :value="unit.value">
+        </el-option>
+      </el-select>
     </el-form-item>
     <el-form-item label="Activate">
       <el-switch v-model="form.active"></el-switch>
@@ -30,7 +37,8 @@
 </template>
 
 <script>
-import { getResources } from '@/api/general'
+
+import { getWialonUnits, getResources } from '../../api/general'
 
   export default {
     name: 'CreateNotification',
@@ -42,7 +50,8 @@ import { getResources } from '@/api/general'
             label: ''
           }],
           geofence_id: '',
-          unit_id: '',
+          unit_default: '',
+          units: [],
           activate: '',
           name: ''
 
@@ -69,6 +78,13 @@ import { getResources } from '@/api/general'
       fetchWialonResources() {
         getResources().then(response => {
           this.form.resources = response.data.data
+        })
+        getWialonUnits().then(response => {
+          this.form.units = response.data.data.map(unit => {
+            return { value: unit.id, label: unit.nm }
+          })
+        }).catch(e => {
+          console.log(e)
         })
       }
     },

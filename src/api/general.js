@@ -15,6 +15,14 @@ export function getResources(params) {
   })
 }
 
+export function getWialonUnits()
+{
+  return request({
+    url: 'v1/wialon/units',
+    method: 'GET'
+  })
+}
+
 export function createContacts(params) {
   return request({
     url: 'v1/contacts',
