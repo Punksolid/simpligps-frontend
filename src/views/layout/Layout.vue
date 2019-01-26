@@ -18,6 +18,8 @@
 
       <app-main class="page-content"/>
 
+      <alerts></alerts>
+
     </div>
   </div>
 </section>
@@ -25,6 +27,7 @@
 
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
+import Alerts from '@/views/layout/components/Alerts'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -32,7 +35,8 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    Alerts
   },
   mixins: [ResizeMixin],
   computed: {

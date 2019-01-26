@@ -186,13 +186,20 @@ export const constantRouterMap = [
   {
     path: '/settings',
     component: Layout,
-    // redirect: 'settings',
+    redirect: '/settings/general',
+    name:'System Settings',
+    meta: { title: 'System Settings', icon: 'icon-settings'},
     children: [
       {
-        path: '',
+        path: 'general',
         component: () => import('@/views/settings/settings'),
-        name: 'System Settings',
-        meta: { title: 'System Settings', icon: 'icon-settings', noCache: true }
+        name: 'System Settings'
+      },
+      {
+        path: 'permissions',
+        component: () => import('@/views/settings/permissions'),
+        name: 'Permissions',
+        meta: { title: 'Permissions', icon: 'icon-settings', noCache: true }
       }
     ]
   }

@@ -95,7 +95,9 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .topbar {
-
+  .header-right .header-menu.navbar-nav {
+    flex-direction: row;
+  }
   #user-header img {
     background: #f7f7f7;
     text-indent: -20000px;

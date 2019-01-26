@@ -19,7 +19,7 @@
 
     </el-row>
 
-    <el-row type="flex">
+    <el-row type="flex" class="active-panels">
       <el-col class="panel bg-blue" :xs="24" :sm="12" :md="12" :lg="12">
         <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-cursor"></i>Active <b>Devices</b></h3></el-col>
         <el-col class="number"><h1><span>{{ total_devices }}</span> Devices</h1></el-col>
@@ -178,4 +178,9 @@ export default {
     }
   }
 }
+  @media (max-width:768px) {
+    .active-panels {
+      flex-direction: column;
+    }
+  }
 </style>

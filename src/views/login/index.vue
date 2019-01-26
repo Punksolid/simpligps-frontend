@@ -148,7 +148,7 @@
     display: flex;
 }
 .website-logo-inside .logo img {
-    width: auto;
+    width: 250px;
     margin-right: 20px;
     height: 75px;
     order: 1;
