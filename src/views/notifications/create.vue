@@ -1,5 +1,8 @@
 <template>
   <el-form ref="form" :model="form" label-width="100px">
+    <el-form-item label="Name">
+      <el-input v-model="form.name"></el-input>
+    </el-form-item>
     <el-form-item label="Resources">
       <el-select v-model="value" placeholder="Select">
         <el-option
@@ -10,8 +13,8 @@
         </el-option>
     </el-select>
     </el-form-item>
-    <el-form-item label="Geofence_id">
-      <el-input v-model="form.name"></el-input>
+    <el-form-item label="Control Type By">
+      <el-input v-model="form.control_type_by" ></el-input>
     </el-form-item>
     <el-form-item label="Units">
       <el-select v-model="form.unit_default" multiple placeholder="Select">
@@ -26,9 +29,6 @@
     <el-form-item label="Activate">
       <el-switch v-model="form.active"></el-switch>
     </el-form-item>
-    <el-form-item label="Name">
-      <el-input v-model="form.name"></el-input>
-    </el-form-item>
     <el-form-item>
       <el-button>Cancel</el-button>
       <el-button type="primary" @click="onSubmit">Create</el-button>
@@ -38,7 +38,8 @@
 
 <script>
 
-import { getWialonUnits, getResources } from '../../api/general'
+import { getWialonUnits, getResources, createWialonNotification } from '../../api/general'
+import { Message } from 'element-ui'
 
   export default {
     name: 'CreateNotification',
@@ -49,7 +50,7 @@ import { getWialonUnits, getResources } from '../../api/general'
             value: '',
             label: ''
           }],
-          geofence_id: '',
+          control_type_by: 'panic_button',
           unit_default: '',
           units: [],
           activate: '',
@@ -60,19 +61,8 @@ import { getWialonUnits, getResources } from '../../api/general'
     },
     methods: {
       onSubmit() {
-        this.$confirm('Are you sure you want save changes?', 'Save Changes', {
-          cancelButtonText: 'Cancel',
-          type: 'info'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: 'Changes Saved'
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Changes not saved'
-          })
+        createWialonNotification(this.form).then(response => {
+          Message('Successful')
         })
       },
       fetchWialonResources() {
