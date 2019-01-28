@@ -12,30 +12,69 @@
           <template slot-scope="props">
             <el-tabs type="border-card">
               <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Details</span>
-                  <div class="card-panel-icon-wrapper icon-people">
-                    <i class="el-icon-info"></i>
-                  </div>
-                  <div class="card-panel-description">
-                      <h3>Truck: Freightliner FL 200</h3>
-                      <el-button type="success" @click="dialogVisible = true">View details</el-button>
-                  </div>
-              </el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i>Details</span>
+
+<el-col style="background-color: #f9f9f9" class="panel" :xs="14" :sm="9" :lg="9">
+
+      <el-col style="padding: 10px" class="panel-header"><h3><b>Operator</b></h3></el-col>
+
+      <el-col :xs="12" :sm="12" :lg="12">
+        <h3 style="padding: 10px"><b>José Ramón Ontiveros González</b></h3>
+        <p style="padding: 10px">Id: 1476</p>
+        <p style="padding: 10px">Phone: 665-147-9136</p>
+      </el-col>
+
+    </el-col>
+
+    <el-col style="background-color: #f9f9f9" class="panel" :xs="14" :sm="9" :lg="9">
+
+      <el-col style="padding: 10px" class="panel-header"><h3><b>Truck</b></h3></el-col>
+
+      <el-col :xs="12" :sm="12" :lg="12">
+        <h3 style="padding: 10px"><b>José Ramón Ontiveros González</b></h3>
+        <p style="padding: 10px">Id: 1476</p>
+        <p style="padding: 10px">Phone: 665-147-9136</p>
+      </el-col>
+
+    </el-col>
+
+    <el-col style="background-color: #f9f9f9" class="panel" :xs="14" :sm="9" :lg="9">
+
+      <el-col style="padding: 10px" class="panel-header"><h3><b>Trailer</b></h3></el-col>
+
+      <el-col :xs="12" :sm="12" :lg="12">
+        <h3 style="padding: 10px"><b>Utility #556</b></h3>
+        <p>Id: 1476</p>
+        <p>GPS: XAS555-67UHG14</p>
+      </el-col>
+
+    </el-col>
+
+    <el-col style="background-color: #f9f9f9" class="panel" :xs="14" :sm="9" :lg="9">
+
+      <el-col style="padding: 10px" class="panel-header"><h3><b>Carrier</b></h3></el-col>
+
+      <el-col :xs="12" :sm="12" :lg="12">
+        <h3 style="padding: 10px"><b>José Ramón Ontiveros González</b></h3>
+        <p style="padding: 10px">Id: 1476</p>
+        <p style="padding: 10px">Phone: 665-147-9136</p>
+      </el-col>
+
+    </el-col>
+</el-tab-pane>
               <el-tab-pane>
                           <span slot="label"><i class="el-icon-date"></i> Monitoring Route</span>
                 <div>
                       <div class="block">
                         <div style="margin-top: 10px"> Operator 1
-                          <el-cascader
-style="padding: 10px"
+                          <el-cascader style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
                           </el-cascader>
                         </div>
                       <div style="margin-top: 10px"> Operator 2
-                          <el-cascader
-style="padding: 10px"
+                          <el-cascader style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
@@ -64,21 +103,66 @@ style="padding: 10px"
             <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Truck and operator</span>
                 <div class="card-panel-icon-wrapper icon-people">
-                      <i class="el-icon-info"></i>
-                    </div>
-                    <div class="card-panel-description">
-                      <h3>First time here?</h3>
-                      <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
-                </div>
-              </el-tab-pane>
-              <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Route</span>
-                <div class="card-panel-icon-wrapper icon-people">
-                      <i class="el-icon-info"></i>
-                    </div>
-                    <div class="card-panel-description">
-                      <h3>First time here?</h3>
-                      <el-button type="success" @click="dialogVisible = true">Check more!</el-button>
+
+                    <div class="card-panel-icon-wrapper icon-people">
+                    <i class="el-icon-info"></i>
+                  </div>
+                  <div>
+                      <h3>operator:</h3>
+                      <h4>Juan Burgos</h4>
+                      <h3>Id: #6664</h3>
+                      <h3>Phone: 55-567-7654</h3>
+                      <div>
+
+                          <el-popover
+                            placement="right"
+                            width="400"
+                            trigger="click">
+                            <el-table :data="truckData">
+                              <el-table-column width="100" property="id_number" label="Id"></el-table-column>
+                              <el-table-column width="100" property="number" label="Truck #"></el-table-column>
+                              <el-table-column width="150" property="brand" label="Brand"></el-table-column>
+                              <el-table-column width="200" property="model" label="Model"></el-table-column>
+                              <el-table-column width="200" property="gps" label="GPS"></el-table-column>
+
+                            </el-table>
+                            <el-button style="margin-right: 10px" type="success" slot="reference">Truck</el-button>
+                          </el-popover>
+
+                            <el-popover
+                            placement="right"
+                            width="400"
+                            trigger="click">
+                            <el-table :data="trailerData">
+                              <el-table-column width="150" property="id_number" label="Id"></el-table-column>
+                              <el-table-column width="100" property="number" label="Economic number"></el-table-column>
+                              <el-table-column width="200" property="brand" label="Brand"></el-table-column>
+                              <el-table-column width="200" property="plate" label="plate"></el-table-column>
+                              <el-table-column width="200" property="gps" label="GPS"></el-table-column>
+
+                            </el-table>
+                            <el-button style="margin-right: 10px" type="success" slot="reference">Trailer</el-button>
+                          </el-popover>
+
+                          <el-popover
+                            placement="right"
+                            width="400"
+                            trigger="click">
+                            <el-table :data="carrierData">
+                              <el-table-column width="150" property="id_number" label="Id"></el-table-column>
+                              <el-table-column width="100" property="name" label="Name"></el-table-column>
+                              <el-table-column width="200" property="contact" label="contact"></el-table-column>
+                              <el-table-column width="200" property="phone" label="Phone"></el-table-column>
+
+
+                            </el-table>
+                            <el-button type="success" slot="reference">Carrier</el-button>
+                          </el-popover>
+
+                      </div>
+
+                  </div>
+
                     </div>
               </el-tab-pane>
               <el-tab-pane>
@@ -115,10 +199,19 @@ style="padding: 10px"
                             </el-table-column>
                           </el-table>
                           <div style="margin-top: 20px">
-                            <el-button @click="toggleSelection([tableData3[1], tableData3[2]])">Apply</el-button>
-                            <el-button @click="toggleSelection()">Clean Selection</el-button>
+                            <el-button type="success" @click="toggleSelection([tableData3[1], tableData3[2]])">Apply</el-button>
+                            <el-button type="danger" @click="toggleSelection()">Clean Selection</el-button>
                           </div>
                         </template>
+                    </div>
+              </el-tab-pane>
+              <el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i> Map</span>
+                <div class="card-panel-icon-wrapper icon-people">
+
+                    </div>
+                    <div class="card-panel-description">
+
                     </div>
               </el-tab-pane>
 
