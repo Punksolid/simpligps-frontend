@@ -18,6 +18,6 @@ export function usersList(params) {
 export function loggedUser() {
   return request({
     url: 'v1/me',
-    method: 'GET',
+    method: 'GET'
   })
 }

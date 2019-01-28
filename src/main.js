@@ -30,6 +30,8 @@ Vue.config.productionTip = false
 import './mock' // simulation data should be deleted on prod
 import '@/permission' // permission control, verifica que usuario tenga permisos
 
+import Echo from 'laravel-echo'
+
 // import * as filters from './filters' // global filters
 
 Vue.use(Element, {
@@ -45,6 +47,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  Echo,
 
   render: h => h(App)
 })

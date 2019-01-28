@@ -21,6 +21,7 @@
 </template>
 
 <script>
+
     export default {
         name: 'Notifications',
       data() {
@@ -33,6 +34,13 @@
               id: 2
             }]
           }
+      },
+      created() {
+          console.log(this.$store.user)
+        // Echo.private('App.User.' + userId)
+        //   .notification((notification) => {
+        //     console.log(notification.type);
+        //   });
       }
     }
 </script>
