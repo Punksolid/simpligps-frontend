@@ -17,7 +17,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button>Cancel</el-button>
+      <el-button @click="dialogVisible = false">Cancel</el-button>
       <el-button type="primary" @click="onSubmit">Create User</el-button>
     </el-form-item>
   </el-form>
@@ -37,7 +37,9 @@
           email: '',
           username: '',
           password: ''
-        }
+        },
+      dialogVisible: false
+
       }
     },
     methods: {
