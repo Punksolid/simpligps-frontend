@@ -74,3 +74,9 @@ export function getTotalDevices() {
     method: 'GET'
   })
 }
+export function getPermissions() {
+  return request({
+    url: 'v1/permissions',
+    method: 'GET'
+  })
+}

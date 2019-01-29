@@ -9,7 +9,8 @@
     class="maxalerts"
     :before-close="handleClose">
     <i class="fas fa-exclamation-triangle"></i>
-    <h1 class="title">Max Alerts</h1>
+    <h1 class="title">MAX ALERT!</h1>
+    <h3>Route Deviation</h3>
     <span slot="footer" class="dialog-footer">
     <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
     <el-button type="primary" @click="dialogVisible = false">Attended</el-button>
@@ -41,6 +42,7 @@
 
 <style scoped>
 h1.title {
+  font-weight: 400;
   text-align: center;
 }
 .dialog-footer {
