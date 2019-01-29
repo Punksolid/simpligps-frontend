@@ -118,12 +118,9 @@ i.el-icon-warning {
      handleClose(done) {
           this.$confirm('Are you sure to close this alert?')
             .then(_ => {
-              done();
+              done()
             })
-            .catch(_ => {});
+            .catch(_ => {})
         }
   }
 </script>
-
-
-

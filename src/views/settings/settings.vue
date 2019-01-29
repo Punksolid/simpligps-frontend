@@ -1,7 +1,7 @@
 <template>
-  <div style="background-color: #fff">
+  <el-row class="panel">
 
-    <div style="padding: 10px">
+    <el-col class="panel-content">
 
           <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="WIALON ACCESS KEY" name="1">
@@ -15,8 +15,9 @@
             </el-form>
           </el-collapse-item>
         </el-collapse>
-      </div>
-  </div>
+      </el-col>
+
+  </el-row>
 
 </template>
 

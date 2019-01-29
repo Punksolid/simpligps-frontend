@@ -3745,7 +3745,7 @@
 .color-red.sidebar-collapsed .sidebar .sidebar-inner .nav-sidebar > li.nav-hover.active > a span:not(.badge),
 .color-red.sidebar-collapsed .topbar .header-left .topnav .menutoggle,
 .color-red .label-primary,
-.color-red .progress-bar-primary, 
+.color-red .progress-bar-primary,
 .color-red .progress-bar-primary[value]::-webkit-progress-value,
 .color-red.sidebar-collapsed .topbar .header-left .topnav .menu__handle,
 .color-red .pagination2 .pagination > .active > a {
@@ -4162,7 +4162,7 @@
   background: -o-linear-gradient(left, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
   background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(205, 205, 205, 0)), color-stop(50%, #4d4d4d), color-stop(100%, rgba(205, 205, 205, 0)));
   background: -webkit-linear-gradient(left, rgba(205, 205, 205, 0), #cfcbcb, rgba(205, 205, 205, 0));
-  background: linear-gradient(left, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
+  background: linear-gradient(to right, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
 }
 .theme-sltd .sidebar .sidebar-inner .sidebar-widgets .charts-sidebar .sidebar-charts-inner .sidebar-charts-left .sidebar-chart-title {
   color: rgba(0, 0, 0, 0.5);
@@ -4177,7 +4177,7 @@
   background: -o-linear-gradient(left, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
   background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(205, 205, 205, 0)), color-stop(50%, #4d4d4d), color-stop(100%, rgba(205, 205, 205, 0)));
   background: -webkit-linear-gradient(left, rgba(205, 205, 205, 0), #cfcbcb, rgba(205, 205, 205, 0));
-  background: linear-gradient(left, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
+  background: linear-gradient(to right, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
 }
 .theme-sltd .topbar .header-right .header-menu #language-header .dropdown-menu a {
   color: #666666 !important;

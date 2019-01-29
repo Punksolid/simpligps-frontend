@@ -28,7 +28,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    // redirect: '/dashboard',
     // name: 'Dashboard',
     hidden: false,
     children: [
@@ -43,7 +43,6 @@ export const constantRouterMap = [
   {
     path: '/users',
     component: Layout,
-    // meta: { title: 'Users', icon: 'icon-users', noCache: true },
     children: [
       {
         path: '',
@@ -56,13 +55,12 @@ export const constantRouterMap = [
   {
     path: '/monitoring',
     component: Layout,
-    redirect: '/monitoring/new_trip',
-    // redirect: '/example/table',
+    redirect: '/monitoring/units',
     name: 'Monitoring',
     meta: { title: 'Monitoring', icon: 'icon-eye' },
     children: [
       {
-        path: '',
+        path: 'units',
         name: 'Units',
         component: () => import('@/views/monitor/units'),
         meta: { title: 'Units', icon: 'icon-cursor' }
@@ -72,12 +70,6 @@ export const constantRouterMap = [
         name: 'New Trip',
         component: () => import('@/views/monitoring/index'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
-      },
-      {
-        path: 'programming',
-        name: 'Programming',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Monitoring', icon: 'icon-location-arrow' }
       },
       {
         path: 'convoy',
@@ -160,6 +152,7 @@ export const constantRouterMap = [
   {
     path: '/user_settings',
     component: Layout,
+    hidden: true,
     // redirect: 'user_settings',
     children: [
       {
@@ -186,13 +179,20 @@ export const constantRouterMap = [
   {
     path: '/settings',
     component: Layout,
-    // redirect: 'settings',
+    redirect: '/settings/general',
+    name: 'System Settings',
+    meta: { title: 'System Settings', icon: 'icon-settings' },
     children: [
       {
         path: '',
         component: () => import('@/views/settings/settings'),
-        name: 'System Settings',
-        meta: { title: 'System Settings', icon: 'icon-settings', noCache: true }
+        name: 'Settings'
+      },
+      {
+        path: 'permissions',
+        component: () => import('@/views/settings/permissions'),
+        name: 'Permissions',
+        meta: { title: 'Permissions', icon: 'icon-settings', noCache: true }
       }
     ]
   }

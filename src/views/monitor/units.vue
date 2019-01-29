@@ -1,20 +1,23 @@
 <template>
-  <div>
+  <el-row class="panel p-10">
+    <el-col class="">
+
     <el-autocomplete v-model="search" :fetch-suggestions="querySearchAsync" placeholder="Search unit" @select="handleSelect"></el-autocomplete>
 
-    <div style="margin-top: 30px">
+    <el-col class="m-t-20">
+
       <el-table
       stripe
-      :data="unitsList"
-          style="width: 100%">
+      height="500"
+      :data="unitsList">
         <el-table-column type="expand">
 
           <template slot-scope="props">
             <el-tabs type="border-card">
               <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i>Details</span>
+                <span slot="label"><i class="el-icon-date"></i> Details</span>
 
-<el-col style="background-color: #f9f9f9" class="panel" :xs="14" :sm="9" :lg="9">
+    <el-col style="background-color: #f9f9f9" class="panel" :xs="14" :sm="9" :lg="9">
 
       <el-col style="padding: 10px" class="panel-header"><h3><b>Operator</b></h3></el-col>
 
@@ -110,16 +113,9 @@
                                   <el-button type="primary">Save</el-button>
                                   <el-button type="danger">Cancel</el-button>
 
-
-
-
                               </div>
 
-
                             </div>
-
-
-
 
             </el-tab-pane>
 
@@ -128,14 +124,16 @@
                 <div>
                       <div class="block">
                         <div style="margin-top: 10px"> Operator 1
-                          <el-cascader style="padding: 10px"
+                          <el-cascader
+style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
                           </el-cascader>
                         </div>
                       <div style="margin-top: 10px"> Operator 2
-                          <el-cascader style="padding: 10px"
+                          <el-cascader
+style="padding: 10px"
                             :options="options"
                             v-model="selectedOptions"
                             @change="handleChange">
@@ -208,8 +206,6 @@ style="padding: 10px"
                         </el-table>
                     </template>
 
-
-
               </div>
             </el-tab-pane>
             <el-tab-pane>
@@ -265,7 +261,6 @@ style="padding: 10px"
                               <el-table-column width="100" property="name" label="Name"></el-table-column>
                               <el-table-column width="200" property="contact" label="contact"></el-table-column>
                               <el-table-column width="200" property="phone" label="Phone"></el-table-column>
-
 
                             </el-table>
                             <el-button type="success" slot="reference">Carrier</el-button>
@@ -338,7 +333,7 @@ style="padding: 10px"
         <el-table-column
           prop="measure_units"
           label="Measure Units"
-          width="180">
+          width="110">
         </el-table-column>
         <el-table-column
           prop="position.lat"
@@ -349,7 +344,8 @@ style="padding: 10px"
           label="Longitude">
         </el-table-column>
         <el-table-column
-      label="Action">
+          label="Action"
+        width="200">
               <template slot-scope="scope">
 
           <el-button type="info" icon="el-icon-edit" size="mini" circle></el-button>
@@ -360,7 +356,7 @@ style="padding: 10px"
         </el-table-column>
     </el-table>
 
-    </div>
+    </el-col>
 
     <!--Wraper -->
 
@@ -381,19 +377,21 @@ style="padding: 10px"
         <div class="col-md-6"></div>
       </div>
 
-  </div>
+     </div>
 
     <!--PAGER-->
 
-  <div style="margin-top: 20px">
-        <el-pagination
-          :page-size="20"
-          :pager-count="11"
-          layout="prev, pager, next"
-          :total="100">
-        </el-pagination>
-      </div>
-    </div>
+    <el-col class="p-t-20">
+      <el-pagination
+        :page-size="10"
+        :pager-count="6"
+        layout="prev, pager, next"
+        :total="100">
+      </el-pagination>
+    </el-col>
+
+  </el-col>
+</el-row>
 
 </template>
 
@@ -429,37 +427,37 @@ style="padding: 10px"
         }],
         monitoringLog: [{
 
-            log_id:'671345',
-            trip:'193003',
-            date:'2019-01-23',
-            monitor:'Alan',
-            location:'No. 1389, Grove St, Los Angeles, US',
-            observations:'Travel load via Layout',
-            status:'operator logged out'
+            log_id: '671345',
+            trip: '193003',
+            date: '2019-01-23',
+            monitor: 'Alan',
+            location: 'No. 1389, Grove St, Los Angeles, US',
+            observations: 'Travel load via Layout',
+            status: 'operator logged out'
             }, {
-            log_id:'678765',
-            trip:'1930523',
-            date:'2019-01-24',
-            monitor:'Pedro',
-            location:'No. 1389, Grove St, Los Angeles, US',
-            observations:'Travel load via Layout',
-            status:'operator logged out'
+            log_id: '678765',
+            trip: '1930523',
+            date: '2019-01-24',
+            monitor: 'Pedro',
+            location: 'No. 1389, Grove St, Los Angeles, US',
+            observations: 'Travel load via Layout',
+            status: 'operator logged out'
             }, {
-            log_id:'671771',
-            trip:'193298',
-            date:'2019-01-23',
-            monitor:'Pedro',
-            location:'No. 1389, Grove St, Los Angeles, US',
-            observations:'Travel load via Layout',
-            status:'operator logged out'
+            log_id: '671771',
+            trip: '193298',
+            date: '2019-01-23',
+            monitor: 'Pedro',
+            location: 'No. 1389, Grove St, Los Angeles, US',
+            observations: 'Travel load via Layout',
+            status: 'operator logged out'
             }, {
-            log_id:'671512',
-            trip:'192982',
-            date:'2019-01-21',
-            monitor:'Alan',
-            location:'No. 1389, Grove St, Los Angeles, US',
-            observations:'Travel load via Layout',
-            status:'operator logged out'
+            log_id: '671512',
+            trip: '192982',
+            date: '2019-01-21',
+            monitor: 'Alan',
+            location: 'No. 1389, Grove St, Los Angeles, US',
+            observations: 'Travel load via Layout',
+            status: 'operator logged out'
 
           }],
 
