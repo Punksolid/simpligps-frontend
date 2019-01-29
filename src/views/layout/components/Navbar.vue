@@ -30,9 +30,14 @@
                 Home
               </el-dropdown-item>
             </router-link>
+            <router-link to="/user_settings">
+              <el-dropdown-item divided>
+                <span>User Settings</span>
+              </el-dropdown-item>
+            </router-link>
             <el-dropdown-item divided>
             <!--@TODO ACTIVAR LOGOUT PROPIO-->
-              <span style="display:block;" @click="logout">Logout</span>
+              <span @click="logout">Logout</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -78,7 +83,6 @@ export default {
     fetchName() {
       loggedUser().then(response => {
         this.logged_user = response.data.data.name
-        console.log(response.data.data)
       })
     },
     logout() {
@@ -95,7 +99,9 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .topbar {
-
+  .header-right .header-menu.navbar-nav {
+    flex-direction: row;
+  }
   #user-header img {
     background: #f7f7f7;
     text-indent: -20000px;

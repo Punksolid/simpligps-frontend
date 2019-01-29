@@ -15,8 +15,7 @@ export function getResources(params) {
   })
 }
 
-export function getWialonUnits()
-{
+export function getWialonUnits() {
   return request({
     url: 'v1/wialon/units',
     method: 'GET'
@@ -86,6 +85,12 @@ export function getTotalDevices() {
 export function getDatabaseNotifications() {
   return request({
     url: 'v1/me/notifications',
+    method: 'GET'
+  })
+}
+export function getPermissions() {
+  return request({
+    url: 'v1/permissions',
     method: 'GET'
   })
 }

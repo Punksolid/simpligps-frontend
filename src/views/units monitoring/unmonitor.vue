@@ -5,17 +5,6 @@
                     </thead>
                     <tbody>
 
-
-
-
-
-
-
-
-
-
-
-
                        <tr role="row" class="odd">
                         <td class="sorting_1">Addams</td>
                         <td>Kim</td>

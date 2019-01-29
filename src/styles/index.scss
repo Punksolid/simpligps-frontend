@@ -3,7 +3,6 @@
 @import './transition.scss';
 @import './element-ui.scss';
 
-
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -71,7 +70,7 @@ a:hover {
 //main-container
 
 .app-main {
-  min-height: calc(100vh - 30px);
+  // min-height: calc(100vh - 30px);
   position: relative;
   overflow: hidden;
   margin: 30px 1px;
@@ -89,13 +88,12 @@ a:hover {
   }
 }// HEADER
 .main-content .page-content {
-  margin-top: 30px !important;
   .header {
     width: 120%;
     margin-bottom: 20px;
     background: #2a9cb6;
     padding: 5px 0px 5px 20px !important;
-    left: -50px;
+    left: -25px;
     color: #FFF !important;
     > h2 {
       font-weight: 500 !important;
@@ -116,6 +114,19 @@ a:hover {
 .panel .panel-footer h3 {
   text-align: right;
 }
+// MAX-ALERTS
+.maxalerts .el-dialog > div:last-child {
+  background-color: #b41d2f;
+}
+.maxalerts button {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1.1em;
+  border-radius: 0px;
+  background: #ffffff61;
+  border: 2px solid #FFF;
+}
+
 @media (max-width: 990px) {
   .main-content .page-content .header {
     left: -20px;

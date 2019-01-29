@@ -1,12 +1,11 @@
 <template>
   <li class="dropdown" id="notifications-header">
 
-    <router-link class="" to="">
-
+    <router-link to="">
       <el-dropdown trigger="click">
-        <i class="icon-bell"></i>
-        <span class="badge badge-danger badge-header">6</span>
+        <span class="el-dropdown-link"><i class="icon-bell"></i><span class="badge badge-danger badge-header">6</span></span>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <el-dropdown-item> Testing</el-dropdown-item>
 
           <el-dropdown-item v-for="notification in notifications" :key="notification.text">
             {{ notification.text.message }}
@@ -14,7 +13,6 @@
 
         </el-dropdown-menu>
       </el-dropdown>
-
     </router-link>
 
   </li>
@@ -27,13 +25,7 @@
     name: 'Notifications',
     data() {
       return {
-        notifications: [{
-          text: 'Mi texto',
-          id: 1
-        }, {
-          text: 'Linea Texto 02',
-          id: 2
-        }]
+        notifications: []
       }
     },
     methods: {
@@ -42,7 +34,6 @@
           this.notifications = response.data.data
         })
       }
-
     },
     created() {
       this.getNotifications()
@@ -52,9 +43,11 @@
       // }.bind(this), 10000) // milisegundos
     }
   }
-
 </script>
 
 <style scoped>
-
+#notifications-header span.el-dropdown-link {
+  line-height: 50px;
+  display: block;
+}
 </style>

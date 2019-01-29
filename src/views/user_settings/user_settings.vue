@@ -1,14 +1,22 @@
 <template>
-  <div style="background-color: #fff">
+  <el-row class="bg-white">
 
-    <div style="padding: 30px">
+    <el-col class="p-30">
       <el-collapse accordion>
       <el-collapse-item name="1">
-        <template slot="title">Password<i class="header-icon el-icon-information"></i></template>
-        <password></password>
+        <template slot="title">
+          <span class="fa-stack fa-2x"><i class="fas fa-square fa-stack-2x"></i>
+          <i class="fas fa-key fa-stack-1x fa-inverse"></i></span>Change Password</template>
+        <el-col :span="10" :xs="24" class="p-10">
+          <password/>
+        </el-col>
       </el-collapse-item>
-      <el-collapse-item title="Notification settings" name="2">
-        <div>
+
+      <el-collapse-item name="2">
+        <template slot="title"><span class="fa-stack fa-2x"><i class="fas fa-square fa-stack-2x"></i>
+          <i class="fas fa-comment-alt fa-stack-1x fa-inverse"></i></span>Notification settings</template>
+        <el-row>
+        <el-col class="m-10">
           <span>Notification on-screen</span>
           <el-switch
               style="display: block"
@@ -16,8 +24,8 @@
               active-text="On"
               inactive-text="Off">
           </el-switch>
-        </div>
-        <div style="margin-top: 30px">
+        </el-col>
+        <el-col class="m-10">
           <span>Notifiaction alert sound</span>
           <el-switch
             style="display: block"
@@ -28,16 +36,23 @@
             inactive-text="Sound off">
           </el-switch>
           <el-button style="margin-top: 30px" type="primary">Save changes</el-button>
-        </div>
+        </el-col>
+        </el-row>
       </el-collapse-item>
-      <el-collapse-item title="Profile customization" name="3">
-        <div>
-          <el-button style="margin-top: 30px" type="primary">Save changes</el-button>
-        </div>
+
+      <el-collapse-item name="3">
+        <template slot="title"><span class="fa-stack fa-2x"><i class="fas fa-square fa-stack-2x"></i>
+          <i class="fas fa-tools fa-stack-1x fa-inverse"></i></span> Profile customization</template>
+        <el-row>
+          <el-col class="m-10">
+            <!-- Content Here -->
+            <el-button style="margin-top: 30px" type="primary">Save changes</el-button>
+          </el-col>
+        </el-row>
       </el-collapse-item>
     </el-collapse>
-  </div>
-  </div>
+  </el-col>
+  </el-row>
 </template>
 
 <script>
@@ -92,3 +107,10 @@
     }
   }
 </script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+  .el-collapse-item .fa-stack {
+    color: #2a9cb6;
+    font-size: 1.2em;
+    margin-right: 10px;
+  }
+</style>

@@ -1,29 +1,40 @@
 <template>
-  <div>
-    <el-button type="primary" @click="dialogVisible = true">Create user</el-button>
+  <el-row class="panel p-10">
 
-    <el-dialog
-      title="Create user"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-  <span>
-    <create-user></create-user>
-  </span>
+    <el-row type="flex" justify="space-between">
 
-    </el-dialog>
-    <div style="margin-top: 30px">
-      <div style="margin-bottom: 30px">
-      <el-button @click="resetDateFilter">Clear date filter</el-button>
-  <el-button @click="clearFilter">Clear all filters</el-button>
-        </div>
+      <el-col :span="5">
+        <el-button type="primary" @click="dialogVisible = true">Create user</el-button>
+      </el-col>
+      <el-col class="t-right" :span="14">
+        <el-button-group>
+          <el-button @click="resetDateFilter">Clear date filter</el-button>
+          <el-button @click="clearFilter">Clear all filters</el-button>
+        </el-button-group>
+      </el-col>
+
+    </el-row>
+
+    <el-col class="m-t-10">
+
+      <el-dialog
+        title="Create user"
+        :visible.sync="dialogVisible"
+        width="70%"
+        :before-close="handleClose">
+
+      <span>
+        <create-user></create-user>
+      </span>
+
+      </el-dialog>
 
       <el-table
         :data="usersListData"
         stripe
         border
-        style="width: 80%"
-        max-height="100%">
+        max-height="400"
+      >
         <el-table-column
           prop="name"
           label="Name"
@@ -42,11 +53,12 @@
         <el-table-column
           prop="username"
           label="Username"
-          width="280">
+          width="180">
         </el-table-column>
         <el-table-column
           label="Operations"
-          width="100">
+          fixed="right"
+          width="120">
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="deleteRow(scope.$index, usersListData)"
@@ -57,8 +69,9 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
-  </div>
+    </el-col>
+
+  </el-row>
 </template>
 
 <script>

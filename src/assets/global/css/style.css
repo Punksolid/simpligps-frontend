@@ -33,13 +33,14 @@
 /* Inline Edition X-Editable - OPTIONAL */
 /* Show Html Code - OPTIONAL */
 /* FONTS */
+/* FONTS for Weather - Not in use
 @font-face {
   font-family: 'weather';
   src: url('icons/weather/artill_clean_icons-webfont.eot');
   src: url('icons/weather/artill_clean_icons-webfont.eot?#iefix') format('embedded-opentype'), url('/icons/weather/artill_clean_icons-webfont.woff') format('woff'), url('icons/weather/artill_clean_icons-webfont.ttf') format('truetype'), url('/icons/weather/weatherfont/artill_clean_icons-webfont.svg#artill_clean_weather_iconsRg') format('svg');
   font-weight: normal;
   font-style: normal;
-}
+}*/
 html {
   height: 100%;
 }
@@ -597,13 +598,13 @@ a.scrollup:hover {
 .topbar .header-left .topnav .menu__handle {
   background: rgba(0, 0, 0, 0);
   border: none;
-  height: 24px;
-  left: 18px;
+  height: 50px;
+  left: 7px;
   outline: none;
   padding: 0;
-  position: absolute;
-  top: 11px;
-  width: 20px;
+  position: relative;
+  top: 1px;
+  width: 50px;
   z-index: 2000;
 }
 .topbar .header-left .topnav .menu__handle::before {
@@ -616,10 +617,10 @@ a.scrollup:hover {
   background: #2b2e33;
   content: '';
   height: 2px;
-  left: 0;
+  left: 9px;
   position: absolute;
-  top: 50%;
-  width: 100%;
+  top: 56%;
+  width: 50%;
   -webkit-transition: transform 0.3s linear;
   -moz-transition: transform 0.3s linear;
   -o-transition: transform 0.3s linear;
@@ -634,12 +635,12 @@ a.scrollup:hover {
   background: #2b2e33;
   content: '';
   height: 2px;
-  left: 0;
+  left: 9px;
   position: absolute;
   top: 50%;
   transform-origin: 50% 50%;
   transform: translate3d(0, 5px, 0);
-  width: 100%;
+  width: 50%;
   -webkit-transition: transform 0.3s linear;
   -moz-transition: transform 0.3s linear;
   -o-transition: transform 0.3s linear;
@@ -648,17 +649,18 @@ a.scrollup:hover {
 }
 .topbar .header-left .topnav .menu__handle span {
   height: 2px;
-  left: 0;
+  left: 9px;
   overflow: hidden;
   position: absolute;
   text-indent: 200%;
-  top: 12px;
-  -webkit-transition: opacity 0.25s linear;
-  -moz-transition: opacity 0.25s linear;
-  -o-transition: opacity 0.25s linear;
-  -ms-transition: opacity 0.25s linear;
-  transition: opacity 0.25s linear;
-  width: 100%;
+  top: 13px;
+  transform: translate3d(0, 2px, 0);
+  -webkit-transition: transform 0.3s linear;
+  -moz-transition: transform 0.3s linear;
+  -o-transition: transform 0.3s linear;
+  -ms-transition: transform 0.3s linear;
+  transition: transform 0.3s linear;
+  width: 50%;
 }
 .topbar .header-left .topnav .mmenu .dropdown a {
   color: #656565;
@@ -1020,11 +1022,12 @@ a.scrollup:hover {
   font-size: 12px;
   padding: 2px 5px;
   position: relative;
-  right: 8px;
+  right: 9px;
   top: -8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  color: #FFF;
 }
 .topbar .header-right .header-menu .dropdown-menu > li > a.pull-right {
   clear: none;
@@ -1135,8 +1138,9 @@ a.scrollup:hover {
 .topbar .header-right .header-menu .dropdown-menu > li > a.pull-left {
   clear: none;
 }
-.topbar .header-right .header-menu #notifications-header > a > i {
+.topbar .header-right .header-menu #notifications-header > a > i, .topbar .header-right .header-menu #notifications-header > a i {
   color: #666666;
+  vertical-align: middle;
   display: inline-block;
   font-size: 20px;
 }
@@ -1403,14 +1407,18 @@ a.scrollup:hover {
   display: none;
 }
 body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .menu__handle::before {
-  -moz-transform: translate3d(0, -6px, 0);
-  -webkit-transform: translate3d(0, -6px, 0);
-  transform: translate3d(0, -6px, 0);
+  -moz-transform: translate3d(0, -5px, 0);
+  -webkit-transform: translate3d(0, -5px, 0);
+  transform: translate3d(0, -5px, 0);
 }
 body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .menu__handle::after {
-  -moz-transform: translate3d(0, 6px, 0);
-  -webkit-transform: translate3d(0, 6px, 0);
-  transform: translate3d(0, 6px, 0);
+  -moz-transform: translate3d(0, 7px, 0);
+  -webkit-transform: translate3d(0, 7px, 0);
+  transform: translate3d(0, 7px, 0);
+}
+body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .menu__handle span {
+  top: 12px;
+  transition: all ease 0.35s;
 }
 .fixed-topbar .topbar {
   position: fixed;
@@ -1429,8 +1437,8 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 @media screen and (min-width: 1025px) {
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle {
     background: rgba(0, 0, 0, 0);
-    left: 14px;
-    top: 12px;
+    left: 5px;
+    top: 0px;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle::before {
     -moz-transform: rotate3d(0, 0, 1, 45deg);
@@ -1443,6 +1451,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
     -webkit-transform: rotate3d(0, 0, 1, -45deg);
     background: #ffffff;
     transform: rotate3d(0, 0, 1, -45deg);
+    top: 53%;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle span {
     opacity: 0;
@@ -2146,7 +2155,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   background: -o-linear-gradient(left, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
   background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(205, 205, 205, 0)), color-stop(50%, #4d4d4d), color-stop(100%, rgba(205, 205, 205, 0)));
   background: -webkit-linear-gradient(left, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
-  background: linear-gradient(left, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
+  background: linear-gradient(to right, rgba(205, 205, 205, 0), #4d4d4d, rgba(205, 205, 205, 0));
   border: 0;
   height: 1px;
   margin-bottom: 0;
@@ -3902,7 +3911,7 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
   background-size: 100% 40px;
   background: -moz-linear-gradient(top, #f0f0f0 0%, #ffffff 5%) 0 0;
   background: -webkit-linear-gradient(top, #f0f0f0 0%, #ffffff 5%) 0 0;
-  background: linear-gradient(top, #f0f0f0 0%, #ffffff 5%) 0 0;
+  background: linear-gradient(to bottom, #f0f0f0 0%, #ffffff 5%) 0 0;
   padding: 0;
   position: relative;
 }
@@ -4190,9 +4199,9 @@ body:not(.fixed-sidebar):not(.fixed-topbar):not(.sidebar-top) .sidebar .logopane
 }
 .main-content .page-content {
   background: #F5F5F5;
-  margin-top: 50px;
+  margin-top: 30px;
   overflow: hidden;
-  padding: 20px 50px 0;
+  padding: 20px 20px 0;
   position: relative;
   height: 100%;
 }
