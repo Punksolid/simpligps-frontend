@@ -53,6 +53,7 @@ import { loggedUser } from '../../../api/users'
 import App from '../../../App'
 import Notifications from '@/views/layout/components/Notifications'
 
+
 export default {
   components: {
     App,
@@ -78,7 +79,6 @@ export default {
     fetchName() {
       loggedUser().then(response => {
         this.logged_user = response.data.data.name
-        console.log(response.data.data)
       })
     },
     logout() {

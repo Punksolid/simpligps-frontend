@@ -11,7 +11,7 @@
     <i class="fas fa-exclamation-triangle"></i>
     <h1 class="title">Max Alerts</h1>
     <span slot="footer" class="dialog-footer">
-    <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
+    <el-button @click="dialogVisible = false">Cancel</el-button>
     <el-button type="primary" @click="dialogVisible = false">Attended</el-button>
     </span>
   </el-dialog>
@@ -25,16 +25,24 @@
       data() {
         return {
           dialogVisible: false
-        };
+        }
       },
       methods: {
         handleClose(done) {
           this.$confirm('Are you sure to close this dialog?')
             .then(_ => {
-              done();
+              done()
             })
-            .catch(_ => {});
+            .catch(_ => {})
+        },
+        activateAlert() {
+          if (!this.dialogVisible) {
+            this.dialogVisible = true
+          }
         }
+      },
+      created() {
+        event.$on('activate-alert', () => this.activateAlert())
       }
     }
 </script>
