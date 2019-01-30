@@ -5,11 +5,11 @@
 
       <el-dropdown trigger="click">
         <i class="icon-bell"></i>
-        <span class="badge badge-danger badge-header">{{ notifications.length }}</span>
+        <span v-if="notifications.length" class="badge badge-danger badge-header">{{ notifications.length }}</span>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
 
-          <el-dropdown-item v-for="notification in notifications" :key="notification.text">
-            {{ notification.text }}
+          <el-dropdown-item v-for="notification in notifications" :key="notification.id">
+            {{ notification.message }}
           </el-dropdown-item>
 
         </el-dropdown-menu>
@@ -22,16 +22,14 @@
 
 <script>
   import { loggedUser } from '../../../api/users'
+  import { getMyNotifications } from '../../../api/me'
 
   export default {
     name: 'Notifications',
     data() {
       return {
         user: '',
-        notifications: [{
-          text: 'Mi texto',
-          id: 1
-        }]
+        notifications: []
       }
     },
     methods: {
@@ -47,19 +45,25 @@
         }).catch(e => {
           console.log(e)
         })
+      },
+      fetchNotifications() {
+        getMyNotifications().then(response => {
+          this.notifications = response.data.data
+        })
       }
     },
     computed: {},
     created() {
-      window.Echo.channel('test')
-        .listen('.unodostres', (e) => {
-          console.log(e)
-        })
-      window.Echo.private('App.User.1')
+      this.fetchNotifications()
+      window.Echo.private('App.User.' + this.$store.state.user.id)
         .notification((notification) => {
           console.log(notification)
           console.log('NOTIFICATION')
-          this.notifications.push(notification)
+          this.notifications.push({
+            id: notification.id,
+            message: notification.message,
+            link: notification.link
+          })
         })
       this.fetchUser()
 

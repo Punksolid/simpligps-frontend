@@ -13,10 +13,6 @@
 
     </el-dialog>
     <div style="margin-top: 30px">
-      <div style="margin-bottom: 30px">
-      <el-button @click="resetDateFilter">Clear date filter</el-button>
-  <el-button @click="clearFilter">Clear all filters</el-button>
-        </div>
 
       <el-table
         :data="usersListData"
