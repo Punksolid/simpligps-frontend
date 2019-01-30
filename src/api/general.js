@@ -81,16 +81,16 @@ export function getTotalDevices() {
     method: 'GET'
   })
 }
+export function getPermissions() {
+  return request({
+    url: 'v1/permissions',
+    method: 'GET'
+  })
+}
 
 export function getDatabaseNotifications() {
   return request({
     url: 'v1/me/notifications',
-    method: 'GET'
-  })
-}
-export function getPermissions() {
-  return request({
-    url: 'v1/permissions',
     method: 'GET'
   })
 }

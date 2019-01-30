@@ -19,6 +19,22 @@ import '@/assets/global/css/ui.css'
 import '@/assets/global/css/icons/line-icons/simple-line-icons.css'
 import '@/assets/global/plugins/jquery/jquery-3.1.0.min.js'
 import '@/assets/admin/layout3/js/layout.js'
+// import Pusher from 'pusher-js'
+import Echo from 'laravel-echo'
+
+window.event = new Vue()
+window.Pusher = require('pusher-js')
+window.Echo = new Echo({
+  authEndpoint: 'http://127.0.0.1:8000/broadcasting/auth',
+  broadcaster: 'pusher',
+  key: '535c65dd1f4182513a5f',
+  auth: {
+    headers: {
+      Authorization: 'Bearer ' + store.getters.token
+    }
+  }
+  // cluster: 'mt1'
+})
 
 import App from './App'
 import router from './router'
@@ -29,6 +45,7 @@ Vue.config.productionTip = false
 import './mock' // simulation data should be deleted on prod
 import '@/permission' // permission control, verifica que usuario tenga permisos
 
+
 // import * as filters from './filters' // global filters
 
 Vue.use(Element, {
@@ -38,7 +55,6 @@ Vue.use(Element, {
 })
 
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

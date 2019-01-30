@@ -184,9 +184,9 @@ export const constantRouterMap = [
     meta: { title: 'System Settings', icon: 'icon-settings' },
     children: [
       {
-        path: '',
+        path: 'general',
         component: () => import('@/views/settings/settings'),
-        name: 'Settings'
+        name: 'System Settings'
       },
       {
         path: 'permissions',

@@ -95,4 +95,9 @@
     flex-direction: column;
   }
 }
+  @media (max-width:768px) {
+    .active-panels {
+      flex-direction: column;
+    }
+  }
 </style>

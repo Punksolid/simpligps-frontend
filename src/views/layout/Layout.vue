@@ -18,7 +18,7 @@
 
       <app-main class="page-content"/>
 
-      <Alerts/>
+      <alerts></alerts>
 
     </div>
   </div>
@@ -27,7 +27,7 @@
 
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
-import Alerts from '@/views/layout/components/Alerts/'
+import Alerts from '@/views/layout/components/Alerts'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -59,6 +59,9 @@ export default {
     handleClickOutside() {
       this.$store.dispatch('CloseSideBar', { withoutAnimation: false })
     }
+  },
+  created() {
+
   }
 }
 </script>

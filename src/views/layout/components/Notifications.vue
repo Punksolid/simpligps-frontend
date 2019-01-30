@@ -3,12 +3,12 @@
 
     <router-link to="">
       <el-dropdown trigger="click">
-        <span class="el-dropdown-link"><i class="icon-bell"></i><span class="badge badge-danger badge-header">6</span></span>
+        <i class="icon-bell"></i>
+        <span v-if="notifications.length" class="badge badge-danger badge-header">{{ notifications.length }}</span>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <el-dropdown-item> Testing</el-dropdown-item>
 
-          <el-dropdown-item v-for="notification in notifications" :key="notification.text">
-            {{ notification.text.message }}
+          <el-dropdown-item v-for="notification in notifications" :key="notification.id">
+            {{ notification.message }}
           </el-dropdown-item>
 
         </el-dropdown-menu>
@@ -19,28 +19,52 @@
 </template>
 
 <script>
-  import { getDatabaseNotifications } from '../../../api/general'
+  import { loggedUser } from '../../../api/users'
+  import { getMyNotifications } from '../../../api/me'
 
   export default {
     name: 'Notifications',
     data() {
       return {
+        user: '',
         notifications: []
       }
     },
     methods: {
-      getNotifications() {
-        getDatabaseNotifications().then(response => {
+      fetchUser() {
+        loggedUser().then(response => {
+          this.user = response.data.data
+
+
+
+          console.log('success')
+          // console.log(response.data.data.id)
+          // console.log(response.data.data)
+        }).catch(e => {
+          console.log(e)
+        })
+      },
+      fetchNotifications() {
+        getMyNotifications().then(response => {
           this.notifications = response.data.data
         })
       }
     },
+    computed: {},
     created() {
-      this.getNotifications()
+      this.fetchNotifications()
+      window.Echo.private('App.User.' + this.$store.state.user.id)
+        .notification((notification) => {
+          console.log(notification)
+          console.log('NOTIFICATION')
+          this.notifications.push({
+            id: notification.id,
+            message: notification.message,
+            link: notification.link
+          })
+        })
+      this.fetchUser()
 
-      // setInterval(function() {
-      //   this.getNotifications()
-      // }.bind(this), 10000) // milisegundos
     }
   }
 </script>

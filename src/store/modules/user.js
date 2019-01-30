@@ -21,6 +21,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_ID: (state,id) => {
+      state.id = id
     }
   },
 
@@ -53,6 +56,7 @@ const user = {
           }
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
+          commit('SET_ID', data.id)
           resolve(response)
         }).catch(error => {
           reject(error)
