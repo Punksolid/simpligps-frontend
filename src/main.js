@@ -19,10 +19,11 @@ import '@/assets/global/css/ui.css'
 import '@/assets/global/css/icons/line-icons/simple-line-icons.css'
 import '@/assets/global/plugins/jquery/jquery-3.1.0.min.js'
 import '@/assets/admin/layout3/js/layout.js'
+// import Pusher from 'pusher-js'
 import Echo from 'laravel-echo'
-import Pusher from 'pusher-js'
 
 window.event = new Vue()
+window.Pusher = require('pusher-js')
 window.Echo = new Echo({
   authEndpoint: 'http://127.0.0.1:8000/broadcasting/auth',
   broadcaster: 'pusher',
@@ -59,7 +60,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  Echo,
 
   render: h => h(App)
 })
