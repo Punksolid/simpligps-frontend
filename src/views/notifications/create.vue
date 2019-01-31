@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" label-width="100px">
+  <el-form ref="form" :model="form" label-width="150px">
     <el-form-item label="Name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
@@ -13,9 +13,28 @@
         </el-option>
     </el-select>
     </el-form-item>
+
     <el-form-item label="Control Type By">
-      <el-input v-model="form.control_type" ></el-input>
+      <el-select v-model="form.control_type" placeholder="Select">
+        <el-option
+          v-for="type in options_control_type"
+          :key="type.value"
+          :label="type.label"
+          :value="type.value"
+        ></el-option>
+      </el-select>
+      </el-form-item>
+    <el-form-item>
+      <el-row v-if="form.control_type === 'speed'">
+        <el-col>
+          <el-input-number v-model="form.params.min_speed" size="mini" :min="1" :max="150"></el-input-number>
+        </el-col>
+        <el-col>
+        <el-input-number v-model="form.params.max_speed" size="mini" :min="1" :max="150"></el-input-number>
+        </el-col>
+      </el-row>
     </el-form-item>
+
     <el-form-item label="Units">
       <el-select v-model="form.units" multiple placeholder="Select">
         <el-option
@@ -30,7 +49,7 @@
       <el-switch v-model="form.active"></el-switch>
     </el-form-item>
     <el-form-item>
-      <el-button>Cancel</el-button>
+      <el-button @click="closeParent">Cancel</el-button>
       <el-button type="primary" @click="onSubmit">Create</el-button>
     </el-form-item>
   </el-form>
@@ -42,17 +61,36 @@ import { getWialonUnits, getResources, createWialonNotification } from '../../ap
 import { Message } from 'element-ui'
 
   export default {
-    name: 'CreateNotification',
+     name: 'CreateNotification',
     data() {
       return {
         form: {
           resource: null,
-          control_type: 'panic_button',
+          control_type: null,
+          params: {
+            min_speed: 0,
+            max_speed: 0
+          },
           units: [],
           activate: '',
           name: ''
-
         },
+        options_control_type: [{
+          label: 'Speed',
+          value: 'speed',
+          params: {
+            min_speed: '',
+            max_speed: ''
+          }
+        },
+          {
+            label: 'Panic Button',
+            value: 'panic_button'
+          },
+          {
+            label: 'Geofence',
+            value: 'geofence'
+          }],
         resources: '',
         units: ''
       }
@@ -63,6 +101,21 @@ import { Message } from 'element-ui'
         createWialonNotification(this.form).then(response => {
           Message('Successful')
         })
+        this.$emit('refreshlist')
+      },
+      handleClose(done) {
+        this.$confirm('Are you sure to close this alert?')
+          .then(_ => {
+            done()
+          })
+          .catch(_ => {})
+      },
+      closeParent() {
+        this.handleClose().then(
+          this.$emit('closedialog'))
+      },
+      setControlType(event) {
+        this.options_control_type.value = event.target.value
       },
       fetchWialonResources() {
         getResources().then(response => {

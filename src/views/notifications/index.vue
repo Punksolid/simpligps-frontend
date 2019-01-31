@@ -1,21 +1,19 @@
 <template>
-  <div>
+  <el-row class="panel p-10">
 
-    <el-button type="primary" @click="dialogVisible = true">Create notification</el-button>
-    <div style="margin-top: 30px">
+    <el-button type="primary" class="m-10" @click="dialogVisible = true">Create notification</el-button>
+    <el-col>
       <el-dialog
         title="Create Notification"
         :visible.sync="dialogVisible"
-        width="30%">
-      <span>
-            <CreateNotification></CreateNotification>
-      </span>
-        <!--<span slot="footer" class="dialog-footer">-->
-        <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
-        <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
-        <!--</span>-->
+        width="40%"
+        :before-close="handleClose">
+      <div>
+            <CreateNotification @refreshlist="fetchWialonNotifications()" @closedialog="dialogVisible = false"></CreateNotification>
+      </div>
       </el-dialog>
-      <div style="margin-top: 30px">
+
+      <div>
         <el-table
           :data="notifications_list"
           border
@@ -36,7 +34,7 @@
           </el-table-column>
         </el-table>
       </div>
-    </div>
+    </el-col>
 
      <el-button type="warning" @click="centerDialogVisible = true">Span Alert</el-button>
        <el-dialog
@@ -62,7 +60,7 @@
     show-icon> </el-alert>
             </el-dialog>
 
-  </div>
+  </el-row>
 </template>
 
 <style scoped>
@@ -114,13 +112,6 @@ i.el-icon-warning {
     },
     created() {
       this.fetchWialonNotifications()
-    },
-     handleClose(done) {
-          this.$confirm('Are you sure to close this alert?')
-            .then(_ => {
-              done()
-            })
-            .catch(_ => {})
-        }
+    }
   }
 </script>

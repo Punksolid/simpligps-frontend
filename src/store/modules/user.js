@@ -22,7 +22,7 @@ const user = {
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
-    SET_ID: (state,id) => {
+    SET_ID: (state, id) => {
       state.id = id
     }
   },

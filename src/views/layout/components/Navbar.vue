@@ -58,7 +58,6 @@ import { loggedUser } from '../../../api/users'
 import App from '../../../App'
 import Notifications from '@/views/layout/components/Notifications'
 
-
 export default {
   components: {
     App,

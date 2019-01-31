@@ -2,8 +2,11 @@
   <el-row class="panel p-10">
     <el-col class="">
 
-      <el-autocomplete v-model="search" :fetch-suggestions="querySearchAsync" placeholder="Search unit"
-                       @select="handleSelect"></el-autocomplete>
+      <el-autocomplete
+        v-model="search"
+        :fetch-suggestions="querySearchAsync"
+        placeholder="Search unit"
+        @select="handleSelect"></el-autocomplete>
 
       <el-col class="m-t-20">
 
@@ -104,8 +107,7 @@
                         <div style="margin-top: 15px">
                           <el-checkbox label="Send notification to Transport Carrier" border></el-checkbox>
                           <el-checkbox label="Send notification to Cooled traffic" border></el-checkbox>
-                          <el-checkbox label="Send notification to Traffic Cattle/Leather/Autoservice"
-                                       border></el-checkbox>
+                          <el-checkbox label="Send notification to Traffic Cattle/Leather/Autoservice" border></el-checkbox>
 
                         </div>
                       </div>
