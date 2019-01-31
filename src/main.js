@@ -21,11 +21,10 @@ import '@/assets/global/plugins/jquery/jquery-3.1.0.min.js'
 import '@/assets/admin/layout3/js/layout.js'
 // import Pusher from 'pusher-js'
 import Echo from 'laravel-echo'
-
 window.event = new Vue()
 window.Pusher = require('pusher-js')
 window.Echo = new Echo({
-  authEndpoint: 'http://127.0.0.1:8000/broadcasting/auth',
+  authEndpoint: process.env.BASE + 'broadcasting/auth',
   broadcaster: 'pusher',
   key: '535c65dd1f4182513a5f',
   auth: {
@@ -39,6 +38,7 @@ window.Echo = new Echo({
 import App from './App'
 import router from './router'
 import store from './store'
+
 
 Vue.config.productionTip = false
 
