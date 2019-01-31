@@ -4,22 +4,22 @@
       <el-input v-model="form.name"></el-input>
     </el-form-item>
     <el-form-item label="Resources">
-      <el-select v-model="value" placeholder="Select">
+      <el-select v-model="form.resource" placeholder="Select">
         <el-option
-          v-for="resource in form.resources"
-          :key="resource.value"
-          :label="resource.name"
-          :value="resource.name">
+          v-for="resource_element in resources"
+          :key="resource_element.id"
+          :label="resource_element.name"
+          :value="resource_element.id">
         </el-option>
     </el-select>
     </el-form-item>
     <el-form-item label="Control Type By">
-      <el-input v-model="form.control_type_by" ></el-input>
+      <el-input v-model="form.control_type" ></el-input>
     </el-form-item>
     <el-form-item label="Units">
-      <el-select v-model="form.unit_default" multiple placeholder="Select">
+      <el-select v-model="form.units" multiple placeholder="Select">
         <el-option
-          v-for="unit in form.units"
+          v-for="unit in units"
           :key="unit.value"
           :label="unit.label"
           :value="unit.value">
@@ -46,31 +46,30 @@ import { Message } from 'element-ui'
     data() {
       return {
         form: {
-          resources: [{
-            value: '',
-            label: ''
-          }],
-          control_type_by: 'panic_button',
-          unit_default: '',
+          resource: null,
+          control_type: 'panic_button',
           units: [],
           activate: '',
           name: ''
 
-        }
+        },
+        resources: '',
+        units: ''
       }
     },
     methods: {
       onSubmit() {
+        console.log(this.form)
         createWialonNotification(this.form).then(response => {
           Message('Successful')
         })
       },
       fetchWialonResources() {
         getResources().then(response => {
-          this.form.resources = response.data.data
+          this.resources = response.data.data
         })
         getWialonUnits().then(response => {
-          this.form.units = response.data.data.map(unit => {
+          this.units = response.data.data.map(unit => {
             return { value: unit.id, label: unit.nm }
           })
         }).catch(e => {
