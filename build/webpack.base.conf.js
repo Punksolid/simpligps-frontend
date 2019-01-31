@@ -1,3 +1,4 @@
+
 'use strict'
 const path = require('path')
 const utils = require('./utils')
@@ -49,7 +50,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: 'babel-loader?cacheDirectory',
         include: [
           resolve('src'),
           resolve('test'),

@@ -29,7 +29,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
-    disableHostCheck: true,
     clientLogLevel: 'warning',
     historyApiFallback: true,
     hot: true,
@@ -58,8 +57,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true,
       favicon: resolve('favicon.ico'),
-      title: 'vue-admin-template'
-    })
+      title: 'vue-element-admin',
+      templateParameters: {
+        BASE_URL: config.dev.assetsPublicPath + config.dev.assetsSubDirectory,
+      },
+    }),
   ]
 })
 
@@ -81,7 +83,7 @@ module.exports = new Promise((resolve, reject) => {
             messages: [
               `Your application is running here: http://${
                 devWebpackConfig.devServer.host
-              }:${port}`
+                }:${port}`
             ]
           },
           onErrors: config.dev.notifyOnErrors
