@@ -4,71 +4,84 @@
     <el-row type="flex" justify="space-between">
 
       <el-col :span="5">
-        <el-button type="primary" @click="dialogVisible = true">Create user</el-button>
+        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-user-plus p-r-10">Create user</el-button>
       </el-col>
       <el-col class="t-right" :span="14">
+        <!-- Disable while click functions are created
         <el-button-group>
-          <el-button @click="resetDateFilter">Clear date filter</el-button>
+          <el-button@click="resetDateFilter">Clear date filter</el-button>
           <el-button @click="clearFilter">Clear all filters</el-button>
-        </el-button-group>
+        </el-button-group> -->
       </el-col>
 
     </el-row>
 
-    <el-col class="m-t-10">
-
       <el-dialog
         title="Create user"
         :visible.sync="dialogVisible"
-        width="70%"
+        width="60%"
         :before-close="handleClose">
-
-      <span>
-        <create-user></create-user>
-      </span>
-
+        <create-user @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
       </el-dialog>
+
+    <el-col class="m-t-10">
 
       <el-table
         :data="usersListData"
         stripe
-        border
-        max-height="400"
-      >
+        border>
         <el-table-column
           prop="name"
           label="Name"
+          sortable
           width="280">
         </el-table-column>
         <el-table-column
           prop="lastname"
           label="Lastname"
+          sortable
           width="280">
         </el-table-column>
         <el-table-column
           prop="email"
           label="Email"
+          sortable
           width="350">
         </el-table-column>
         <el-table-column
           prop="username"
           label="Username"
+          sortable
           width="180">
         </el-table-column>
         <el-table-column
           label="Operations"
           fixed="right"
-          width="120">
+          width="190">
           <template slot-scope="scope">
+            <el-button
+              size="mini">
+              Edit
+            </el-button>
             <el-button
               @click.native.prevent="deleteRow(scope.$index, usersListData)"
               type="danger"
               size="mini">
-              Remove
+              Delete
             </el-button>
           </template>
         </el-table-column>
       </el-table>
+    </el-col>
+      <!-- layout="prev, pager, next" -->
+    <el-col class="m-t-5 t-center">
+    <el-pagination
+      class="dis-inline-b"
+      :current-page.sync="page"
+      :total="usersListPage.total"
+      v-bind="usersListPage"
+      @current-change="handleCurrentChange"
+      @pagination="fetchUserPage" />
     </el-col>
 
   </el-row>
@@ -86,7 +99,8 @@
     },
     params: {
       return: {
-        usersListData: []
+        usersListData: [],
+        usersListPage: []
       }
     },
     methods: {
@@ -113,20 +127,49 @@
           .catch(_ => {
           })
       },
+      fetchUserPage() {
+        this.listLoading = true
+        usersList(this.usersListPage).then(response => {
+          this.usersListPage = response.data.meta
+          this.usersListData = response.data.data
+          this.listLoading = false
+        })
+      },
+      handleCurrentChange(val) {
+        this.page = val
+        this.usersListPage.current_page = val
+        this.fetchUserPage()
+      },
       fetchUsersList() {
         this.listLoading = true
         usersList(this.usersListData).then(response => {
           this.usersListData = response.data.data
           this.listLoading = false
+          this.dialogVisible = false
         })
       }
     },
     created() {
       this.fetchUsersList()
+      this.fetchUserPage()
     },
     data() {
       return {
         usersListData: null,
+        list: null,
+        total: 0,
+        page: 0,
+        from: 0,
+        to: 0,
+        listLoading: true,
+        usersListPage: {
+          current_page: 0,
+          from: 0,
+          last_page: 0,
+          per_page: 10,
+          to: 0,
+          total: 0
+        },
         dialogVisible: false
       }
     }

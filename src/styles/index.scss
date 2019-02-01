@@ -130,7 +130,10 @@ a:hover {
   background: #ffffff61;
   border: 2px solid #FFF;
 }
-
+// DISPLAY
+.dis-flex {
+  display: flex;
+}
 @media (max-width: 990px) {
   .main-content .page-content .header {
     left: -20px;

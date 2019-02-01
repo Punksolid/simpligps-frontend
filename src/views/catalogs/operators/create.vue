@@ -16,7 +16,7 @@
 </el-switch>
 </el-form-item>
   <el-form-item>
-    <el-button type="danger" aria-label="close">Cancel</el-button>
+    <el-button @click="handleClose" aria-label="close">Cancel</el-button>
     <el-button type="primary" @click="onSubmit">Create</el-button>
   </el-form-item>
 </el-form>
@@ -46,10 +46,22 @@
             type: 'success',
             duration: 10 * 1000
           })
+          this.resetForm('form')
+          this.$emit('operatorcreated')
         })
+      },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
+    handleClose(done) {
+      this.$confirm('Are you sure to close this dialog?')
+        .then(_ => {
+          this.resetForm('form')
+          done(this.$emit('closedialog'))
+        })
+        .catch(_ => {})
       }
     }
-
   }
 </script>
 

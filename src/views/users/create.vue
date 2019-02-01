@@ -1,25 +1,30 @@
 <template>
-  <el-form ref="form" :model="form" label-width="200">
-    <el-form-item label="Name">
-      <el-input v-model="form.name"></el-input>
+  <el-form ref="form" :model="form" label-width="200" class="user-form">
+    <el-form-item label="Name" prop="name">
+      <el-input v-model="form.name" clearable></el-input>
     </el-form-item>
-    <el-form-item label="Last Name">
-      <el-input v-model="form.lastname"></el-input>
+    <el-form-item label="Last Name" prop="lastname">
+      <el-input v-model="form.lastname" clearable></el-input>
     </el-form-item>
-    <el-form-item label="Email">
+    <el-form-item label="Email" prop="email">
       <el-input v-model="form.email"></el-input>
     </el-form-item>
-    <el-form-item label="Username">
-      <el-input v-model="form.username"></el-input>
+    <el-form-item label="Username" prop="username">
+      <el-input v-model="form.username" clearable></el-input>
     </el-form-item>
-    <el-form-item label="Password">
-      <el-input v-model="form.password" type="password"></el-input>
+    <el-form-item label="Password" prop="password">
+      <el-input v-model="form.password" type="password" clearable></el-input>
     </el-form-item>
+    <el-row>
+      <el-col class="t-center">
+        <el-form-item  class="dis-inline-b t-center">
+          <el-button @click="resetForm('form')">Reset</el-button>
+          <el-button @click="handleClose">Cancel</el-button>
+          <el-button type="primary" @click="onSubmit">Create User</el-button>
+        </el-form-item>
+      </el-col>
+    </el-row>
 
-    <el-form-item>
-      <el-button @click="dialogVisible = false">Cancel</el-button>
-      <el-button type="primary" @click="onSubmit">Create User</el-button>
-    </el-form-item>
   </el-form>
 </template>
 
@@ -50,7 +55,20 @@
             type: 'success',
             duration: 10 * 1000
           })
+          this.resetForm('form')
+          this.$emit('usercreated')
         })
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields()
+      },
+      handleClose(done) {
+        this.$confirm('Are you sure to close this dialog?')
+          .then(_ => {
+            this.resetForm('form')
+            done(this.$emit('closedialog'))
+          })
+          .catch(_ => {})
       }
     },
     rules: {
@@ -62,8 +80,13 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .user-form {
-    width: 800px;
+    min-width: 200px;
+  }
+  @media (max-width: 480px) {
+    .user-form button {
+      margin: 5px;
+    }
   }
 </style>

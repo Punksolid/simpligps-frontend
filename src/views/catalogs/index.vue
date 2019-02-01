@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <el-button type="primary" @click="dialogVisible = true">Create Operator</el-button>
+  <el-row>
+    <el-col>
+      <el-button type="primary" @click="dialogVisible = true">Create Operator</el-button>
+    </el-col>
 
     <el-dialog
       title="Create Operator"
@@ -9,17 +11,13 @@
       <span>
             <CreateOperator></CreateOperator>
       </span>
-      <!--<span slot="footer" class="dialog-footer">-->
-        <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
-        <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
-      <!--</span>-->
 
     </el-dialog>
-<div style="margin-top: 30px">
 
+    <el-col>
       <el-table
       :data="operatorsList"
-      stripe
+      striped
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -50,8 +48,9 @@
       </template>
       </el-table-column>
     </el-table>
-  </div>
-  </div>
+  </el-col>
+
+  </el-row>
 </template>
 
 <script>
@@ -71,7 +70,7 @@
     },
     params: {
       return: {
-        tableData4: []
+        getOperatorsList: []
       }
     },
     methods: {
@@ -100,9 +99,8 @@
     },
     created() {
       this.fetchOperatorsList()
-    },
+      },
     }
-
 </script>
 
 <style scoped>

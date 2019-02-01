@@ -48,10 +48,14 @@
     <el-form-item label="Activate">
       <el-switch v-model="form.active"></el-switch>
     </el-form-item>
+    <el-row>
+    <el-col class="t-center">
     <el-form-item>
-      <el-button @click="closeParent">Cancel</el-button>
+      <el-button @click="handleClose">Cancel</el-button>
       <el-button type="primary" @click="onSubmit">Create</el-button>
     </el-form-item>
+    </el-col>
+    </el-row>
   </el-form>
 </template>
 
@@ -100,19 +104,15 @@ import { Message } from 'element-ui'
         console.log(this.form)
         createWialonNotification(this.form).then(response => {
           Message('Successful')
+          this.$emit('refreshlist')
         })
-        this.$emit('refreshlist')
       },
       handleClose(done) {
         this.$confirm('Are you sure to close this alert?')
           .then(_ => {
-            done()
+            done(this.$emit('closedialog'))
           })
           .catch(_ => {})
-      },
-      closeParent() {
-        this.handleClose().then(
-          this.$emit('closedialog'))
       },
       setControlType(event) {
         this.options_control_type.value = event.target.value

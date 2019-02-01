@@ -1,10 +1,11 @@
 <template>
   <el-row class="panel p-10">
-    <el-col class="">
+    <el-col>
 
       <el-autocomplete
         v-model="search"
         :fetch-suggestions="querySearchAsync"
+        prefix-icon="el-icon-search"
         placeholder="Search unit"
         @select="handleSelect"></el-autocomplete>
 
@@ -335,6 +336,7 @@
           <el-table-column
             prop="name"
             label="Name"
+            sortable
             width="180">
           </el-table-column>
           <el-table-column
@@ -351,7 +353,8 @@
             label="Longitude">
           </el-table-column>
           <el-table-column
-            label="Action"
+            label="Actions"
+            fixed="right"
             width="200">
             <template slot-scope="scope">
 
@@ -388,10 +391,10 @@
 
       <!--PAGER-->
 
-      <el-col class="p-t-20">
+      <el-col class="p-t-20 t-center">
         <el-pagination
           :page-size="10"
-          :pager-count="6"
+          :pager-count="5"
           layout="prev, pager, next"
           :total="100">
         </el-pagination>

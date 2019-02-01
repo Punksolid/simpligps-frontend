@@ -1,23 +1,29 @@
 <template>
-<div>
-  <el-button type="danger" plain @click="dialogVisible = true" icon="fas fa-exclamation-triangle"> Test Alert</el-button>
+<el-row>
+  <el-col class="m-l-20">
+    <el-button type="danger" size="small" plain @click="dialogVisible = true" icon="fas fa-exclamation-triangle"> Test Alert</el-button>
+  </el-col>
 
   <el-dialog
     title=""
     :visible.sync="dialogVisible"
     width="30%"
     class="maxalerts"
+    :show-close="false"
     :before-close="handleClose">
+    <el-row>
     <i class="fas fa-exclamation-triangle"></i>
     <h1 class="title">MAX ALERT!</h1>
-    <h3>Route Deviation</h3>
+    <el-col class="t-center"><h2 class="m-0 text-danger">Route Deviation</h2></el-col>
+      <el-col class="t-center"><h3 class="m-0">This is an example of alert list</h3></el-col>
+    </el-row>
     <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">Cancel</el-button>
-    <el-button type="primary" @click="dialogVisible = false">Attended</el-button>
+    <el-button disabled @click="handleClose">Cancel</el-button>
+    <el-button type="warning" @click="handleClose">Attended</el-button>
     </span>
   </el-dialog>
 
-</div>
+</el-row>
 </template>
 
 <script>
@@ -30,9 +36,9 @@
       },
       methods: {
         handleClose(done) {
-          this.$confirm('Are you sure to close this dialog?')
+          this.$confirm('Are you sure to close this alert?')
             .then(_ => {
-              done()
+              done(this.dialogVisible = false)
             })
             .catch(_ => {})
         },

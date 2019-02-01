@@ -5,9 +5,9 @@
 
           <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="WIALON ACCESS KEY" name="1">
-            <el-form :inline="true" :model="formInline" class="demo-form-inline">
-              <el-form-item label="Wialon Key">
-                <el-input v-model="formInline.wialon_key" placeholder="Wialon Key">{{ formInline.wialon_key }}</el-input>
+            <el-form :model="formInline" class="wialonkey">
+              <el-form-item label="Wialon Key" class="dis-flex">
+                <el-input type="text" v-model="formInline.wialon_key" placeholder="Wialon Key" style="width: 100%"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">Update Key</el-button>
@@ -59,6 +59,27 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scooped>
+.wialonkey {
+    display: flex;
+  .dis-flex {
+    width: 100%;
+  .el-form-item__content {
+    flex:1;
+  }
+ }
+}
+@media only screen and (max-width: 768px) {
+  .wialonkey {
+    flex-direction: column;
 
+    .dis-flex {
+      flex-direction: column;
+    }
+
+    .el-form-item__label {
+      text-align: left;
+    }
+  }
+}
 </style>
