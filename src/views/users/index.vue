@@ -77,9 +77,8 @@
     <el-col class="m-t-5 t-center">
     <el-pagination
       class="dis-inline-b"
-      :current-page.sync="page"
+      :current-page.sync="usersListPage.page"
       :total="usersListPage.total"
-      v-bind="usersListPage"
       @current-change="handleCurrentChange"
       @pagination="fetchUserPage" />
     </el-col>
@@ -96,12 +95,6 @@
     name: 'Users',
     components: {
       CreateUser
-    },
-    params: {
-      return: {
-        usersListData: [],
-        usersListPage: []
-      }
     },
     methods: {
       deleteRow(index, userListData) {
@@ -136,8 +129,7 @@
         })
       },
       handleCurrentChange(val) {
-        this.page = val
-        this.usersListPage.current_page = val
+        this.usersListPage.page = val
         this.fetchUserPage()
       },
       fetchUsersList() {
@@ -156,14 +148,9 @@
     data() {
       return {
         usersListData: null,
-        list: null,
-        total: 0,
-        page: 0,
-        from: 0,
-        to: 0,
         listLoading: true,
         usersListPage: {
-          current_page: 0,
+          page: 0,
           from: 0,
           last_page: 0,
           per_page: 10,
