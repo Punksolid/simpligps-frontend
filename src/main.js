@@ -36,8 +36,8 @@ window.Echo = new Echo({
 })
 
 import App from './App'
-import router from './router'
 import store from './store'
+import router from './router'
 
 Vue.config.productionTip = false
 

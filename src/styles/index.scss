@@ -20,7 +20,7 @@ html {
   box-sizing: border-box;
 }
 
-#app{
+#app {
   height: 100%;
 }
 
@@ -39,9 +39,9 @@ a:hover {
   text-decoration: none;
 }
 
-div:focus{
+div:focus {
   outline: none;
- }
+}
 
 a:focus,
 a:active {
@@ -67,13 +67,9 @@ a:hover {
   }
 }
 
-//main-container
-
+//main-container全局样式
 .app-main {
-  // min-height: calc(100vh - 30px);
-  position: relative;
-  overflow: hidden;
-  margin: 30px 1px;
+  min-height: 100%
 }
 .app-container {
   padding: 20px;
