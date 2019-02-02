@@ -12,12 +12,12 @@ export function usersList(params) {
   return request({
     url: 'v1/users',
     method: 'get',
-    params
+    params: params
   })
 }
 export function loggedUser() {
   return request({
     url: 'v1/me',
-    method: 'GET',
+    method: 'GET'
   })
 }

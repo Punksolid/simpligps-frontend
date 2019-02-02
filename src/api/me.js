@@ -7,3 +7,10 @@ export function changePassword(params) {
     params
   })
 }
+
+export function getMyNotifications() {
+  return request({
+    url: 'v1/me/notifications',
+    method: 'GET'
+  })
+}

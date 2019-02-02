@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <el-button type="primary" @click="dialogVisible = true">Create Operator</el-button>
+  <el-row class="panel p-10">
+    <el-row>
+      <el-col>
+        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-user-plus p-r-10">Create Operator</el-button>
+      </el-col>
+    </el-row>
 
     <el-dialog
       title="Create Operator"
       :visible.sync="dialogVisible"
-      width="30%">
-      <span>
-            <CreateOperator></CreateOperator>
-      </span>
-      <!--<span slot="footer" class="dialog-footer">-->
-      <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
-      <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
-      <!--</span>-->
-
+      :show-close="false"
+      width="40%">
+            <CreateOperator @usercreated="fetchOperatorsList" @closedialog="dialogVisible = false"></CreateOperator>
     </el-dialog>
-    <div style="margin-top: 30px">
 
+    <el-col class="panel-body m-t-10">
       <el-table
         :data="operatorsList"
         border
-        style="width: 80%">
+        style="width: 100%">
         <el-table-column
           prop="name"
           label="Name"
@@ -36,8 +34,9 @@
           label="Active">
         </el-table-column>
       </el-table>
-    </div>
-  </div>
+    </el-col>
+
+  </el-row>
 </template>
 
 <script>

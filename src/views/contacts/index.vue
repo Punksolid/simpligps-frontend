@@ -20,6 +20,7 @@
       <el-table
         :data="operatorsList"
         border
+        stripe
         style="width: 100%">
         <el-table-column
           prop="name"
@@ -42,7 +43,7 @@
           width="180">
         </el-table-column>
         <el-table-column
-          label="Operaciones"
+          label="Actions"
           width="200">
           <template slot-scope="scope">
             <el-button
