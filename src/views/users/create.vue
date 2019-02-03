@@ -20,7 +20,7 @@
         <el-form-item  class="dis-inline-b t-center">
           <el-button @click="resetForm('form')">Reset</el-button>
           <el-button @click="handleClose">Cancel</el-button>
-          <el-button type="primary" @click="onSubmit">Create User</el-button>
+          <el-button type="primary" @click="onSubmit">Confirm</el-button>
         </el-form-item>
       </el-col>
     </el-row>
@@ -44,7 +44,6 @@
           password: ''
         },
       dialogVisible: false
-
       }
     },
     methods: {
@@ -72,7 +71,6 @@
       }
     },
     rules: {
-
       password: [
         { required: true, message: 'Please enter your password', trigger: 'blur' }
       ]

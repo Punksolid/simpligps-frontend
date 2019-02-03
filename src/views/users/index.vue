@@ -4,24 +4,23 @@
     <el-row type="flex" justify="space-between">
 
       <el-col :span="5">
-        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-user-plus p-r-10">Create user</el-button>
+        <el-button type="primary" @click="openDialog" icon="fas fa-user-plus p-r-10">Create user</el-button>
       </el-col>
       <el-col class="t-right" :span="14">
-        <!-- Disable while click functions are created
         <el-button-group>
-          <el-button@click="resetDateFilter">Clear date filter</el-button>
-          <el-button @click="clearFilter">Clear all filters</el-button>
-        </el-button-group> -->
+          <el-button>Clear date filter</el-button>
+          <el-button>Clear all filters</el-button>
+        </el-button-group>
       </el-col>
 
     </el-row>
 
       <el-dialog
-        title="Create user"
+        :title="titleDialog[dialogStatus]"
         :visible.sync="dialogVisible"
         width="60%"
         :before-close="handleClose">
-        <create-user @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
+        <create-user ref="formData" @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
       </el-dialog>
 
     <el-col class="m-t-10">
@@ -60,7 +59,8 @@
           width="190">
           <template slot-scope="scope">
             <el-button
-              size="mini">
+              size="mini"
+              @click="handleUpdate(scope.row)">
               Edit
             </el-button>
             <el-button
@@ -73,7 +73,7 @@
         </el-table-column>
       </el-table>
     </el-col>
-      <!-- layout="prev, pager, next" -->
+
     <el-col class="m-t-5 t-center">
     <el-pagination
       class="dis-inline-b"
@@ -101,16 +101,9 @@
         deleteUser(userListData[index].id)
         this.fetchUsersList()
       },
-      open() {
-        this.$alert('This is a message', 'Title', {
-          confirmButtonText: 'OK',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `action: ${action}`
-            })
-          }
-        })
+      openDialog() {
+        this.dialogStatus = 'create'
+        this.dialogVisible = true
       },
       handleClose(done) {
         this.$confirm('Are you sure to close? Not saved data will be lost!')
@@ -127,6 +120,15 @@
           this.usersListData = response.data.data
           this.listLoading = false
         })
+      },
+      handleUpdate(row) {
+        this.form = Object.assign({}, row) // Copy Row
+        this.dialogStatus = 'update'
+        this.dialogVisible = true
+        this.$refs['formData'].form = this.form
+        /* this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        }) */
       },
       handleCurrentChange(val) {
         this.usersListPage.page = val
@@ -156,6 +158,13 @@
           per_page: 10,
           to: 0,
           total: 0
+        },
+        form: {},
+        formData: {},
+        dialogStatus: '',
+        titleDialog: {
+          update: 'Edit User',
+          create: 'Create User'
         },
         dialogVisible: false
       }
