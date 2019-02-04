@@ -48,7 +48,9 @@
                 type="password"
                 name="password"
                 placeholder="Password"
-                required></el-input>
+                required
+                @keyup.enter.native="handleLogin"
+              ></el-input>
               <el-form-item>
                 <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
                   Sign in

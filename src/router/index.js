@@ -180,7 +180,7 @@ export const constantRouterMap = [
   {
     path: '/settings',
     component: Layout,
-    // redirect: '/settings/general',
+    redirect: '/settings/general',
     name: 'System Settings',
     meta: { title: 'System Settings', icon: 'icon-settings' },
     children: [
