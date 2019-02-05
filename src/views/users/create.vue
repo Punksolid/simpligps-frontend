@@ -34,16 +34,12 @@
 
   export default {
     name: 'CreateUser',
+    props: [
+      'form'
+    ],
     data() {
       return {
-        form: {
-          name: '',
-          lastname: '',
-          email: '',
-          username: '',
-          password: ''
-        },
-      dialogVisible: false
+        dialogVisible: false
       }
     },
     methods: {
@@ -59,16 +55,18 @@
         })
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields()
+        this.form = {}
       },
       handleClose(done) {
-        this.$confirm('Are you sure to close this dialog?')
+        this.$confirm('Are you sure to close this dialog?.') // a donde va este texto? borrar si no es necesario
           .then(_ => {
             this.resetForm('form')
             done(this.$emit('closedialog'))
           })
           .catch(_ => {})
       }
+    },
+    created() {
     },
     rules: {
       password: [

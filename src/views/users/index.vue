@@ -20,7 +20,7 @@
         :visible.sync="dialogVisible"
         width="60%"
         :before-close="handleClose">
-        <create-user ref="formData" @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
+        <create-user v-bind:form="elementToUpdate" @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
       </el-dialog>
 
     <el-col class="m-t-10">
@@ -60,7 +60,7 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.row)">
+              @click="handleUpdate(scope.$index, usersListData)">
               Edit
             </el-button>
             <el-button
@@ -103,6 +103,7 @@
       },
       openDialog() {
         this.dialogStatus = 'create'
+        this.form = {}
         this.dialogVisible = true
       },
       handleClose(done) {
@@ -121,14 +122,11 @@
           this.listLoading = false
         })
       },
-      handleUpdate(row) {
-        this.form = Object.assign({}, row) // Copy Row
+      handleUpdate(index, userListData) {
+        this.elementToUpdate = userListData[index]
         this.dialogStatus = 'update'
         this.dialogVisible = true
-        this.$refs['formData'].form = this.form
-        /* this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        }) */
+
       },
       handleCurrentChange(val) {
         this.usersListPage.page = val
@@ -151,6 +149,7 @@
       return {
         usersListData: null,
         listLoading: true,
+        elementToUpdate: {},
         usersListPage: {
           page: 0,
           from: 0,
