@@ -1,28 +1,27 @@
 <template>
   <el-row class="panel p-10">
 
-    <el-dialog
-      :title="textMap[dialogStatus]"
-      :visible.sync="dialogVisible"
-      width="60%"
-      :before-close="handleClose">
-      <create-user :dialogform="form" @usercreated="fetchUsersList" @closedialog="cerrarDialogo"></create-user>
-    </el-dialog>
-
     <el-row type="flex" justify="space-between">
 
       <el-col :span="5">
-        <el-button type="primary" @click="createUsr" icon="fas fa-user-plus p-r-10">Create user</el-button>
+        <el-button type="primary" @click="openDialog" icon="fas fa-user-plus p-r-10">Create user</el-button>
       </el-col>
       <el-col class="t-right" :span="14">
-        <!-- Disable while click functions are created
         <el-button-group>
-          <el-button@click="resetDateFilter">Clear date filter</el-button>
-          <el-button @click="clearFilter">Clear all filters</el-button>
-        </el-button-group> -->
+          <el-button>Clear date filter</el-button>
+          <el-button>Clear all filters</el-button>
+        </el-button-group>
       </el-col>
 
     </el-row>
+
+    <el-dialog
+      :title="titleDialog[dialogStatus]"
+      :visible.sync="dialogVisible"
+      width="60%"
+      :before-close="handleClose">
+      <create-user @resetData="cleanFields" :form="elementToUpdate" @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
+    </el-dialog>
 
     <el-col class="m-t-10">
 
@@ -60,8 +59,8 @@
           width="190">
           <template slot-scope="scope">
             <el-button
-              @click="handleUpdate(scope.row)"
-              size="mini">
+              size="mini"
+              @click="handleUpdate(scope.$index, usersListData)">
               Edit
             </el-button>
             <el-button
@@ -76,14 +75,12 @@
     </el-col>
 
     <el-col class="m-t-5 t-center">
-    <el-pagination
-      class="dis-inline-b"
-      layout="prev, pager, next, total"
-      :current-page.sync="usersListPage.current_page"
-      :page-size="usersListPage.per_page"
-      :total="usersListPage.total"
-      @current-change="handleCurrentChange"
-      @pagination="fetchUserPage" />
+      <el-pagination
+        class="dis-inline-b"
+        :current-page.sync="usersListPage.page"
+        :total="usersListPage.total"
+        @current-change="handleCurrentChange"
+        @pagination="fetchUserPage" />
     </el-col>
 
   </el-row>
@@ -104,28 +101,9 @@
         deleteUser(userListData[index].id)
         this.fetchUsersList()
       },
-      createUsr() {
+      openDialog() {
         this.dialogStatus = 'create'
         this.dialogVisible = true
-      },
-      cerrarDialogo() {
-        this.dialogVisible = false
-      },
-      handleUpdate(row) {
-        this.form = Object.assign({}, row) // Copy Row
-        this.dialogStatus = 'update'
-        this.dialogVisible = true
-      },
-      open() {
-        this.$alert('This is a message', 'Title', {
-          confirmButtonText: 'OK',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `action: ${action}`
-            })
-          }
-        })
       },
       handleClose(done) {
         this.$confirm('Are you sure to close? Not saved data will be lost!')
@@ -143,6 +121,11 @@
           this.listLoading = false
         })
       },
+      handleUpdate(index, userListData) {
+        this.elementToUpdate = userListData[index]
+        this.dialogStatus = 'update'
+        this.dialogVisible = true
+      },
       handleCurrentChange(val) {
         this.usersListPage.page = val
         this.fetchUserPage()
@@ -154,6 +137,9 @@
           this.listLoading = false
           this.dialogVisible = false
         })
+      },
+      cleanFields() {
+        this.elementToUpdate = {}
       }
     },
     created() {
@@ -164,18 +150,18 @@
       return {
         usersListData: null,
         listLoading: true,
+        elementToUpdate: {},
         usersListPage: {
           page: 0,
-          current_page: 0,
           from: 0,
           last_page: 0,
-          per_page: 0,
+          per_page: 10,
           to: 0,
           total: 0
         },
-        form: [],
+
         dialogStatus: '',
-        textMap: {
+        titleDialog: {
           update: 'Edit User',
           create: 'Create User'
         },
