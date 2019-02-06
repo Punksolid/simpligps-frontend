@@ -56,7 +56,8 @@
         })
       },
       updateUsr() {
-        updateUser(this.formData).then(response => {
+        console.log(this.formData)
+        updateUser(this.formData.id, this.formData).then(response => {
           Message({
             message: 'User ' + response.data.data.name + ' updated',
             type: 'success',

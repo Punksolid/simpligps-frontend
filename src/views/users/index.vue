@@ -77,7 +77,7 @@
     <el-col class="m-t-5 t-center">
       <el-pagination
         class="dis-inline-b"
-        :current-page.sync="usersListPage.page"
+        :current-page.sync="usersListPage.current_page"
         :total="usersListPage.total"
         @current-change="handleCurrentChange"
         @pagination="fetchUserPage" />
@@ -155,11 +155,10 @@
           page: 0,
           from: 0,
           last_page: 0,
-          per_page: 10,
+          per_page: 15,
           to: 0,
           total: 0
         },
-
         dialogStatus: '',
         titleDialog: {
           update: 'Edit User',

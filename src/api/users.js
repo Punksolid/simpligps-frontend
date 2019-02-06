@@ -7,9 +7,9 @@ export function createUser(params) {
     params
   })
 }
-export function updateUser(params) {
+export function updateUser(id, params) {
   return request({
-    url: 'v1/users',
+    url: 'v1/users/' + id,
     method: 'PUT',
     params
   })
