@@ -7,7 +7,13 @@ export function createUser(params) {
     params
   })
 }
-
+export function updateUser(id, params) {
+  return request({
+    url: 'v1/users/' + id,
+    method: 'PUT',
+    params
+  })
+}
 export function usersList(params) {
   return request({
     url: 'v1/users',

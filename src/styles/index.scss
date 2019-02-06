@@ -110,6 +110,16 @@ a:hover {
 .panel .panel-footer h3 {
   text-align: right;
 }
+// Custom Dialog Title
+.el-dialog__title {
+  color: #676767;
+  border-left: 3px solid #2a9cb6;
+  padding-left: 10px;
+  font-weight: 700;
+}
+.el-dialog__header {
+  padding: 15px 20px 10px;
+}
 // Panel Footer
 .panel-footer .pull-right {
   text-align: right;

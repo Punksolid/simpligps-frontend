@@ -4,25 +4,24 @@
     <el-row type="flex" justify="space-between">
 
       <el-col :span="5">
-        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-user-plus p-r-10">Create user</el-button>
+        <el-button type="primary" @click="openDialog" icon="fas fa-user-plus p-r-10">Create user</el-button>
       </el-col>
       <el-col class="t-right" :span="14">
-        <!-- Disable while click functions are created
         <el-button-group>
-          <el-button@click="resetDateFilter">Clear date filter</el-button>
-          <el-button @click="clearFilter">Clear all filters</el-button>
-        </el-button-group> -->
+          <el-button>Clear date filter</el-button>
+          <el-button>Clear all filters</el-button>
+        </el-button-group>
       </el-col>
 
     </el-row>
 
-      <el-dialog
-        title="Create user"
-        :visible.sync="dialogVisible"
-        width="60%"
-        :before-close="handleClose">
-        <create-user @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
-      </el-dialog>
+    <el-dialog
+      :title="titleDialog[dialogStatus]"
+      :visible.sync="dialogVisible"
+      width="60%"
+      :before-close="handleClose">
+      <create-user @resetData="cleanFields" :form="elementToUpdate" @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
+    </el-dialog>
 
     <el-col class="m-t-10">
 
@@ -60,7 +59,8 @@
           width="190">
           <template slot-scope="scope">
             <el-button
-              size="mini">
+              size="mini"
+              @click="handleUpdate(scope.$index, usersListData)">
               Edit
             </el-button>
             <el-button
@@ -73,14 +73,16 @@
         </el-table-column>
       </el-table>
     </el-col>
-      <!-- layout="prev, pager, next" -->
+
     <el-col class="m-t-5 t-center">
-    <el-pagination
-      class="dis-inline-b"
-      :current-page.sync="usersListPage.page"
-      :total="usersListPage.total"
-      @current-change="handleCurrentChange"
-      @pagination="fetchUserPage" />
+      <el-pagination
+        class="dis-inline-b"
+        layout="total, prev, pager, next, jumper"
+        :current-page.sync="usersListPage.current_page"
+        :page-size="usersListPage.per_page"
+        :total="usersListPage.total"
+        @current-change="handleCurrentChange"
+        @pagination="fetchUserPage" />
     </el-col>
 
   </el-row>
@@ -98,19 +100,29 @@
     },
     methods: {
       deleteRow(index, userListData) {
-        deleteUser(userListData[index].id)
-        this.fetchUsersList()
-      },
-      open() {
-        this.$alert('This is a message', 'Title', {
-          confirmButtonText: 'OK',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `action: ${action}`
-            })
-          }
+        this.$confirm('This will permanently delete the user: ' + userListData[index].username + ' are you sure to Continue?', 'Warning', {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          confirmButtonClass: 'btn-danger',
+          type: 'warning'
+        }).then(() => {
+          deleteUser(userListData[index].id)
+          this.fetchUsersList()
+          this.fetchUserPage()
+          this.$message({
+            type: 'success',
+            message: 'Delete user completed'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete User canceled'
+          })
         })
+      },
+      openDialog() {
+        this.dialogStatus = 'create'
+        this.dialogVisible = true
       },
       handleClose(done) {
         this.$confirm('Are you sure to close? Not saved data will be lost!')
@@ -128,6 +140,11 @@
           this.listLoading = false
         })
       },
+      handleUpdate(index, userListData) {
+        this.elementToUpdate = userListData[index]
+        this.dialogStatus = 'update'
+        this.dialogVisible = true
+      },
       handleCurrentChange(val) {
         this.usersListPage.page = val
         this.fetchUserPage()
@@ -139,6 +156,9 @@
           this.listLoading = false
           this.dialogVisible = false
         })
+      },
+      cleanFields() {
+        this.elementToUpdate = {}
       }
     },
     created() {
@@ -149,13 +169,19 @@
       return {
         usersListData: null,
         listLoading: true,
+        elementToUpdate: {},
         usersListPage: {
           page: 0,
           from: 0,
           last_page: 0,
-          per_page: 10,
+          per_page: 15,
           to: 0,
           total: 0
+        },
+        dialogStatus: '',
+        titleDialog: {
+          update: 'Edit User',
+          create: 'Create User'
         },
         dialogVisible: false
       }

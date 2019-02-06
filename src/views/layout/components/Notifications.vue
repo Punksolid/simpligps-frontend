@@ -34,9 +34,6 @@
       fetchUser() {
         loggedUser().then(response => {
           this.user = response.data.data
-          console.log('success')
-          // console.log(response.data.data.id)
-          // console.log(response.data.data)
         }).catch(e => {
           console.log(e)
         })

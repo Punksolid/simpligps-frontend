@@ -7,4 +7,3 @@ export function getUnits(params) {
     params
   })
 }
-
