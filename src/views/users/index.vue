@@ -77,7 +77,9 @@
     <el-col class="m-t-5 t-center">
       <el-pagination
         class="dis-inline-b"
+        layout="total, prev, pager, next, jumper"
         :current-page.sync="usersListPage.current_page"
+        :page-size="usersListPage.per_page"
         :total="usersListPage.total"
         @current-change="handleCurrentChange"
         @pagination="fetchUserPage" />
@@ -98,8 +100,25 @@
     },
     methods: {
       deleteRow(index, userListData) {
-        deleteUser(userListData[index].id)
-        this.fetchUsersList()
+        this.$confirm('This will permanently delete the user: ' + userListData[index].username + ' are you sure to Continue?', 'Warning', {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          confirmButtonClass: 'btn-danger',
+          type: 'warning'
+        }).then(() => {
+          deleteUser(userListData[index].id)
+          this.fetchUsersList()
+          this.fetchUserPage()
+          this.$message({
+            type: 'success',
+            message: 'Delete user completed'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete User canceled'
+          })
+        })
       },
       openDialog() {
         this.dialogStatus = 'create'

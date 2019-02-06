@@ -42,7 +42,7 @@
       width="120">
       <template slot-scope="scope">
         <el-tag
-          :type="scope.row.active ? 'sucess' : 'info' "
+          :type="scope.row.active ? 'success' : 'info' "
           disable-transitions>
           {{ scope.row.active ? 'Active' : 'Inactive' }}
         </el-tag>
@@ -57,6 +57,7 @@
         class="dis-inline-b"
         :current-page.sync="operatorsListPage.current_page"
         :total="operatorsListPage.total"
+        :page-size="operatorsListPage.per_page"
         @current-change="handleCurrentChange"
         @pagination="fetchOperatorsPage" />
     </el-col>
