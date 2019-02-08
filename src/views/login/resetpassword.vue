@@ -43,7 +43,7 @@ export default {
     onSubmit() {
       resetPass(this.form).then(response => {
         Message({
-          message: 'Reset link was sended to: ' + this.form.email,
+          message: 'Reset link was sent to: ' + this.form.email,
           type: 'success',
           duration: 10 * 1000
         })
