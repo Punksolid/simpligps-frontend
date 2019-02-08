@@ -38,7 +38,7 @@
 
   <script>
     import { mapGetters } from 'vuex'
-    import { getTotalDevices } from '../../api/general'
+    import { getDevices } from '../../api/devices'
     import { usersList } from '../../api/users'
 
     export default {
@@ -57,7 +57,7 @@
       },
       methods: {
         fetchTotalDevices() {
-          getTotalDevices().then(response => {
+          getDevices().then(response => {
             this.total_devices = response.data.meta.total
           })
         },

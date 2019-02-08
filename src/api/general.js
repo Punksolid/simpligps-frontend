@@ -74,13 +74,6 @@ export function getWialonNotifications() {
     method: 'GET'
   })
 }
-
-export function getTotalDevices() {
-  return request({
-    url: 'v1/devices',
-    method: 'GET'
-  })
-}
 export function getPermissions() {
   return request({
     url: 'v1/permissions',

@@ -100,6 +100,12 @@ export const constantRouterMap = [
         meta: { title: 'Operators', icon: 'icon-comments' }
       },
       {
+        path: 'devices',
+        name: 'Devices',
+        component: () => import('@/views/catalogs/devices/index'), // Parent router-view,
+        meta: { title: 'Devices', icon: 'fas fa-mobile-alt' }
+      },
+      {
         path: 'carriers',
         name: 'Carriers',
         component: () => import('@/views/carriers/index'),
