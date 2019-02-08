@@ -15,7 +15,7 @@
 
     <el-form-item>
       <el-button @click="handleClose" aria-label="close">Cancel</el-button>
-      <el-button type="primary" @click="dialogStatus==='create'?createDevice():editDevice()">{{dialogStatus==='create'?'Register':'Update'}}</el-button>
+      <el-button type="primary" @click="dialogStatus==='create'?createDevice():editDevice()">Confirm</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -48,7 +48,6 @@
         })
       },
       editDevice() {
-        console.log(this.formData)
         updateDevice(this.formData.id, this.formData).then(response => {
           Message({
             message: 'Device ' + response.data.data.gps + ' updated',
