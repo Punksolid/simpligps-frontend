@@ -11,7 +11,7 @@
       :visible.sync="dialogVisible"
       :show-close="false"
       width="40%">
-      <RegisterDevice :form="elementToUpdate" @newdevice="fetchDevicesPage" @closedialog="dialogVisible = false"></RegisterDevice>
+      <RegisterDevice :form="elementToUpdate" @newdevice="fetchDevicesPage" @resetdata="cleanFields" @closedialog="dialogVisible = false"></RegisterDevice>
     </el-dialog>
 
     <el-col>
@@ -153,6 +153,9 @@
         this.elementToUpdate = deviceListData[index]
         this.dialogStatus = 'update'
         this.dialogVisible = true
+      },
+      cleanFields() {
+        this.elementToUpdate = {}
       }
     },
     created() {

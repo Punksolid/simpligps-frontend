@@ -14,6 +14,13 @@ export function newDevice(params) {
     params
   })
 }
+export function updateDevice(id, params) {
+  return request({
+    url: 'v1/devices/' + id,
+    method: 'PUT',
+    params
+  })
+}
 export function deleteDevice(id, params) {
   return request({
     url: 'v1/devices/' + id,
