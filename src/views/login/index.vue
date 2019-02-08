@@ -57,6 +57,24 @@
                 </el-button>
               </el-form-item>
             </el-form>
+
+            <el-row>
+              <el-col class="t-right float-right">
+                <el-button type="text" class="dis-inline-b c-light f-12" @click="dialogVisible = true">Forgot my password</el-button>
+                <el-dialog
+                  title="Reset Password"
+                  :visible.sync="dialogVisible"
+                  width="35%"
+                  center
+                  :show-close="false"
+                  :before-close="handleClose">
+
+                  <ResetPassword @closedialog="dialogVisible = false"/>
+
+                </el-dialog>
+              </el-col>
+            </el-row>
+
           </div>
         </div>
       </div>
@@ -67,10 +85,14 @@
 <script>
   import '@/styles/bootstrap.min.css' // make
   // import { login } from '@/api/login'
+  import ResetPassword from '@/views/login/resetpassword'
   import { checkStatus } from '../../api/general'
 
   export default {
     name: 'Login',
+    components: {
+      ResetPassword
+    },
     data() {
       const validateUsername = (rule, value, callback) => {
         callback()
@@ -87,6 +109,7 @@
           email: [{ required: true, trigger: 'blur', validator: validateUsername }],
           password: [{ required: true, trigger: 'blur', validator: validatePassword }]
         },
+        dialogVisible: false,
         loading: false,
         pwdType: 'password',
         redirect: undefined,
@@ -102,6 +125,13 @@
       }
     },
     methods: {
+        handleClose(done) {
+          this.$confirm('Are you sure to close this dialog?')
+            .then(_ => {
+              done()
+            })
+            .catch(_ => {})
+        },
       showPwd() {
         if (this.pwdType === 'password') {
           this.pwdType = ''
@@ -142,6 +172,9 @@
 <style type="text/scss" lang="scss" scoped>
 .form-content .form-items {
   display: block;
+}
+.form-content form {
+  margin-bottom: 15px;
 }
 .website-logo-inside {
     margin-bottom: 30px;
