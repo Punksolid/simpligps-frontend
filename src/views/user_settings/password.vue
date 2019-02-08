@@ -1,10 +1,10 @@
 <template>
   <el-form ref="form" :model="form">
     <el-form-item>
-        <el-input placeholder="Password" v-model="form.password"></el-input>
+        <el-input type="password" placeholder="Password" v-model="form.password"></el-input>
     </el-form-item>
     <el-form-item>
-        <el-input placeholder="Repeat Password" v-model="form.password_confirmation"></el-input>
+        <el-input type="password" placeholder="Repeat Password" v-model="form.password_confirmation"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">Save changes</el-button>
