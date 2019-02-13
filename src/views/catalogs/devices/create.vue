@@ -1,6 +1,9 @@
 <template>
   <el-row>
     <el-form :model="formData">
+      <el-form-item label="Name">
+        <el-input v-model="formData.name"></el-input>
+      </el-form-item>
       <el-form-item label="GPS">
         <el-input v-model="formData.gps"></el-input>
       </el-form-item>

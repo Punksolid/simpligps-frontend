@@ -128,7 +128,7 @@
           type: 'warning'
         }).then(() => {
           deleteUser(userListData[index].id)
-          this.fetchUsersList()
+          // this.fetchUsersList()
           this.fetchUserPage()
           this.$message({
             type: 'success',
@@ -155,8 +155,10 @@
       },
       fetchUserPage() {
         this.listLoading = true
+        console.log(this.usersListPage)
         usersList(this.usersListPage).then(response => {
           this.usersListPage = response.data.meta
+          this.usersListPage.page = response.data.meta.current_page
           this.usersListData = response.data.data
           this.listLoading = false
         })
