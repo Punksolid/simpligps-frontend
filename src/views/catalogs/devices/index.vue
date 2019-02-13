@@ -87,7 +87,12 @@
       return {
         listLoading: true,
         devicesList: null,
-        elementToUpdate: {},
+        elementToUpdate: {
+          gps: '',
+          plate: '',
+          internal_number: '',
+          carrier_id: ''
+        },
         devicesListPage: {
           page: 0,
           from: 0,
@@ -137,11 +142,12 @@
           type: 'warning'
         }).then(() => {
           deleteDevice(deviceListData[index].id)
+          this.fetchDevicesList()
+          this.fetchDevicesPage()
           this.$message({
             type: 'success',
             message: 'Device deleted successfully'
           })
-          this.fetchDevicesPage()
         }).catch(() => {
           this.$message({
             type: 'info',
