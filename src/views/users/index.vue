@@ -125,10 +125,6 @@
         this.form = {}
         this.dialogVisible = true
       },
-      openDialog() {
-        this.dialogStatus = 'create'
-        this.dialogVisible = true
-      },
       handleClose(done) {
         this.$confirm('Are you sure to close? Not saved data will be lost!')
           .then(_ => {
@@ -149,7 +145,6 @@
         this.elementToUpdate = userListData[index]
         this.dialogStatus = 'update'
         this.dialogVisible = true
-
       },
       handleCurrentChange(val) {
         this.usersListPage.page = val
