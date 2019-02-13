@@ -1,23 +1,25 @@
 <template>
-  <el-form :model="formData">
-    <el-form-item label="GPS">
-      <el-input v-model="formData.gps"></el-input>
-    </el-form-item>
-    <el-form-item label="Plate">
-      <el-input v-model="formData.plate"></el-input>
-    </el-form-item>
-    <el-form-item label="Internal Number">
-      <el-input v-model="formData.internal_number"></el-input>
-    </el-form-item>
-    <el-form-item label="Carrier ID">
-      <el-input v-model="formData.carrier_id"></el-input>
-    </el-form-item>
+  <el-row>
+    <el-form :model="formData">
+      <el-form-item label="GPS">
+        <el-input v-model="formData.gps"></el-input>
+      </el-form-item>
+      <el-form-item label="Plate">
+        <el-input v-model="formData.plate"></el-input>
+      </el-form-item>
+      <el-form-item label="Internal Number">
+        <el-input v-model="formData.internal_number"></el-input>
+      </el-form-item>
+      <el-form-item label="Carrier ID">
+        <el-input v-model="formData.carrier_id"></el-input>
+      </el-form-item>
 
-    <el-form-item>
-      <el-button @click="handleClose" aria-label="close">Cancel</el-button>
-      <el-button type="primary" @click="dialogStatus==='create'?createDevice():editDevice()">Confirm</el-button>
-    </el-form-item>
-  </el-form>
+      <el-col class="dis-inline-b t-center">
+        <el-button @click="handleClose" aria-label="close">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">{{ this.form.id == null ? 'Create' : 'Update' }}</el-button>
+      </el-col>
+    </el-form>
+  </el-row>
 </template>
 
 <script>
@@ -31,32 +33,33 @@
     ],
     data() {
       return {
-        dialogStatus: '',
-        formData: this.form
+        formData: this.form,
+        dialogVisible: false
         }
       },
     methods: {
-      createDevice() {
-        newDevice(this.formData).then(response => {
-          Message({
-            message: 'Device ' + response.data.data.gps + ' registered',
-            type: 'success',
-            duration: 10 * 1000
+      onSubmit() {
+        if (this.form.id == null) {
+          newDevice(this.formData).then(response => {
+            Message({
+              message: 'Device ' + response.data.data.gps + ' registered',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.resetForm('form')
+            this.$emit('newdevice')
           })
-          this.resetForm('form')
-          this.$emit('newdevice')
-        })
-      },
-      editDevice() {
-        updateDevice(this.formData.id, this.formData).then(response => {
-          Message({
-            message: 'Device ' + response.data.data.gps + ' updated',
-            type: 'success',
-            duration: 10 * 1000
+        } else {
+          updateDevice(this.formData.id, this.formData).then(response => {
+            Message({
+              message: 'Device ' + response.data.data.gps + ' updated',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.dialogvisible = false
+            this.$emit('closedialog')
           })
-          this.dialogvisible = false
-          this.$emit('closedialog')
-        })
+        }
       },
       resetForm(formName) {
         this.$emit('resetdata')
