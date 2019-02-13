@@ -1,5 +1,5 @@
 <template>
-<el-form ref="form" :model="form" label-width="120px">
+<el-form ref="form" :model="form">
   <el-form-item label="Name">
     <el-input v-model="form.name"></el-input>
   </el-form-item>
@@ -24,7 +24,7 @@
 
 <script>
  import { createOperator } from '../../../api/catalogs'
-  import { Message } from 'element-ui'
+ import { Message } from 'element-ui'
 
   export default {
     name: 'CreateOperator',
@@ -42,7 +42,7 @@
       onSubmit() {
         createOperator(this.form).then(response => {
           Message({
-            message: 'Operator ' + response.data.data.name + ' created',
+            message: 'Operator ' + response.data.name + ' created',
             type: 'success',
             duration: 10 * 1000
           })

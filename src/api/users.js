@@ -6,7 +6,8 @@ export function createUser(params) {
     method: 'POST',
     data: params
   })
-}export function updateUser(id,params) {
+}
+export function updateUser(id, params) {
   return request({
     url: 'v1/users/' + id,
     method: 'PUT',

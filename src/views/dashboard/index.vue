@@ -10,7 +10,7 @@
             <img src="@/assets/dashboard.png" width="85%"/>
           </el-col>
           <el-col :xs="12" :sm="12" :lg="12">
-            <h2 class="m-5"><b>First time here?</b></h2>
+            <h2 class="m-t-5"><b>First time here?</b></h2>
             <p>Congratulations! Please, let us tell you what can be done with TRM System. Sit comfy and check it out!</p>
           </el-col>
 

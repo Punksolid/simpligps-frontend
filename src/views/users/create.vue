@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" label-width="200" class="user-form">
+  <el-form :model="form" label-width="200" class="user-form">
     <el-form-item label="Name" prop="name">
       <el-input v-model="form.name" clearable></el-input>
     </el-form-item>
@@ -71,7 +71,7 @@
       handleClose(done) {
         this.$confirm('Are you sure to close this dialog?.') // a donde va este texto? borrar si no es necesario
           .then(_ => {
-            this.resetForm('form')
+            this.resetForm()
             done(this.$emit('closedialog'))
           })
           .catch(_ => {})

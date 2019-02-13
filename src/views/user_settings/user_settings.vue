@@ -6,7 +6,8 @@
       <el-collapse-item name="1">
         <template slot="title">
           <span class="fa-stack fa-2x"><i class="fas fa-square fa-stack-2x"></i>
-          <i class="fas fa-key fa-stack-1x fa-inverse"></i></span>Change Password</template>
+          <i class="fas fa-key fa-stack-1x fa-inverse"></i></span>Change Password
+        </template>
         <el-col :span="10" :xs="24" class="p-10">
           <password/>
         </el-col>
@@ -56,34 +57,19 @@
 </template>
 
 <script>
-  export default {
-    methods: {
-      open8() {
-        this.$confirm('You have not saved changes, continue?', 'Warning', {
-          confirmButtonText: 'Save',
-          cancelButtonText: 'Delete',
-          type: 'warning'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: 'Changes Saved'
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Changes deleted'
-          })
-        })
-      }
-    }
-  }
-</script>
-
-<script>
   import Password from './password'
 
   export default {
-    components: { Password },
+    components: {
+      Password
+    },
+    data() {
+      return {
+        form: {},
+        value3: '',
+        value4: ''
+      }
+    },
     methods: {
       open9() {
         this.$confirm('Are you sure you want save changes?', 'Save Changes', {
@@ -94,15 +80,13 @@
           this.$message({
             type: 'success',
             message: 'Changes Saved'
-          });
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: 'Changes not saved'
-          });
-
-        });
-
+          })
+        })
       }
     }
   }

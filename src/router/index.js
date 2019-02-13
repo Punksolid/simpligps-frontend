@@ -96,7 +96,7 @@ export const constantRouterMap = [
       {
         path: 'operators',
         name: 'Operators',
-        component: () => import('@/views/catalogs/operators/index'), // Parent router-view,
+        component: () => import('@/views/catalogs/index'), // Parent router-view,
         meta: { title: 'Operators', icon: 'icon-comments' }
       },
       {
@@ -180,7 +180,7 @@ export const constantRouterMap = [
   {
     path: '/settings',
     component: Layout,
-    // redirect: '/settings/general',
+    redirect: '/settings/general',
     name: 'System Settings',
     meta: { title: 'System Settings', icon: 'icon-settings' },
     children: [

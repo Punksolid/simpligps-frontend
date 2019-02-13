@@ -1,10 +1,10 @@
 <template>
   <el-form ref="form" :model="form">
     <el-form-item>
-        <el-input placeholder="Password" v-model="password"></el-input>
+        <el-input type="password" placeholder="Password" v-model="form.password"></el-input>
     </el-form-item>
     <el-form-item>
-        <el-input placeholder="Repeat Password" v-model="password_confirm"></el-input>
+        <el-input type="password" placeholder="Repeat Password" v-model="form.password_confirmation"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">Save changes</el-button>
@@ -20,16 +20,26 @@
     name: 'Password',
     props: [
       'password',
-      'password_confirm'
+      'password_confirmation'
     ],
+    data() {
+      return {
+        form: {
+          password: '',
+          password_confirmation: ''
+        }
+      }
+    },
     methods: {
       onSubmit() {
         changePassword(this.form).then(response => {
           Message({
-            message: response.data.data.message,
+            // message: response.data.message, // Asignar mensaje via Response
+            message: 'Password changed successfully',
             type: 'success',
             duration: 10 * 1000
           })
+          this.form = {}
         })
       }
     }
