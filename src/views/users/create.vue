@@ -1,26 +1,25 @@
 <template>
-  <el-form :model="formData" label-width="200" class="user-form">
+  <el-form :model="form" label-width="200" class="user-form">
     <el-form-item label="Name" prop="name">
-      <el-input v-model="formData.name" clearable></el-input>
+      <el-input v-model="form.name" clearable></el-input>
     </el-form-item>
     <el-form-item label="Last Name" prop="lastname">
-      <el-input v-model="formData.lastname" clearable></el-input>
+      <el-input v-model="form.lastname" clearable></el-input>
     </el-form-item>
     <el-form-item label="Email" prop="email">
-      <el-input v-model="formData.email"></el-input>
+      <el-input v-model="form.email"></el-input>
     </el-form-item>
     <el-form-item label="Username" prop="username">
-      <el-input v-model="formData.username" clearable></el-input>
+      <el-input v-model="form.username" clearable></el-input>
     </el-form-item>
     <el-form-item label="Password" prop="password">
-      <el-input v-model="formData.password" type="password" clearable></el-input>
+      <el-input v-model="form.password" type="password" clearable></el-input>
     </el-form-item>
     <el-row>
       <el-col class="t-center">
         <el-form-item  class="dis-inline-b t-center">
-          <el-button @click="resetForm">Reset</el-button>
           <el-button @click="handleClose">Cancel</el-button>
-          <el-button type="primary" @click="dialogStatus==='create'?createUsr():updateUsr()">Confirm</el-button>
+          <el-button type="primary" @click="onSubmit">{{ this.form.id > 0 ? 'Update': 'Create'  }}</el-button>
         </el-form-item>
       </el-col>
     </el-row>
@@ -39,40 +38,38 @@
     ],
     data() {
       return {
-        formData: this.form,
         dialogVisible: false
       }
     },
     methods: {
-      createUsr() {
-        createUser(this.formData).then(response => {
-          Message({
-            message: 'User ' + response.data.data.name + ' created',
-            type: 'success',
-            duration: 10 * 1000
+      onSubmit() {
+        if (this.form.id) {
+          updateUser(this.form.id, this.form).then(response => {
+            Message({
+              message: 'User ' + response.data.data.name + ' updated',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.resetForm('form')
+            this.$emit('user_updated')
+            this.$emit('closedialog')
           })
-          this.resetForm()
-          this.$emit('usercreated')
-        })
-      },
-      updateUsr() {
-        console.log(this.formData)
-        updateUser(this.formData.id, this.formData).then(response => {
-          Message({
-            message: 'User ' + response.data.data.name + ' updated',
-            type: 'success',
-            duration: 10 * 1000
+        } else {
+          createUser(this.form).then(response => {
+            Message({
+              message: 'User ' + response.data.data.name + ' created',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.resetForm('form')
+            this.$emit('user_created')
           })
-          this.resetForm()
-          this.$emit('usercreated')
-        })
+        }
       },
-      resetForm() {
-        this.$emit('resetData')
-        // this.$refs[formName].resetFields()
+      resetForm(formName) {
       },
       handleClose(done) {
-        this.$confirm('Are you sure to close this dialog?.') // Se muestra texto al intentar cerrar el Dialogo desde Cancel - Cerrar
+        this.$confirm('Are you sure to close this dialog?.') // a donde va este texto? borrar si no es necesario
           .then(_ => {
             this.resetForm()
             done(this.$emit('closedialog'))
@@ -80,10 +77,7 @@
           .catch(_ => {})
       }
     },
-    watch: {
-      form() {
-        this.formData = this.form
-      }
+    created() {
     },
     rules: {
       password: [

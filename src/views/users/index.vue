@@ -15,13 +15,13 @@
 
     </el-row>
 
-    <el-dialog
-      :title="titleDialog[dialogStatus]"
-      :visible.sync="dialogVisible"
-      width="60%"
-      :before-close="handleClose">
-      <create-user @resetData="cleanFields" :form="elementToUpdate" @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
-    </el-dialog>
+      <el-dialog
+        :title="titleDialog[dialogStatus]"
+        :visible.sync="dialogVisible"
+        width="60%"
+        :before-close="handleClose">
+        <create-user v-bind:form="elementToUpdate" @user_created="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
+      </el-dialog>
 
     <el-col class="m-t-10">
 
@@ -122,6 +122,7 @@
       },
       openDialog() {
         this.dialogStatus = 'create'
+        this.form = {}
         this.dialogVisible = true
       },
       handleClose(done) {
@@ -178,6 +179,7 @@
           to: 0,
           total: 0
         },
+        form: {},
         dialogStatus: '',
         titleDialog: {
           update: 'Edit User',

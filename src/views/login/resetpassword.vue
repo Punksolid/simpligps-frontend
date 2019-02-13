@@ -4,7 +4,8 @@
 
       <el-form :model="form" :rules="rules" class="mb-5">
         <el-form-item
-          label-width="120" prop="email">
+          label-width="120"
+          prop="email">
           <el-input type="email" prefix-icon="fas fa-envelope" class="email" v-model="form.email" placeholder="usuario@correo.com"></el-input>
         </el-form-item>
       </el-form>
@@ -33,7 +34,7 @@ export default {
       dialogVisible: '',
       rules: {
         email: [
-          { required: true, message: 'Please input email address', trigger: 'blur'},
+          { required: true, message: 'Please input email address', trigger: 'blur' },
           { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] }
           ]
       }
