@@ -20,7 +20,7 @@
         :visible.sync="dialogVisible"
         width="60%"
         :before-close="handleClose">
-        <create-user v-bind:form="elementToUpdate" @usercreated="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
+        <create-user v-bind:form="elementToUpdate" @user_created="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
       </el-dialog>
 
     <el-col class="m-t-10">

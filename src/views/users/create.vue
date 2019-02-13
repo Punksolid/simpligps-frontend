@@ -18,7 +18,6 @@
     <el-row>
       <el-col class="t-center">
         <el-form-item  class="dis-inline-b t-center">
-          <el-button @click="resetForm('form')">Reset</el-button>
           <el-button @click="handleClose">Cancel</el-button>
           <el-button type="primary" @click="onSubmit">Confirm</el-button>
         </el-form-item>
@@ -29,7 +28,7 @@
 </template>
 
 <script>
-  import { createUser } from '../../api/users'
+  import { createUser, updateUser } from '../../api/users'
   import { Message } from 'element-ui'
 
   export default {
@@ -44,15 +43,28 @@
     },
     methods: {
       onSubmit() {
-        createUser(this.form).then(response => {
-          Message({
-            message: 'User ' + response.data.data.name + ' created',
-            type: 'success',
-            duration: 10 * 1000
+        if (this.form.id) {
+          updateUser(this.form.id, this.form).then(response => {
+            Message({
+              message: 'User ' + response.data.data.name + ' updated',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.resetForm('form')
+            this.$emit('user_updated')
+            this.$emit('closedialog')
           })
-          this.resetForm('form')
-          this.$emit('usercreated')
-        })
+        } else {
+          createUser(this.form).then(response => {
+            Message({
+              message: 'User ' + response.data.data.name + ' created',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.resetForm('form')
+            this.$emit('user_created')
+          })
+        }
       },
       resetForm(formName) {
       },
