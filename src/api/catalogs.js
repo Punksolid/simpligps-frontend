@@ -10,7 +10,7 @@ export function getOperators(params) {
 export function createOperator(params) {
   return request({
     url: 'v1/operators',
-    method: 'post',
-    params
+    method: 'POST',
+    data: params
   })
 }

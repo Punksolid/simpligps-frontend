@@ -10,7 +10,8 @@ export function getDevices(params) {
 export function newDevice() {
   return request({
     url: 'v1/devices',
-    method: 'POST'
+    method: 'POST',
+    data: params
   })
 }
 export function updateDevice(id, params) {
@@ -23,7 +24,6 @@ export function updateDevice(id, params) {
 export function deleteDevice(id, params) {
   return request({
     url: 'v1/devices/' + id,
-    method: 'DELETE',
-    params
+    method: 'DELETE'
   })
 }

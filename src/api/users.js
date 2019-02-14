@@ -11,13 +11,13 @@ export function updateUser(id, params) {
   return request({
     url: 'v1/users/' + id,
     method: 'PUT',
-    params
+    data: params
   })
 }
 export function usersList(params) {
   return request({
     url: 'v1/users',
-    method: 'get',
+    method: 'GET',
     params: params
   })
 }
