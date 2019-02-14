@@ -2,7 +2,6 @@
   <div class="form-body">
     <div class="row">
       <div class="img-holder">
-        <blockquote>&nbsp;</blockquote>
         <div class="bg"/>
         <div class="info-holder">
           <h3>Welcome to TRM System.</h3>
@@ -13,19 +12,20 @@
         <div class="form-content">
           <div class="form-items">
             <div class="website-logo-inside">
-                <div class="logo">
-                  <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM">
-                  <div class="status">
-                    <span class="label">STATUS:</span>
-                    <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
-                  </div>
+              <div class="logo">
+                <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM">
+                <div class="status">
+                  <span class="label">STATUS:</span>
+                  <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
                 </div>
+              </div>
             </div>
             <div class="page-links">
-              <a href="#" class="active">Login</a>
+              <a href="#" class="active">{{ formType == 'login' ? 'Login' : 'Change Password' }}</a>
             </div>
 
-            <el-form
+            <template v-if="formType == 'login'">
+              <el-form
               ref="loginForm"
               :model="loginForm"
               :rules="loginRules"
@@ -57,23 +57,33 @@
                 </el-button>
               </el-form-item>
             </el-form>
+              <el-row>
+                <el-col class="t-right float-right">
+                  <template>
+                    <el-button type="text" class="dis-inline-b c-light f-12" @click="dialogVisible = true">Forgot my password</el-button>
+                  </template>
+                  <el-dialog
+                    title="Reset Password"
+                    :visible.sync="dialogVisible"
+                    id="forgotpsw"
+                    width="35%"
+                    center
+                    :show-close="false"
+                    :before-close="handleClose">
 
-            <el-row>
-              <el-col class="t-right float-right">
-                <el-button type="text" class="dis-inline-b c-light f-12" @click="dialogVisible = true">Forgot my password</el-button>
-                <el-dialog
-                  title="Reset Password"
-                  :visible.sync="dialogVisible"
-                  width="35%"
-                  center
-                  :show-close="false"
-                  :before-close="handleClose">
+                    <ResetPassword @closedialog="dialogVisible = false"/>
 
-                  <ResetPassword @closedialog="dialogVisible = false"/>
+                  </el-dialog>
+                </el-col>
+              </el-row>
+            </template>
 
-                </el-dialog>
+            <template v-else>
+              <NewPassword @pwd_changed="formType = 'login'"/>
+              <el-col>
+                <el-button type="text" icon="fas fa-chevron-left" class="dis-inline-b c-light f-12" @click="formType = 'login'"> Return to Login</el-button>
               </el-col>
-            </el-row>
+            </template>
 
           </div>
         </div>
@@ -83,15 +93,17 @@
 </template>
 
 <script>
-  import '@/styles/bootstrap.min.css' // make
+  import '@/styles/bootstrap.min.css'
   // import { login } from '@/api/login'
-  import ResetPassword from '@/views/login/resetpassword'
+  import ResetPassword from '../login/resetpassword'
+  import NewPassword from '../login/newpassword'
   import { checkStatus } from '../../api/general'
 
   export default {
     name: 'Login',
     components: {
-      ResetPassword
+      ResetPassword,
+      NewPassword
     },
     data() {
       const validateUsername = (rule, value, callback) => {
@@ -109,6 +121,7 @@
           email: [{ required: true, trigger: 'blur', validator: validateUsername }],
           password: [{ required: true, trigger: 'blur', validator: validatePassword }]
         },
+        formType: 'login',
         dialogVisible: false,
         loading: false,
         pwdType: 'password',
@@ -125,13 +138,13 @@
       }
     },
     methods: {
-        handleClose(done) {
-          this.$confirm('Are you sure to close this dialog?')
-            .then(_ => {
-              done()
-            })
-            .catch(_ => {})
-        },
+      handleClose(done) {
+        this.$confirm('Are you sure to close this dialog?')
+          .then(_ => {
+            done()
+          })
+          .catch(_ => {})
+      },
       showPwd() {
         if (this.pwdType === 'password') {
           this.pwdType = ''
@@ -162,39 +175,47 @@
             return false
           }
         })
+      },
+      checkReset() {
+        if (this.$route.query.token) {
+          this.formType = 'newpassword'
+        } else {
+          this.formType = 'login'
+        }
       }
     },
     created() {
+      this.checkReset()
       this.backendStatus()
     }
   }
 </script>
 <style type="text/scss" lang="scss" scoped>
-.form-content .form-items {
-  display: block;
-}
-.form-content form {
-  margin-bottom: 15px;
-}
-.website-logo-inside {
+  .form-content .form-items {
+    display: block;
+  }
+  .form-content form {
+    margin-bottom: 15px;
+  }
+  .website-logo-inside {
     margin-bottom: 30px;
-}
-.website-logo-inside .logo {
+  }
+  .website-logo-inside .logo {
     display: flex;
-}
-.website-logo-inside .logo img {
+  }
+  .website-logo-inside .logo img {
     width: 250px;
     margin-right: 20px;
     height: 75px;
     order: 1;
-}
-.status {
+  }
+  .status {
     margin-top: 4px;
     order: 2;
     border: 1px solid #ffffff80;
     padding: 3px 10px 0px;
-}
-.status .label {
+  }
+  .status .label {
     font-size: 10px;
     color: #fff;
     background: #074e88;
@@ -202,32 +223,32 @@
     vertical-align: top;
     position: relative;
     top: -10px;
-}
-.el-form-item {
-  margin-bottom: 0px;
-}
-.dot {
+  }
+  .el-form-item {
+    margin-bottom: 0px;
+  }
+  .dot {
     height: 20px;
     width: 35px;
     margin: auto;
     border-radius: 0px;
     display: block;
-}
-@media (max-width: 480px) {
-.form-holder .form-content {
-    padding: 100px 45px 45px;
-}
-.status {
-  margin-top: 25px;
-}
-.dot {
-    height: 10px;
-    width: 80%;
-    margin: auto;
-    margin-bottom: 20px;
-}
-.website-logo-inside .logo {
+  }
+  @media (max-width: 480px) {
+    .form-holder .form-content {
+      padding: 100px 45px 45px;
+    }
+    .status {
+      margin-top: 25px;
+    }
+    .dot {
+      height: 10px;
+      width: 80%;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    .website-logo-inside .logo {
       flex-direction: column;
-   }
-}
+    }
+  }
 </style>
