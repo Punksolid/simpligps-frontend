@@ -145,3 +145,41 @@ a:hover {
     left: -20px;
   }
 }
+
+/* -----------------------------------
+     Forgot Password Form
+------------------------------------*/
+#forgotpsw .el-dialog {
+  background: #064E89;
+
+  .el-dialog__title {
+    color: #ffffff;
+    display: block;
+    border-left: none;
+    padding-left: 0px;
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #0a599a;
+  }
+
+  .el-input__prefix, .el-input__suffix {
+    position: absolute;
+    top: 0px;
+    font-size: 20px;
+    height: 50px;
+    color: #ffffff;
+    text-align: center;
+  }
+  .email .el-input__inner::placeholder {
+    color: #5384ad;
+  }
+  .email .el-input__inner {
+    color: #FFF;
+    background: #09528e;
+    border-bottom: 2px solid;
+    border-radius: 0px;
+    padding: 20px 0px 20px 40px;
+  }
+}
+

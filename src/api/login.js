@@ -26,10 +26,19 @@ export function logout() {
     method: 'post'
   })
 }
+
 export function resetPass(params) {
   return request({
     url: '/v1/password/send_email/',
     method: 'POST',
-    params:params
+    params: params
+  })
+}
+
+export function newPass(params) {
+  return request({
+    url: '/v1/password/change',
+    method: 'POST',
+    data: params
   })
 }

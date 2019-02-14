@@ -37,7 +37,6 @@
           }
       }
     },
-
   methods: {
       onSubmit() {
         createOperator(this.form).then(response => {
