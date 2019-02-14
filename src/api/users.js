@@ -18,7 +18,7 @@ export function updateUser(id, params) {
 export function usersList(params) {
   return request({
     url: 'v1/users',
-    method: 'get',
+    method: 'GET',
     params: params
   })
 }

@@ -7,24 +7,23 @@ export function getDevices(params) {
     params
   })
 }
-export function newDevice(params) {
+export function newDevice() {
   return request({
     url: 'v1/devices',
     method: 'POST',
-    params
+    data: params
   })
 }
 export function updateDevice(id, params) {
   return request({
     url: 'v1/devices/' + id,
     method: 'PUT',
-    params
+    data: params
   })
 }
 export function deleteDevice(id, params) {
   return request({
     url: 'v1/devices/' + id,
-    method: 'DELETE',
-    params
+    method: 'DELETE'
   })
 }

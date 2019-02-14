@@ -7,7 +7,7 @@ export function login(email, password) {
   }
   return request({
     url: 'v1/login',
-    method: 'post',
+    method: 'POST',
     data
   })
 }
@@ -15,7 +15,7 @@ export function login(email, password) {
 export function getInfo(token) {
   return request({
     url: 'v1/user/info',
-    method: 'get'
+    method: 'GET'
     // params: { token }
   })
 }
@@ -23,7 +23,7 @@ export function getInfo(token) {
 export function logout() {
   return request({
     url: '/v1/logout',
-    method: 'post'
+    method: 'POST'
   })
 }
 export function resetPass(params) {

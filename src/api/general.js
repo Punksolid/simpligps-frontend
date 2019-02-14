@@ -25,8 +25,8 @@ export function getWialonUnits() {
 export function createContacts(params) {
   return request({
     url: 'v1/contacts',
-    method: 'post',
-    params
+    method: 'POST',
+    data: params
   })
 }
 
@@ -63,8 +63,8 @@ export function getCarriers(params) {
 export function createCarrier(params) {
   return request({
     url: 'v1/carriers',
-    method: 'post',
-    params
+    method: 'POST',
+    data: params
   })
 }
 

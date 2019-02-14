@@ -4,7 +4,7 @@ export function changePassword(params) {
   return request({
     url: 'v1/me/change_password',
     method: 'POST',
-    params
+    data: params
   })
 }
 

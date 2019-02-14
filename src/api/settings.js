@@ -4,7 +4,7 @@ export function updateAccessKey(params) {
   return request({
     url: 'v1/settings/',
     method: 'POST',
-    params
+    data: params
   })
 }
 
