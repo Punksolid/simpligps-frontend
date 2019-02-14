@@ -98,6 +98,27 @@
     components: {
       CreateUser
     },
+    data() {
+      return {
+        usersListData: null,
+        listLoading: true,
+        elementToUpdate: {},
+        usersListPage: {
+          page: 0,
+          from: 0,
+          last_page: 0,
+          per_page: 15,
+          to: 0,
+          total: 0
+        },
+        dialogStatus: '',
+        titleDialog: {
+          update: 'Edit User',
+          create: 'Create User'
+        },
+        dialogVisible: false
+      }
+    },
     methods: {
       deleteRow(index, userListData) {
         this.$confirm('This will permanently delete the user: ' + userListData[index].username + ' are you sure to Continue?', 'Warning', {
@@ -107,7 +128,7 @@
           type: 'warning'
         }).then(() => {
           deleteUser(userListData[index].id)
-          this.fetchUsersList()
+          // this.fetchUsersList()
           this.fetchUserPage()
           this.$message({
             type: 'success',
@@ -135,8 +156,10 @@
       },
       fetchUserPage() {
         this.listLoading = true
+        console.log(this.usersListPage)
         usersList(this.usersListPage).then(response => {
           this.usersListPage = response.data.meta
+          this.usersListPage.page = response.data.meta.current_page
           this.usersListData = response.data.data
           this.listLoading = false
         })
