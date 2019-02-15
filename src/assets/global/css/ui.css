@@ -7643,9 +7643,9 @@ label.required:after {
 }
 button .fa-trash,
 .trash-link {
-  font-size: 20px;
-  display: inline-block;
-  color: #C75757 !important;
+/*  font-size: 20px;
+  display: inline-block; */
+  color: #b14b4b !important;
 }
 button .fa-trash:hover,
 .trash-link:hover {
