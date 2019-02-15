@@ -10,18 +10,18 @@
       <el-col :xl="20" :sm="20" :xs="24">
         <el-form class="dis-flex" v-model="search">
           <el-form-item>
-          <el-input placeholder="Name" v-model="search.name" @keyup.enter.native="handleFilter"/>
+          <el-input placeholder="Name" v-model="search.name" @keyup.enter.native="fetchUsersList"/>
           </el-form-item>
           <el-form-item>
-          <el-input placeholder="Lastname" v-model="search.lastname" @keyup.enter.native="handleFilter"/>
+          <el-input placeholder="Lastname" v-model="search.lastname" @keyup.enter.native="fetchUsersList"/>
           </el-form-item>
           <el-form-item>
-          <el-input placeholder="Email" v-model="search.email" @keyup.enter.native="handleFilter">
-            <el-button slot="append" icon="fas fa-search" @click="handleFilter"></el-button>
+          <el-input placeholder="Email" v-model="search.email" @keyup.enter.native="fetchUsersList">
+            <el-button slot="append" icon="fas fa-search" @click="fetchUsersList"></el-button>
           </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button icon="fas fa-trash-alt" plain @click="fetchUserPage"></el-button>
+            <el-button icon="fas fa-trash-alt" plain @click="resetFilter"></el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -29,16 +29,17 @@
     </el-row>
 
       <el-dialog
-        :title="titleDialog[dialogStatus]"
+        :title="titleDialog"
         :visible.sync="dialogVisible"
         width="60%"
         :before-close="handleClose">
-        <create-user v-bind:form="elementToUpdate" @user_created="fetchUsersList" @closedialog="dialogVisible = false"></create-user>
+        <create-user v-bind:form="elementToUpdate" @user_created="fetchUsersList" @closedialog="handleClose"></create-user>
       </el-dialog>
 
     <el-col class="m-t-10">
 
       <el-table
+        v-loading="listLoading"
         :data="usersListData"
         stripe
         border>
@@ -95,7 +96,7 @@
         :page-size="usersListPage.per_page"
         :total="usersListPage.total"
         @current-change="handleCurrentChange"
-        @pagination="fetchUserPage" />
+        @pagination="fetchUsersList" />
     </el-col>
 
   </el-row>
@@ -123,17 +124,11 @@
         elementToUpdate: {},
         usersListPage: {
           page: 0,
-          from: 0,
-          last_page: 0,
           per_page: 15,
-          to: 0,
           total: 0
         },
         dialogStatus: '',
-        titleDialog: {
-          update: 'Edit User',
-          create: 'Create User'
-        },
+        titleDialog: 'Create User', // Un default y se redefine según la acción
         dialogVisible: false
       }
     },
@@ -146,74 +141,53 @@
           type: 'warning'
         }).then(() => {
           deleteUser(userListData[index].id)
-          this.fetchUserPage()
+          this.fetchUsersList()
           this.$message({
             type: 'success',
             message: 'Delete user completed'
           })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Delete User canceled'
-          })
         })
       },
       openDialog() {
-        this.dialogStatus = 'create'
+        this.titleDialog = 'Create User'
         this.form = {}
         this.dialogVisible = true
       },
       handleClose(done) {
         this.$confirm('Are you sure to close? Not saved data will be lost!')
           .then(_ => {
+            this.dialogVisible = false
+            this.elementToUpdate = {}
             done()
           })
-          .catch(_ => {
-          })
       },
-      fetchUserPage() {
+      fetchUsersList() {
         this.listLoading = true
-        this.search = {}
-        usersList(this.usersListPage).then(response => {
+        const params = Object.assign(this.usersListPage, this.search)
+
+        usersList(params).then(response => {
+          this.usersListData = response.data.data
           this.usersListPage = response.data.meta
           this.usersListPage.page = response.data.meta.current_page
-          this.usersListData = response.data.data
           this.listLoading = false
         })
       },
+      resetFilter() {
+        this.search = {}
+        this.fetchUsersList()
+      },
       handleUpdate(index, userListData) {
         this.elementToUpdate = userListData[index]
-        this.dialogStatus = 'update'
+        this.titleDialog = 'Edit User'
         this.dialogVisible = true
       },
       handleCurrentChange(val) {
         this.usersListPage.page = val
-        this.fetchUserPage()
-      },
-      handleFilter() {
-        this.listLoading = true
-        usersList(this.search).then(response => {
-          this.usersListPage = response.data.meta
-          this.usersListPage.page = response.data.meta.current_page
-          this.usersListData = response.data.data
-          this.listLoading = false
-        })
-      },
-      fetchUsersList() {
-        this.listLoading = true
-        usersList(this.usersListData).then(response => {
-          this.usersListData = response.data.data
-          this.listLoading = false
-          this.dialogVisible = false
-        })
-      },
-      cleanFields() {
-        this.elementToUpdate = {}
+        this.fetchUsersList()
       }
     },
     created() {
       this.fetchUsersList()
-      this.fetchUserPage()
     }
   }
 </script>

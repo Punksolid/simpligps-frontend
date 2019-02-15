@@ -68,13 +68,8 @@
       },
       resetForm(formName) {
       },
-      handleClose(done) {
-        this.$confirm('Are you sure to close this dialog?.') // a donde va este texto? borrar si no es necesario
-          .then(_ => {
-            this.resetForm()
-            done(this.$emit('closedialog'))
-          })
-          .catch(_ => {})
+      handleClose() {
+        this.$emit('closedialog')
       }
     },
     created() {
