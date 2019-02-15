@@ -118,12 +118,6 @@ export const constantRouterMap = [
         meta: { title: 'Status', icon: 'icon-clipboard-check' }
       },
       {
-        path: 'notification_linking',
-        name: 'Notification Linking',
-        component: () => import('@/views/notification_linking/notiflink'),
-        meta: { title: 'Notification Linking', icon: 'icon-form' }
-      },
-      {
         path: 'monitoring_assign',
         name: 'Monitoring Assign',
         component: () => import('@/views/monitoring_assign/assign'),

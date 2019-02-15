@@ -218,16 +218,5 @@
   }
 </script>
 <style lang="scss" scoped>
-  .searchBar .dis-flex {
-    justify-content: flex-end;
-    .el-form-item {
-      margin-bottom: 5px;
-      padding: 0px 5px;
-    }
-  }
-  @media screen and (max-width: 468px) {
-    .dis-flex {
-      flex-direction: column;
-    }
-  }
+
 </style>
