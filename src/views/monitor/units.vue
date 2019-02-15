@@ -1,11 +1,10 @@
 <template>
   <el-row class="panel p-10">
-    <el-col>
 
       <el-autocomplete
         v-model="search"
         :fetch-suggestions="querySearchAsync"
-        prefix-icon="el-icon-search"
+        prefix-icon="fas fa-search"
         placeholder="Search unit"
         @select="handleSelect"></el-autocomplete>
 
@@ -381,28 +380,39 @@
           </div>
         </div>
         <!--TABLAS -->
-
-        <div class="row">
-          <div class="col-md-6"></div>
-          <div class="col-md-6"></div>
-        </div>
-
       </div>
 
-      <!--PAGER-->
-
-      <el-col class="p-t-20 t-center">
-        <el-pagination
-          :page-size="10"
-          :pager-count="5"
-          layout="prev, pager, next"
-          :total="100">
-        </el-pagination>
-      </el-col>
-
+    <el-col class="m-t-5 t-center">
+      <el-pagination
+        class="dis-inline-b"
+        layout="total, prev, pager, next, jumper"
+        :current-page.sync="unitsListPage.current_page"
+        :page-size="unitsListPage.per_page"
+        :total="unitsListPage.total"
+        @current-change="handleCurrentChange"
+        @pagination="fetchUnitsList" />
     </el-col>
-  </el-row>
 
+    <el-row>
+      <el-col class="t-center"><h3>Realtime Monitoring for: <b>PTS003</b></h3></el-col>
+      <el-col>
+        <GmapMap
+          :center="{lat:24.791999, lng:-107.404263}"
+          :zoom="12"
+          map-type-id="roadmap"
+          style="width: 100%; height: 400px"
+        >
+          <GmapMarker
+            v-if="marker.position"
+            :position="marker.position"
+            :clickable="true"
+            :draggable="true"
+            @click="center=m.position"
+          />
+        </GmapMap>
+      </el-col>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -470,10 +480,19 @@
           status: 'operator logged out'
 
         }],
-
         search: '',
-        timeout: null
-
+        timeout: null,
+        unitsListPage: {
+          page: 0,
+          per_page: 15,
+          total: 30
+        },
+        marker: {
+          position: {
+            lat: 0,
+            lng: 0
+          }
+        }
       }
     },
     methods: {
@@ -492,10 +511,15 @@
         this.listLoading = true
         getUnits(this.unitsListData).then(response => {
           this.unitsList = response.data.data
+          this.marker.position.lat = this.unitsList[3].position.lat
+          this.marker.position.lng = this.unitsList[3].position.lon
           this.listLoading = false
         })
       },
-
+      handleCurrentChange(val) {
+        this.unitsListPage.page = val
+        this.fetchUnitsList()
+      },
       querySearchAsync(queryString, cb) {
         var links = this.links
         var results = queryString ? links.filter(this.createFilter(queryString)) : links

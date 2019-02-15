@@ -5,7 +5,6 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
-
 import '@/styles/index.scss' // global css
 
 import '@/assets/global/css/fontawesome-all.css'
@@ -19,6 +18,23 @@ import '@/assets/global/css/ui.css'
 import '@/assets/global/css/icons/line-icons/simple-line-icons.css'
 import '@/assets/global/plugins/jquery/jquery-3.1.0.min.js'
 import '@/assets/admin/layout3/js/layout.js'
+
+// Vue GMaps
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyCzsnMy1tCub2fzL9_5W2zlLvlWlHyMu-c', // Create a custom API for TRM.
+    libraries: 'places' // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    // OR: libraries: 'places,drawing,visualization'
+    // (as you require)
+
+    // If you want to set the version, you can do so:
+    // v: '3.26',
+  }
+})
+
 // import Pusher from 'pusher-js'
 import Echo from 'laravel-echo'
 window.event = new Vue()
