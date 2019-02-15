@@ -1,6 +1,13 @@
 import { Message } from 'element-ui'
 
 export function ErrorsHandling(error) {
+  if (error.code === 'ECONNABORTED') {
+    Message({
+      message: 'Try again later',
+      type: 'error'
+    })
+    return Promise.reject(error)
+  }
   if (error.response.status === 422) {
     Message({
       message: error.response.data.errors.message,
