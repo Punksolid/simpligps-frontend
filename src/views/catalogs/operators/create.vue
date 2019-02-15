@@ -1,25 +1,25 @@
 <template>
-<el-form ref="form" :model="form">
-  <el-form-item label="Name">
-    <el-input v-model="form.name"></el-input>
+  <el-form ref="form" :model="form">
+    <el-form-item label="Name">
+      <el-input v-model="form.name"></el-input>
+    </el-form-item>
+    <el-form-item label="Phone">
+      <el-input v-model="form.phone"></el-input>
+    </el-form-item>
+  <el-form-item label="Active">
+  <el-switch
+    v-model="form.active"
+    active-color="#13ce66"
+    inactive-color="#ff4949"
+    active-value="1"
+    inactive-value="0">
+  </el-switch>
   </el-form-item>
-  <el-form-item label="Phone">
-    <el-input v-model="form.phone"></el-input>
-  </el-form-item>
-<el-form-item label="Active">
-<el-switch
-  v-model="form.active"
-  active-color="#13ce66"
-  inactive-color="#ff4949"
-  active-value="1"
-  inactive-value="0">
-</el-switch>
-</el-form-item>
-  <el-form-item>
-    <el-button @click="handleClose" aria-label="close">Cancel</el-button>
-    <el-button type="primary" @click="onSubmit">Create</el-button>
-  </el-form-item>
-</el-form>
+    <el-form-item>
+      <el-button @click="handleClose" aria-label="close">Cancel</el-button>
+      <el-button type="primary" @click="onSubmit">Create</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>

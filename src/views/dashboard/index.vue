@@ -15,7 +15,6 @@
           </el-col>
 
         </el-col>
-        <el-col class="panel-footer t-right p-r-20"><router-link to="">CHECK MORE!</router-link></el-col>
 
       </el-col>
     </el-row>

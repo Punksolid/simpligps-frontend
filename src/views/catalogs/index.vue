@@ -1,8 +1,37 @@
 <template>
   <el-row class="panel p-10">
-    <el-row>
-      <el-col>
+    <el-row class="searchBar">
+      <el-col :span="4" class="m-b-5">
         <el-button type="primary" @click="dialogVisible = true" icon="fas fa-user-plus p-r-10">Create Operator</el-button>
+      </el-col>
+      <el-col :xl="20" :sm="20" :xs="24">
+        <el-form class="dis-flex" v-model="search">
+          <el-form-item>
+            <el-input placeholder="Name" v-model="search.name" @keyup.enter.native="handleFilter"/>
+          </el-form-item>
+          <el-form-item>
+            <el-input placeholder="Carrier" v-model="search.carrier" @keyup.enter.native="handleFilter"/>
+          </el-form-item>
+          <el-form-item>
+            <el-input placeholder="Phone" v-model="search.phone" @keyup.enter.native="handleFilter">
+              <el-button slot="append" icon="fas fa-search" @click="handleFilter"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-tooltip :content="'Operator Status'" placement="top">
+              <el-switch
+                v-model="search.active"
+                active-color="#13ce66"
+                inactive-color="#909399"
+                active-value="true"
+                inactive-value="false">
+              </el-switch>
+            </el-tooltip>
+          </el-form-item>
+          <el-form-item>
+            <el-button icon="fas fa-trash-alt" plain @click="fetchOperatorsPage"></el-button>
+          </el-form-item>
+        </el-form>
       </el-col>
     </el-row>
 
@@ -77,6 +106,11 @@
     data() {
       return {
         listLoading: true,
+        search: {
+          name: '',
+          carrier: '',
+          phone: ''
+        },
         operatorsList: [],
         operatorsListPage: {
           page: 0,
@@ -94,14 +128,21 @@
         alert(value)
         return row.tag === value
       },
-      filterHandler(value, row, column) {
-        const property = column['property']
-        return row[property] === value
+      handleFilter() {
+        this.listLoading = true
+        getOperators(this.search).then(response => {
+          this.operatorsListPage = response.data.meta
+          this.operatorsListPage.page = response.data.meta.current_page
+          this.operatorsList = response.data.data
+          this.listLoading = false
+        })
       },
       fetchOperatorsPage() {
         this.listLoading = true
+        this.search = {}
         getOperators(this.operatorsListPage).then(response => {
           this.operatorsListPage = response.data.meta
+          this.operatorsListPage.page = response.data.meta.current_page
           this.operatorsList = response.data.data
           this.listLoading = false
         })

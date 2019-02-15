@@ -1,9 +1,29 @@
 <template>
   <el-row class="panel p-10">
-    <el-row>
-      <el-col>
+    <el-row class="searchBar">
+      <el-col class="m-b-5" :xl="4" :sm="4" :xs="24">
         <el-button type="primary" @click="openDialog" icon="fas fa-mobile-alt p-r-10">Register Device</el-button>
       </el-col>
+
+      <el-col :xl="20" :sm="20" :xs="24">
+        <el-form class="dis-flex" v-model="search">
+          <el-form-item>
+            <el-input placeholder="Name" v-model="search.name" @keyup.enter.native="handleFilter"/>
+          </el-form-item>
+          <el-form-item>
+            <el-input placeholder="GPS" v-model="search.gps" @keyup.enter.native="handleFilter"/>
+          </el-form-item>
+          <el-form-item>
+            <el-input placeholder="Plate" v-model="search.plate" @keyup.enter.native="handleFilter">
+              <el-button slot="append" icon="fas fa-search" @click="handleFilter"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button icon="fas fa-trash-alt" plain @click="fetchDevicesPage"></el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+
     </el-row>
 
     <el-dialog
@@ -19,6 +39,11 @@
         :data="devicesList"
         stripe
         style="width: 100%">
+        <el-table-column
+          prop="name"
+          label="Name"
+          sortable>
+        </el-table-column>
         <el-table-column
           prop="gps"
           label="GPS"
@@ -43,18 +68,18 @@
         <el-table-column
           label="Operations"
           fixed="right"
-          width="190">
+          width="130">
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, devicesList)">
-              Edit
+              @click="handleUpdate(scope.$index, devicesList)"
+              icon="fas fa-edit">
             </el-button>
             <el-button
               @click.native.prevent="deleteRow(scope.$index, devicesList)"
               type="danger"
-              size="mini">
-              Delete
+              size="mini"
+              icon="fas fa-trash">
             </el-button>
           </template>
         </el-table-column>
@@ -86,8 +111,14 @@
     data() {
       return {
         listLoading: true,
+        search: {
+          name: '',
+          gps: '',
+          plate: ''
+        },
         devicesList: null,
         elementToUpdate: {
+          name: '',
           gps: '',
           plate: '',
           internal_number: '',
@@ -112,10 +143,20 @@
     methods: {
       fetchDevicesPage() {
         this.listLoading = true
+        this.search = {}
         getDevices(this.devicesListPage).then(response => {
           this.devicesListPage = response.data.meta
           this.devicesList = response.data.data
           this.dialogVisible = false
+          this.listLoading = false
+        })
+      },
+      handleFilter() {
+        this.listLoading = true
+        getDevices(this.search).then(response => {
+          this.devicesListPage = response.data.meta
+          this.devicesListPage.page = response.data.meta.current_page
+          this.devicesList = response.data.data
           this.listLoading = false
         })
       },

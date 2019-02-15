@@ -1,29 +1,29 @@
 <template>
-  <div>
-    <el-button type="primary" @click="dialogVisible = true">Create Carrier</el-button>
+  <el-row class="panel p-10">
+
+    <el-row class="searchBar m-b-10">
+      <el-col>
+        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-truck p-r-10">Create Carrier</el-button>
+      </el-col>
+    </el-row>
 
     <el-dialog
       title="Create carrier"
       :visible.sync="dialogVisible"
-      width="30%">
-      <span>
-            <createCarrier></createCarrier>
-      </span>
-      <!--<span slot="footer" class="dialog-footer">-->
-        <!--<el-button @click="dialogVisible = false">Cancel</el-button>-->
-        <!--<el-button type="primary" @click="dialogVisible = false">Confirm</el-button>-->
-      <!--</span>-->
-
+      :before-close="handleClose"
+      width="35%">
+            <CreateCarrier @closedialog="dialogVisible = false"></CreateCarrier>
     </el-dialog>
-<div style="margin-top: 30px">
 
+  <el-col>
     <el-table
       :data="carriersList"
-      border
-      style="width: 80%">
+      stripe
+      style="width: 100%">
       <el-table-column
         prop="carrier_name"
         label="Carrier Name"
+        sortable
         width="180">
       </el-table-column>
       <el-table-column
@@ -38,21 +38,22 @@
       </el-table-column>
       <el-table-column
         prop="email"
-        label="e-Mail">
+        label="E-mail">
       </el-table-column>
     </el-table>
-  </div>
-  </div>
+  </el-col>
+
+  </el-row>
 </template>
 
 <script>
-  import createCarrier from './create.vue'
+  import CreateCarrier from './create.vue'
   import { getCarriers } from '../../api/general'
 
   export default {
     name: 'CarrierList',
     components: {
-      createCarrier
+      CreateCarrier
     },
     data() {
       return {
@@ -60,25 +61,25 @@
         dialogVisible: false
       }
     },
-    params: {
-      return: {
-        tableData4: []
-      }
-    },
     methods: {
       fetchCarriersList() {
         this.listLoading = true
         getCarriers(this.carriersListData).then(response => {
-          console.log(response.data.data)
           this.carriersList = response.data.data
           this.listLoading = false
         })
+      },
+      handleClose(done) {
+        this.$confirm('Are you sure to close this dialog?').then(_ => {
+          done()
+        })
+          .catch(_ => {})
       }
     },
     created() {
       this.fetchCarriersList()
     }
-    }
+  }
 
 </script>
 

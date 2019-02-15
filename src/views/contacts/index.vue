@@ -1,25 +1,21 @@
 <template>
-  <div>
-    <el-button type="primary" @click="dialogVisible = true">Create Contacts</el-button>
+  <el-row class="panel p-10">
+    <el-row class="searchBar m-b-10">
+      <el-col>
+        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-user-plus"> Create Contacts</el-button>
+      </el-col>
+    </el-row>
 
     <el-dialog
       title="Create Contacts"
       :visible.sync="dialogVisible"
       width="30%">
-      <span>
-            <CreateContacts></CreateContacts>
-      </span>
-      <span slot="footer" class="dialog-footer">
-      <el-button @click="dialogVisible = false">Cancel</el-button>
-      <el-button type="primary" @toparent="onSubmit()">Create</el-button>
-      </span>
-
+            <CreateContacts @closedialog="dialogVisible = false" @created="fetchContactList"></CreateContacts>
     </el-dialog>
-    <div style="margin-top: 30px">
 
+    <el-col>
       <el-table
         :data="operatorsList"
-        border
         stripe
         style="width: 100%">
         <el-table-column
@@ -44,20 +40,24 @@
         </el-table-column>
         <el-table-column
           label="Actions"
-          width="200">
+          fixed="right"
+          width="135">
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+              @click="handleEdit(scope.$index, scope.row)"
+              icon="fas fa-edit"/>
             <el-button
               size="mini"
               type="danger"
-              @click="buttonDeleteContact(scope.$index, scope.row)">Delete</el-button>
+              @click="buttonDeleteContact(scope.$index, scope.row)"
+              icon="fas fa-trash"/>
           </template>
         </el-table-column>
       </el-table>
-    </div>
-  </div>
+    </el-col>
+
+  </el-row>
 </template>
 
 <script>
@@ -71,20 +71,16 @@
     },
     data() {
       return {
+        listLoading: false,
         operatorsList: [],
         dialogVisible: false
       }
     },
-    params: {
-      return: {
-        tableData4: []
-      }
-    },
     methods: {
       fetchContactList() {
+        this.dialogVisible = false
         this.listLoading = true
         getContacts().then(response => {
-          console.log(response.data.data)
           this.operatorsList = response.data.data
           this.listLoading = false
         })

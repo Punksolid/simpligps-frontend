@@ -7,7 +7,7 @@ export function getDevices(params) {
     params
   })
 }
-export function newDevice() {
+export function newDevice(params) {
   return request({
     url: 'v1/devices',
     method: 'POST',
