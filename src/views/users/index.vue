@@ -153,13 +153,18 @@
         this.form = {}
         this.dialogVisible = true
       },
-      handleClose(done) {
-        this.$confirm('Are you sure to close? Not saved data will be lost!')
-          .then(_ => {
-            this.dialogVisible = false
-            this.elementToUpdate = {}
-            done()
-          })
+      handleClose(confirm = true) {
+        console.log(confirm)
+        if (confirm) {
+          this.$confirm('Are you sure to close? Not saved data will be lost!')
+            .then(_ => {
+              this.dialogVisible = false
+              this.elementToUpdate = {}
+            })
+        } else {
+          this.dialogVisible = false
+          this.elementToUpdate = {}
+        }
       },
       fetchUsersList() {
         this.listLoading = true
