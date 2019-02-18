@@ -15,9 +15,10 @@
     <div class="m-t-20">
       <el-table
         stripe
+        :highlight-current-row=true
         height="610"
         :data="unitsList">
-        <el-table-column type="expand" @click="deviceLocation($index, unitsList)">
+        <el-table-column type="expand" @row-click="deviceLocation(props.$index)">
 
           <template slot-scope="props">
             <el-tabs type="border-card">
@@ -28,14 +29,19 @@
                 <el-col>
                   <GmapMap
                     :center="{lat:24.791999, lng:-107.404263}"
-                    :zoom="10"
+                    :zoom="12"
                     map-type-id="roadmap"
                     style="width: 100%; height: 400px">
                     <GmapMarker
-                      :position="deviceMarker"
+                      :position="{
+                      lat: unitsList[props.$index].position.lat,
+                      lng: unitsList[props.$index].position.lon,
+                      }"
+                      :icon="{ url: 'src/assets/carmarker.svg' }"
+                      :title="'Unit: ' + unitsList[props.$index].name"
                       :clickable="true"
                       :draggable="false"
-                      @click="center=m.position"
+                      @click="center=deviceMarker.position"
                     />
                   </GmapMap>
                 </el-col>
@@ -356,7 +362,7 @@
           min-width="180">
           <template slot-scope="scope">
             <el-button type="info" icon="el-icon-edit" size="mini" circle></el-button>
-            <el-button type="success" icon="el-icon-check" size="mini" circle @click="deviceLocation(scope.$index, unitsList)"></el-button>
+            <el-button type="success" icon="el-icon-check" size="mini" circle></el-button>
             <el-button type="success" icon="el-icon-star-off" size="mini" circle></el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" circle></el-button>
           </template>
@@ -499,8 +505,6 @@
         this.listLoading = true
         getUnits(this.unitsListData).then(response => {
           this.unitsList = response.data.data
-          // this.marker.position.lat = this.unitsList[3].position.lat
-          // this.marker.position.lng = this.unitsList[3].position.lon
           this.listLoading = false
         })
       },
@@ -522,12 +526,12 @@
           return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         }
       },
-      deviceLocation(index, unitsList) {
+      deviceLocation(index) {
+        console.log(index)
         this.deviceMarker.position = {
-          lat: unitsList[index].position.lat,
-          lng: unitsList[index].position.lon
+          lat: this.unitsList[index].position.lat,
+          lng: this.unitsList[index].position.lon
         }
-        console.log(this.deviceMarker.position)
       },
       handleSelectionChange() {
       },
@@ -540,9 +544,9 @@
       this.links = this.loadAll()
       this.fetchUnitsList()
 
-      // setInterval(function() {
-      //   this.fetchUnitsList()
-      // }.bind(this), 30000) // milisegundos
+     setInterval(function() {
+         this.fetchUnitsList()
+      }.bind(this), 30000) // milisegundos
     }
   }
 </script>
