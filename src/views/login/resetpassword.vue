@@ -7,7 +7,7 @@
         <el-form-item
           label-width="120"
           prop="email">
-          <el-input type="email" prefix-icon="fas fa-envelope" class="email" v-model="form.email" placeholder="usuario@correo.com"></el-input>
+          <el-input type="email" prefix-icon="fas fa-envelope" class="email" v-model="form.email" placeholder="usuario@correo.com" @keyup.enter.native="onSubmit"></el-input>
         </el-form-item>
       </el-form>
 

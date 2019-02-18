@@ -67,9 +67,15 @@ export const constantRouterMap = [
         meta: { title: 'Units', icon: 'icon-cursor' }
       },
       {
+        path: 'devicesmap',
+        name: 'Devices Map',
+        component: () => import('@/views/catalogs/devices_map'),
+        meta: { title: 'Units', icon: 'icon-cursor' }
+      },
+      {
         path: 'new_trip',
         name: 'New Trip',
-        component: () => import('@/views/monitoring/index'),
+        component: () => import('@/views/monitor/newtrip'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
       },
       {
@@ -112,6 +118,12 @@ export const constantRouterMap = [
         meta: { title: 'Carriers', icon: 'icon-exchange-alt' }
       },
       {
+        path: 'contacts',
+        name: 'Contacts',
+        component: () => import('@/views/contacts/index'), // Parent router-view
+        meta: { title: 'Contacts', icon: 'icon-users' }
+      },
+      {
         path: 'status',
         name: 'Status',
         component: () => import('@/views/form/index'),
@@ -122,18 +134,6 @@ export const constantRouterMap = [
         name: 'Monitoring Assign',
         component: () => import('@/views/monitoring_assign/assign'),
         meta: { title: 'Monitoring Assign', icon: 'icon-form' }
-      }
-    ]
-  },
-  {
-    path: '/contacts',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'Contacts',
-        component: () => import('@/views/contacts/index'), // Parent router-view
-        meta: { title: 'Contacts', icon: 'icon-users' }
       }
     ]
   },
