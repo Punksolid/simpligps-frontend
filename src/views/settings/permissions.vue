@@ -1,94 +1,59 @@
 <template>
-  <el-row :gutter="10">
+  <el-row>
+    <el-col :span="24" class="panel">
 
-    <el-col :span="24">
-      <div class="panel bg-white">
-        <div class="panel-header">
-          <h3 class="m-5"><i class="el-icon-edit p-5"></i>Permissions</h3>
-        </div>
-        <div class="panel-content p-15">
+        <div class="panel-content p-0">
 
-        <el-form>
-            <el-select v-model="emptyUserList" multiple placeholder="Select user" class="m-b-10">
-              <el-option
-                v-for="userl in usersListData"
-                :key="userl.value"
-                :label="userl.name"
-                :value="userl.id">
-              </el-option>
-            </el-select>
+          <el-tabs type="border-card">
+            <el-tab-pane>
+              <span slot="label"><i class="fas fa-user-check"></i> Assign</span>
+              <AssignPermissions :roles="this.roles"/>
+            </el-tab-pane>
+            <el-tab-pane>
+              <span slot="label"><i class="fas fa-folder-plus"></i> Create Role</span>
+              <CreateRole :roles="this.roles" @new_role="fetchRoleList"/>
+            </el-tab-pane>
+            <el-tab-pane>
+              <span slot="label"><i class="fas fa-folder-minus"></i> Delete Role</span>
+              <DeleteRole :roles="this.roles" @deleted_role="fetchRoleList"/>
+            </el-tab-pane>
+          </el-tabs>
 
-          <el-form-item>
-            <el-radio-group v-model="permissions" v-for="permission in permissions" :key="permission.name" class="p-10 p-l-0">
-              <el-radio v-model="permission.name" :label="permission.name" border></el-radio>
-            </el-radio-group>
-          </el-form-item>
-
-          </el-form>
         </div>
 
-        <div class="panel-footer clearfix">
-          <div class="pull-right">
-            <button type="button" class="btn btn-white m-r-10">Cancel</button>
-            <button type="button" class="btn bg-primary">Save</button>
-          </div>
-        </div>
-      </div>
     </el-col>
-
-    <!--<el-col :span="12">
-      <div class="panel bg-white">
-        <div class="panel-header">
-          <h3 class="m-5"><i class="el-icon-edit p-5"></i><b>Other</b> Permissions</h3>
-        </div>
-        <div class="panel-content p-15">
-          <div>
-            <el-checkbox v-model="checked3" label="List Users" border></el-checkbox>
-            <el-checkbox v-model="checked4" label="Add User" border></el-checkbox>
-          </div>
-        </div>
-        <div class="panel-footer clearfix">
-          <div class="pull-right">
-            <button type="button" class="btn btn-white m-r-10">Cancel</button>
-            <button type="button" class="btn bg-primary">Save</button>
-          </div>
-        </div>
-      </div>
-    </el-col>-->
-
   </el-row>
 </template>
 
 <script>
-  import { usersList } from '@/api/users'
-  import { getPermissions } from '../../api/general'
+  import AssignPermissions from '@/views/settings/permissions/assign'
+  import CreateRole from '@/views/settings/permissions/createrole'
+  import DeleteRole from '@/views/settings/permissions/deleterole'
+  import { getRoles } from '@/api/permissions'
 
   export default {
     name: 'Permissions',
+    components: {
+      AssignPermissions,
+      CreateRole,
+      DeleteRole
+    },
     data() {
       return {
-        usersListData: [],
-        emptyUserList: '',
-        permissions: []
+        roles: []
       }
     },
     methods: {
-      fetchPermissions() {
-        getPermissions().then(response => {
-          this.permissions = response.data.data
-        })
-      },
-      fetchUsersList() {
+      fetchRoleList() {
         this.listLoading = true
-        usersList(this.usersListData).then(response => {
-          this.usersListData = response.data.data
+        getRoles(this.roles).then(response => {
+          this.roles = response.data
           this.listLoading = false
         })
       }
     },
     created() {
-      this.fetchUsersList()
-      this.fetchPermissions()
+      this.fetchRoleList()
     }
   }
 </script>

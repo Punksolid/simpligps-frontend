@@ -8,6 +8,13 @@ export function changePassword(params) {
   })
 }
 
+export function getMyPermissions() {
+  return request({
+    url: 'v1/me/permissions',
+    method: 'GET'
+  })
+}
+
 export function getMyNotifications() {
   return request({
     url: 'v1/me/notifications',
