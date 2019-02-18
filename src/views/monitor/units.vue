@@ -15,12 +15,33 @@
     <div class="m-t-20">
       <el-table
         stripe
-        height="500"
+        height="610"
         :data="unitsList">
-        <el-table-column type="expand">
+        <el-table-column type="expand" @click="deviceLocation($index, unitsList)">
 
           <template slot-scope="props">
             <el-tabs type="border-card">
+
+              <el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i> Map</span>
+
+                <el-col>
+                  <GmapMap
+                    :center="{lat:24.791999, lng:-107.404263}"
+                    :zoom="10"
+                    map-type-id="roadmap"
+                    style="width: 100%; height: 400px">
+                    <GmapMarker
+                      :position="deviceMarker"
+                      :clickable="true"
+                      :draggable="false"
+                      @click="center=m.position"
+                    />
+                  </GmapMap>
+                </el-col>
+
+              </el-tab-pane>
+
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Details</span>
 
@@ -199,6 +220,7 @@
 
                 </div>
               </el-tab-pane>
+
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Truck and operator</span>
                 <div class="card-panel-icon-wrapper icon-people">
@@ -263,6 +285,7 @@
 
                 </div>
               </el-tab-pane>
+
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Add group risk</span>
                 <div class="card-panel-icon-wrapper icon-people">
@@ -304,19 +327,11 @@
                   </template>
                 </div>
               </el-tab-pane>
-              <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Map</span>
-                <div class="card-panel-icon-wrapper icon-people">
-
-                </div>
-                <div class="card-panel-description">
-
-                </div>
-              </el-tab-pane>
 
             </el-tabs>
           </template>
         </el-table-column>
+
         <el-table-column
           prop="name"
           label="Name"
@@ -341,7 +356,7 @@
           min-width="180">
           <template slot-scope="scope">
             <el-button type="info" icon="el-icon-edit" size="mini" circle></el-button>
-            <el-button type="success" icon="el-icon-check" size="mini" circle></el-button>
+            <el-button type="success" icon="el-icon-check" size="mini" circle @click="deviceLocation(scope.$index, unitsList)"></el-button>
             <el-button type="success" icon="el-icon-star-off" size="mini" circle></el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" circle></el-button>
           </template>
@@ -360,7 +375,7 @@
         @pagination="fetchUnitsList"/>
     </el-col>
 
-    <el-col>
+    <!-- <el-col>
       <el-col class="t-center"><h3>Realtime Monitoring for: <b>PTS003</b></h3></el-col>
       <el-col>
         <GmapMap
@@ -377,7 +392,7 @@
           />
         </GmapMap>
       </el-col>
-    </el-col>
+    </el-col> -->
 
   </el-row>
 </template>
@@ -413,7 +428,6 @@
           }
         }],
         monitoringLog: [{
-
           log_id: '671345',
           trip: '193003',
           date: '2019-01-23',
@@ -447,6 +461,11 @@
           status: 'operator logged out'
 
         }],
+        input: '',
+        value: {},
+        truckData: [],
+        trailerData: [],
+        carrierData: [],
         search: '',
         timeout: null,
         unitsListPage: {
@@ -455,8 +474,8 @@
           total: 30
         },
         options: [],
-        selectedOptions: {},
-        marker: {
+        selectedOptions: [],
+        deviceMarker: {
           position: {
             lat: 0,
             lng: 0
@@ -480,8 +499,8 @@
         this.listLoading = true
         getUnits(this.unitsListData).then(response => {
           this.unitsList = response.data.data
-          this.marker.position.lat = this.unitsList[3].position.lat
-          this.marker.position.lng = this.unitsList[3].position.lon
+          // this.marker.position.lat = this.unitsList[3].position.lat
+          // this.marker.position.lng = this.unitsList[3].position.lon
           this.listLoading = false
         })
       },
@@ -502,6 +521,13 @@
         return (link) => {
           return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         }
+      },
+      deviceLocation(index, unitsList) {
+        this.deviceMarker.position = {
+          lat: unitsList[index].position.lat,
+          lng: unitsList[index].position.lon
+        }
+        console.log(this.deviceMarker.position)
       },
       handleSelectionChange() {
       },
