@@ -74,12 +74,6 @@ export function getWialonNotifications() {
     method: 'GET'
   })
 }
-export function getPermissions() {
-  return request({
-    url: 'v1/permissions',
-    method: 'GET'
-  })
-}
 
 export function getDatabaseNotifications() {
   return request({
