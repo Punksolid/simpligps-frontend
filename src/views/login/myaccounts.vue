@@ -27,13 +27,10 @@
 
 <script>
   import { getMyAccounts } from '@/api/me'
-  import { setTenantID, removeTenantID } from '@/utils/auth'
+  import { setTenantID } from '@/utils/auth'
 
     export default {
       name: 'MyAccounts',
-      props: [
-        'login_form'
-      ],
       data() {
           return {
             myAccounts: []
@@ -41,19 +38,13 @@
       },
       methods: {
           setTenant(account) {
-            removeTenantID()
             setTenantID(account.id)
             this.$message({
               showClose: true,
               type: 'success',
               message: 'User: ' + account.name + ' Selected'
             })
-            this.$store.dispatch('Login', this.login_form).then(() => {
-              this.$emit('selected')
-              this.$router.push({ path: this.redirect || '/' })
-            }).catch(() => {
-              this.$emit('selected')
-            })
+            this.$emit('selected')
           },
           fetchAccountsList() {
             getMyAccounts(this.myAccounts).then(response => {

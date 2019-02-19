@@ -8,7 +8,7 @@ export function login(email, password) {
   return request({
     url: 'v1/login',
     method: 'POST',
-    data: data
+    data
   })
 }
 

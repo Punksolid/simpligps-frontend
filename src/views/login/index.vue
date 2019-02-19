@@ -67,7 +67,7 @@
                 :show-close="false"
                 :close-on-click-modal="false">
 
-                <MyAccounts :login_form="this.loginForm" @selected="selectedAccount"/>
+                <MyAccounts @selected="selectedAccount"/>
 
               </el-dialog>
 
@@ -184,20 +184,18 @@
       },
       selectedAccount() {
         this.dialogAccounts = false
+        this.$router.push({ path: this.redirect || '/' })
         this.loading = false
         },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true
-            this.dialogAccounts = true
-            /* this.$store.dispatch('Login', this.loginForm).then(() => {
-              this.loading = false
-              // Accounts Dialog Here
-              this.$router.push({ path: this.redirect || '/' })
+            this.$store.dispatch('Login', this.loginForm).then(() => {
+              this.dialogAccounts = true
             }).catch(() => {
               this.loading = false
-            }) */
+            })
           } else {
             console.log('error submit!!')
             return false
