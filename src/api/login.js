@@ -8,7 +8,7 @@ export function login(email, password) {
   return request({
     url: 'v1/login',
     method: 'POST',
-    data
+    data: data
   })
 }
 
@@ -31,7 +31,7 @@ export function resetPass(params) {
   return request({
     url: '/v1/password/send_email/',
     method: 'POST',
-    params: params
+    data: params
   })
 }
 

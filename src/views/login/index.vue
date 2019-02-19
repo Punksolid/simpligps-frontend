@@ -57,6 +57,20 @@
                 </el-button>
               </el-form-item>
             </el-form>
+
+              <el-dialog
+                title="My Accounts"
+                :visible.sync="dialogAccounts"
+                id="myaccounts"
+                width="45%"
+                center
+                :show-close="false"
+                :close-on-click-modal="false">
+
+                <MyAccounts :login_form="this.loginForm" @selected="selectedAccount"/>
+
+              </el-dialog>
+
               <el-row>
                 <el-col class="t-right float-right">
                   <template>
@@ -95,6 +109,7 @@
 <script>
   import '@/styles/bootstrap.min.css'
   // import { login } from '@/api/login'
+  import MyAccounts from '../login/myaccounts'
   import ResetPassword from '../login/resetpassword'
   import NewPassword from '../login/newpassword'
   import { checkStatus } from '../../api/general'
@@ -102,6 +117,7 @@
   export default {
     name: 'Login',
     components: {
+      MyAccounts,
       ResetPassword,
       NewPassword
     },
@@ -123,6 +139,7 @@
         },
         formType: 'login',
         dialogVisible: false,
+        dialogAccounts: false,
         loading: false,
         pwdType: 'password',
         redirect: undefined,
@@ -145,6 +162,12 @@
           })
           .catch(_ => {})
       },
+      selectAccount() {
+        this.$confirm('Please select an account to manage.')
+          .then(_ => {
+          })
+          .catch(_ => {})
+      },
       showPwd() {
         if (this.pwdType === 'password') {
           this.pwdType = ''
@@ -159,17 +182,22 @@
           this.apiPingSuccess = false
         })
       },
+      selectedAccount() {
+        this.dialogAccounts = false
+        this.loading = false
+        },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true
-            // this.$store.dispatch('Login', this.loginForm).then(() => {
-            this.$store.dispatch('Login', this.loginForm).then(() => {
+            this.dialogAccounts = true
+            /* this.$store.dispatch('Login', this.loginForm).then(() => {
               this.loading = false
+              // Accounts Dialog Here
               this.$router.push({ path: this.redirect || '/' })
             }).catch(() => {
               this.loading = false
-            })
+            }) */
           } else {
             console.log('error submit!!')
             return false

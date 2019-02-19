@@ -8,6 +8,20 @@ export function changePassword(params) {
   })
 }
 
+export function getMyAccounts() {
+  return request({
+    url: 'v1/me/accounts/',
+    method: 'GET'
+  })
+}
+
+export function viewAccount() {
+  return request({
+    url: 'v1/me/accounts/',
+    method: 'POST'
+  })
+}
+
 export function getMyPermissions() {
   return request({
     url: 'v1/me/permissions',
