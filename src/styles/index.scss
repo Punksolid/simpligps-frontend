@@ -98,18 +98,29 @@ a:hover {
   }
 }
 // FIN - HEADER
-.panel .number h1 {
-  text-align: center;
-  span {
-    font-weight: 800;
+
+// Custom Footer Dashboard Panels
+.active-panels {
+  .panel .number h1 {
+    text-align: center;
+    span {
+      font-weight: 800;
+    }
+  }
+  .panel .panel-footer {
+    opacity: .6;
+  }
+  .panel .panel-footer h3 {
+    text-align: right;
   }
 }
-.panel .panel-footer {
-  opacity: .6;
+// COLLAPSE ICONS
+.el-collapse-item .fa-stack {
+  color: #2a9cb6;
+  font-size: 1.2em;
+  margin-right: 10px;
 }
-.panel .panel-footer h3 {
-  text-align: right;
-}
+
 // Custom Dialog Title
 .el-dialog__title {
   color: #676767;

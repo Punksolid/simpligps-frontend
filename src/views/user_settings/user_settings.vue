@@ -120,10 +120,5 @@
     }
   }
 </script>
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .el-collapse-item .fa-stack {
-    color: #2a9cb6;
-    font-size: 1.2em;
-    margin-right: 10px;
-  }
+<style>
 </style>
