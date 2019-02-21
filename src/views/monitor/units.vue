@@ -544,9 +544,9 @@
       this.links = this.loadAll()
       this.fetchUnitsList()
 
-     setInterval(function() {
-         this.fetchUnitsList()
-      }.bind(this), 30000) // milisegundos
+     // setInterval(function() {
+     //     this.fetchUnitsList()
+     //  }.bind(this), 30000) // milisegundos
     }
   }
 </script>
