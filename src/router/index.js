@@ -69,7 +69,7 @@ export const constantRouterMap = [
       {
         path: 'devicesmap',
         name: 'Devices Map',
-        component: () => import('@/views/catalogs/devices_map'),
+        component: () => import('@/views/monitor/devices_map'),
         meta: { title: 'Units', icon: 'icon-cursor' }
       },
       {
