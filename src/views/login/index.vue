@@ -162,12 +162,6 @@
           })
           .catch(_ => {})
       },
-      selectAccount() {
-        this.$confirm('Please select an account to manage.')
-          .then(_ => {
-          })
-          .catch(_ => {})
-      },
       showPwd() {
         if (this.pwdType === 'password') {
           this.pwdType = ''

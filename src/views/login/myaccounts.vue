@@ -10,7 +10,7 @@
       highlight-current-row
       @row-click="setTenant"
       :show-header="false"
-      cell-class-name="t-center"
+      height="370px"
       align="center"
       style="width: 100%">
       <el-table-column width="80" align="center" cell-class-name="t-center">
@@ -18,7 +18,7 @@
           <i class="fas fa-user-circle"></i>
         </div>
       </el-table-column>
-      <el-table-column prop="name">
+      <el-table-column prop="easyname">
       </el-table-column>
     </el-table>
 
@@ -38,11 +38,11 @@
       },
       methods: {
           setTenant(account) {
-            setTenantID(account.id)
+            setTenantID(account.uuid)
             this.$message({
               showClose: true,
               type: 'success',
-              message: 'User: ' + account.name + ' Selected'
+              message: 'User: ' + account.easyname + ' Selected.'
             })
             this.$emit('selected')
           },
