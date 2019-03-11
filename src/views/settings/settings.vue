@@ -5,9 +5,12 @@
 
           <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="WIALON ACCESS KEY" name="1">
-            <el-form :model="formInline" class="wialonkey">
+            <el-form :model="formInline" >
               <el-form-item label="Wialon Key" class="dis-flex">
                 <el-input type="text" v-model="formInline.wialon_key" placeholder="Wialon Key" style="width: 100%"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-checkbox v-model="formInline.import">Import</el-checkbox>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">Update Key</el-button>

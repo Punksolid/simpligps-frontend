@@ -39,8 +39,10 @@
             fixed="right">
             <template slot-scope="scope">
             <el-button
+              size="small"
               type="danger"
-              size="small">
+              @click="deleteNotification(scope.$index, scope.row)"
+              icon="fas fa-trash">
               Delete
             </el-button>
             </template>
@@ -76,32 +78,13 @@
   </el-row>
 </template>
 
-<style scoped>
-h1,h2 {
-  text-align: center;
-}
-.dialog-footer {
-  display: block;
-  text-align: center;
-}
-i.el-icon-warning {
-  display: block;
-  margin: auto;
-  width: 84px;
-  padding: 20px;
-  margin: auto;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 50px;
-
-}
-</style>
 
 <script>
 
   import AlertDialog from '../../components/Alert/index.vue'
-  import CreateNotification from './create.vue'
-  import { getWialonNotifications } from '../../api/general'
+  import CreateNotification from '@/views/notifications/create.vue'
+  // import CreateNotification './create.vue'
+  import { destroyNotification, getWialonNotifications } from '../../api/general'
 
   export default {
     name: 'NotificationsList',
@@ -129,10 +112,42 @@ i.el-icon-warning {
           })
           .catch(_ => {
           })
+      },
+      deleteNotification(index, row) {
+        console.log(row)
+        console.log('index: ' + index)
+        destroyNotification(row.id).then(response => {
+          this.fetchWialonNotifications()
+        }).catch(response => {
+          console.log('ERROR')
+        })
+        // this.deleteNotification()
       }
+
     },
     created() {
       this.fetchWialonNotifications()
     }
   }
 </script>
+
+<style scoped>
+h1,h2 {
+  text-align: center;
+}
+.dialog-footer {
+  display: block;
+  text-align: center;
+}
+i.el-icon-warning {
+  display: block;
+  margin: auto;
+  width: 84px;
+  padding: 20px;
+  margin: auto;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 50px;
+
+}
+</style>

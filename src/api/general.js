@@ -75,6 +75,13 @@ export function getWialonNotifications() {
   })
 }
 
+export function destroyNotification(id) {
+  return request({
+    url: 'v1/wialon/notifications/' + id,
+    method: 'delete'
+  })
+}
+
 export function getDatabaseNotifications() {
   return request({
     url: 'v1/me/notifications',
