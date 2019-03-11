@@ -115,7 +115,8 @@
   import { checkStatus } from '../../api/general'
 
   export default {
-    name: 'Login',
+    name: 'LoginView',
+
     components: {
       MyAccounts,
       ResetPassword,
@@ -130,8 +131,8 @@
       }
       return {
         loginForm: {
-          email: 'test@test.com',
-          password: '12345678'
+          email: '',
+          password: ''
         },
         loginRules: {
           email: [{ required: true, trigger: 'blur', validator: validateUsername }],
