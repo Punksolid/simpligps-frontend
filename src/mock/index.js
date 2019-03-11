@@ -22,6 +22,7 @@ Mock.XHR.prototype.send = function() {
 // })
 
 // Relacionado con inicio de sesión
+// Mock.mock(/\/v1\/me\/accounts/, 'get', settingsAPI.getAccountsList)
 // Mock.mock(/\/v1\/login/, 'post', loginAPI.loginByUsername)
 // Mock.mock(/\/v1\/logout/, 'post', loginAPI.logout)
 // Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)

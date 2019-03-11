@@ -57,6 +57,20 @@
                 </el-button>
               </el-form-item>
             </el-form>
+
+              <el-dialog
+                title="My Accounts"
+                :visible.sync="dialogAccounts"
+                id="myaccounts"
+                width="45%"
+                center
+                :show-close="false"
+                :close-on-click-modal="false">
+
+                <MyAccounts @selected="selectedAccount"/>
+
+              </el-dialog>
+
               <el-row>
                 <el-col class="t-right float-right">
                   <template>
@@ -95,13 +109,16 @@
 <script>
   import '@/styles/bootstrap.min.css'
   // import { login } from '@/api/login'
+  import MyAccounts from '../login/myaccounts'
   import ResetPassword from '../login/resetpassword'
   import NewPassword from '../login/newpassword'
   import { checkStatus } from '../../api/general'
 
   export default {
-    name: 'Login',
+    name: 'LoginView',
+
     components: {
+      MyAccounts,
       ResetPassword,
       NewPassword
     },
@@ -114,8 +131,8 @@
       }
       return {
         loginForm: {
-          email: 'test@test.com',
-          password: '12345678'
+          email: '',
+          password: ''
         },
         loginRules: {
           email: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -123,6 +140,7 @@
         },
         formType: 'login',
         dialogVisible: false,
+        dialogAccounts: false,
         loading: false,
         pwdType: 'password',
         redirect: undefined,
@@ -159,14 +177,17 @@
           this.apiPingSuccess = false
         })
       },
+      selectedAccount() {
+        this.dialogAccounts = false
+        this.$router.push({ path: this.redirect || '/' })
+        this.loading = false
+        },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true
-            // this.$store.dispatch('Login', this.loginForm).then(() => {
             this.$store.dispatch('Login', this.loginForm).then(() => {
-              this.loading = false
-              this.$router.push({ path: this.redirect || '/' })
+              this.dialogAccounts = true
             }).catch(() => {
               this.loading = false
             })

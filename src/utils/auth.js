@@ -1,6 +1,17 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'Admin-Token'
+const TenantID = '0'
+
+export function setTenantID(value) {
+  return Cookies.set(TenantID, value)
+}
+export function getTenantID() {
+  return Cookies.get(TenantID)
+}
+export function removeTenantID() {
+  return Cookies.remove(TenantID)
+}
 
 export function getToken() {
   return Cookies.get(TokenKey)

@@ -8,7 +8,6 @@
     <el-form-item prop="email" class="m-b-5">
       <el-input
         v-model="passwordForm.email"
-        class=""
         type="email"
         name="email"
         placeholder="Confirm your e-mail"
@@ -18,7 +17,6 @@
     <el-form-item prop="password" class="m-b-0">
       <el-input
         v-model="passwordForm.password"
-        class=""
         type="password"
         name="password"
         placeholder="New Password"
@@ -28,7 +26,6 @@
     <el-form-item prop="password" class="m-b-0">
       <el-input
         v-model="passwordForm.password_confirmation"
-        class=""
         type="password"
         name="password"
         placeholder="Confirm New Password"
@@ -42,8 +39,8 @@
       type="hidden"
       name="token"
       placeholder="Token"
-      required
-    ></el-input>
+      required>
+    </el-input>
     <el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="onSubmit">
         Change Password
@@ -83,12 +80,9 @@
             type: 'success',
             duration: 10 * 1000
           })
-          this.closeForm()
+          this.passwordForm = {}
+          this.$emit('pwd_changed')
         })
-      },
-      closeForm() {
-        this.passwordForm = {}
-        this.$emit('closedialog')
       }
     },
     created() {

@@ -14,7 +14,7 @@ export function login(email, password) {
 
 export function getInfo(token) {
   return request({
-    url: 'v1/user/info',
+    url: 'v1/me',
     method: 'GET'
     // params: { token }
   })
@@ -31,7 +31,7 @@ export function resetPass(params) {
   return request({
     url: '/v1/password/send_email/',
     method: 'POST',
-    params: params
+    data: params
   })
 }
 
