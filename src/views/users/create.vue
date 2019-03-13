@@ -19,7 +19,7 @@
       <el-col class="t-center">
         <el-form-item  class="dis-inline-b t-center">
           <el-button @click="handleClose">Cancel</el-button>
-          <el-button type="primary" @click="onSubmit">{{ this.form.id === null ? 'Create':'Update' }}</el-button>
+          <el-button type="primary" @click="onSubmit">{{ this.form.id == null ? 'Create':'Update' }}</el-button>
         </el-form-item>
       </el-col>
     </el-row>

@@ -67,7 +67,7 @@
                 :show-close="false"
                 :close-on-click-modal="false">
 
-                <MyAccounts @selected="selectedAccount"/>
+                <MyAccounts :accounts="myAccounts" @selected="selectedAccount"/>
 
               </el-dialog>
 
@@ -109,6 +109,7 @@
 <script>
   import '@/styles/bootstrap.min.css'
   // import { login } from '@/api/login'
+  import { getMyAccounts } from '@/api/me'
   import MyAccounts from '../login/myaccounts'
   import ResetPassword from '../login/resetpassword'
   import NewPassword from '../login/newpassword'
@@ -116,7 +117,6 @@
 
   export default {
     name: 'LoginView',
-
     components: {
       MyAccounts,
       ResetPassword,
@@ -140,6 +140,8 @@
         },
         formType: 'login',
         dialogVisible: false,
+        myAccounts: [],
+        account_selected: false,
         dialogAccounts: false,
         loading: false,
         pwdType: 'password',
@@ -177,7 +179,18 @@
           this.apiPingSuccess = false
         })
       },
+      fetchAccountsList() {
+        getMyAccounts(this.myAccounts).then(response => {
+          this.myAccounts = response.data.data
+          if (this.myAccounts.length <= 1) {
+            this.$router.push({ path: this.redirect || '/' })
+          } else {
+            this.dialogAccounts = true
+          }
+            })
+      },
       selectedAccount() {
+        this.account_selected = true
         this.dialogAccounts = false
         this.$router.push({ path: this.redirect || '/' })
         this.loading = false
@@ -187,7 +200,7 @@
           if (valid) {
             this.loading = true
             this.$store.dispatch('Login', this.loginForm).then(() => {
-              this.dialogAccounts = true
+              this.fetchAccountsList()
             }).catch(() => {
               this.loading = false
             })
@@ -208,6 +221,14 @@
     created() {
       this.checkReset()
       this.backendStatus()
+      this.$router.beforeEach((to, from, next) => {
+        if (to.name === 'login' && this.account_selected) {
+          // Redirect user to homepage
+          return next({ path: '/' })
+        }
+        // Let the user pass
+        return next()
+      })
     }
   }
 </script>
