@@ -78,7 +78,6 @@
   </el-row>
 </template>
 
-
 <script>
 
   import AlertDialog from '../../components/Alert/index.vue'

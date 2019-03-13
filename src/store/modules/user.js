@@ -3,6 +3,7 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
   state: {
+    id: '',
     token: getToken(),
     name: '',
     avatar: '',
@@ -35,8 +36,9 @@ const user = {
         login(username, userInfo.password).then(response => {
           const data = response.data
           commit('SET_TOKEN', data.access_token)
+          commit('SET_ID', data.id)
           setToken(response.data.access_token)
-          resolve()
+          resolve(data)
         }).catch(error => {
           console.log(error.response)
           reject(error)
@@ -51,7 +53,6 @@ const user = {
           const data = response.data
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
-          commit('SET_ID', data.id)
           resolve(response)
         }).catch(error => {
           reject(error)
