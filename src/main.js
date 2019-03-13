@@ -47,8 +47,8 @@ window.Echo = new Echo({
     headers: {
       Authorization: 'Bearer ' + store.getters.token
     }
-  }
-  // cluster: 'mt1'
+  },
+  cluster: 'mt1'
 })
 
 import App from './App'

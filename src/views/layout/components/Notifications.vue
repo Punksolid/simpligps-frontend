@@ -46,10 +46,13 @@
     },
     computed: {},
     created() {
+      window.Echo.channel('orders')
+        .listen('OrderShipped', (e) => {
+          console.log(e.order.name)
+        })
       this.fetchNotifications()
       window.Echo.private('App.User.' + this.$store.state.user.id)
         .notification((notification) => {
-          console.log(notification)
           console.log('NOTIFICATION')
           this.notifications.push({
             id: notification.id,
