@@ -8,6 +8,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/Layout'
+import store from '../store'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -29,8 +30,18 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    // redirect: '/dashboard',
-    // name: 'Dashboard',
+    beforeEnter: (to, from, next) => {
+      if (to.path !== '/login') {
+        if (store.getters.accselected) {
+          next()
+        } else {
+          store.dispatch('LogOut')
+          next('/login')
+        }
+      } else {
+        next()
+      }
+    },
     hidden: false,
     children: [
       {
@@ -204,3 +215,4 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
+

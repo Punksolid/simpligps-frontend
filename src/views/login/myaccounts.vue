@@ -4,7 +4,7 @@
       <p>Select account to Manage:</p>
     </el-col>
     <el-table
-      :data="myAccounts"
+      :data="accounts"
       stripe
       class="f-15"
       highlight-current-row
@@ -26,14 +26,14 @@
 </template>
 
 <script>
-  import { getMyAccounts } from '@/api/me'
   import { setTenantID } from '@/utils/auth'
 
     export default {
       name: 'MyAccounts',
-      data() {
-          return {
-            myAccounts: []
+      props: {
+          accounts: {
+            type: Array,
+            required: true
           }
       },
       methods: {
@@ -44,16 +44,9 @@
               type: 'success',
               message: 'User: ' + account.easyname + ' Selected.'
             })
+            this.$store.commit('SET_ACCSELECTED', true)
             this.$emit('selected')
-          },
-          fetchAccountsList() {
-            getMyAccounts(this.myAccounts).then(response => {
-              this.myAccounts = response.data.data
-            })
           }
-      },
-      created() {
-          this.fetchAccountsList()
       }
     }
 </script>

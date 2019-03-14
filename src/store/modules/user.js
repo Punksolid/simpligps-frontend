@@ -1,5 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, getAccSelected } from '@/utils/auth'
+import Cookies from 'js-cookie'
 
 const user = {
   state: {
@@ -7,6 +8,7 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
+    accselected: getAccSelected(),
     roles: []
   },
 
@@ -16,6 +18,10 @@ const user = {
     },
     SET_NAME: (state, name) => {
       state.name = name
+    },
+    SET_ACCSELECTED: (state, value) => {
+      state.accselected = value
+      Cookies.set('AccSelected', value)
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -64,6 +70,7 @@ const user = {
     LogOut: function({ commit, state }) {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
+      Cookies.remove('AccSelected')
       removeToken()
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
