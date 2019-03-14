@@ -47,8 +47,8 @@
     computed: {},
     created() {
       window.Echo.channel('orders')
-        .listen('OrderShipped', (e) => {
-          console.log(e.order.name)
+        .listen('OrderShipped', function(ooo) {
+          console.log('ooo')
         })
       this.fetchNotifications()
       window.Echo.private('App.User.' + this.$store.state.user.id)

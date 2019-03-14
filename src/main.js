@@ -21,7 +21,14 @@ import '@/assets/admin/layout3/js/layout.js'
 
 // Vue GMaps
 import * as VueGoogleMaps from 'vue2-google-maps'
+import App from './App'
+import store from './store'
+import router from './router'
+// import Pusher from 'pusher-js'
+import Echo from 'laravel-echo'
 
+import './mock' // simulation data should be deleted on prod
+import '@/permission' // permission control, verifica que usuario tenga permisos
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCzsnMy1tCub2fzL9_5W2zlLvlWlHyMu-c', // Create a custom API for TRM.
@@ -35,8 +42,6 @@ Vue.use(VueGoogleMaps, {
   }
 })
 
-// import Pusher from 'pusher-js'
-import Echo from 'laravel-echo'
 window.event = new Vue()
 window.Pusher = require('pusher-js')
 window.Echo = new Echo({
@@ -47,18 +52,15 @@ window.Echo = new Echo({
     headers: {
       Authorization: 'Bearer ' + store.getters.token
     }
-  },
-  cluster: 'mt1'
+  }
+  // cluster: 'mt1'
 })
 
-import App from './App'
-import store from './store'
-import router from './router'
+
 
 Vue.config.productionTip = false
 
-import './mock' // simulation data should be deleted on prod
-import '@/permission' // permission control, verifica que usuario tenga permisos
+
 
 // import * as filters from './filters' // global filters
 
