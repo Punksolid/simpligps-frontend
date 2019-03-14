@@ -7,6 +7,7 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
+    accselected: false,
     roles: []
   },
 
@@ -16,6 +17,9 @@ const user = {
     },
     SET_NAME: (state, name) => {
       state.name = name
+    },
+    SET_ACCSELECTED: (state, accselected) => {
+      state.accselected = accselected
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
