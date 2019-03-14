@@ -141,7 +141,6 @@
         formType: 'login',
         dialogVisible: false,
         myAccounts: [],
-        account_selected: false,
         dialogAccounts: false,
         loading: false,
         pwdType: 'password',
@@ -190,7 +189,6 @@
             })
       },
       selectedAccount() {
-        this.account_selected = true
         this.dialogAccounts = false
         this.$router.push({ path: this.redirect || '/' })
         this.loading = false
@@ -221,14 +219,6 @@
     created() {
       this.checkReset()
       this.backendStatus()
-      this.$router.beforeEach((to, from, next) => {
-        if (to.name === 'login' && this.account_selected) {
-          // Redirect user to homepage
-          return next({ path: '/' })
-        }
-        // Let the user pass
-        return next()
-      })
     }
   }
 </script>

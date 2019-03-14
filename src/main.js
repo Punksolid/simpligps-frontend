@@ -55,26 +55,6 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-// The below code need to be relocated to router/index.js
-
-router.beforeEach((to, from, next) => {
-  if (to.fullPath === '/') {
-    if (!store.state.accselected) {
-      store.dispatch('LogOut').then(() => {
-        next('/login')
-        // location.reload()
-      })
-      // next('/login')
-    }
-  }
-  if (to.fullPath === '/login') {
-    if (store.state.accselected) {
-      next('/dashboard')
-    }
-  }
-  next()
-})
-
 Vue.config.productionTip = false
 
 import './mock' // simulation data should be deleted on prod
