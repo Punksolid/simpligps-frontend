@@ -60,12 +60,16 @@ import router from './router'
 router.beforeEach((to, from, next) => {
   if (to.fullPath === '/') {
     if (!store.state.accselected) {
-      next('/login')
+      store.dispatch('LogOut').then(() => {
+        next('/login')
+        // location.reload()
+      })
+      // next('/login')
     }
   }
   if (to.fullPath === '/login') {
     if (store.state.accselected) {
-      next('/')
+      next('/dashboard')
     }
   }
   next()
