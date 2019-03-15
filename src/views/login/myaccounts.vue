@@ -44,7 +44,6 @@
               type: 'success',
               message: 'User: ' + account.easyname + ' Selected.'
             })
-            this.$store.commit('SET_ACCSELECTED', true)
             this.$emit('selected')
           }
       }

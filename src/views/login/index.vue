@@ -182,7 +182,7 @@
         getMyAccounts(this.myAccounts).then(response => {
           this.myAccounts = response.data.data
           if (this.myAccounts.length <= 1) {
-            this.$router.push({ path: this.redirect || '/' })
+            this.selectedAccount()
           } else {
             this.dialogAccounts = true
           }
@@ -190,6 +190,7 @@
       },
       selectedAccount() {
         this.dialogAccounts = false
+        this.$store.commit('SET_ACCSELECTED', true)
         this.$router.push({ path: this.redirect || '/' })
         this.loading = false
         },
@@ -223,38 +224,46 @@
   }
 </script>
 <style type="text/scss" lang="scss" scoped>
-  .form-content .form-items {
-    display: block;
+  .form-body {
+    .img-holder {
+      min-height: unset;
+    }
   }
-  .form-content form {
-    margin-bottom: 15px;
+  .form-content {
+    padding: 20px;
+    .form-items {
+      display: block;
+    }
+    form {
+      margin-bottom: 15px;
+    }
   }
   .website-logo-inside {
     margin-bottom: 30px;
-  }
-  .website-logo-inside .logo {
-    display: flex;
-  }
-  .website-logo-inside .logo img {
-    width: 250px;
-    margin-right: 20px;
-    height: 75px;
-    order: 1;
+    .logo {
+      display: flex;
+      img {
+        width: 250px;
+        margin-right: 20px;
+        height: 75px;
+        order: 1;
+      }
+    }
   }
   .status {
     margin-top: 4px;
     order: 2;
     border: 1px solid #ffffff80;
     padding: 3px 10px 0px;
-  }
-  .status .label {
-    font-size: 10px;
-    color: #fff;
-    background: #074e88;
-    padding: 0px 10px;
-    vertical-align: top;
-    position: relative;
-    top: -10px;
+    .label {
+      font-size: 10px;
+      color: #fff;
+      background: #074e88;
+      padding: 0px 10px;
+      vertical-align: top;
+      position: relative;
+      top: -10px;
+    }
   }
   .el-form-item {
     margin-bottom: 0px;
