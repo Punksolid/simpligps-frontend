@@ -31,10 +31,11 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     beforeEnter: (to, from, next) => {
-      console.log(store.getter.tenant)
-      if (store.getter.tenant){
-        console.log("no hay tenant")
-      }
+      console.log(store.state)
+      next()
+      // if (this.$store.state.tenant) {
+      //   console.log('no hay tenant')
+      // }
       // if (to.path !== '/login') {
       //   if (store.getters.accselected) {
       //     next()
