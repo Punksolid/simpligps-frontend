@@ -32,7 +32,11 @@ export const constantRouterMap = [
     component: Layout,
     beforeEnter: (to, from, next) => {
       console.log(store.state)
-      next()
+      if (store.state.user.tenant !== '') {
+        next()
+      }
+      store.dispatch('LogOut')
+
       // if (this.$store.state.tenant) {
       //   console.log('no hay tenant')
       // }

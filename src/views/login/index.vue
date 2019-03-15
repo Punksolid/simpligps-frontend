@@ -26,37 +26,37 @@
 
             <template v-if="formType == 'login'">
               <el-form
-              ref="loginForm"
-              :model="loginForm"
-              :rules="loginRules"
-              class="login-form"
-              auto-complete="on"
-              label-position="left">
-              <el-form-item prop="email">
+                ref="loginForm"
+                :model="loginForm"
+                :rules="loginRules"
+                class="login-form"
+                auto-complete="on"
+                label-position="left">
+                <el-form-item prop="email">
+                  <el-input
+                    v-model="loginForm.email"
+                    class=""
+                    type="text"
+                    name="email"
+                    placeholder="E-mail Address"
+                    auto-complete="on"
+                    required></el-input>
+                </el-form-item>
                 <el-input
-                  v-model="loginForm.email"
+                  v-model="loginForm.password"
                   class=""
-                  type="text"
-                  name="email"
-                  placeholder="E-mail Address"
-                  auto-complete="on"
-                  required></el-input>
-              </el-form-item>
-              <el-input
-                v-model="loginForm.password"
-                class=""
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-                @keyup.enter.native="handleLogin"
-              ></el-input>
-              <el-form-item>
-                <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-                  Sign in
-                </el-button>
-              </el-form-item>
-            </el-form>
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  @keyup.enter.native="handleLogin"
+                ></el-input>
+                <el-form-item>
+                  <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+                    Sign in
+                  </el-button>
+                </el-form-item>
+              </el-form>
 
               <el-dialog
                 title="My Accounts"
@@ -74,7 +74,9 @@
               <el-row>
                 <el-col class="t-right float-right">
                   <template>
-                    <el-button type="text" class="dis-inline-b c-light f-12" @click="dialogVisible = true">Forgot my password</el-button>
+                    <el-button type="text" class="dis-inline-b c-light f-12" @click="dialogVisible = true">Forgot my
+                      password
+                    </el-button>
                   </template>
                   <el-dialog
                     title="Reset Password"
@@ -95,7 +97,9 @@
             <template v-else>
               <NewPassword @pwd_changed="formType = 'login'"/>
               <el-col>
-                <el-button type="text" icon="fas fa-chevron-left" class="dis-inline-b c-light f-12" @click="formType = 'login'"> Return to Login</el-button>
+                <el-button type="text" icon="fas fa-chevron-left" class="dis-inline-b c-light f-12"
+                           @click="formType = 'login'"> Return to Login
+                </el-button>
               </el-col>
             </template>
 
@@ -114,6 +118,7 @@
   import ResetPassword from '../login/resetpassword'
   import NewPassword from '../login/newpassword'
   import { checkStatus } from '../../api/general'
+  import { setTenantID } from '../../utils/auth'
 
   export default {
     name: 'LoginView',
@@ -162,7 +167,8 @@
           .then(_ => {
             done()
           })
-          .catch(_ => {})
+          .catch(_ => {
+          })
       },
       showPwd() {
         if (this.pwdType === 'password') {
@@ -182,17 +188,22 @@
         getMyAccounts(this.myAccounts).then(response => {
           this.myAccounts = response.data.data
           if (this.myAccounts.length <= 1) {
+            console.log('this.myAccounts[0].uuid')
+            console.log(this.myAccounts[0].uuid)
+            this.$store.commit('SET_TENANT', this.myAccounts[0].uuid)
+            setTenantID(this.myAccounts[0].uuid)
+            // console.log(this.myAccounts)
             this.$router.push({ path: this.redirect || '/' })
           } else {
             this.dialogAccounts = true
           }
-            })
+        })
       },
       selectedAccount() {
         this.dialogAccounts = false
         this.$router.push({ path: this.redirect || '/' })
         this.loading = false
-        },
+      },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
@@ -226,27 +237,33 @@
   .form-content .form-items {
     display: block;
   }
+
   .form-content form {
     margin-bottom: 15px;
   }
+
   .website-logo-inside {
     margin-bottom: 30px;
   }
+
   .website-logo-inside .logo {
     display: flex;
   }
+
   .website-logo-inside .logo img {
     width: 250px;
     margin-right: 20px;
     height: 75px;
     order: 1;
   }
+
   .status {
     margin-top: 4px;
     order: 2;
     border: 1px solid #ffffff80;
     padding: 3px 10px 0px;
   }
+
   .status .label {
     font-size: 10px;
     color: #fff;
@@ -256,9 +273,11 @@
     position: relative;
     top: -10px;
   }
+
   .el-form-item {
     margin-bottom: 0px;
   }
+
   .dot {
     height: 20px;
     width: 35px;
@@ -266,6 +285,7 @@
     border-radius: 0px;
     display: block;
   }
+
   @media (max-width: 480px) {
     .form-holder .form-content {
       padding: 100px 45px 45px;

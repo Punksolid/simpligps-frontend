@@ -10,7 +10,7 @@ const user = {
     avatar: '',
     accselected: getAccSelected(),
     roles: [],
-    tenant : ''
+    tenant: ''
   },
 
   mutations: {
