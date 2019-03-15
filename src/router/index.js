@@ -31,16 +31,20 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     beforeEnter: (to, from, next) => {
-      if (to.path !== '/login') {
-        if (store.getters.accselected) {
-          next()
-        } else {
-          store.dispatch('LogOut')
-          next('/login')
-        }
-      } else {
-        next()
+      console.log(store.getter.tenant)
+      if (store.getter.tenant){
+        console.log("no hay tenant")
       }
+      // if (to.path !== '/login') {
+      //   if (store.getters.accselected) {
+      //     next()
+      //   } else {
+      //     store.dispatch('LogOut')
+      //     next('/login')
+      //   }
+      // } else {
+      //   next()
+      // }
     },
     hidden: false,
     children: [
@@ -89,18 +93,18 @@ export const constantRouterMap = [
         component: () => import('@/views/monitor/newtrip'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
       },
-      {
-        path: 'convoy',
-        name: 'Convoy',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Convoy', icon: 'icon-truck-moving' }
-      },
-      {
-        path: 'high_risk_group',
-        name: 'High Risk Group',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
-      }
+      // {
+      //   path: 'convoy',
+      //   name: 'Convoy',
+      //   component: () => import('@/views/tree/index'),
+      //   meta: { title: 'Convoy', icon: 'icon-truck-moving' }
+      // },
+      // {
+      //   path: 'high_risk_group',
+      //   name: 'High Risk Group',
+      //   component: () => import('@/views/tree/index'),
+      //   meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
+      // }
     ]
   },
   {

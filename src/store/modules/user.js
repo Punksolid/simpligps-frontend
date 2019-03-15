@@ -9,7 +9,8 @@ const user = {
     name: '',
     avatar: '',
     accselected: getAccSelected(),
-    roles: []
+    roles: [],
+    tenant : ''
   },
 
   mutations: {
@@ -31,7 +32,11 @@ const user = {
     },
     SET_ID: (state, id) => {
       state.id = id
+    },
+    SET_TENANT: (state, tenant_id) => {
+      state.tenant = tenant_id
     }
+
   },
 
   actions: {
