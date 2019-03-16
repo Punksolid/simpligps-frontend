@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken, getAccSelected } from '@/utils/auth'
-import Cookies from 'js-cookie'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getTenantID, resetCookie } from '../../utils/auth'
 
 const user = {
   state: {
@@ -8,8 +8,8 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    accselected: getAccSelected(),
-    roles: []
+    roles: [],
+    tenant: getTenantID()
   },
 
   mutations: {
@@ -19,10 +19,6 @@ const user = {
     SET_NAME: (state, name) => {
       state.name = name
     },
-    SET_ACCSELECTED: (state, value) => {
-      state.accselected = value
-      Cookies.set('AccSelected', value)
-    },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
     },
@@ -31,7 +27,11 @@ const user = {
     },
     SET_ID: (state, id) => {
       state.id = id
+    },
+    SET_TENANT: (state, tenant_id) => {
+      state.tenant = tenant_id
     }
+
   },
 
   actions: {
@@ -70,8 +70,8 @@ const user = {
     LogOut: function({ commit, state }) {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      Cookies.remove('AccSelected')
       removeToken()
+      resetCookie()
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
