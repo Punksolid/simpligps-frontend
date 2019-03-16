@@ -8,7 +8,6 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/Layout'
-import store from '../store'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -24,33 +23,17 @@ import store from '../store'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
 
+  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  {
+    path: '/login/:mode',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  { path: '/404', component: () => import('@/views/404'), hidden: true },
   {
     path: '/',
     component: Layout,
-    beforeEnter: (to, from, next) => {
-      console.log(store.state)
-      if (store.state.user.tenant !== '') {
-        next()
-      }
-      store.dispatch('LogOut')
-
-      // if (this.$store.state.tenant) {
-      //   console.log('no hay tenant')
-      // }
-      // if (to.path !== '/login') {
-      //   if (store.getters.accselected) {
-      //     next()
-      //   } else {
-      //     store.dispatch('LogOut')
-      //     next('/login')
-      //   }
-      // } else {
-      //   next()
-      // }
-    },
     hidden: false,
     children: [
       {
@@ -97,7 +80,7 @@ export const constantRouterMap = [
         name: 'New Trip',
         component: () => import('@/views/monitor/newtrip'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
-      },
+      }
       // {
       //   path: 'convoy',
       //   name: 'Convoy',

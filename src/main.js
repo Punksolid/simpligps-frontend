@@ -56,11 +56,7 @@ window.Echo = new Echo({
   // cluster: 'mt1'
 })
 
-
-
 Vue.config.productionTip = false
-
-
 
 // import * as filters from './filters' // global filters
 
