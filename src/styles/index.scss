@@ -17,6 +17,7 @@ label {
 
 html {
   height: 100%;
+  overflow-x: hidden;
   box-sizing: border-box;
 }
 
@@ -98,6 +99,36 @@ a:hover {
   }
 }
 // FIN - HEADER
+// TopBar Right
+.topbar .header-right {
+  float: right;
+  position: absolute;
+  right: 0px;
+  background: white;
+  max-height: 50px;
+}
+// SIDEBAR
+.sidebar-light:not(.sidebar-collapsed) .sidebar {
+  background: #f5f5f5 !important;
+  z-index: 1000;
+  width: 240px !important;
+}
+.drawer-bg {
+  background: #000;
+  opacity: .3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+.sidebar .logopanel {
+  padding: 5px !important;
+  h1 a {
+    background-size: contain !important;
+    height: 40px !important;
+  }
+}
 
 // Custom Footer Dashboard Panels
 .active-panels {
@@ -203,12 +234,36 @@ a:hover {
     padding: 0px 5px;
   }
 }
+@media screen and (max-width: 1024px) {
+  .sidebar-show.fixed-topbar .topbar {
+    left: unset;
+    overflow: visible;
+  }
+}
 @media screen and (max-width: 468px) {
   .dis-flex {
     flex-direction: column;
     .el-form-item {
       padding: 0px !important;
     }
+  }
+  .topbar .header-right .header-menu #notifications-header {
+      display: initial !important;
+  }
+  .main-content .page-content {
+    margin-top: 75px !important;
+  }
+  .app-breadcrumb {
+      left: 0px;
+      margin-left: 0px !important;
+      padding: 0px 15px;
+      width: 100%;
+      line-height: 44px !important;
+      background: #f9f9f9;
+      box-shadow: inset 0px 5px 10px #00000038;
+  }
+  .main-content .page-content > .header {
+      box-shadow: inset 0px 5px 10px #00000038;
   }
 }
 

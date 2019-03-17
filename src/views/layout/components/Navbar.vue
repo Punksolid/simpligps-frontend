@@ -5,7 +5,6 @@
       <router-link class="menutoggle" to="">
         <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="menu__handle"/>
       </router-link>
-      <breadcrumb />
     </div>
   </div>
 
@@ -19,7 +18,11 @@
 
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
-            <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+            <span class="fa-stack fa-2x">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+            </span>
+            <!--<img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">-->
             <span class="username">Hi, {{ logged_user }}</span>
             <i class="el-icon-caret-bottom"/>
           </div>
@@ -47,6 +50,7 @@
     </ul>
   </div>
 
+  <breadcrumb />
 </div>
 </template>
 
@@ -125,6 +129,16 @@ export default {
       position: relative;
       line-height: initial;
 
+      .fa-stack {
+        top: 2px;
+        font-size: 1.6em;
+        color: #ececec;
+        .fa-user {
+          font-size: 1.6em;
+          top: 4px;
+        }
+      }
+
       .user-avatar {
         width: 40px !important;
         height: 40px;
@@ -139,6 +153,9 @@ export default {
       }
     }
   }
+}
+.el-popper .popper__arrow::after {
+  display: none;
 }
 </style>
 

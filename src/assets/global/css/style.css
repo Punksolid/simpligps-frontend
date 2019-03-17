@@ -596,10 +596,9 @@ a.scrollup:hover {
   text-transform: none !important;
 }
 .topbar .header-left .topnav .menu__handle {
-  background: rgba(0, 0, 0, 0);
+  background: #FFF;
   border: none;
-  height: 50px;
-  left: 7px;
+  height: 48px;
   outline: none;
   padding: 0;
   position: relative;
@@ -1020,13 +1019,14 @@ a.scrollup:hover {
 }
 .topbar .header-right .header-menu .badge-header {
   font-size: 12px;
+  font-weight: 600;
   padding: 2px 5px;
   position: relative;
-  right: 9px;
-  top: -8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+  right: 10px;
+  top: -15px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
   color: #FFF;
 }
 .topbar .header-right .header-menu .dropdown-menu > li > a.pull-right {
@@ -1425,7 +1425,6 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
   top: 0;
   right: 0;
   left: 240px;
-  z-index: 801;
   z-index: 300;
   -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
@@ -1437,8 +1436,8 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
 @media screen and (min-width: 1025px) {
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle {
     background: rgba(0, 0, 0, 0);
-    left: 5px;
-    top: 0px;
+    left: 3px;
+    top: -3px;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle::before {
     -moz-transform: rotate3d(0, 0, 1, 45deg);
@@ -1451,7 +1450,7 @@ body:not(.sidebar-collapsed) .topbar .header-left .topnav .menutoggle:hover .men
     -webkit-transform: rotate3d(0, 0, 1, -45deg);
     background: #ffffff;
     transform: rotate3d(0, 0, 1, -45deg);
-    top: 53%;
+    top: 56%;
   }
   .sidebar-collapsed .topbar .header-left .topnav .menu__handle span {
     opacity: 0;
@@ -2620,8 +2619,8 @@ body:not(.sidebar-collapsed) .sidebar .sidebar-inner .nav-sidebar > li.nav-paren
   margin-right: 0;
 }
 .sidebar-light:not(.sidebar-collapsed) .sidebar {
-  background: none !important;
-  width: 260px;
+  background: none;
+  width: 240px;
 }
 .sidebar-light:not(.sidebar-collapsed) .sidebar .sidebar-top h4 {
   width: 115px;

@@ -13,11 +13,11 @@
           <div class="form-items">
             <div class="website-logo-inside">
               <div class="logo">
-                <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM">
-                <div class="status">
-                  <span class="label">STATUS:</span>
-                  <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
-                </div>
+                <img class="logo-size" src="src/assets/trm-home.png" alt="TRM">
+              </div>
+              <div class="status">
+                <span class="label">STATUS:</span>
+                <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
               </div>
             </div>
             <div class="page-links">
@@ -239,22 +239,24 @@
     }
   }
   .website-logo-inside {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    display: flex;
     .logo {
-      display: flex;
+      margin-right: 5px;
+      background-position: center;
       img {
         width: 250px;
-        margin-right: 20px;
+        margin-right: 5px;
         height: 75px;
         order: 1;
       }
     }
   }
   .status {
-    margin-top: 4px;
+    margin: 6px;
     order: 2;
     border: 1px solid #ffffff80;
-    padding: 3px 10px 0px;
+    padding: 0px 5px;
     .label {
       font-size: 10px;
       color: #fff;
@@ -262,7 +264,7 @@
       padding: 0px 10px;
       vertical-align: top;
       position: relative;
-      top: -10px;
+      top: -5px;
     }
   }
   .el-form-item {
@@ -288,7 +290,7 @@
       margin: auto;
       margin-bottom: 20px;
     }
-    .website-logo-inside .logo {
+    .website-logo-inside {
       flex-direction: column;
     }
   }
