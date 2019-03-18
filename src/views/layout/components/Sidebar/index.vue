@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sidebar-container sidebar">
     <div class="sidebar-inner">
       <div class="logopanel">
         <h1>

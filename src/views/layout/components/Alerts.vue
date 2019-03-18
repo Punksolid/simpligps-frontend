@@ -9,8 +9,10 @@
     :visible.sync="dialogVisible"
     width="30%"
     class="maxalerts"
+    append-to-body
     :show-close="false"
     :before-close="handleClose">
+    <h1 slot="title" class="title"></h1>
     <el-row>
     <i class="fas fa-exclamation-triangle"></i>
     <h1 class="title">MAX ALERT!</h1>
@@ -54,26 +56,34 @@
     }
 </script>
 
-<style scoped>
-h1.title {
-  font-weight: 400;
-  text-align: center;
-}
-.dialog-footer {
-  display: block;
-  text-align: center;
-}
-i.fa-exclamation-triangle {
-  display: block;
-  margin: auto;
-  width: 84px;
-  padding: 10px 0px 15px;
-  margin: auto;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 50px;
-  background: #D91443;
-  color: #FFF;
-  border: 4px solid #b3132e;
-}
+<style lang="scss">
+  .maxalerts {
+    .title {
+      border: none !important;
+    }
+    .el-dialog__header {
+      display: none;
+    }
+    h1.title {
+      font-weight: 400;
+      text-align: center;
+    }
+    .dialog-footer {
+      display: block;
+      text-align: center;
+    }
+    i.fa-exclamation-triangle {
+      display: block;
+      margin: auto;
+      width: 84px;
+      padding: 10px 0px 15px;
+      margin: auto;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 50px;
+      background: #D91443;
+      color: #FFF;
+      border: 4px solid #b3132e;
+    }
+  }
 </style>

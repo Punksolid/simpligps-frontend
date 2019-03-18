@@ -5,12 +5,14 @@
 
           <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="WIALON ACCESS KEY" name="1">
-            <el-form :model="formInline" >
-              <el-form-item label="Wialon Key" class="dis-flex">
-                <el-input type="text" v-model="formInline.wialon_key" placeholder="Wialon Key" style="width: 100%"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-checkbox v-model="formInline.import">Import</el-checkbox>
+            <el-form :model="accessKey" >
+              <el-form-item style="width: 100%">
+                <el-input type="text" v-model="accessKey.wialon_key" placeholder="Wialon Key">
+                  <template slot="prepend">Wialon Key:</template>
+                  <template slot="append">
+                    <el-checkbox v-model="accessKey.import" class="m-0">Import</el-checkbox>
+                  </template>
+                </el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">Update Key</el-button>
@@ -33,26 +35,25 @@
     data() {
       return {
         activeName: '1',
-        formInline: {
-          wialon_key: ''
+        accessKey: {
+          wialon_key: '',
+          import: false
         }
       }
     },
     methods: {
       onSubmit() {
-        updateAccessKey(this.formInline).then(response => {
-          console.log(this.formInline)
+        updateAccessKey(this.accessKey).then(response => {
           Message({
             message: response.data.data.message,
             type: 'success',
             duration: 10 * 1000
           })
         })
-        console.log('submit!')
       },
       fillSettings() {
         getSettings().then(response => {
-          this.formInline.wialon_key = response.data.data.wialon_key
+          this.accessKey.wialon_key = response.data.data.wialon_key
         })
       }
     },

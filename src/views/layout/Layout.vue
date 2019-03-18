@@ -3,7 +3,7 @@
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
 
-      <sidebar class="sidebar">
+      <sidebar>
         <div class="sidebar-container">
         <div class="logopanel">
           <h1>
@@ -18,7 +18,7 @@
 
       <app-main class="page-content"/>
 
-      <alerts></alerts>
+      <alerts/>
 
     </div>
   </div>
@@ -61,7 +61,7 @@ export default {
     }
   },
   created() {
-
+    document.body.classList.add('sidebar-show')
   }
 }
 </script>

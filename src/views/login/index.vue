@@ -13,11 +13,11 @@
           <div class="form-items">
             <div class="website-logo-inside">
               <div class="logo">
-                <img class="logo-size" src="src/assets/t2-blanco.png" alt="TRM">
-                <div class="status">
-                  <span class="label">STATUS:</span>
-                  <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
-                </div>
+                <img class="logo-size" src="src/assets/trm-home.png" alt="TRM">
+              </div>
+              <div class="status">
+                <span class="label">STATUS:</span>
+                <span class="dot" v-bind:class="{ 'btn-success':apiPingSuccess, 'btn-danger':!apiPingSuccess}"></span>
               </div>
             </div>
             <div class="page-links">
@@ -228,52 +228,54 @@
     created() {
       this.checkReset()
       this.backendStatus()
-    },
-
-    ready() {
-      alert('READY')
     }
   }
 </script>
 <style type="text/scss" lang="scss" scoped>
-  .form-content .form-items {
-    display: block;
+  .form-body {
+    .img-holder {
+      min-height: unset;
+    }
   }
-
-  .form-content form {
-    margin-bottom: 15px;
+  .form-content {
+    padding: 20px;
+    .form-items {
+      display: block;
+    }
+    form {
+      margin-bottom: 15px;
+    }
   }
 
   .website-logo-inside {
-    margin-bottom: 30px;
-  }
-
-  .website-logo-inside .logo {
+    margin-bottom: 20px;
     display: flex;
-  }
-
-  .website-logo-inside .logo img {
-    width: 250px;
-    margin-right: 20px;
-    height: 75px;
-    order: 1;
+    .logo {
+      margin-right: 5px;
+      background-position: center;
+      img {
+        width: 250px;
+        margin-right: 5px;
+        height: 75px;
+        order: 1;
+      }
+    }
   }
 
   .status {
-    margin-top: 4px;
+    margin: 6px;
     order: 2;
     border: 1px solid #ffffff80;
-    padding: 3px 10px 0px;
-  }
-
-  .status .label {
-    font-size: 10px;
-    color: #fff;
-    background: #074e88;
-    padding: 0px 10px;
-    vertical-align: top;
-    position: relative;
-    top: -10px;
+    padding: 0px 5px;
+    .label {
+      font-size: 10px;
+      color: #fff;
+      background: #074e88;
+      padding: 0px 10px;
+      vertical-align: top;
+      position: relative;
+      top: -5px;
+    }
   }
 
   .el-form-item {
@@ -301,7 +303,7 @@
       margin: auto;
       margin-bottom: 20px;
     }
-    .website-logo-inside .logo {
+    .website-logo-inside {
       flex-direction: column;
     }
   }

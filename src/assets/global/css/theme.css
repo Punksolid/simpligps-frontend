@@ -593,7 +593,7 @@
   background: #fff;
 }
 .theme-sdtd.color-default.sidebar-hover .logopanel2 h1 a {
-  background: url(../images/logo/t2.png) no-repeat;
+  background: url(../../trm-blanco.jpg) no-repeat;
 }
 .theme-sdtl.color-default:not(.sidebar-top) .sidebar .sidebar-inner .nav-sidebar .children > li.active > a {
   color: #ffffff !important;
@@ -694,7 +694,7 @@
   background: #0f3139;
 }
 .theme-sdtd.color-primary.sidebar-hover .logopanel2 h1 a {
-  background: url(../images/logo/t2.png) no-repeat;
+  background: url(../../trm-blanco.jpg) no-repeat;
 }
 .theme-sdtd.color-primary.submenu-hover .sidebar .sidebar-inner .nav-sidebar > li.nav-parent.nav-hover:before {
   border-right-color: #133c45;
@@ -2602,7 +2602,7 @@
   background: #ffffff;
 }
 .theme-sltl.color-default .sidebar .logopanel h1 a {
-  background: url(../images/logo/t2.png) no-repeat center;
+  background: url(../../trm-blanco.jpg) no-repeat center;
 }
 .theme-sltl.color-default .sidebar .sidebar-inner {
   background: #ffffff;

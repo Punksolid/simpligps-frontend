@@ -20,11 +20,12 @@ const app = {
         el.classList.add('sidebar-show')
         el.classList.remove('sidebar-collapsed')
       }
-
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
     },
     CLOSE_SIDEBAR: (state, withoutAnimation) => {
+      const el = document.body
+      el.classList.remove('sidebar-show')
       Cookies.set('sidebarStatus', 1)
       state.sidebar.opened = false
       state.sidebar.withoutAnimation = withoutAnimation
