@@ -35,3 +35,12 @@ export function getMyNotifications() {
     method: 'GET'
   })
 }
+
+export function markNotificationAsRead(uuid) {
+  return request({
+    url: 'v1/me/notifications/' + uuid + '/mark_as_read',
+    method: 'POST'
+  })
+}
+
+
