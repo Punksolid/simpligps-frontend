@@ -1,5 +1,9 @@
 <template>
-  <el-form ref="form" :model="form" label-width="150px">
+  <el-form
+    v-loading="loading"
+    ref="form"
+    :model="form"
+    label-width="150px">
     <el-form-item label="Name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
@@ -68,6 +72,7 @@ import { Message } from 'element-ui'
      name: 'CreateNotification',
     data() {
       return {
+        loading: false,
         form: {
           resource: null,
           control_type: null,
@@ -101,10 +106,11 @@ import { Message } from 'element-ui'
     },
     methods: {
       onSubmit() {
-        console.log(this.form)
+        this.loading = true
         createWialonNotification(this.form).then(response => {
           Message('Successful')
           this.$emit('refreshlist')
+          this.loading = false
         })
       },
       handleClose(done) {
