@@ -50,17 +50,6 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-// function requireTenant(route) {
-//   return !dontRequireTenant.includes(route.path)
-// }
-
-router.beforeEach((to, from, next) => {
-  console.log(to)
-  console.log(from)
-  console.log(next)
-  next()
-})
-
 router.afterEach(() => {
   NProgress.done() // 结束Progress
 })
