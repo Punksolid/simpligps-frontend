@@ -14,7 +14,7 @@
           </li>
 
           <ul class="dropdown-menu-list">
-            <el-dropdown-item v-for="notification in notifications" :key="notification.id" command="x">
+            <el-dropdown-item v-for="notification in notifications" :key="notification.id" :command="notification.id">
               <i class="far fa-bell"></i>
               {{ notification.message }}
             </el-dropdown-item>
@@ -29,7 +29,7 @@
 
 <script>
   import { loggedUser } from '../../../api/users'
-  import { getMyNotifications } from '../../../api/me'
+  import { getMyNotifications, markNotificationAsRead } from '../../../api/me'
 
   export default {
     name: 'Notifications',
@@ -52,24 +52,26 @@
           this.notifications = response.data.data
         })
       },
-      handleAlert(command) {
-        this.$message('Command: ' + command + ' executed')
+      handleAlert(uuid) {
+        // this.$message('Command: ' + command + ' executed')
+        markNotificationAsRead(uuid) // todo, apply queue, get the catch and discard locally
+
+        this.discardNotificationByUuid(uuid)
+      },
+      discardNotificationByUuid(uuid) {
+        this.notifications = this.notifications.filter(function(value, index, array) {
+              return uuid !== value.id
+        })
       }
     },
     computed: {},
     created() {
-      window.Echo.channel('orders')
+/*      window.Echo.channel('orders')
         .listen('OrderShipped', function(ooo) {
           console.log('ooo')
-        })
+        })*/
       this.fetchNotifications()
-/*      // console.log(this.$store.state.user)
-      this.$store.dispatch('GetInfo').then(response => {
-        console.log('RESPOSNSE')
-        console.log(response.data.data)
-      })*/
-      console.log('seearching foruser')
-      console.log(this.$store.state.user.id)
+
       window.Echo.private('App.User.' + this.$store.state.user.id)
         .notification((notification) => {
           console.log('NOTIFICATION')
