@@ -16,6 +16,7 @@
 
     <el-col>
         <el-table
+          v-loading="loading"
           :data="notifications_list"
           stripe
           style="width: 100%">
@@ -95,13 +96,16 @@
       return {
         notifications_list: [],
         dialogVisible: false,
-        centerDialogVisible: false
+        centerDialogVisible: false,
+        loading: false
       }
     },
     methods: {
       fetchWialonNotifications() {
+        this.loading = true
         getWialonNotifications().then(response => {
           this.notifications_list = response.data.data
+          this.loading = false
         })
       },
       handleClose(done) {
@@ -113,12 +117,12 @@
           })
       },
       deleteNotification(index, row) {
-        console.log(row)
-        console.log('index: ' + index)
+        this.loading = true
         destroyNotification(row.id).then(response => {
           this.fetchWialonNotifications()
         }).catch(response => {
-          console.log('ERROR')
+          console.log(response.data)
+          this.loading = false
         })
         // this.deleteNotification()
       }

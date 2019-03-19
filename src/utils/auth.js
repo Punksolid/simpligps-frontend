@@ -26,3 +26,12 @@ export function resetCookie() {
   Cookies.remove('TokenKey')
   return Cookies.remove('TenantID')
 }
+
+// User id handling
+export function getUserId() {
+  return Cookies.get('UserId')
+}
+
+export function setUserId(value) {
+  return Cookies.set('UserId', value)
+}

@@ -63,6 +63,13 @@
           console.log('ooo')
         })
       this.fetchNotifications()
+/*      // console.log(this.$store.state.user)
+      this.$store.dispatch('GetInfo').then(response => {
+        console.log('RESPOSNSE')
+        console.log(response.data.data)
+      })*/
+      console.log('seearching foruser')
+      console.log(this.$store.state.user.id)
       window.Echo.private('App.User.' + this.$store.state.user.id)
         .notification((notification) => {
           console.log('NOTIFICATION')
