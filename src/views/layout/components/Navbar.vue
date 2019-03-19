@@ -12,6 +12,7 @@
     <ul class="header-menu nav navbar-nav">
 
       <notifications/>
+      <alerts/>
 
       <li class="dropdown" id="user-header">
         <router-link to="">
@@ -62,12 +63,13 @@ import { loggedUser } from '../../../api/users'
 import App from '../../../App'
 import Notifications from '@/views/layout/components/Notifications'
 
+
 export default {
   components: {
     App,
     Breadcrumb,
     Hamburger,
-    Notifications
+    Notifications,
   },
   computed: {
     ...mapGetters([

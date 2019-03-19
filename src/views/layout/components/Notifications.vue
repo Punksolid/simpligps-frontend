@@ -57,6 +57,7 @@
         markNotificationAsRead(uuid) // todo, apply queue, get the catch and discard locally
 
         this.discardNotificationByUuid(uuid)
+
       },
       discardNotificationByUuid(uuid) {
         this.notifications = this.notifications.filter(function(value, index, array) {
@@ -80,6 +81,9 @@
             message: notification.message,
             link: notification.link
           })
+
+          event.$emit('activate-alert', notification ) // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
+
         })
       this.fetchUser()
     }
