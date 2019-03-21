@@ -42,5 +42,3 @@ export function markNotificationAsRead(uuid) {
     method: 'POST'
   })
 }
-
-

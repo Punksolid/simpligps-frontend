@@ -1,26 +1,63 @@
 <template>
 <el-row>
- <!-- <el-col class="m-l-20">
-    <el-button type="danger" size="small" plain @click="dialogVisible = true" icon="fas fa-exclamation-triangle"> Test Alert</el-button>
-  </el-col>-->
 
   <el-dialog
     title=""
     :visible.sync="dialogVisible"
-    width="30%"
+    width="75%"
     class="maxalerts"
     append-to-body
+    :close-on-click-modal="false"
     :show-close="false"
     :before-close="handleClose">
     <h1 slot="title" class="title"></h1>
     <el-row>
-    <i class="fas fa-exclamation-triangle"></i>
-    <h1 class="title">{{ wialon.NOTIFICATION }}</h1>
-    <el-col class="t-center"><h2 class="m-0 text-danger">{{ wialon.title |  capitalize }}</h2></el-col>
-      <el-col class="t-center"><h3 class="m-0">{{ wialon.location }}</h3></el-col>
+      <el-col class="text-center">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h1 class="title">{{ wialon[0].NOTIFICATION }}</h1>
+        <h3 class="message">{{ wialon[0].message }}</h3>
+      </el-col>
+      <el-col class="t-center m-t-20 m-b-15">
+        <i class="fas fa-truck-moving p-r-10" title="Truck:"></i> {{ wialon[0].TRAILER }} <i class="fas fa-user p-l-10 p-r-10" title="Driver:"></i> {{ wialon[0].DRIVER }} <i class="fas fa-phone p-l-10 p-r-10" title="Driver:"></i> {{ wialon[0].DRIVER }}
+        <!-- <p class="t-center m-0"><i class="fas fa-map-marker-alt" title="Location:"></i> {{ wialon[0].location }}</p> -->
+      </el-col>
+
+        <el-table
+          :data="wialon"
+          fit
+          align="center"
+          style="width: 100%">
+          <el-table-column
+            prop="unit"
+            label="Unit"
+            min-width="80">
+          </el-table-column>
+          <el-table-column
+            prop="UNIT_GROUP"
+            label="Unit"
+            min-width="80">
+          </el-table-column>
+          <el-table-column
+            prop="SPEED"
+            label="Speed"
+            min-width="50">
+          </el-table-column>
+          <el-table-column
+            prop="MSG_TIME"
+            label="MSG TIME"
+            min-width="100">
+            <i class="el-icon-time"></i>
+          </el-table-column>
+          <el-table-column
+            prop="location"
+            label="Location"
+            min-width="200">
+          </el-table-column>
+        </el-table>
+
+      <p class="text-center"><a :href="wialon.GOOGLE_LINK" target="_blank" class="t-center">View map</a></p>
     </el-row>
     <span slot="footer" class="dialog-footer">
-    <el-button disabled @click="handleClose">Cancel</el-button>
     <el-button type="warning" @click="handleClose">Attended</el-button>
     </span>
   </el-dialog>
@@ -34,37 +71,11 @@
       data() {
         return { // para tener flexibilidad con los atributos rellenamos el atributo wialon, revisar si es posible pasarlos al primer nivel
           dialogVisible: false,
-          title: '',
-          message: '',
-          // wialon attributes
-          unit: '',
-          timestamp: '',
-          location: '',
-          last_location: '',
-          locator_link: '',
-          smallest_geofence_inside: '',
-          all_geofences_inside: '',
-          UNIT_GROUP: '',
-          SPEED: '/',
-          POS_TIME: '',
-          MSG_TIME: '',
-          DRIVER: '',
-          DRIVER_PHONE: '',
-          TRAILER: '',
-          SENSOR: '',
-          ENGINE_HOURS: ':',
-          MILEAGE: '',
-          LAT: '',
-          LON: '',
-          LATD: '',
-          LOND: '',
-          GOOGLE_LINK: '',
-          CUSTOM_FIELD: '',
-          UNIT_ID: '',
-          MSG_TIME_INT: '',
-          NOTIFICATION: '',
-          'X-Tenant-Id': '',
-          wialon: ''
+          wialon: [
+            {
+              NOTIFICATION: ''
+            }
+          ]
         }
       },
       methods: {
@@ -83,10 +94,9 @@
       },
       created: function() {
         event.$on('activate-alert', (data) => {
-          // this.title = data.message
-          // this.message = data.message
-          this.wialon = data
-          // console.log(data)
+          this.wialon = []
+          this.wialon.push(data)
+          // this.wialon = data
           return this.activateAlert()
         }) // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
       }
@@ -102,12 +112,27 @@
       display: none;
     }
     h1.title {
-      font-weight: 400;
+      font-weight: 500;
       text-align: center;
+      margin-top: 10px;
+      margin-bottom: 0px;
+      line-height: 1em;
+    }
+    .message {
+      display: inline;
+      text-align: center;
+      font-weight: 400;
+      border-bottom: 2px solid #e6e6e6;
+      color: #868686;
     }
     .dialog-footer {
       display: block;
       text-align: center;
+      .el-button--warning:focus, .el-button--warning:hover {
+        background: #7b1414;
+        border-color: #ffffff;
+        color: #fff;
+      }
     }
     i.fa-exclamation-triangle {
       display: block;
