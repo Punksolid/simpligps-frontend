@@ -37,7 +37,7 @@
                       lat: unitsList[props.$index].position.lat,
                       lng: unitsList[props.$index].position.lon,
                       }"
-                      :icon="{ url: 'src/assets/carmarker.svg' }"
+                      :icon="require('@/assets/carmarker.svg')"
                       :title="'Unit: ' + unitsList[props.$index].name"
                       :clickable="true"
                       :draggable="false"
