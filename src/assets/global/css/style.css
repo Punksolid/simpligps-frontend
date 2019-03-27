@@ -33,14 +33,6 @@
 /* Inline Edition X-Editable - OPTIONAL */
 /* Show Html Code - OPTIONAL */
 /* FONTS */
-/* FONTS for Weather - Not in use
-@font-face {
-  font-family: 'weather';
-  src: url('icons/weather/artill_clean_icons-webfont.eot');
-  src: url('icons/weather/artill_clean_icons-webfont.eot?#iefix') format('embedded-opentype'), url('/icons/weather/artill_clean_icons-webfont.woff') format('woff'), url('icons/weather/artill_clean_icons-webfont.ttf') format('truetype'), url('/icons/weather/weatherfont/artill_clean_icons-webfont.svg#artill_clean_weather_iconsRg') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 html {
   height: 100%;
 }

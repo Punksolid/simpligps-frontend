@@ -3,7 +3,6 @@
 
     <el-row type="flex" justify="space-between">
       <el-button type="primary" class="m-10 m-l-0" @click="dialogVisible = true" icon="fas fa-bell p-r-10">Create notification</el-button>
-      <el-button type="danger" class="m-10" @click="centerDialogVisible = true" icon="fas fa-bell p-r-10">Span Alert</el-button>
     </el-row>
 
       <el-dialog
@@ -52,45 +51,18 @@
 
     </el-col>
 
-       <el-dialog
-         :visible.sync="centerDialogVisible"
-         width="40%"
-         center>
-          <el-col class="panel bg-red">
-            <i class="el-icon-warning"></i>
-            <el-col class="panel-header"><h1>MAX <b>ALERT!</b></h1></el-col>
-            <el-col class="number"><h2><b>Route deviation</b></h2></el-col>
-            <el-col class="t-center"><h4>UNIT: FREIGHTLINER FL200 TECNOCOSAS 33</h4></el-col>
-          </el-col>
-
-          <div slot="footer" class="dialog-footer">
-            <el-button type="danger" @click="centerDialogVisible = false">Ignore</el-button>
-            <el-button type="primary" @click="centerDialogVisible = false">Attend</el-button>
-          </div>
-
-          <el-alert
-          title="Success Alert"
-          type="success"
-          center
-          show-icon>
-          </el-alert>
-        </el-dialog>
-
   </el-row>
 </template>
 
 <script>
 
-  import AlertDialog from '../../components/Alert/index.vue'
   import CreateNotification from '@/views/notifications/create.vue'
-  // import CreateNotification './create.vue'
   import { destroyNotification, getWialonNotifications } from '../../api/general'
 
   export default {
     name: 'NotificationsList',
     components: {
-      CreateNotification,
-      AlertDialog
+      CreateNotification
     },
     data() {
       return {
@@ -137,20 +109,5 @@
 <style scoped>
 h1,h2 {
   text-align: center;
-}
-.dialog-footer {
-  display: block;
-  text-align: center;
-}
-i.el-icon-warning {
-  display: block;
-  margin: auto;
-  width: 84px;
-  padding: 20px;
-  margin: auto;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 50px;
-
 }
 </style>
