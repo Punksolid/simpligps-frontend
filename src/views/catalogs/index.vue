@@ -184,10 +184,6 @@
         }).then(() => {
           deleteOperator(operatorData[index].id)
           this.fetchOperatorsPage()
-          this.$message({
-            type: 'success',
-            message: 'Operator delete completed'
-          })
         }).catch(() => {
           this.$message({
             type: 'info',
