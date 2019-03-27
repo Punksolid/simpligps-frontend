@@ -40,6 +40,25 @@
         prop="email"
         label="E-mail">
       </el-table-column>
+      <el-table-column
+        label="Operations"
+        fixed="right"
+        width="130">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            disabled
+            @click="handleUpdate(scope.$index, usersListData)"
+            icon="fas fa-edit">
+          </el-button>
+          <el-button
+            @click.native.prevent="deleteRow(scope.$index, usersListData)"
+            type="danger"
+            size="mini"
+            icon="fas fa-trash">
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </el-col>
 

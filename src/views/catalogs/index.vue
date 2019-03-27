@@ -2,7 +2,7 @@
   <el-row class="panel p-10">
     <el-row class="searchBar">
       <el-col :span="4" class="m-b-5">
-        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-user-plus p-r-10">Create Operator</el-button>
+        <el-button type="primary" @click="openDialog()" icon="fas fa-user-plus p-r-10">Create Operator</el-button>
       </el-col>
       <el-col :xl="20" :sm="20" :xs="24">
         <el-form class="dis-flex" v-model="search">
@@ -36,11 +36,11 @@
     </el-row>
 
     <el-dialog
-      title="Create Operator"
+      :title="titleDialog"
       :visible.sync="dialogVisible"
       :show-close="false"
       width="40%">
-      <CreateOperator @operatorcreated="fetchOperatorsList" @closedialog="dialogVisible = false"></CreateOperator>
+      <CreateOperator :form="elementToUpdate" @operatorcreated="fetchOperatorsList" @closedialog="dialogVisible = false"></CreateOperator>
     </el-dialog>
 
     <el-col>
@@ -67,7 +67,6 @@
       <el-table-column
       prop="active"
       label="Status"
-      fixed="right"
       width="120">
       <template slot-scope="scope">
         <el-tag
@@ -77,6 +76,22 @@
         </el-tag>
       </template>
       </el-table-column>
+        <el-table-column
+          label="Operations"
+          fixed="right"
+          width="130">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleUpdate(scope.$index, operatorsList)"
+              icon="fas fa-edit"/>
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index, operatorsList)"
+              type="danger"
+              size="mini"
+              icon="fas fa-trash"/>
+          </template>
+        </el-table-column>
 
     </el-table>
   </el-col>
@@ -95,8 +110,8 @@
 </template>
 
 <script>
-  import CreateOperator from './operators/create.vue'
-  import { getOperators } from '../../api/catalogs'
+  import CreateOperator from '@/views/catalogs/operators/create'
+  import { getOperators, deleteOperator } from '../../api/operators'
 
   export default {
     name: 'OperatorsList',
@@ -120,6 +135,8 @@
           to: 0,
           total: 0
         },
+        titleDialog: 'Create Operator',
+        elementToUpdate: {},
         dialogVisible: false
       }
     },
@@ -147,11 +164,44 @@
           this.listLoading = false
         })
       },
+      openDialog() {
+        this.titleDialog = 'Create Operator'
+        this.elementToUpdate = {}
+        this.dialogVisible = true
+      },
+      handleUpdate(index, operatorsList) {
+        this.elementToUpdate = operatorsList[index]
+        this.titleDialog = 'Edit Operator'
+        this.dialogVisible = true
+      },
+      deleteRow(index, operatorData) {
+        this.$confirm('This will permanently delete operator: ' + operatorData[index].name + ' are you sure to Continue?', 'Warning', {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          confirmButtonClass: 'btn-danger',
+          center: true,
+          type: 'warning'
+        }).then(() => {
+          deleteOperator(operatorData[index].id)
+          this.fetchOperatorsPage()
+          this.$message({
+            type: 'success',
+            message: 'Operator delete completed'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          })
+        })
+      },
       handleCurrentChange(val) {
         this.operatorsListPage.page = val
         this.fetchOperatorsPage()
       },
       fetchOperatorsList() {
+        this.dialogVisible = false
+        this.elementToUpdate = {}
         this.listLoading = true
         getOperators(this.operatorsList).then(response => {
           this.operatorsList = response.data.data
