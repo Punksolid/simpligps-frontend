@@ -8,7 +8,6 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/Layout'
-import store from '../store'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -23,25 +22,18 @@ import store from '../store'
     breadcrumb: false            if false, the item will hidden in breadcrumb(default is true)
   }
 **/
-export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
+export const tenantProtectedRoutes = [
 
+  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  {
+    path: '/login/:mode',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  { path: '/404', component: () => import('@/views/404'), hidden: true },
   {
     path: '/',
     component: Layout,
-    beforeEnter: (to, from, next) => {
-      if (to.path !== '/login') {
-        if (store.getters.accselected) {
-          next()
-        } else {
-          store.dispatch('LogOut')
-          next('/login')
-        }
-      } else {
-        next()
-      }
-    },
     hidden: false,
     children: [
       {
@@ -88,19 +80,19 @@ export const constantRouterMap = [
         name: 'New Trip',
         component: () => import('@/views/monitor/newtrip'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
-      },
-      {
-        path: 'convoy',
-        name: 'Convoy',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Convoy', icon: 'icon-truck-moving' }
-      },
-      {
-        path: 'high_risk_group',
-        name: 'High Risk Group',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
       }
+      // {
+      //   path: 'convoy',
+      //   name: 'Convoy',
+      //   component: () => import('@/views/tree/index'),
+      //   meta: { title: 'Convoy', icon: 'icon-truck-moving' }
+      // },
+      // {
+      //   path: 'high_risk_group',
+      //   name: 'High Risk Group',
+      //   component: () => import('@/views/tree/index'),
+      //   meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
+      // }
     ]
   },
   {
@@ -213,6 +205,6 @@ export const constantRouterMap = [
 export default new Router({
   // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
+  routes: tenantProtectedRoutes
 })
 

@@ -1,15 +1,15 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken, getAccSelected } from '@/utils/auth'
-import Cookies from 'js-cookie'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getTenantID, resetCookie, getUserId, setUserId } from '../../utils/auth'
 
 const user = {
   state: {
-    id: '',
+    id: getUserId(),
     token: getToken(),
     name: '',
     avatar: '',
-    accselected: getAccSelected(),
-    roles: []
+    roles: [],
+    tenant: getTenantID()
   },
 
   mutations: {
@@ -19,10 +19,6 @@ const user = {
     SET_NAME: (state, name) => {
       state.name = name
     },
-    SET_ACCSELECTED: (state, value) => {
-      state.accselected = value
-      Cookies.set('AccSelected', value)
-    },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
     },
@@ -31,7 +27,11 @@ const user = {
     },
     SET_ID: (state, id) => {
       state.id = id
+    },
+    SET_TENANT: (state, tenant_id) => {
+      state.tenant = tenant_id
     }
+
   },
 
   actions: {
@@ -42,8 +42,8 @@ const user = {
         login(username, userInfo.password).then(response => {
           const data = response.data
           commit('SET_TOKEN', data.access_token)
-          commit('SET_ID', data.id)
-          setToken(response.data.access_token)
+          setUserId(data.id)
+          setToken(data.access_token)
           resolve(data)
         }).catch(error => {
           console.log(error.response)
@@ -56,9 +56,10 @@ const user = {
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(response => {
-          const data = response.data
+          const data = response.data.data
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
+          commit('SET_ID', data.id)
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -70,8 +71,8 @@ const user = {
     LogOut: function({ commit, state }) {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      Cookies.remove('AccSelected')
       removeToken()
+      resetCookie()
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')

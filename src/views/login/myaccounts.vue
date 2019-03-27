@@ -26,7 +26,6 @@
 </template>
 
 <script>
-  import { setTenantID } from '@/utils/auth'
 
     export default {
       name: 'MyAccounts',
@@ -38,13 +37,7 @@
       },
       methods: {
           setTenant(account) {
-            setTenantID(account.uuid)
-            this.$message({
-              showClose: true,
-              type: 'success',
-              message: 'User: ' + account.easyname + ' Selected.'
-            })
-            this.$emit('selected')
+            this.$emit('account', account)
           }
       }
     }
