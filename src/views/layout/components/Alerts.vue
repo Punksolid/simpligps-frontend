@@ -55,7 +55,7 @@
           </el-table-column>
         </el-table>
 
-      <p class="text-center"><a :href="wialon.GOOGLE_LINK" target="_blank" class="t-center">View map</a></p>
+      <p class="text-center"><a :href="wialon[0].GOOGLE_LINK" target="_blank" class="t-center">View map</a></p>
     </el-row>
     <span slot="footer" class="dialog-footer">
     <el-button type="warning" @click="handleClose">Attended</el-button>

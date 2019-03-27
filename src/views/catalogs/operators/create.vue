@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form">
+  <el-form ref="operatorData" :model="form">
     <el-form-item label="Name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
@@ -15,47 +15,53 @@
     inactive-value="0">
   </el-switch>
   </el-form-item>
-    <el-form-item>
+  <el-form-item>
+    <el-col class="text-center">
       <el-button @click="handleClose" aria-label="close">Cancel</el-button>
-      <el-button type="primary" @click="onSubmit">Create</el-button>
-    </el-form-item>
+      <el-button type="primary" @click="onSubmit">{{this.form.id ? 'Update Operator':'Create Operator'}}</el-button>
+    </el-col>
+  </el-form-item>
   </el-form>
 </template>
 
 <script>
- import { createOperator } from '../../../api/catalogs'
+ import { createOperator, updateOperator } from '../../../api/operators'
  import { Message } from 'element-ui'
 
   export default {
     name: 'CreateOperator',
-    data() {
-      return {
-        form: {
-          name: '',
-          phone: '',
-          active: '1'
-          }
-      }
+    props: [
+      'form'
+    ],
+    mounted() {
+      // this.$refs.operatorData.model.active = '1'
     },
   methods: {
       onSubmit() {
-        createOperator(this.form).then(response => {
-          Message({
-            message: 'Operator ' + response.data.name + ' created',
-            type: 'success',
-            duration: 10 * 1000
+        if (this.form.id) {
+          updateOperator(this.form.id, this.form).then(response => {
+            Message({
+              message: 'User ' + response.data.data.name + ' updated',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.$emit('closedialog')
           })
-          this.resetForm('form')
-          this.$emit('operatorcreated')
-        })
+        } else {
+          createOperator(this.form).then(response => {
+            Message({
+              message: 'Operator ' + response.data.name + ' created',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.$emit('operatorcreated')
+          })
+        }
       },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    },
     handleClose(done) {
       this.$confirm('Are you sure to close this dialog?')
         .then(_ => {
-          this.resetForm('form')
+          this.$refs['form'] = {}
           done(this.$emit('closedialog'))
         })
         .catch(_ => {})
