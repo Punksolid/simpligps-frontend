@@ -2,7 +2,7 @@
   <li class="dropdown" id="notifications-header">
 
     <router-link to="" class="dis-block">
-      <el-dropdown trigger="click" @command="handleAlert">
+      <el-dropdown trigger="click">
 
         <i class="icon-bell">
           <span v-if="notifications.length" class="badge badge-danger badge-header">{{ notifications.length }}</span>
@@ -14,10 +14,15 @@
           </li>
 
           <ul class="dropdown-menu-list">
-            <el-dropdown-item v-for="notification in notifications" :key="notification.id" :command="notification.id">
-              <i class="far fa-bell"></i>
-              {{ notification.message }}
-            </el-dropdown-item>
+              <el-dropdown-item v-for="notification in notifications" :key="notification.id">
+                <span @click="handleAlert(notification)">
+                  <i class="fas fa-bell"></i>
+                  {{ notification.message }}
+                </span>
+                <span @click="notificationReaded(notification.id)">
+                  <i class="fas fa-check p-l-10 p-r-0"></i>
+                </span>
+              </el-dropdown-item>
           </ul>
 
         </el-dropdown-menu>
@@ -30,6 +35,7 @@
 <script>
   import { loggedUser } from '../../../api/users'
   import { getMyNotifications, markNotificationAsRead } from '../../../api/me'
+  // import { getMyNotifications } from '../../../api/me'
 
   export default {
     name: 'Notifications',
@@ -52,12 +58,15 @@
           this.notifications = response.data.data
         })
       },
-      handleAlert(uuid) {
-        // this.$message('Command: ' + command + ' executed')
-        markNotificationAsRead(uuid) // todo, apply queue, get the catch and discard locally
-
-        this.discardNotificationByUuid(uuid)
-
+      notificationReaded(uuid) {
+        markNotificationAsRead(uuid).then(resp => {
+          this.discardNotificationByUuid(uuid)
+        })
+      },
+      handleAlert(notification) {
+        event.$emit('activate-alert', notification)
+        // markNotificationAsRead(uuid) // todo, apply queue, get the catch and discard locally
+        // this.discardNotificationByUuid(data.uuid)
       },
       discardNotificationByUuid(uuid) {
         this.notifications = this.notifications.filter(function(value, index, array) {
@@ -81,9 +90,8 @@
             message: notification.message,
             link: notification.link
           })
-
-          event.$emit('activate-alert', notification ) // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
-
+          event.$emit('activate-alert', notification)
+          // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
         })
       this.fetchUser()
     }
@@ -101,7 +109,7 @@
   z-index: 100;
   width: 10px;
   height: 10px;
-  right: 20px;
+  right: 5%;
   top: -9px;
   border-style: solid;
   border-width: 0 10px 10px 10px;
@@ -118,12 +126,13 @@
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
-  }
-  div[x-arrow] {
-    display: none !important;
+    div[x-arrow] {
+      visibility: hidden;
+      display: none !important;
+    }
   }
   .dropdown-menu-list {
-    height: 70vh;
+    max-height: 70vh;
     overflow-y: scroll;
     i {
       color: #efefef;
@@ -133,9 +142,6 @@
 .el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover {
   background-color: #b8605d;
   color: #ffffff;
-}
-.popper__arrow {
-  display: none;
 }
 
 </style>

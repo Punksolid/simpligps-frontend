@@ -253,6 +253,9 @@
     .logo {
       margin-right: 5px;
       background-position: center;
+      min-width: 250px;
+      width: 100%;
+      height: 75px;
       img {
         width: 250px;
         margin-right: 5px;
