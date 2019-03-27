@@ -111,6 +111,9 @@ import { Message } from 'element-ui'
           Message('Successful')
           this.$emit('refreshlist')
           this.loading = false
+        }).catch(err => {
+          console.log(err)
+          this.loading = false
         })
       },
       handleClose(done) {

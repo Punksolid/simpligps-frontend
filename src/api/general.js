@@ -93,6 +93,6 @@ export function createWialonNotification(params) {
   return request({
     url: 'v1/wialon/notifications',
     method: 'POST',
-    params
+    data: params
   })
 }
