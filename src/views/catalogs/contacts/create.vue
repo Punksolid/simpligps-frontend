@@ -17,44 +17,48 @@
     </el-form-item>
     <el-form-item>
       <el-button @click="handleClose" aria-label="close">Cancel</el-button>
-      <el-button type="primary" @click="onSubmit">Create</el-button>
+      <el-button type="primary" @click="onSubmit">{{this.form.id?'Update':'Create'}}</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-  import { createContacts } from '@/api/general'
-  import { Message } from 'element-ui'
+  import { createContact, updateContact } from '@/api/contacts'
 
 export default {
   name: 'CreateContact',
+  props: [
+    'form'
+  ],
   data() {
     return {
-      form: {
-        name: '',
-        phone: '',
-        company: '',
-        email: '',
-        address: ''
-
-      }
     }
   },
   methods: {
-    onSubmit: function() {
-      createContacts(this.form).then(response => {
-        Message({
-          message: 'Contact ' + response.data.data.name + ' created',
-          type: 'success',
-          duration: 10 * 1000
+    onSubmit() {
+      if (this.form.id) {
+        updateContact(this.form.id, this.form).then(response => {
+          this.$message({
+            message: 'Contact ' + response.data.data.name + ' updated',
+            type: 'success',
+            duration: 10 * 1000
+          })
+          this.$emit('created')
         })
-        this.$emit('created')
-      })
+      } else {
+        createContact(this.form).then(response => {
+          this.$message({
+            message: 'Contact ' + response.data.data.name + ' created',
+            type: 'success',
+            duration: 10 * 1000
+          })
+          this.$emit('created')
+        })
+      }
     },
     handleClose(done) {
       this.$confirm('Are you sure to close this dialog?')
         .then(_ => {
-          this.form = {}
           done(this.$emit('closedialog'))
         })
         .catch(_ => {})

@@ -117,13 +117,13 @@ export const tenantProtectedRoutes = [
       {
         path: 'carriers',
         name: 'Carriers',
-        component: () => import('@/views/carriers/index'),
+        component: () => import('@/views/catalogs/carriers/index'),
         meta: { title: 'Carriers', icon: 'icon-exchange-alt' }
       },
       {
         path: 'contacts',
         name: 'Contacts',
-        component: () => import('@/views/contacts/index'), // Parent router-view
+        component: () => import('@/views/catalogs/contacts/index'), // Parent router-view
         meta: { title: 'Contacts', icon: 'icon-users' }
       },
       {

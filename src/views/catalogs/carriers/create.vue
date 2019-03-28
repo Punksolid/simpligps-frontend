@@ -22,8 +22,7 @@
 </template>
 
 <script>
-  import { createCarrier } from '../../api/general'
-  import { Message } from 'element-ui'
+  import { createCarrier } from '@/api/carriers'
 
   export default {
     name: 'CreateCarrier',
@@ -40,7 +39,7 @@
   methods: {
       onSubmit() {
         createCarrier(this.form).then(response => {
-          Message({
+          this.$message({
             message: 'Carrier ' + response.data.data.name + ' created',
             type: 'success',
             duration: 10 * 1000

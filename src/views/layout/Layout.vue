@@ -67,8 +67,8 @@ export default {
     refresh() {
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
+        event.$emit('wasInactive')
         this.$store.dispatch('LogOut').then(() => {
-          this.$router.push({ path: 'login', query: { inactive: 'true' }})
           location.reload()
         })
       }, 2 * 60 * 1000) // El primer numero equivale a minutos, para convertir a milisegundos.

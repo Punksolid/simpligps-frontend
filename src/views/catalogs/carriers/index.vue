@@ -48,11 +48,11 @@
           <el-button
             size="mini"
             disabled
-            @click="handleUpdate(scope.$index, usersListData)"
+            @click="handleUpdate(scope.$index, carriersList)"
             icon="fas fa-edit">
           </el-button>
           <el-button
-            @click.native.prevent="deleteRow(scope.$index, usersListData)"
+            @click.native.prevent="deleteRow(scope.$index, carriersList)"
             type="danger"
             size="mini"
             icon="fas fa-trash">
@@ -62,12 +62,23 @@
     </el-table>
   </el-col>
 
+  <el-col class="m-t-5 t-center">
+    <el-pagination
+      class="dis-inline-b"
+      layout="total, prev, pager, next, jumper"
+      :current-page.sync="carriersListPage.current_page"
+      :page-size="carriersListPage.per_page"
+      :total="carriersListPage.total"
+      @current-change="handleCurrentChange"
+      @pagination="fetchCarriersList" />
+  </el-col>
+
   </el-row>
 </template>
 
 <script>
   import CreateCarrier from './create.vue'
-  import { getCarriers } from '../../api/general'
+  import { getCarriers, deleteCarrier } from '@/api/carriers'
 
   export default {
     name: 'CarrierList',
@@ -77,6 +88,7 @@
     data() {
       return {
         carriersList: [],
+        carriersListPage: {},
         dialogVisible: false
       }
     },
@@ -85,7 +97,30 @@
         this.listLoading = true
         getCarriers(this.carriersListData).then(response => {
           this.carriersList = response.data.data
+          this.carriersListPage = response.data.meta
+          this.carriersListPage.page = response.data.meta.current_page
           this.listLoading = false
+        })
+      },
+      deleteRow(index, carrierData) {
+        this.$confirm('This will permanently delete the carrier: ' + carrierData[index].carrier_name + ' are you sure to Continue?', 'Warning', {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          confirmButtonClass: 'btn-danger',
+          type: 'warning'
+        }).then(() => {
+          deleteCarrier(carrierData[index].id).then(resp => {
+            this.fetchCarriersList()
+            this.$message({
+              type: 'success',
+              message: 'Delete carrier completed'
+            })
+          }).catch(resp => {
+            this.$message({
+              type: 'info',
+              message: 'Carrier not deleted'
+            })
+          })
         })
       },
       handleClose(done) {
@@ -93,6 +128,10 @@
           done()
         })
           .catch(_ => {})
+      },
+      handleCurrentChange(val) {
+        this.carriersListPage.page = val
+        this.fetchCarriersList()
       }
     },
     created() {
