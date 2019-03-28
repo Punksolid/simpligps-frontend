@@ -78,6 +78,7 @@
     },
     methods: {
       fetchContactList() {
+        this.elementToUpdate = {}
         this.dialogVisible = false
         this.listLoading = true
         getContacts().then(response => {
