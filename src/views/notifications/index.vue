@@ -10,7 +10,7 @@
         :visible.sync="dialogVisible"
         width="40%"
         :before-close="handleClose">
-          <CreateNotification @refreshlist="fetchWialonNotifications()" @closedialog="dialogVisible = false"></CreateNotification>
+          <CreateNotification @creted="fetchWialonNotifications()" @closedialog="dialogVisible = false"></CreateNotification>
       </el-dialog>
 
     <el-col>
@@ -74,6 +74,7 @@
     },
     methods: {
       fetchWialonNotifications() {
+        this.dialogVisible = false
         this.loading = true
         getWialonNotifications().then(response => {
           this.notifications_list = response.data.data

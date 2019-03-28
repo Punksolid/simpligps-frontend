@@ -107,8 +107,11 @@ import { getWialonUnits, getResources, createWialonNotification } from '../../ap
       onSubmit() {
         this.loading = true
         createWialonNotification(this.form).then(response => {
-          this.$message('Successful')
-          this.$emit('refreshlist')
+          this.$message({
+            message: 'Notification created successfully',
+            type: 'success'
+          })
+          this.$emit('created')
           this.loading = false
         }).catch(err => {
           console.log(err)
