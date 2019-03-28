@@ -7,7 +7,6 @@ export function createContact(params) {
     data: params
   })
 }
-
 export function getContacts(params) {
   return request({
     url: 'v1/contacts',

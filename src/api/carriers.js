@@ -14,6 +14,13 @@ export function createCarrier(params) {
     data: params
   })
 }
+export function updateCarrier(id, params) {
+  return request({
+    url: 'v1/carriers/' + id,
+    method: 'PUT',
+    data: params
+  })
+}
 export function deleteCarrier(id) {
   return request({
     url: 'v1/carriers/' + id,

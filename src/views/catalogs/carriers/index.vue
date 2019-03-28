@@ -8,17 +8,18 @@
     </el-row>
 
     <el-dialog
-      title="Create carrier"
+      :title="titleDialog"
       :visible.sync="dialogVisible"
       :before-close="handleClose"
       width="35%">
-            <CreateCarrier @closedialog="dialogVisible = false"></CreateCarrier>
+            <CreateCarrier @closedialog="dialogVisible = false" @created="fetchCarriersList" :form="elementToUpdate"></CreateCarrier>
     </el-dialog>
 
   <el-col>
     <el-table
       :data="carriersList"
       stripe
+      v-loading="listLoading"
       style="width: 100%">
       <el-table-column
         prop="carrier_name"
@@ -47,12 +48,11 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            disabled
-            @click="handleUpdate(scope.$index, carriersList)"
+            @click="handleUpdate(scope.row)"
             icon="fas fa-edit">
           </el-button>
           <el-button
-            @click.native.prevent="deleteRow(scope.$index, carriersList)"
+            @click.native.prevent="deleteRow(scope.$index, scope.row)"
             type="danger"
             size="mini"
             icon="fas fa-trash">
@@ -89,11 +89,16 @@
       return {
         carriersList: [],
         carriersListPage: {},
+        elementToUpdate: {},
+        listLoading: false,
+        titleDialog: 'Create Carrier',
         dialogVisible: false
       }
     },
     methods: {
       fetchCarriersList() {
+        this.elementToUpdate = {}
+        this.dialogVisible = false
         this.listLoading = true
         getCarriers(this.carriersListData).then(response => {
           this.carriersList = response.data.data
@@ -102,14 +107,19 @@
           this.listLoading = false
         })
       },
+      handleUpdate(carrierData) {
+        this.elementToUpdate = carrierData
+        this.titleDialog = 'Edit Carrier'
+        this.dialogVisible = true
+      },
       deleteRow(index, carrierData) {
-        this.$confirm('This will permanently delete the carrier: ' + carrierData[index].carrier_name + ' are you sure to Continue?', 'Warning', {
+        this.$confirm('This will permanently delete the carrier: ' + carrierData.carrier_name + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
-          deleteCarrier(carrierData[index].id).then(resp => {
+          deleteCarrier(carrierData.id).then(resp => {
             this.fetchCarriersList()
             this.$message({
               type: 'success',
