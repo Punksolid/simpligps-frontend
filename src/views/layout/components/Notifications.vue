@@ -119,6 +119,7 @@
     padding: 5px;
 }
   .dropdown-menu {
+    display: block;
     max-height: 80%;
     list-style: none;
     border: none;
