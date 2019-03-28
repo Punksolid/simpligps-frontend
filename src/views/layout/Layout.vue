@@ -71,7 +71,7 @@ export default {
         this.$store.dispatch('LogOut').then(() => {
           location.reload()
         })
-      }, 2 * 60 * 1000) // El primer numero equivale a minutos, para convertir a milisegundos.
+      }, 5 * 60 * 1000) // El primer numero equivale a minutos, para convertir a milisegundos.
     }
   },
   created() {
