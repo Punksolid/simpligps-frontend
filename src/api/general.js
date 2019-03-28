@@ -22,49 +22,10 @@ export function getWialonUnits() {
   })
 }
 
-export function createContacts(params) {
-  return request({
-    url: 'v1/contacts',
-    method: 'POST',
-    data: params
-  })
-}
-
-export function getContacts(params) {
-  return request({
-    url: 'v1/contacts',
-    method: 'get',
-    params
-  })
-}
-export function deleteContact(contact_id) {
-  console.log(contact_id)
-  console.log('contact')
-  return request({
-    url: 'v1/contacts/' + contact_id,
-    method: 'DELETE'
-  })
-}
-
 export function deleteUser(user_id) {
   return request({
     url: 'v1/users/' + user_id,
     method: 'DELETE'
-  })
-}
-
-export function getCarriers(params) {
-  return request({
-    url: 'v1/carriers',
-    method: 'GET',
-    params
-  })
-}
-export function createCarrier(params) {
-  return request({
-    url: 'v1/carriers',
-    method: 'POST',
-    data: params
   })
 }
 
