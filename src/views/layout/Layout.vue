@@ -38,6 +38,11 @@ export default {
     AppMain,
     Alerts
   },
+  data() {
+    return {
+      timeout: 0
+    }
+  },
   mixins: [ResizeMixin],
   computed: {
     sidebar() {
@@ -58,10 +63,21 @@ export default {
   methods: {
     handleClickOutside() {
       this.$store.dispatch('CloseSideBar', { withoutAnimation: false })
+    },
+    refresh() {
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.$store.dispatch('LogOut').then(() => {
+          this.$router.push({ path: 'login', query: { inactive: 'true' }})
+          location.reload()
+        })
+      }, 2 * 60 * 1000) // El primer numero equivale a minutos, para convertir a milisegundos.
     }
   },
   created() {
     document.body.classList.add('sidebar-show')
+    this.refresh()
+    document.addEventListener('click', this.refresh)
   }
 }
 </script>

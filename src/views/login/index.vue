@@ -202,6 +202,17 @@
           this.formType = 'login'
         }
       },
+      ifInactive() {
+        if (this.$route.query.inactive) {
+          this.$notify({
+            title: 'Inactividad',
+            message: 'Due to inactivity your session has been closed, please sign in again',
+            duration: 0
+          })
+        } else {
+          return null
+        }
+      },
       formSelectAccount() {
         getMyAccounts().then(response => {
           this.my_accounts = response.data.data
@@ -215,18 +226,17 @@
       selectedAccount(account) {
         setTenantID(account.uuid)
         this.$store.commit('SET_TENANT', account.uuid)
-
         this.$message({
           showClose: true,
           type: 'success',
           message: 'User: ' + account.easyname + ' Selected.'
         })
-
         this.$router.push('/')
       }
     },
     created() {
       this.checkReset()
+      this.ifInactive()
       this.backendStatus()
     }
   }
