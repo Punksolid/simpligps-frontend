@@ -81,12 +81,19 @@
     </span>
   </el-dialog>
 
+  <AttendAlerts :alertinfo="wialon" :position="unitPositions"/>
+
 </el-row>
 </template>
 
 <script>
+  import AttendAlerts from '@/views/layout/components/attend_alert'
+
     export default {
-        name: 'Alerts',
+      name: 'Alerts',
+      components: {
+        AttendAlerts
+      },
       data() {
         return { // para tener flexibilidad con los atributos rellenamos el atributo wialon, revisar si es posible pasarlos al primer nivel
           dialogVisible: false,
@@ -103,12 +110,9 @@
         }
       },
       methods: {
-        handleClose(done) {
-          this.$confirm('Are you sure to close this alert?')
-            .then(_ => {
-              done(this.dialogVisible = false)
-            })
-            .catch(_ => {})
+        handleClose() {
+          this.dialogVisible = false
+          event.$emit('attend-alert')
         },
         activateAlert() {
           if (!this.dialogVisible) {

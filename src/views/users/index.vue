@@ -33,7 +33,7 @@
         :visible.sync="dialogVisible"
         width="60%"
         :before-close="handleClose">
-        <create-user v-bind:form="elementToUpdate" @user_created="fetchUsersList" @closedialog="handleClose"></create-user>
+        <create-user :form="elementToUpdate" @user_created="fetchUsersList" @closedialog="handleClose"></create-user>
       </el-dialog>
 
     <el-col class="m-t-10">
@@ -121,7 +121,7 @@
           email: ''
         },
         listLoading: true,
-        elementToUpdate: {},
+        elementToUpdate: null,
         usersListPage: {
           page: 0,
           per_page: 15,
@@ -147,12 +147,11 @@
       },
       openDialog() {
         this.titleDialog = 'Create User'
-        this.form = {}
+        this.elementToUpdate = {}
         this.dialogVisible = true
       },
-      handleClose(confirm = true) {
-        console.log(confirm)
-        if (confirm) {
+      handleClose() {
+        if (this.elementToUpdate.name) {
           this.$confirm('Are you sure to close? Not saved data will be lost!')
             .then(_ => {
               this.dialogVisible = false
