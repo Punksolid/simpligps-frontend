@@ -140,11 +140,8 @@
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
-          deleteUser(userListData[index].id)
-          this.fetchUsersList()
-          this.$message({
-            type: 'success',
-            message: 'Delete user completed'
+          deleteUser(userListData[index].id).then(response => {
+            this.fetchUsersList()
           })
         })
       },
