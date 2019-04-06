@@ -74,25 +74,7 @@ export const tenantProtectedRoutes = [
         name: 'Devices Map',
         component: () => import('@/views/monitor/devices_map'),
         meta: { title: 'Units', icon: 'icon-cursor' }
-      },
-      {
-        path: 'new_trip',
-        name: 'New Trip',
-        component: () => import('@/views/monitor/newtrip'),
-        meta: { title: 'New Trip', icon: 'icon-plus-circle' }
       }
-      // {
-      //   path: 'convoy',
-      //   name: 'Convoy',
-      //   component: () => import('@/views/tree/index'),
-      //   meta: { title: 'Convoy', icon: 'icon-truck-moving' }
-      // },
-      // {
-      //   path: 'high_risk_group',
-      //   name: 'High Risk Group',
-      //   component: () => import('@/views/tree/index'),
-      //   meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
-      // }
     ]
   },
   {
@@ -102,6 +84,12 @@ export const tenantProtectedRoutes = [
     name: 'Catalogs',
     meta: { title: 'Catalogs', icon: 'icon-docs' },
     children: [
+      {
+        path: 'newtrip',
+        name: 'New Trip',
+        component: () => import('@/views/catalogs/trips/index'),
+        meta: { title: 'New Trip', icon: 'fas fa-route' }
+      },
       {
         path: 'operators',
         name: 'Operators',

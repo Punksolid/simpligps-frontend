@@ -29,7 +29,6 @@
 
 <script>
   import { createUser, updateUser } from '../../api/users'
-  import { Message } from 'element-ui'
 
   export default {
     name: 'CreateUser',
@@ -45,7 +44,7 @@
       onSubmit() {
         if (this.form.id) {
           updateUser(this.form.id, this.form).then(response => {
-            Message({
+            this.$message({
               message: 'User ' + response.data.data.name + ' updated',
               type: 'success',
               duration: 10 * 1000
@@ -55,7 +54,7 @@
           })
         } else {
           createUser(this.form).then(response => {
-            Message({
+            this.$message({
               message: 'User ' + response.data.data.name + ' created',
               type: 'success',
               duration: 10 * 1000
