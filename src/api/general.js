@@ -57,3 +57,11 @@ export function createWialonNotification(params) {
     data: params
   })
 }
+
+export function getPlaces(params) {
+    return request({
+        url: 'v1/places',
+        method: 'GET',
+        params
+    })
+}

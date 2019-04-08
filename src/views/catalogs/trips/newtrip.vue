@@ -15,43 +15,79 @@
       <el-form-item>
         <el-input v-model="form.client" placeholder="Client"/>
       </el-form-item>
-      <el-form-item>
-        <el-input v-model="form.origin" placeholder="Origin"/>
-      </el-form-item>
-      <el-form-item>
-        <el-input v-model="form.destination" placeholder="Destination"/>
-      </el-form-item>
-      <el-form-item>
+        <el-form-item label="Origin">
+          <el-select v-model="form.origin_id" placeholder="Origin">
+              <el-option
+                  v-for="place in places"
+                  :key="place.id"
+                  :label="place.name"
+                  :value="place.id">
+              </el-option>
+          </el-select>
+        </el-form-item>
+      <el-form-item label="Intermediates">
+          <el-select v-model="form.intermediates" multiple placeholder="Intermediates">
+              <el-option
+                  v-for="place in places"
+                  :key="place.id"
+                  :label="place.name"
+                  :value="place.id">
+              </el-option>
+          </el-select>
+        </el-form-item>
+      <el-form-item label="Destination">
+          <el-select v-model="form.destination_id" placeholder="Destination">
+              <el-option
+                  v-for="place in places"
+                  :key="place.id"
+                  :label="place.name"
+                  :value="place.id">
+              </el-option>
+          </el-select>
+        </el-form-item>
+
+      <el-form-item label="Mon Type">
         <el-input v-model="form.mon_type" placeholder="Mon Type"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Line">
         <el-input v-model="form.line" placeholder="Line"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Schedule Load">
         <el-date-picker
           v-model="form.scheduled_load"
-          type="datetime"
+          type="date"
+          format="dd-MM-yyyy"
+          value-format="yyyy-MM-dd"
+
           placeholder="Select Load's date">
         </el-date-picker>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Departure Date">
         <el-date-picker
           v-model="form.scheduled_departure"
-          type="datetime"
+          type="date"
+          format="dd-MM-yyyy"
+          value-format="yyyy-MM-dd"
+
           placeholder="Select Depature's date">
         </el-date-picker>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Scheduled Arrival">
         <el-date-picker
           v-model="form.scheduled_arrival"
-          type="datetime"
+          type="date"
+          format="dd-MM-yyyy"
+          value-format="yyyy-MM-dd"
+
           placeholder="Select Arrival's Date">
         </el-date-picker>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Scheduled Unload">
         <el-date-picker
           v-model="form.scheduled_unload"
-          type="datetime"
+          type="date"
+          format="dd-MM-yyyy"
+          value-format="yyyy-MM-dd"
           placeholder="Select Unload's date">
         </el-date-picker>
       </el-form-item>
@@ -67,6 +103,7 @@
 
 <script>
   import { createTrip, updateTrip } from '@/api/trips'
+  import { getPlaces } from '../../../api/general'
 
   export default {
       name: 'CreateTrip',
@@ -79,14 +116,17 @@
             rp: '',
             invoice: '',
             client: '',
-            origin: '',
+            origin_id: '',
+            intermediates: [],
+            destination_id: '',
             mon_type: '',
             line: '',
             scheduled_load: '',
             scheduled_departure: '',
             scheduled_arrival: '',
             scheduled_unload: ''
-          }
+          },
+            places: ''
         }
       },
       methods: {
@@ -117,9 +157,18 @@
         },
         handleClose() {
          /* this.$emit('closeDialog') */
+        },
+        fetchPlaces(params) {
+            getPlaces(params).then(response => {
+                this.places = response.data.data
+            })
         }
+
+      },
+      mounted() {
+          this.fetchPlaces({ 'all': 1 })
       }
-    }
+  }
 </script>
 
 <style scoped>

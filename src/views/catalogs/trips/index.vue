@@ -24,36 +24,23 @@
          width="50">
        </el-table-column>
        <el-table-column
-         prop="bulk.rp"
-         label="RP"
-         width="50">
+         prop="rp"
+         label="RP">
        </el-table-column>
        <el-table-column
-         prop="bulk.folio"
+         prop="folio"
          label="Folio">
        </el-table-column>
        <el-table-column
-         prop="bulk.origin"
+         prop="origin_name"
          label="Origin">
        </el-table-column>
        <el-table-column
-         prop="bulk.destination"
+         prop="destination_name"
          label="Destination">
        </el-table-column>
        <el-table-column
-         prop="bulk.client"
-         label="Client Inter">
-       </el-table-column>
-       <el-table-column
-         prop="bulk.trailer"
-         label="Trailer">
-       </el-table-column>
-       <el-table-column
-         prop="bulk.truck"
-         label="Truck">
-       </el-table-column>
-       <el-table-column
-         prop="bulk.status"
+         prop="status"
          label="Status">
        </el-table-column>
      </el-table>
