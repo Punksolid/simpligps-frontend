@@ -81,18 +81,6 @@ export const tenantProtectedRoutes = [
         component: () => import('@/views/monitor/newtrip'),
         meta: { title: 'New Trip', icon: 'icon-plus-circle' }
       }
-      // {
-      //   path: 'convoy',
-      //   name: 'Convoy',
-      //   component: () => import('@/views/tree/index'),
-      //   meta: { title: 'Convoy', icon: 'icon-truck-moving' }
-      // },
-      // {
-      //   path: 'high_risk_group',
-      //   name: 'High Risk Group',
-      //   component: () => import('@/views/tree/index'),
-      //   meta: { title: 'High Risk Group', icon: 'icon-exclamation-triangle' }
-      // }
     ]
   },
   {
@@ -125,6 +113,12 @@ export const tenantProtectedRoutes = [
         name: 'Contacts',
         component: () => import('@/views/catalogs/contacts/index'), // Parent router-view
         meta: { title: 'Contacts', icon: 'icon-users' }
+      },
+      {
+        path: 'places',
+        name: 'Places',
+        component: () => import('@/views/catalogs/places/index'),
+        meta: { title: 'Places', icon: 'fas fa-map-marker-alt' }
       },
       {
         path: 'status',
