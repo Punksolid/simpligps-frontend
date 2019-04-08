@@ -49,8 +49,8 @@
       <el-form-item label="Mon Type">
         <el-input v-model="form.mon_type" placeholder="Mon Type"/>
       </el-form-item>
-      <el-form-item label="Line">
-        <el-input v-model="form.line" placeholder="Line"/>
+      <el-form-item label="Carrier">
+        <el-input v-model="form.carrier_id" placeholder="Carrier"/>
       </el-form-item>
       <el-form-item label="Schedule Load">
         <el-date-picker
@@ -120,7 +120,7 @@
             intermediates: [],
             destination_id: '',
             mon_type: '',
-            line: '',
+            carrier_id: '',
             scheduled_load: '',
             scheduled_departure: '',
             scheduled_arrival: '',
