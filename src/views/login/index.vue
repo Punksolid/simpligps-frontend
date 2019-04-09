@@ -21,10 +21,10 @@
               </div>
             </div>
             <div class="page-links">
-              <a href="#" class="active">{{ formType == 'login' ? 'Login' : 'Change Password' }}</a>
+              <a href="#" class="active">{{ this.formType.name }}</a>
             </div>
 
-            <template v-if="formType == 'login'">
+            <template v-if="formType.type === 'login'">
               <el-form
                 ref="loginForm"
                 :model="loginForm"
@@ -94,13 +94,13 @@
             </template>
 
             <template v-else>
-              <NewPassword @pwd_changed="formType = 'login'"/>
+              <NewPassword :formtype="formType" @pwd_changed="resetFormType()"/>
               <el-col>
                 <el-button
                   type="text"
                   icon="fas fa-chevron-left"
                   class="dis-inline-b c-light f-12"
-                  @click="formType = 'login'"> Return to Login
+                  @click="resetFormType()"> Return to Login
                 </el-button>
               </el-col>
             </template>
@@ -145,7 +145,10 @@
           email: [{ required: true, trigger: 'blur', validator: validateUsername }],
           password: [{ required: true, trigger: 'blur', validator: validatePassword }]
         },
-        formType: 'login',
+        formType: {
+          type: 'login',
+          name: 'Login'
+        },
         dialogVisible: false,
         my_accounts: [],
         loading: false,
@@ -195,11 +198,28 @@
           }
         })
       },
-      checkReset() {
+      resetFormType() {
+        this.formType = {
+          type: 'login',
+          name: 'Login'
+        }
+      },
+      checkFormType() {
         if (this.$route.query.token) {
-          this.formType = 'newpassword'
+          this.formType = {
+            type: 'reset',
+            name: 'New Password'
+          }
+        } else if (this.$route.query.continue_registration) {
+          this.formType = {
+            type: 'newuser',
+            name: 'New User'
+          }
         } else {
-          this.formType = 'login'
+          this.formType = {
+            type: 'login',
+            name: 'Login'
+          }
         }
       },
       formSelectAccount() {
@@ -224,7 +244,7 @@
       }
     },
     created() {
-      this.checkReset()
+      this.checkFormType()
       this.backendStatus()
     }
   }

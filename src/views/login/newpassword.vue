@@ -43,7 +43,7 @@
     </el-input>
     <el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="onSubmit">
-        Change Password
+        {{ formtype.type === 'reset' ? 'Reset Password' : 'Complete Registration' }}
       </el-button>
     </el-form-item>
   </el-form>
@@ -51,10 +51,12 @@
 
 <script>
   import { newPass } from '@/api/login'
-  import { Message } from 'element-ui'
 
   export default {
     name: 'NewPassword',
+    props: [
+      'formtype'
+    ],
     data() {
       return {
         passwordForm: {
@@ -74,14 +76,18 @@
     },
     methods: {
       onSubmit() {
+        this.loading = true
         newPass(this.passwordForm).then(response => {
-          Message({
+          this.$message({
             message: 'Password Changed Successfully',
             type: 'success',
             duration: 10 * 1000
           })
+          this.loading = false
           this.passwordForm = {}
           this.$emit('pwd_changed')
+        }).catch(() => {
+          this.loading = false
         })
       }
     },
