@@ -6,13 +6,13 @@
     :before-close="handleClose()">
 
     <el-form ref="form" :model="form">
-      <el-form-item>
+      <el-form-item label="Payment Requirement">
         <el-input v-model="form.rp" placeholder="RP"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Invoice">
         <el-input v-model="form.invoice" placeholder="Invoice"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Client">
         <el-input v-model="form.client" placeholder="Client"/>
       </el-form-item>
         <el-form-item label="Origin">
