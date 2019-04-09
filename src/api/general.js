@@ -22,13 +22,6 @@ export function getWialonUnits() {
   })
 }
 
-export function deleteUser(user_id) {
-  return request({
-    url: 'v1/users/' + user_id,
-    method: 'DELETE'
-  })
-}
-
 export function getWialonNotifications() {
   return request({
     url: 'v1/wialon/notifications',
@@ -55,5 +48,11 @@ export function createWialonNotification(params) {
     url: 'v1/wialon/notifications',
     method: 'POST',
     data: params
+  })
+}
+export function getDashboardElements() {
+  return request({
+    url: 'v1/dashboard',
+    method: 'GET'
   })
 }

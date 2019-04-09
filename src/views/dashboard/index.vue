@@ -37,8 +37,7 @@
 
   <script>
     import { mapGetters } from 'vuex'
-    import { getDevices } from '../../api/devices'
-    import { usersList } from '../../api/users'
+    import { getDashboardElements } from '@/api/general'
 
     export default {
       name: 'Dashboard',
@@ -55,20 +54,15 @@
         }
       },
       methods: {
-        fetchTotalDevices() {
-          getDevices().then(response => {
-            this.total_devices = response.data.meta.total
-          })
-        },
-        fetchTotalUsers() {
-          usersList().then(response => {
-            this.total_users = response.data.meta.total
+        fetchDashboardItems() {
+          getDashboardElements().then(response => {
+            this.total_users = response.data.users // Se necesita ver el response
+            this.total_devices = response.data.devices // Depende del response
           })
         }
       },
       created() {
-        this.fetchTotalDevices()
-        this.fetchTotalUsers()
+        this.fetchDashboardItems()
       }
     }
   </script>

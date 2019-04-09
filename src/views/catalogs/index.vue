@@ -29,7 +29,7 @@
             </el-tooltip>
           </el-form-item>
           <el-form-item>
-            <el-button icon="fas fa-trash-alt" plain @click="fetchOperatorsPage"></el-button>
+            <el-button icon="fas fa-trash-alt" plain @click="fetchOperators"></el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -40,13 +40,14 @@
       :visible.sync="dialogVisible"
       :show-close="false"
       width="40%">
-      <CreateOperator :form="elementToUpdate" @operatorcreated="fetchOperatorsList" @closedialog="dialogVisible = false"></CreateOperator>
+      <CreateOperator :form="elementToUpdate" @operatorcreated="fetchOperators" @closedialog="closeDialog()"></CreateOperator>
     </el-dialog>
 
     <el-col>
       <el-table
       :data="operatorsList"
       stripe
+      v-loading="listLoading"
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -103,7 +104,7 @@
         :total="operatorsListPage.total"
         :page-size="operatorsListPage.per_page"
         @current-change="handleCurrentChange"
-        @pagination="fetchOperatorsPage" />
+        @pagination="fetchOperators" />
     </el-col>
 
   </el-row>
@@ -120,7 +121,7 @@
     },
     data() {
       return {
-        listLoading: true,
+        listLoading: false,
         search: {
           name: '',
           carrier: '',
@@ -136,7 +137,9 @@
           total: 0
         },
         titleDialog: 'Create Operator',
-        elementToUpdate: {},
+        elementToUpdate: {
+          active: false
+        },
         dialogVisible: false
       }
     },
@@ -154,8 +157,9 @@
           this.listLoading = false
         })
       },
-      fetchOperatorsPage() {
+      fetchOperators() {
         this.listLoading = true
+        this.dialogVisible = false
         this.search = {}
         getOperators(this.operatorsListPage).then(response => {
           this.operatorsListPage = response.data.meta
@@ -166,8 +170,13 @@
       },
       openDialog() {
         this.titleDialog = 'Create Operator'
+        this.listLoading = true
         this.elementToUpdate = {}
         this.dialogVisible = true
+      },
+      closeDialog() {
+        this.dialogVisible = false
+        this.listLoading = false
       },
       handleUpdate(index, operatorsList) {
         this.elementToUpdate = operatorsList[index]
@@ -175,6 +184,7 @@
         this.dialogVisible = true
       },
       deleteRow(index, operatorData) {
+        this.listLoading = true
         this.$confirm('This will permanently delete operator: ' + operatorData[index].name + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
@@ -182,32 +192,38 @@
           center: true,
           type: 'warning'
         }).then(() => {
-          deleteOperator(operatorData[index].id)
-          this.fetchOperatorsPage()
+          deleteOperator(operatorData[index].id).then(_ => {
+            this.fetchOperators()
+            this.$message.error('Operator deleted')
+          }).catch(resp => {
+            this.$message.error(resp.meta)
+          })
+          this.listLoading = false
         }).catch(() => {
           this.$message({
             type: 'info',
             message: 'Delete canceled'
           })
+          this.listLoading = false
         })
       },
       handleCurrentChange(val) {
         this.operatorsListPage.page = val
-        this.fetchOperatorsPage()
-      },
-      fetchOperatorsList() {
-        this.dialogVisible = false
-        this.elementToUpdate = {}
-        this.listLoading = true
-        getOperators(this.operatorsList).then(response => {
-          this.operatorsList = response.data.data
-          this.listLoading = false
-        })
+        this.fetchOperators()
       }
+      // fetchOperatorsList() {
+      //   this.dialogVisible = false
+      //   this.elementToUpdate = {}
+      //   this.listLoading = true
+      //   getOperators(this.operatorsListPage).then(response => {
+      //     this.operatorsList = response.data.data
+      //     this.listLoading = false
+      //   })
+      // }
     },
     created() {
-      this.fetchOperatorsList()
-      this.fetchOperatorsPage()
+      // this.fetchOperatorsList()
+      this.fetchOperators()
       }
     }
 </script>

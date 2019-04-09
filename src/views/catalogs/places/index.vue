@@ -13,6 +13,7 @@
       <el-table
         :data="placesList"
         stripe
+        v-loading="listLoading"
         style="width: 100%">
         <el-table-column
           prop="name"
@@ -60,6 +61,7 @@
         :total="placesListPage.total"
         :page-size="placesListPage.per_page"
         @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
         @pagination="fetchPlaces" />
     </el-col>
 
@@ -77,7 +79,7 @@
       },
       data() {
         return {
-          listLoading: true,
+          listLoading: false,
           placeData: {},
           placesList: [],
           placesListPage: {
@@ -93,17 +95,17 @@
         }
       },
       methods: {
-        fetchPlaces() {
+        fetchPlaces(params) {
           this.dialogVisible = false
           this.listLoading = true
-
-          getPlaces(this.placesList).then(response => {
+          getPlaces(this.placesListPage).then(response => {
             this.placesList = response.data.data
             this.placesListPage = response.data.meta
             this.placesListPage.page = response.data.meta.current_page
             this.listLoading = false
+          }).catch(_ => {
+            this.listLoading = false
           })
-          this.listLoading = false
         },
         openDialog() {
           this.titleDialog = 'Create Place'
@@ -111,7 +113,7 @@
           this.dialogVisible = true
         },
         handleClose(done) {
-          this.$confirm('??')
+          this.$confirm('Are you sure to close? Not saved data will be lost!')
             .then(_ => {
               done()
             })
@@ -146,6 +148,10 @@
         },
         handleCurrentChange(val) {
           this.placesListPage.page = val
+          this.fetchPlaces()
+        },
+        handleSizeChange(val) {
+          this.placesListPage.per_page = val
           this.fetchPlaces()
         }
       },

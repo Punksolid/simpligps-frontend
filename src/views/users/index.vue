@@ -105,7 +105,7 @@
 <script>
   import CreateUser from './create.vue'
   import { usersList } from '../../api/users'
-  import { deleteUser } from '../../api/general'
+  import { deleteUser } from '../../api/users'
 
   export default {
     name: 'Users',
