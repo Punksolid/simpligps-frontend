@@ -42,3 +42,10 @@ export function newPass(params) {
     data: params
   })
 }
+export function newUser(params) {
+  return request({
+    url: '/v1/continue_registration',
+    method: 'POST',
+    data: params
+  })
+}

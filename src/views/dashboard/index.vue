@@ -56,8 +56,8 @@
       methods: {
         fetchDashboardItems() {
           getDashboardElements().then(response => {
-            this.total_users = response.data.users // Se necesita ver el response
-            this.total_devices = response.data.devices // Depende del response
+            this.total_users = response.data.data.users
+            this.total_devices = response.data.data.devices
           })
         }
       },

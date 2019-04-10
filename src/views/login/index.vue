@@ -213,7 +213,7 @@
         } else if (this.$route.query.continue_registration) {
           this.formType = {
             type: 'newuser',
-            name: 'New User'
+            name: 'Continue Registration'
           }
         } else {
           this.formType = {
