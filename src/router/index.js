@@ -103,6 +103,12 @@ export const tenantProtectedRoutes = [
         meta: { title: 'Devices', icon: 'fas fa-mobile-alt' }
       },
       {
+        path: 'trucks',
+        name: 'Trucks',
+        component: () => import('@/views/catalogs/trucks/index'),
+        meta: { title: 'Trucks', icon: 'fas fa-truck' }
+      },
+      {
         path: 'carriers',
         name: 'Carriers',
         component: () => import('@/views/catalogs/carriers/index'),

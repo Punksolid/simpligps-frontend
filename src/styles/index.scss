@@ -254,4 +254,11 @@ a:hover {
       box-shadow: inset 0px 5px 10px #00000038;
   }
 }
-
+/* -----------------------------------
+     Responsive Max - 768
+------------------------------------*/
+@media screen and (max-width: 768px) {
+  .el-dialog {
+    min-width: 85%;
+  }
+}
