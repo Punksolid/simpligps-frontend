@@ -100,7 +100,7 @@
         this.elementToUpdate = {}
         this.dialogVisible = false
         this.listLoading = true
-        getCarriers(this.carriersListData).then(response => {
+        getCarriers(this.carriersListPage).then(response => {
           this.carriersList = response.data.data
           this.carriersListPage = response.data.meta
           this.carriersListPage.page = response.data.meta.current_page

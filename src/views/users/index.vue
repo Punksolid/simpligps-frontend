@@ -141,6 +141,7 @@
           type: 'warning'
         }).then(() => {
           deleteUser(userListData[index].id).then(response => {
+            this.$message.error('User: ' + userListData[index].username + ' deleted.')
             this.fetchUsersList()
           })
         })
