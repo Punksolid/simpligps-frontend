@@ -61,7 +61,6 @@
     handleClose(done) {
       this.$confirm('Are you sure to close this dialog?')
         .then(_ => {
-          this.$refs['form'] = {}
           done(this.$emit('closedialog'))
         })
         .catch(_ => {})

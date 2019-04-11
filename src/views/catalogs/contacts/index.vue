@@ -17,6 +17,7 @@
       <el-table
         :data="contactList"
         stripe
+        v-loading="listLoading"
         style="width: 100%">
         <el-table-column
           prop="name"

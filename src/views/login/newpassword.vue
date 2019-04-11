@@ -5,6 +5,25 @@
     class="login-form"
     auto-complete="on"
     label-position="left">
+
+    <template v-if="(formtype.type === 'newuser')">
+    <el-form-item prop="name" class="m-b-0">
+      <el-input
+        v-model="passwordForm.name"
+        placeholder="Name"
+        required>
+      </el-input>
+    </el-form-item>
+
+      <el-form-item prop="lastname" class="m-b-0">
+        <el-input
+          v-model="passwordForm.lastname"
+          placeholder="Lastname"
+          required>
+        </el-input>
+      </el-form-item>
+    </template>
+
     <el-form-item prop="email" class="m-b-5">
       <el-input
         v-model="passwordForm.email"
@@ -33,34 +52,31 @@
         required>
       </el-input>
     </el-form-item>
-    <el-input
-      v-model="passwordForm.token"
-      class=""
-      type="hidden"
-      name="token"
-      placeholder="Token"
-      required>
-    </el-input>
     <el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="onSubmit">
-        Change Password
+        {{ formtype.type === 'reset' ? 'Reset Password' : 'Complete Registration' }}
       </el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-  import { newPass } from '@/api/login'
-  import { Message } from 'element-ui'
+  import { newPass, newUser } from '@/api/login'
 
   export default {
     name: 'NewPassword',
+    props: [
+      'formtype'
+    ],
     data() {
       return {
         passwordForm: {
           email: '',
+          name: '',
+          lastname: '',
           password: '',
           password_confirmation: '',
+          hash: '',
           token: ''
         },
         loading: false,
@@ -74,20 +90,46 @@
     },
     methods: {
       onSubmit() {
-        newPass(this.passwordForm).then(response => {
-          Message({
-            message: 'Password Changed Successfully',
-            type: 'success',
-            duration: 10 * 1000
+        this.loading = true
+        if (this.formtype.type === 'newuser') {
+          newUser(this.passwordForm).then(resp => {
+            this.$message({
+              message: 'User registration completed',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.loading = false
+            this.passwordForm = {}
+            this.$emit('pwd_changed')
+          }).catch(this.loading = false)
+        } else {
+          newPass(this.passwordForm).then(response => {
+            this.$message({
+              message: 'Password Changed Successfully',
+              type: 'success',
+              duration: 10 * 1000
+            })
+            this.loading = false
+            this.passwordForm = {}
+            this.$emit('pwd_changed')
+          }).catch(() => {
+            this.loading = false
           })
-          this.passwordForm = {}
-          this.$emit('pwd_changed')
-        })
+        }
+      },
+      hashOrToken() {
+        if (this.formtype.type === 'newuser') {
+          this.passwordForm.hash = this.$route.query.continue_registration
+          this.passwordForm.email = this.$route.query.email
+          this.passwordForm.token = this.$route.query.continue_registration
+        } else {
+          this.passwordForm.token = this.$route.query.token
+        }
       }
     },
-    created() {
-      this.passwordForm.token = this.$route.query.token
-    }
+      created() {
+       this.hashOrToken()
+      }
   }
 </script>
 

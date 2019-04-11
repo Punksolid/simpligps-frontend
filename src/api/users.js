@@ -14,7 +14,12 @@ export function updateUser(id, params) {
     data: params
   })
 }
-
+export function deleteUser(user_id) {
+  return request({
+    url: 'v1/users/' + user_id,
+    method: 'DELETE'
+  })
+}
 export function usersList(params) {
   return request({
     url: 'v1/users',

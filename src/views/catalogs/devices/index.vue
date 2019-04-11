@@ -38,6 +38,7 @@
       <el-table
         :data="devicesList"
         stripe
+        v-loading="listLoading"
         style="width: 100%">
         <el-table-column
           prop="name"
@@ -110,7 +111,7 @@
     },
     data() {
       return {
-        listLoading: true,
+        listLoading: false,
         search: {
           name: '',
           gps: '',

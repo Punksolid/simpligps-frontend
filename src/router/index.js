@@ -115,6 +115,12 @@ export const tenantProtectedRoutes = [
         meta: { title: 'Contacts', icon: 'icon-users' }
       },
       {
+        path: 'places',
+        name: 'Places',
+        component: () => import('@/views/catalogs/places/index'),
+        meta: { title: 'Places', icon: 'fas fa-map-marker-alt' }
+      },
+      {
         path: 'status',
         name: 'Status',
         component: () => import('@/views/form/index'),
