@@ -106,7 +106,7 @@ export const tenantProtectedRoutes = [
         path: 'trucks',
         name: 'Trucks',
         component: () => import('@/views/catalogs/trucks/index'),
-        meta: { title: 'Truck', icon: 'fas fa-truck' }
+        meta: { title: 'Trucks', icon: 'fas fa-truck' }
       },
       {
         path: 'carriers',

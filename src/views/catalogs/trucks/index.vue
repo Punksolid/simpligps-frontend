@@ -30,6 +30,7 @@
     <el-dialog
       :title="titleDialog"
       :visible.sync="dialogVisible"
+      custom-class="truck-form"
       width="60%"
       :before-close="handleClose">
       <create-truck :form="elementToUpdate" @truck_created="fetchTrucksList" @closedialog="handleClose"></create-truck>
@@ -49,13 +50,14 @@
         </el-table-column>
         <el-table-column
           prop="brand"
-          label="brand"
+          label="Brand"
           sortable
           min-width="100">
         </el-table-column>
         <el-table-column
           prop="model"
           label="Model"
+          sortable
           min-width="100">
         </el-table-column>
         <el-table-column
@@ -121,11 +123,6 @@
     data() {
       return {
         trucksListData: [],
-        search: {
-          name: '',
-          lastname: '',
-          email: ''
-        },
         listLoading: false,
         elementToUpdate: null,
         trucksListPage: {
@@ -133,7 +130,6 @@
           per_page: 15,
           total: 0
         },
-        dialogStatus: '',
         titleDialog: 'Create Truck',
         dialogVisible: false
       }
@@ -148,7 +144,7 @@
           type: 'warning'
         }).then(() => {
           deleteTruck(truckData[index].id).then(response => {
-            this.$message.error('Truck with plate: ' + truckData[index].plate + ' deleted.')
+            this.$message('Truck with plate: ' + truckData[index].plate + ' deleted.')
             this.fetchTrucksList()
           })
         })
@@ -176,7 +172,7 @@
       },
       fetchTrucksList() {
         this.listLoading = true
-        const params = Object.assign(this.trucksListData, this.search)
+        const params = Object.assign(this.trucksListPage, this.search)
 
         trucksList(params).then(response => {
           this.trucksListData = response.data.data
@@ -196,7 +192,7 @@
         this.dialogVisible = true
       },
       handleCurrentChange(val) {
-        this.usersListPage.page = val
+        this.trucksListPage.page = val
         this.fetchTrucksList()
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" label-width="200" class="user-form">
+  <el-form :model="form" label-width="200">
     <el-form-item label="Plate" prop="plate">
       <el-input v-model="form.plate" clearable></el-input>
     </el-form-item>
@@ -18,6 +18,8 @@
     <el-form-item label="Color" prop="color">
       <el-input v-model="form.color" clearable></el-input>
     </el-form-item>
+    <el-row>
+    <el-col :xs="12" :xl="24">
     <el-form-item label="Device" prop="device">
       <el-select v-model="form.device_id" placeholder="Select Device">
         <el-option
@@ -28,6 +30,8 @@
         </el-option>
       </el-select>
     </el-form-item>
+    </el-col>
+    <el-col :xs="12" :xl="24">
     <el-form-item label="Carrier" prop="carrier">
       <el-select v-model="form.carrier_id" placeholder="Select Carrier">
         <el-option
@@ -38,12 +42,13 @@
         </el-option>
       </el-select>
     </el-form-item>
+    </el-col>
+    </el-row>
+
     <el-row>
-      <el-col class="t-center">
-        <el-form-item  class="dis-inline-b t-center">
-          <el-button @click="handleClose">Cancel</el-button>
-          <el-button type="primary" :loading="loading" @click="onSubmit">{{ this.form.id == null ? 'Create':'Update' }}</el-button>
-        </el-form-item>
+      <el-col class="t-center p-10">
+        <el-button @click="handleClose">Cancel</el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">{{ this.form.id == null ? 'Create':'Update' }}</el-button>
       </el-col>
     </el-row>
 
@@ -133,13 +138,18 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  .user-form {
-    min-width: 200px;
+<style lang="scss">
+  .truck-form {
+    .el-form-item {
+      margin-bottom: 5px;
+    }
+    .el-select {
+      width: 100%;
+    }
   }
   @media (max-width: 480px) {
-    .user-form button {
-      margin: 5px;
+    .truck-form {
+      width: 90% !important;
     }
   }
 </style>

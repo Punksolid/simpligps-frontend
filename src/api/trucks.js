@@ -24,12 +24,6 @@ export function trucksList(params) {
   return request({
     url: 'v1/trucks',
     method: 'GET',
-    data: params
-  })
-}
-export function loggedTruck() {
-  return request({
-    url: 'v1/me',
-    method: 'GET'
+    params: params
   })
 }
