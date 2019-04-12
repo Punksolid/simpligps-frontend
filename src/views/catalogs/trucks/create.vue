@@ -37,7 +37,7 @@
         <el-option
           v-for="carrier in carriers"
           :key="carrier.id"
-          :label="carrier.carrier_name"
+          :label="selected_carrier.carrier_name"
           :value="carrier.id">
         </el-option>
       </el-select>
@@ -67,6 +67,7 @@
     ],
     data() {
       return {
+        selected_carrier: null,
         dialogVisible: false,
         loading: false,
         devices: [],
@@ -117,6 +118,9 @@
         })
         getCarriers(this.params).then(resp => {
           this.carriers = resp.data.data
+          if (this.form.id) {
+            this.selected_carrier = this.carriers[this.form.carrier_id]
+          }
         }).catch(() => {
           this.$message.error('Error fetching Carriers List')
         })

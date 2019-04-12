@@ -47,7 +47,7 @@
           updatePlace(this.form.id, this.form).then(response => {
             console.log(response)
             this.$message({
-              message: 'User ' + response.data.data + ' updated',
+              message: 'User ' + response.data.data.name + ' updated',
               type: 'success',
               duration: 10 * 1000
             })
