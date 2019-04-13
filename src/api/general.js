@@ -50,6 +50,7 @@ export function createWialonNotification(params) {
     data: params
   })
 }
+
 export function getDashboardElements() {
   return request({
     url: 'v1/dashboard',
@@ -58,9 +59,16 @@ export function getDashboardElements() {
 }
 
 export function getPlaces(params) {
-    return request({
-        url: 'v1/places',
-        method: 'GET',
-        params
-    })
+  return request({
+    url: 'v1/places',
+    method: 'GET',
+    params
+  })
+}
+
+export function fetchGeofences() {
+  return request({
+    url: 'v1/wialon/geofences',
+    method: 'GET'
+  })
 }
