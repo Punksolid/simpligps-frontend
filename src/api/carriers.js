@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getCarriers(params) {
+export function fetchCarriers(params) {
   return request({
     url: 'v1/carriers',
     method: 'GET',
