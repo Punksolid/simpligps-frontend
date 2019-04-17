@@ -76,8 +76,8 @@ export default {
   },
   created() {
     document.body.classList.add('sidebar-show')
-    this.refresh()
-    document.addEventListener('click', this.refresh)
+    // this.refresh()
+    // document.addEventListener('click', this.refresh)
   }
 }
 </script>

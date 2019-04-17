@@ -9,14 +9,13 @@
 
     </el-row>
 
-    <el-dialog
+    <create-truck
+      v-if="dialogVisible"
       :title="titleDialog"
-      :visible.sync="dialogVisible"
-      custom-class="truck-form"
-      width="60%"
-      :before-close="handleClose">
-      <create-truck v-if="dialogVisible" :form="elementToUpdate" @truck_created="fetchTrucksList" @closedialog="handleClose"></create-truck>
-    </el-dialog>
+      :dialogvisible="dialogVisible"
+      :form="elementToUpdate"
+      @truck_created="fetchTrucksList"
+      @closedialog="closeDialog"/>
 
     <el-col class="m-t-10">
 
@@ -24,13 +23,14 @@
         v-loading="listLoading"
         :data="trucksListData"
         class="trucktable"
-        :row-key="getRowKeys"
+        :row-key="row => row.id"
+        :expand-row-keys="expandRowKeys"
         ref="truckTable"
-        @row-click="fetchTruckDetail"
+        @expand-change="handleExpandChange"
         stripe>
         <el-table-column type="expand">
           <template slot-scope="details">
-            <el-row :gutter="10">
+            <el-row :gutter="10" v-loading="truckLoading">
               <el-col class="panel" :xs="24" :sm="12" :lg="12">
                 <div class="panel-header bg-primary"><h3><i class="fas fa-truck"/>Truck</h3></div>
                 <el-col class="panel-body p-10 bg-gray-light">
@@ -140,14 +140,15 @@
     },
     data() {
       return {
+        expandRowKeys: [],
         trucksListData: [],
-        truckData: [
-          { operator: {
+        truckData: {
+          operator: {
             name: ''
-            }
           }
-        ],
+        },
         listLoading: false,
+        truckLoading: false,
         elementToUpdate: null,
         trucksListPage: {
           page: 0,
@@ -179,22 +180,12 @@
         this.elementToUpdate = {}
         this.dialogVisible = true
       },
-      handleClose() {
-        this.listLoading = true
-        if (this.elementToUpdate.plate) {
-          this.$confirm('Are you sure to close? Not saved data will be lost!')
-            .then(_ => {
-              this.listLoading = false
-              this.dialogVisible = false
-              this.elementToUpdate = {}
-            })
-        } else {
-          this.listLoading = false
-          this.dialogVisible = false
-          this.elementToUpdate = {}
-        }
+      closeDialog() {
+        this.listLoading = false
+        this.dialogVisible = false
       },
       fetchTrucksList() {
+        this.dialogVisible = false
         this.listLoading = true
         const params = Object.assign(this.trucksListPage, this.search)
 
@@ -205,14 +196,20 @@
           this.listLoading = false
         })
       },
-      fetchTruckDetail(row) {
-        this.$refs.truckTable.toggleRowExpansion(row)
-        TruckDetail(row.id).then(resp => {
-           this.truckData = resp.data.data
-        })
+      handleExpandChange(row, expandedRows) {
+        this.fetchTruckDetail(row.id)
+        const id = row.id
+        const lastId = this.expandRowKeys[0]
+        // disable mutiple row expanded
+        this.expandRowKeys = id === lastId ? [] : [id]
       },
-      getRowKeys(row) {
-        return row.id
+      fetchTruckDetail(id) {
+        // this.$refs.truckTable.toggleRowExpansion(row)
+        this.truckLoading = true
+        TruckDetail(id).then(resp => {
+          this.truckData = resp.data.data
+          this.truckLoading = false
+        }).catch(() => {})
       },
       resetFilter() {
         this.search = {}
