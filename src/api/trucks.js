@@ -7,6 +7,13 @@ export function createTruck(params) {
     data: params
   })
 }
+export function TruckDetail(id, params) {
+  return request({
+    url: 'v1/trucks/' + id,
+    method: 'GET',
+    data: params
+  })
+}
 export function updateTruck(id, params) {
   return request({
     url: 'v1/trucks/' + id,

@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" label-width="200">
+  <el-form :model="form" label-width="120px">
     <el-form-item label="Plate" prop="plate">
       <el-input v-model="form.plate" clearable></el-input>
     </el-form-item>
@@ -18,8 +18,6 @@
     <el-form-item label="Color" prop="color">
       <el-input v-model="form.color" clearable></el-input>
     </el-form-item>
-    <el-row>
-    <el-col :xs="12" :xl="24">
     <el-form-item label="Device" prop="device">
       <el-select v-model="form.device_id" placeholder="Select Device">
         <el-option
@@ -30,24 +28,30 @@
         </el-option>
       </el-select>
     </el-form-item>
-    </el-col>
-    <el-col :xs="12" :xl="24">
     <el-form-item label="Carrier" prop="carrier">
       <el-select v-model="form.carrier_id" placeholder="Select Carrier">
         <el-option
           v-for="carrier in carriers"
           :key="carrier.id"
-          :label="selected_carrier.carrier_name"
+          :label="selected_carrier?selected_carrier:carrier.carrier_name"
           :value="carrier.id">
         </el-option>
       </el-select>
     </el-form-item>
-    </el-col>
-    </el-row>
+    <el-form-item label="Operator" prop="operator">
+      <el-select v-model="form.operator_id" placeholder="Select Operator">
+        <el-option
+          v-for="operator in operators"
+          :key="operator.id"
+          :label="operator.name"
+          :value="operator.id">
+        </el-option>
+      </el-select>
+    </el-form-item>
 
     <el-row>
       <el-col class="t-center p-10">
-        <el-button @click="handleClose">Cancel</el-button>
+        <el-button @click="closeDialog">Cancel</el-button>
         <el-button type="primary" :loading="loading" @click="onSubmit">{{ this.form.id == null ? 'Create':'Update' }}</el-button>
       </el-col>
     </el-row>
@@ -59,6 +63,7 @@
   import { createTruck, updateTruck } from '@/api/trucks'
   import { getDevices } from '@/api/devices'
   import { fetchCarriers } from '@/api/carriers'
+  import { getOperators } from '@/api/operators'
 
   export default {
     name: 'CreateTruck',
@@ -72,6 +77,7 @@
         loading: false,
         devices: [],
         carriers: [],
+        operators: [],
         params: {
           all: true
         }
@@ -110,7 +116,7 @@
           })
         }
       },
-      DevicesAndCarriers() {
+      DevicesAndCarriers: function() {
         getDevices(this.params).then(resp => {
           this.devices = resp.data.data
         }).catch(() => {
@@ -119,15 +125,16 @@
         fetchCarriers(this.params).then(resp => {
           this.carriers = resp.data.data
           if (this.form.id) {
-            this.selected_carrier = this.carriers[this.form.carrier_id]
+            const carrier = this.carriers.find(carrier => carrier.id === this.form.carrier_id)
+            // Se busca 'carrier_id' en Carriers y se retorna el nombre
+            this.selected_carrier = carrier.carrier_name
           }
-        }).catch(() => {
-          this.$message.error('Error fetching Carriers List')
+        })
+        getOperators(this.params).then(resp => {
+          this.operators = resp.data.data
         })
       },
-      resetForm(formName) {
-      },
-      handleClose() {
+      closeDialog() {
         this.$emit('closedialog')
       }
     },
