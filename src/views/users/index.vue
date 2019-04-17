@@ -28,44 +28,31 @@
 
     </el-row>
 
-      <el-dialog
-        :title="titleDialog"
-        :visible.sync="dialogVisible"
-        width="60%"
-        :before-close="handleClose">
-        <create-user :form="elementToUpdate" @user_created="fetchUsersList" @closedialog="handleClose"></create-user>
-      </el-dialog>
+    <create-user :title="titleDialog" :form="elementToUpdate" :dialogvisible="dialogVisible" @created="fetchUsersList" @closedialog="closeDialog"></create-user>
 
     <el-col class="m-t-10">
 
       <el-table
         v-loading="listLoading"
         :data="usersListData"
-        stripe
-        border>
+        stripe>
         <el-table-column
           prop="name"
           label="Name"
           sortable
-          width="280">
+          min-width="280">
         </el-table-column>
         <el-table-column
           prop="lastname"
           label="Lastname"
           sortable
-          width="280">
+          min-width="250">
         </el-table-column>
         <el-table-column
           prop="email"
           label="Email"
           sortable
-          width="350">
-        </el-table-column>
-        <el-table-column
-          prop="username"
-          label="Username"
-          sortable
-          width="180">
+          min-width="300">
         </el-table-column>
         <el-table-column
           label="Operations"
@@ -121,49 +108,49 @@
           email: ''
         },
         listLoading: true,
-        elementToUpdate: null,
+        elementToUpdate: {},
         usersListPage: {
           page: 0,
           per_page: 15,
           total: 0
         },
         dialogStatus: '',
-        titleDialog: 'Create User', // Un default y se redefine según la acción
+        titleDialog: 'Create User',
         dialogVisible: false
       }
     },
     methods: {
       deleteRow(index, userListData) {
-        this.$confirm('This will permanently delete the user: ' + userListData[index].username + ' are you sure to Continue?', 'Warning', {
+        console.log(index)
+        this.listLoading = true
+        this.$confirm('This will permanently delete the user: ' + userListData[index].name + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
           deleteUser(userListData[index].id).then(response => {
-            this.$message.error('User: ' + userListData[index].username + ' deleted.')
+            this.$message.error('User: ' + userListData[index].name + ' deleted.')
             this.fetchUsersList()
+          }).catch(() => {
+            this.listLoading = false
           })
+        }).catch(() => {
+          this.listLoading = false
         })
       },
       openDialog() {
+        this.listLoading = true
         this.titleDialog = 'Create User'
         this.elementToUpdate = {}
         this.dialogVisible = true
       },
-      handleClose() {
-        if (this.elementToUpdate.name) {
-          this.$confirm('Are you sure to close? Not saved data will be lost!')
-            .then(_ => {
-              this.dialogVisible = false
-              this.elementToUpdate = {}
-            })
-        } else {
-          this.dialogVisible = false
-          this.elementToUpdate = {}
-        }
+      closeDialog() {
+        this.dialogVisible = false
+        this.listLoading = false
       },
       fetchUsersList() {
+        this.dialogVisible = false
         this.listLoading = true
         const params = Object.assign(this.usersListPage, this.search)
 

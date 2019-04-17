@@ -1,30 +1,35 @@
 <template>
-  <el-form :model="form" label-width="200" class="user-form">
-    <el-form-item label="Name" prop="name">
-      <el-input v-model="form.name" clearable></el-input>
-    </el-form-item>
-    <el-form-item label="Last Name" prop="lastname">
-      <el-input v-model="form.lastname" clearable></el-input>
-    </el-form-item>
-    <el-form-item label="Email" prop="email">
-      <el-input v-model="form.email"></el-input>
-    </el-form-item>
-    <el-form-item label="Username" prop="username">
-      <el-input v-model="form.username" clearable></el-input>
-    </el-form-item>
-    <el-form-item label="Password" prop="password">
-      <el-input v-model="form.password" type="password" clearable></el-input>
-    </el-form-item>
-    <el-row>
-      <el-col class="t-center">
-        <el-form-item  class="dis-inline-b t-center">
-          <el-button @click="handleClose">Cancel</el-button>
-          <el-button type="primary" @click="onSubmit">{{ this.form.id == null ? 'Create':'Update' }}</el-button>
-        </el-form-item>
-      </el-col>
-    </el-row>
+  <el-dialog
+    :title="title"
+    :visible="dialogvisible"
+    width="60%"
+    :before-close="handleClose"
+  >
+    <el-form :model="form" label-width="200" class="user-form">
+      <el-form-item label="Name" prop="name">
+        <el-input v-model="form.name" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="Last Name" prop="lastname">
+        <el-input v-model="form.lastname" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="Email" prop="email">
+        <el-input v-model="form.email"></el-input>
+      </el-form-item>
+      <el-form-item label="Password" prop="password">
+        <el-input v-model="form.password" type="password" clearable></el-input>
+      </el-form-item>
 
-  </el-form>
+      <el-row>
+        <el-col class="t-center">
+          <el-form-item  class="dis-inline-b t-center">
+            <el-button @click="handleClose">Cancel</el-button>
+            <el-button type="primary" :loading="loading" @click="onSubmit">{{ this.form.id == null ? 'Create':'Update' }}</el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+    </el-form>
+  </el-dialog>
 </template>
 
 <script>
@@ -33,45 +38,57 @@
   export default {
     name: 'CreateUser',
     props: [
-      'form'
+      'title',
+      'form',
+      'dialogvisible'
     ],
     data() {
       return {
-        dialogVisible: false
+        dialogVisible: false,
+        loading: false
       }
     },
     methods: {
       onSubmit() {
         if (this.form.id) {
+          this.loading = true
           updateUser(this.form.id, this.form).then(response => {
             this.$message({
-              message: 'User ' + response.data.data.name + ' updated',
+              message: 'User: ' + response.data.data.name + ' updated',
               type: 'success',
               duration: 10 * 1000
             })
-            this.resetForm('form')
-            this.$emit('closedialog', false)
+            this.loading = false
+            this.$emit('closedialog')
+          }).catch(() => {
+            this.loading = false
           })
         } else {
+          this.loading = true
           createUser(this.form).then(response => {
             this.$message({
-              message: 'User ' + response.data.data.name + ' created',
+              message: 'User: ' + response.data.data.name + ' created',
               type: 'success',
               duration: 10 * 1000
             })
-            this.resetForm('form')
-            this.$emit('user_created')
-            this.$emit('closedialog', false)
+            this.loading = false
+            this.$emit('created')
+          }).catch(() => {
+            this.loading = false
           })
         }
       },
-      resetForm(formName) {
-      },
       handleClose() {
-        this.$emit('closedialog')
+        if (this.form.name) {
+          this.$confirm('Are you sure to close? Not saved data will be lost!')
+            .then(_ => {
+              this.$emit('closedialog')
+            }).catch(() => {
+          })
+        } else {
+          this.$emit('closedialog')
+        }
       }
-    },
-    created() {
     },
     rules: {
       password: [
