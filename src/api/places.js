@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getPlaces(params) {
+export function fetchPlaces(params) {
   return request({
     url: 'v1/places',
     method: 'GET',

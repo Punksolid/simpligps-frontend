@@ -28,18 +28,12 @@
         ></el-option>
       </el-select>
       </el-form-item>
-    <el-form-item v-if="form.control_type === 'speed'">
-        <el-col>
-          <span>Min Speed:</span>
-          <el-input-number v-model="form.params.min_speed" label="Max:" size="mini" :min="1" :max="150">
-          </el-input-number>
-        </el-col>
-        <el-col>
-          <span>Max Speed:</span>
-          <el-input-number v-model="form.params.max_speed" label="Min:" size="mini" :min="1" :max="150">
-          </el-input-number>
-        </el-col>
-    </el-form-item>
+    <div v-if="form.control_type === 'speed'">
+      <SpeedControlType :form="form"/>
+    </div>
+    <div v-if="form.control_type === 'geofence'">
+      <GeofenceControlType :form="form"/>
+    </div>
 
     <el-form-item label="Units">
       <el-select v-model="form.units" multiple placeholder="Select">
@@ -66,9 +60,15 @@
 <script>
 
 import { getWialonUnits, getResources, createWialonNotification } from '../../api/general'
+import SpeedControlType from './control_types/SpeedControlType'
+import GeofenceControlType from './control_types/GeofenceControlType'
 
   export default {
      name: 'CreateNotification',
+    components: {
+       SpeedControlType,
+       GeofenceControlType
+    },
     data() {
       return {
         loading: false,

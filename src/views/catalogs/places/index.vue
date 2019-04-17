@@ -7,7 +7,7 @@
       </el-col>
     </el-row>
 
-    <NewPlace :title="titleDialog" :form="placeData" @created="fetchPlaces" :dialog_visible="dialogVisible" @closedialog="dialogVisible = false"></NewPlace>
+    <NewPlace :title="titleDialog" :form="placeData" @created="getPlaces" :dialog_visible="dialogVisible" @closedialog="dialogVisible = false"></NewPlace>
 
     <el-col>
       <el-table
@@ -62,14 +62,14 @@
         :page-size="placesListPage.per_page"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
-        @pagination="fetchPlaces" />
+        @pagination="getPlaces" />
     </el-col>
 
   </el-row>
 </template>
 
 <script>
-  import { getPlaces, deletePlace } from '@/api/places'
+  import { fetchPlaces, deletePlace } from '@/api/places'
   import NewPlace from '@/views/catalogs/places/create'
 
     export default {
@@ -95,10 +95,10 @@
         }
       },
       methods: {
-        fetchPlaces(params) {
+        getPlaces(params) {
           this.dialogVisible = false
           this.listLoading = true
-          getPlaces(this.placesListPage).then(response => {
+          fetchPlaces(this.placesListPage).then(response => {
             this.placesList = response.data.data
             this.placesListPage = response.data.meta
             this.placesListPage.page = response.data.meta.current_page
@@ -134,8 +134,10 @@
             center: true,
             type: 'warning'
           }).then(() => {
+            this.listLoading = true
             deletePlace(placeData[index].id).then(resp => {
               this.$message('Place: ' + resp.data.data.name + ' deleted.')
+              this.getPlaces()
               }).catch(resp => {
                 this.$message.error(resp.message)
             })
@@ -148,15 +150,15 @@
         },
         handleCurrentChange(val) {
           this.placesListPage.page = val
-          this.fetchPlaces()
+          this.getPlaces()
         },
         handleSizeChange(val) {
           this.placesListPage.per_page = val
-          this.fetchPlaces()
+          this.getPlaces()
         }
       },
       created() {
-        this.fetchPlaces()
+        this.getPlaces()
       }
     }
 </script>

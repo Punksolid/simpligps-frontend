@@ -19,7 +19,14 @@
         <el-input v-model="form.phone" placeholder="Phone"/>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="form.geofence_ref" placeholder="Geofence Reference"/>
+        <el-select v-model="selected_geofence" placeholder="Select">
+          <el-option
+            v-for="geofence in geofences"
+            :key="geofence.id"
+            :label="geofence.name"
+            :value="geofence.id">
+          </el-option>
+        </el-select>
       </el-form-item>
     </el-form>
 
@@ -33,6 +40,7 @@
 
 <script>
   import { createPlace, updatePlace } from '@/api/places'
+  import { fetchGeofences } from '../../../api/general'
 
   export default {
     name: 'NewPlace',
@@ -41,13 +49,19 @@
       'title',
       'form'
     ],
+    data() {
+      return {
+        selected_geofence: null,
+        geofences: []
+      }
+    },
     methods: {
       onSubmit() {
         if (this.form.id) {
           updatePlace(this.form.id, this.form).then(response => {
             console.log(response)
             this.$message({
-              message: 'User ' + response.data.data + ' updated',
+              message: 'User ' + response.data.data.name + ' updated',
               type: 'success',
               duration: 10 * 1000
             })
@@ -75,6 +89,11 @@
             }).catch(_ => {})
         }
       }
+    },
+    created() {
+      fetchGeofences().then(response => {
+          this.geofences = response.data.data
+      })
     }
   }
 </script>

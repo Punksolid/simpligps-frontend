@@ -12,7 +12,7 @@
       :visible.sync="dialogVisible"
       :before-close="handleClose"
       width="35%">
-            <CreateCarrier @closedialog="dialogVisible = false" @created="fetchCarriersList" :form="elementToUpdate"></CreateCarrier>
+            <CreateCarrier @closedialog="dialogVisible = false" @created="getCarriersList" :form="elementToUpdate"></CreateCarrier>
     </el-dialog>
 
   <el-col>
@@ -70,7 +70,7 @@
       :page-size="carriersListPage.per_page"
       :total="carriersListPage.total"
       @current-change="handleCurrentChange"
-      @pagination="fetchCarriersList" />
+      @pagination="getCarriersList" />
   </el-col>
 
   </el-row>
@@ -78,7 +78,7 @@
 
 <script>
   import CreateCarrier from './create.vue'
-  import { getCarriers, deleteCarrier } from '@/api/carriers'
+  import { fetchCarriers, deleteCarrier } from '@/api/carriers'
 
   export default {
     name: 'CarrierList',
@@ -96,11 +96,11 @@
       }
     },
     methods: {
-      fetchCarriersList() {
+      getCarriersList() {
         this.elementToUpdate = {}
         this.dialogVisible = false
         this.listLoading = true
-        getCarriers(this.carriersListPage).then(response => {
+        fetchCarriers(this.carriersListPage).then(response => {
           this.carriersList = response.data.data
           this.carriersListPage = response.data.meta
           this.carriersListPage.page = response.data.meta.current_page
@@ -120,7 +120,7 @@
           type: 'warning'
         }).then(() => {
           deleteCarrier(carrierData.id).then(resp => {
-            this.fetchCarriersList()
+            this.getCarriersList()
             this.$message({
               type: 'success',
               message: 'Delete carrier completed'
@@ -141,11 +141,11 @@
       },
       handleCurrentChange(val) {
         this.carriersListPage.page = val
-        this.fetchCarriersList()
+        this.getCarriersList()
       }
     },
     created() {
-      this.fetchCarriersList()
+      this.getCarriersList()
     }
   }
 
