@@ -31,14 +31,14 @@ export function getMyPermissions() {
 
 export function getMyNotifications() {
   return request({
-    url: 'v1/me/notifications',
+    url: 'v1/account/notifications',
     method: 'GET'
   })
 }
 
 export function markNotificationAsRead(uuid) {
   return request({
-    url: 'v1/me/notifications/' + uuid + '/mark_as_read',
+    url: 'v1/account/notifications/' + uuid + '/mark_as_read',
     method: 'POST'
   })
 }
