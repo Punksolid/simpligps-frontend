@@ -7,7 +7,7 @@
       </el-col>
     </el-row>
 
-    <NewPlace :title="titleDialog" :form="placeData" @created="getPlaces" :dialog_visible="dialogVisible" @closedialog="dialogVisible = false"></NewPlace>
+    <NewPlace :title="titleDialog" :form="placeData" :dialogvisible="dialogVisible"  @created="getPlaces" @closedialog="closeDialog"/>
 
     <el-col>
       <el-table
@@ -41,10 +41,10 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, placesList)"
+              @click="handleUpdate(scope.$index, scope.row)"
               icon="fas fa-edit"/>
             <el-button
-              @click.native.prevent="deleteRow(scope.$index, placesList)"
+              @click.native.prevent="deleteRow(scope.$index, scope.row)"
               type="danger"
               size="mini"
               icon="fas fa-trash"/>
@@ -110,32 +110,29 @@
         openDialog() {
           this.titleDialog = 'Create Place'
           this.placeData = {}
+          this.listLoading = true
           this.dialogVisible = true
         },
-        handleClose(done) {
-          this.$confirm('Are you sure to close? Not saved data will be lost!')
-            .then(_ => {
-              done()
-            })
-            .catch(_ => {
-
-            })
+        closeDialog() {
+          this.listLoading = false
+          this.dialogVisible = false
         },
-        handleUpdate(index, placesList) {
-          this.placeData = placesList[index]
+        handleUpdate(index, rowData) {
+          this.placeData = rowData
           this.titleDialog = 'Edit Place'
+          this.listLoading = true
           this.dialogVisible = true
         },
-        deleteRow(index, placeData) {
-          this.$confirm('This will permanently delete place: ' + placeData[index].name + ' are you sure to Continue?', 'Warning', {
+        deleteRow(index, rowData) {
+          this.listLoading = true
+          this.$confirm('This will permanently delete place: ' + rowData.name + ' are you sure to Continue?', 'Warning', {
             confirmButtonText: 'Delete',
             cancelButtonText: 'Cancel',
             confirmButtonClass: 'btn-danger',
             center: true,
             type: 'warning'
           }).then(() => {
-            this.listLoading = true
-            deletePlace(placeData[index].id).then(resp => {
+            deletePlace(rowData.id).then(resp => {
               this.$message('Place: ' + resp.data.data.name + ' deleted.')
               this.getPlaces()
               }).catch(resp => {
@@ -146,6 +143,7 @@
               type: 'info',
               message: 'Delete canceled'
             })
+            this.listLoading = false
           })
         },
         handleCurrentChange(val) {

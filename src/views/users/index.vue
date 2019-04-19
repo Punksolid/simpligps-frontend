@@ -61,11 +61,11 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, usersListData)"
+              @click="handleUpdate(scope.$index, scope.row)"
               icon="fas fa-edit">
             </el-button>
             <el-button
-              @click.native.prevent="deleteRow(scope.$index, usersListData)"
+              @click.native.prevent="deleteRow(scope.$index, scope.row)"
               type="danger"
               size="mini"
               icon="fas fa-trash">
@@ -120,17 +120,16 @@
       }
     },
     methods: {
-      deleteRow(index, userListData) {
-        console.log(index)
+      deleteRow(index, userData) {
         this.listLoading = true
-        this.$confirm('This will permanently delete the user: ' + userListData[index].name + ' are you sure to Continue?', 'Warning', {
+        this.$confirm('This will permanently delete the user: ' + userData.email + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
-          deleteUser(userListData[index].id).then(response => {
-            this.$message.error('User: ' + userListData[index].name + ' deleted.')
+          deleteUser(userData.id).then(response => {
+            this.$message.error('User: ' + userData.email + ' deleted.')
             this.fetchUsersList()
           }).catch(() => {
             this.listLoading = false
@@ -165,8 +164,8 @@
         this.search = {}
         this.fetchUsersList()
       },
-      handleUpdate(index, userListData) {
-        this.elementToUpdate = userListData[index]
+      handleUpdate(index, userData) {
+        this.elementToUpdate = userData
         this.titleDialog = 'Edit User'
         this.dialogVisible = true
       },
