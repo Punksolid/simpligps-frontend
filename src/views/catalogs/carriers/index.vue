@@ -3,17 +3,11 @@
 
     <el-row class="searchBar m-b-10">
       <el-col>
-        <el-button type="primary" @click="dialogVisible = true" icon="fas fa-truck p-r-10">Create Carrier</el-button>
+        <el-button type="primary" @click="openDialog" icon="fas fa-truck p-r-10">New Carrier</el-button>
       </el-col>
     </el-row>
 
-    <el-dialog
-      :title="titleDialog"
-      :visible.sync="dialogVisible"
-      :before-close="handleClose"
-      width="35%">
-            <CreateCarrier @closedialog="dialogVisible = false" @created="getCarriersList" :form="elementToUpdate"></CreateCarrier>
-    </el-dialog>
+    <CreateCarrier :form="formData" :title="titleDialog" :dialogvisible="dialogVisible" @closedialog="closeDialog" @created="getCarriersList"/>
 
   <el-col>
     <el-table
@@ -89,7 +83,7 @@
       return {
         carriersList: [],
         carriersListPage: {},
-        elementToUpdate: {},
+        formData: {},
         listLoading: false,
         titleDialog: 'Create Carrier',
         dialogVisible: false
@@ -97,7 +91,7 @@
     },
     methods: {
       getCarriersList() {
-        this.elementToUpdate = {}
+        this.formData = {}
         this.dialogVisible = false
         this.listLoading = true
         fetchCarriers(this.carriersListPage).then(response => {
@@ -108,8 +102,9 @@
         })
       },
       handleUpdate(carrierData) {
-        this.elementToUpdate = carrierData
+        this.formData = carrierData
         this.titleDialog = 'Edit Carrier'
+        this.listLoading = true
         this.dialogVisible = true
       },
       deleteRow(index, carrierData) {
@@ -133,11 +128,15 @@
           })
         })
       },
-      handleClose(done) {
-        this.$confirm('Are you sure to close this dialog?').then(_ => {
-          done()
-        })
-          .catch(_ => {})
+      openDialog() {
+        this.formData = {}
+        this.titleDialog = 'New Carrier'
+        this.listLoading = true
+        this.dialogVisible = true
+      },
+      closeDialog() {
+        this.listLoading = false
+        this.dialogVisible = false
       },
       handleCurrentChange(val) {
         this.carriersListPage.page = val

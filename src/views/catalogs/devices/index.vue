@@ -43,6 +43,7 @@
         <el-table-column
           prop="name"
           label="Name"
+          min-width="120px"
           sortable>
         </el-table-column>
         <el-table-column

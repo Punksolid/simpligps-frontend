@@ -100,12 +100,18 @@ export const tenantProtectedRoutes = [
         path: 'devices',
         name: 'Devices',
         component: () => import('@/views/catalogs/devices/index'), // Parent router-view,
-        meta: { title: 'Devices', icon: 'fas fa-mobile-alt' }
+        meta: { title: 'Devices', icon: 'fas fa-truck-loading' }
       },
       {
         path: 'trucks',
         name: 'Trucks',
         component: () => import('@/views/catalogs/trucks/index'),
+        meta: { title: 'Trucks', icon: 'fas fa-truck' }
+      },
+      {
+        path: 'trailerbox',
+        name: 'Trialerbox',
+        component: () => import('@/views/catalogs/trailerbox/index'),
         meta: { title: 'Trucks', icon: 'fas fa-truck' }
       },
       {

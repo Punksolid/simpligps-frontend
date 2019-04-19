@@ -1,5 +1,12 @@
 import request from '@/utils/request'
 
+export function tripList(params) {
+  return request({
+    url: 'v1/trips',
+    method: 'GET',
+    data: params
+  })
+}
 export function createTrip(params) {
   return request({
     url: 'v1/trips',
@@ -14,10 +21,9 @@ export function updateTrip(id, params) {
     data: params
   })
 }
-export function tripList(params) {
+export function deleteTrip(id) {
   return request({
-    url: 'v1/trips',
-    method: 'GET',
-    data: params
+    url: 'v1/trips/' + id,
+    method: 'DELETE'
   })
 }
