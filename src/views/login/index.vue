@@ -120,7 +120,7 @@
   import ResetPassword from '../login/resetpassword'
   import NewPassword from '../login/newpassword'
   import { checkStatus } from '../../api/general'
-  import { setTenantID } from '../../utils/auth'
+  import { setTenant, setTenantID } from '../../utils/auth'
 
   export default {
     name: 'LoginView',
@@ -188,7 +188,7 @@
           if (valid) {
             this.loading = true
             this.$store.dispatch('Login', this.loginForm).then(() => {
-              this.$router.push({ path: '/login/select_account/', query: { mode: 'select_account' }})
+              // this.$router.push({ path: '/login/select_account/', query: { mode: 'select_account' }})
             }).catch(() => {
               this.loading = false
             })
@@ -234,7 +234,9 @@
       },
       selectedAccount(account) {
         setTenantID(account.uuid)
+        setTenant(account)
         this.$store.commit('SET_TENANT', account.uuid)
+        this.$store.commit('SET_TENANT_OBJECT', account)
         this.$message({
           showClose: true,
           type: 'success',

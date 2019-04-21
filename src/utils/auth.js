@@ -1,12 +1,19 @@
 import Cookies from 'js-cookie'
 
 const TenantID = ''
+const Tenant = null
 
 export function setTenantID(value) {
   return Cookies.set('TenantID', value)
 }
 export function getTenantID() {
   return Cookies.get('TenantID')
+}
+export function setTenant(value) {
+  return Cookies.set('Tenant', value)
+}
+export function getTenant() {
+  return Cookies.get('Tenant')
 }
 export function removeTenantID() {
   return Cookies.remove(TenantID)
@@ -23,6 +30,7 @@ export function removeToken() {
 }
 
 export function resetCookie() {
+  Cookies.remove('TokenKey')
   Cookies.remove('TokenKey')
   return Cookies.remove('TenantID')
 }

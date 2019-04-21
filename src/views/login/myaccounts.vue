@@ -25,42 +25,59 @@
   </el-row>
 </template>
 
-<script>
+<script>/**
+ * Todo este componente debe hacer su propia petición y seleccion de la cuenta, la logica debe ir aquí, no en el parent
+ */
+import * as Message from 'element-ui'
+// import { VueRouter as router } from 'vue-router/types/router'
 
-    export default {
-      name: 'MyAccounts',
-      props: {
-          accounts: {
-            type: Array,
-            required: true
-          }
-      },
-      methods: {
-          setTenant(account) {
-            this.$emit('account', account)
-          }
-      }
+export default {
+  name: 'MyAccounts',
+  props: {
+    accounts: {
+      type: Array,
+      required: true
     }
-</script>
-
-<style lang="scss">
-#myaccounts {
-  .el-dialog__body {
-    padding-top: 5px;
-  }
-  p {
-    text-align: center;
-    color: #444444;
-    font-size: 15px;
-  }
-  .el-dialog__header {
-    text-align: center;
-
-    .el-dialog__title {
-      border-left: none;
-      padding-bottom: 10px;
-      border-bottom: 1px solid gainsboro;
+  },
+  methods: {
+    setTenant(account) {
+      console.log(account)
+      // this.$store.commit('SET_TENANT', account)
+      this.$store.dispatch('SelectAccount', account.uuid)
+        .then(() => {
+          this.$router.push({ path: '/'})
+          // this.$router.push('/users')
+          console.log('selected')
+        }).catch(() => {
+        this.loading = false
+        Message.error('AccountError')
+      })
+      // this.$emit('account', account)
     }
   }
 }
+</script>
+
+<style lang="scss">
+  #myaccounts {
+    .el-dialog__body {
+      padding-top: 5px;
+    }
+
+    p {
+      text-align: center;
+      color: #444444;
+      font-size: 15px;
+    }
+
+    .el-dialog__header {
+      text-align: center;
+
+      .el-dialog__title {
+        border-left: none;
+        padding-bottom: 10px;
+        border-bottom: 1px solid gainsboro;
+      }
+    }
+  }
 </style>

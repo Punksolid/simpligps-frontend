@@ -9,7 +9,7 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    tenant: getTenantID()
+    tenant: getTenantID(), // todo change for uuid
   },
 
   mutations: {
@@ -31,7 +31,6 @@ const user = {
     SET_TENANT: (state, tenant_id) => {
       state.tenant = tenant_id
     }
-
   },
 
   actions: {
