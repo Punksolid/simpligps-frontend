@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 const TenantID = ''
-const Tenant = null
+// const Tenant = null
 
 export function setTenantID(value) {
   return Cookies.set('TenantID', value)

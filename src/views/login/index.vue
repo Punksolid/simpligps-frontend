@@ -1,5 +1,5 @@
 <template>
-  <div class="form-body">
+  <div class="form-body" :v-loading="selectLoading">
     <div class="row">
       <div class="img-holder">
         <div class="bg"/>
@@ -58,17 +58,7 @@
                 </el-form-item>
               </el-form>
 
-              <el-dialog
-                title="My Accounts"
-                :visible.sync="showAccountSelector"
-                width="45%"
-                center
-                :show-close="false"
-                :close-on-click-modal="false">
-
-                <MyAccounts :accounts="my_accounts" @account="selectedAccount"></MyAccounts>
-
-              </el-dialog>
+              <MyAccounts/>
 
               <el-row>
                 <el-col class="t-right float-right">
@@ -115,12 +105,10 @@
 <script>
   import '@/styles/bootstrap.min.css'
   // import { login } from '@/api/login'
-  import { getMyAccounts } from '@/api/me'
   import MyAccounts from '../login/myaccounts'
   import ResetPassword from '../login/resetpassword'
   import NewPassword from '../login/newpassword'
   import { checkStatus } from '../../api/general'
-  import { setTenant, setTenantID } from '../../utils/auth'
 
   export default {
     name: 'LoginView',
@@ -149,20 +137,19 @@
           type: 'login',
           name: 'Login'
         },
-        dialogVisible: false,
-        my_accounts: [],
-        loading: false,
-        pwdType: 'password',
         redirect: undefined,
-        apiPingSuccess: false,
-        showAccountSelector: false
+        dialogVisible: false,
+        loading: false,
+        selectLoading: false,
+        pwdType: 'password',
+        apiPingSuccess: false
       }
     },
     watch: {
       $route: {
         handler: function(route) {
           if (route.params.mode === 'select_account') {
-            this.formSelectAccount()
+            event.$emit('getaccounts')
           }
           this.redirect = route.query && route.query.redirect
         },
@@ -188,12 +175,12 @@
           if (valid) {
             this.loading = true
             this.$store.dispatch('Login', this.loginForm).then(() => {
-              // this.$router.push({ path: '/login/select_account/', query: { mode: 'select_account' }})
+                this.loading = false
+                event.$emit('getaccounts')
             }).catch(() => {
               this.loading = false
             })
           } else {
-            console.log('error submit!!')
             return false
           }
         })
@@ -221,28 +208,6 @@
             name: 'Login'
           }
         }
-      },
-      formSelectAccount() {
-        getMyAccounts().then(response => {
-          this.my_accounts = response.data.data
-          if (this.my_accounts.length <= 1) {
-            this.selectedAccount(this.my_accounts[0])
-          } else {
-            this.showAccountSelector = true
-          }
-        })
-      },
-      selectedAccount(account) {
-        setTenantID(account.uuid)
-        setTenant(account)
-        this.$store.commit('SET_TENANT', account.uuid)
-        this.$store.commit('SET_TENANT_OBJECT', account)
-        this.$message({
-          showClose: true,
-          type: 'success',
-          message: 'User: ' + account.easyname + ' Selected.'
-        })
-        this.$router.push('/')
       }
     },
     created() {
@@ -251,12 +216,15 @@
     }
   }
 </script>
-<style type="text/scss" lang="scss" scoped>
+<style type="text/scss" lang="scss">
   .form-body {
     .img-holder {
       min-height: unset;
     }
-  }
+    .el-loading-mask {
+      background-color: #00000080 !important;
+    }
+
   .form-content {
     padding: 20px;
     .form-items {
@@ -312,22 +280,24 @@
     border-radius: 0px;
     display: block;
   }
-
+  }
   @media (max-width: 480px) {
-    .form-holder .form-content {
-      padding: 100px 45px 45px;
-    }
-    .status {
-      margin-top: 25px;
-    }
-    .dot {
-      height: 10px;
-      width: 80%;
-      margin: auto;
-      margin-bottom: 20px;
-    }
-    .website-logo-inside {
-      flex-direction: column;
+    .form-body {
+      .form-holder .form-content {
+        padding: 100px 45px 45px;
+      }
+      .status {
+        margin-top: 25px;
+      }
+      .dot {
+        height: 10px;
+        width: 80%;
+        margin: auto;
+        margin-bottom: 20px;
+      }
+      .website-logo-inside {
+        flex-direction: column;
+      }
     }
   }
 </style>

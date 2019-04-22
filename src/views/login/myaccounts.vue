@@ -1,10 +1,20 @@
 <template>
+  <el-dialog
+    title="My Accounts"
+    id="myaccounts"
+    :visible.sync="dialogVisible"
+    width="45%"
+    center
+    :show-close="false"
+    :close-on-click-modal="false">
+
   <el-row class="m-0">
     <el-col>
       <p>Select account to Manage:</p>
     </el-col>
     <el-table
-      :data="accounts"
+      :data="my_accounts"
+      v-loading="loading"
       stripe
       class="f-15"
       highlight-current-row
@@ -21,39 +31,58 @@
       <el-table-column prop="easyname">
       </el-table-column>
     </el-table>
-
   </el-row>
+
+  </el-dialog>
 </template>
 
-<script>/**
- * Todo este componente debe hacer su propia petición y seleccion de la cuenta, la logica debe ir aquí, no en el parent
- */
-import * as Message from 'element-ui'
+<script>
 // import { VueRouter as router } from 'vue-router/types/router'
+import { setTenantID } from '@/utils/auth'
+import { getMyAccounts } from '@/api/me'
 
 export default {
   name: 'MyAccounts',
-  props: {
-    accounts: {
-      type: Array,
-      required: true
+  data() {
+    return {
+      dialogVisible: false,
+      my_accounts: [],
+      loading: true
     }
   },
   methods: {
-    setTenant(account) {
-      console.log(account)
-      // this.$store.commit('SET_TENANT', account)
-      this.$store.dispatch('SelectAccount', account.uuid)
-        .then(() => {
-          this.$router.push({ path: '/'})
-          // this.$router.push('/users')
-          console.log('selected')
-        }).catch(() => {
+    defaultAccount() {
+      getMyAccounts().then(response => {
         this.loading = false
-        Message.error('AccountError')
+        this.my_accounts = response.data.data
+        if (this.my_accounts.length <= 1) {
+          this.setTenant(this.my_accounts[0])
+        }
+      }).catch(() => {})
+    },
+    setTenant(account) {
+      this.$store.dispatch('SelectAccount', account.uuid).then(() => {
+        this.$store.commit('SET_TENANT', account.uuid)
+        setTenantID(account.uuid)
+        this.$router.push('/')
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: 'Account: ' + account.easyname + ' Selected.'
+        })
+        this.my_accounts = []
+        this.dialogVisible = false
+      }).catch(() => {
+        this.loading = false
+        this.$message.error('AccountError')
       })
-      // this.$emit('account', account)
     }
+  },
+  created() {
+    event.$on('getaccounts', (data) => {
+      this.dialogVisible = true
+      this.defaultAccount()
+    })
   }
 }
 </script>
@@ -63,13 +92,11 @@ export default {
     .el-dialog__body {
       padding-top: 5px;
     }
-
     p {
       text-align: center;
       color: #444444;
       font-size: 15px;
     }
-
     .el-dialog__header {
       text-align: center;
 

@@ -7,7 +7,6 @@ import { getToken } from '@/utils/auth'
 import { getTenantID } from './utils/auth' // 验权
 
 const whiteList = ['/login'] // 不重定向白名单
-
 // const dontRequireTenant = ['/login', '/404', '/login/:mode', '/user_settings']
 
 function getInfoOrDropToken(next) {

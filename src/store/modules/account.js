@@ -18,12 +18,10 @@ const account = {
   actions: {
     SelectAccount({ commit }, account_uuid_selected) {
       return new Promise((resolve, reject) => {
-
           return request({
             url: 'v1/me/accounts/' + account_uuid_selected,
             method: 'GET'
-          })
-            .then(response => {
+          }).then(response => {
               commit('SET_ACCOUNT', response.data.data)
               resolve()
             }).catch(error => {
@@ -32,7 +30,6 @@ const account = {
               Error('err')
               reject()
           })
-
       })
     }
   }

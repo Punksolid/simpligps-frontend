@@ -9,7 +9,7 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    tenant: getTenantID(), // todo change for uuid
+    tenant: getTenantID() // todo change for uuid
   },
 
   mutations: {
