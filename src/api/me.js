@@ -15,6 +15,13 @@ export function getMyAccounts() {
   })
 }
 
+export function fetchAccountDetails(uuid) {
+  return request({
+    url: 'v1/me/accounts/' + uuid,
+    method: 'GET'
+  })
+}
+
 export function viewAccount() {
   return request({
     url: 'v1/me/accounts/',

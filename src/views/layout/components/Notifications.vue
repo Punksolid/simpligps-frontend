@@ -34,7 +34,7 @@
 
 <script>
   import { loggedUser } from '../../../api/users'
-  import { getMyNotifications, markNotificationAsRead } from '../../../api/me'
+  import { fetchAccountDetails, getMyNotifications, markNotificationAsRead } from '../../../api/me'
   // import { getMyNotifications } from '../../../api/me'
 
   export default {
@@ -82,17 +82,46 @@
         })*/
       this.fetchNotifications()
 
-      window.Echo.private('App.User.' + this.$store.state.user.id)
-        .notification((notification) => {
+      // window.Echo.private('App.User.' + this.$store.state.user.id)
+      //   .notification((notification) => {
+      //     console.log('NOTIFICATION')
+      //     this.notifications.push({
+      //       id: notification.id,
+      //       message: notification.message,
+      //       link: notification.link
+      //     })
+      //     event.$emit('activate-alert', notification)
+      //     // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
+      //   })
+
+      // Account Notifications Channel
+      // console.log( 'App.Account.' + this.$store.getters.tenant)
+      // window.Echo.private('App.Account.' + this.$store.user.tenant)
+        // .listen()
+      window.Echo.private('App.Account.' + this.$store.getters.tenant_id)
+        .listen('ReceivedAlertHookEvent', (notification) => {
           console.log('NOTIFICATION')
-          this.notifications.push({
-            id: notification.id,
-            message: notification.message,
-            link: notification.link
-          })
-          event.$emit('activate-alert', notification)
+          console.log(notification)
+          // App\Events\ReceivedAlertHookEvent
+          // this.notifications.push({
+          //   id: notification.id,
+          //   message: notification.message,
+          //   link: notification.link
+          // })
+          // event.$emit('activate-alert', notification)
           // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
         })
+        // .notification((notification) => {
+        //   console.log('NOTIFICATION')
+        //   this.notifications.push({
+        //     id: notification.id,
+        //     message: notification.message,
+        //     link: notification.link
+        //   })
+        //   event.$emit('activate-alert', notification)
+        //   // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
+        // })
+
       this.fetchUser()
     }
   }
