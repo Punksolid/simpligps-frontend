@@ -98,27 +98,41 @@
       // console.log( 'App.Account.' + this.$store.getters.tenant)
       // window.Echo.private('App.Account.' + this.$store.user.tenant)
         // .listen()
-      window.Echo.private('App.Account.' + this.$store.getters.tenant_id)
-        .listen('ReceivedAlertHookEvent', (notification) => {
+      console.log('App.Account.' + this.$store.getters.account_id)
+      window.Echo.private('App.Account.' + this.$store.getters.account_id)
+        .notification((notification) => {
           console.log('NOTIFICATION')
-          console.log(notification)
-          // App\Events\ReceivedAlertHookEvent
-          // this.notifications.push({
-          //   id: notification.id,
-          //   message: notification.message,
-          //   link: notification.link
-          // })
-          // event.$emit('activate-alert', notification)
+          this.notifications.push({
+            id: notification.id,
+            message: notification.message,
+            link: notification.link
+          })
+          event.$emit('activate-alert', notification)
           // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
         })
-        // .notification((notification) => {
+      // window.Echo.private('App.User.' + this.$store.getters.account_id)
+      //   .notification((notification) => {
+      //     alert('PONG')
+      //
+      //     console.log('NOTIFICATION')
+      //     this.notifications.push({
+      //       id: notification.id,
+      //       message: notification.message,
+      //       link: notification.link
+      //     })
+      //     event.$emit('activate-alert', notification)
+      //     // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
+      //   })
+        // .listen('ReceivedAlertHookEvent', (notification) => {
         //   console.log('NOTIFICATION')
-        //   this.notifications.push({
-        //     id: notification.id,
-        //     message: notification.message,
-        //     link: notification.link
-        //   })
-        //   event.$emit('activate-alert', notification)
+        //   console.log(notification)
+        //   // App\Events\ReceivedAlertHookEvent
+        //   // this.notifications.push({
+        //   //   id: notification.id,
+        //   //   message: notification.message,
+        //   //   link: notification.link
+        //   // })
+        //   // event.$emit('activate-alert', notification)
         //   // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
         // })
 

@@ -1,10 +1,11 @@
 import request from '@/utils/request'
+import Cookies from 'js-cookie'
 
 const account = {
   state: {
-    id: '',
-    name: '',
-    uuid: ''
+    id: Cookies.get('Account') ? Cookies.getJSON('Account').id : '',
+    name: Cookies.get('Account') ? Cookies.getJSON('Account').name : '',
+    uuid: Cookies.get('Account') ? Cookies.getJSON('Account').uuid : ''
   },
 
   mutations: {
@@ -12,6 +13,7 @@ const account = {
       state.uuid = account.uuid
       state.id = account.id
       state.name = account.easyname
+      Cookies.set('Account', account)
     }
   },
 
