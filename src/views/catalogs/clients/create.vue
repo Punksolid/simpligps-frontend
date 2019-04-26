@@ -27,16 +27,10 @@
       <el-form-item label="Email" prop="email">
         <el-input v-model="form.email" type="email" clearable/>
       </el-form-item>
-      <el-form-item label="Contact">
-        <el-select v-model="form.contact" placeholder="Select a contact">
-          <el-option
-            v-for="contact in contacts"
-            :key="contact.id"
-            :label="contact.name"
-            :value="contact.id">
-          </el-option>
-        </el-select>
+        <el-form-item label="Person's Name" prop="persons name">
+        <el-input v-model="form.person_name"  clearable/>
       </el-form-item>
+
       <el-form-item label="Status" prop="status">
         <el-switch v-model="form.status"/>
       </el-form-item>
@@ -61,7 +55,6 @@
 
 <script>
   import { createClient, updateClient } from '@/api/clients'
-  import { getContacts } from '../../../api/contacts'
 
   export default {
     name: 'CreateClient',
@@ -72,7 +65,6 @@
     ],
     data() {
       return {
-        contacts: [],
         dialogVisible: false,
         loading: false
       }
@@ -117,15 +109,9 @@
         } else {
           this.$emit('closedialog')
         }
-      },
-      fetchContacts(params) {
-        getContacts(params).then(response => {
-          this.contacts = response.data.data
-        })
       }
     },
     created() {
-      this.fetchContacts({ 'all': 1 })
     }
   }
 </script>
