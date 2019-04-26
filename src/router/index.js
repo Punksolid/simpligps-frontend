@@ -99,7 +99,7 @@ export const tenantProtectedRoutes = [
       {
         path: 'devices',
         name: 'Devices',
-        component: () => import('@/views/catalogs/devices/index'), // Parent router-view,
+        component: () => import('@/views/catalogs/devices/index'),
         meta: { title: 'Devices', icon: 'fas fa-truck-loading' }
       },
       {
@@ -121,9 +121,15 @@ export const tenantProtectedRoutes = [
         meta: { title: 'Carriers', icon: 'icon-exchange-alt' }
       },
       {
+        path: 'clients',
+        name: 'Clients',
+        component: () => import('@/views/catalogs/clients/index'),
+        meta: { title: 'Clients', icon: 'icon-users' }
+      },
+      {
         path: 'contacts',
         name: 'Contacts',
-        component: () => import('@/views/catalogs/contacts/index'), // Parent router-view
+        component: () => import('@/views/catalogs/contacts/index'),
         meta: { title: 'Contacts', icon: 'icon-users' }
       },
       {
