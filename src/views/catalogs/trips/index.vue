@@ -116,8 +116,9 @@
             this.tripsListPage = response.data.meta
             this.tripsListPage.page = response.data.meta.current_page
             this.listLoading = false
+          }).catch(() => {
+            this.listLoading = false
           })
-          this.listLoading = false
         },
         openDialog() {
           this.tripData = {}
@@ -131,6 +132,7 @@
         },
         handleUpdate(index, row) {
           this.tripData = row
+          this.listLoading = true
           this.titleDialog = 'Edit Trip'
           this.dialogVisible = true
         },
@@ -144,7 +146,7 @@
           }).then(() => {
             deleteTrip(tripData.id).then(response => {
               this.$message.error('Trip ID: ' + tripData.id + ' deleted.')
-              this.fetchUsersList()
+              this.fetchTrips()
             }).catch(() => {
               this.listLoading = false
             })

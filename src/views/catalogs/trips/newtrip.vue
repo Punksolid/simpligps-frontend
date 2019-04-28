@@ -135,7 +135,7 @@
 
         <div slot="footer" class="dialog-footer text-center">
             <el-button @click="handleClose">Cancel</el-button>
-            <el-button type="primary" @click="onSubmit">Create</el-button>
+            <el-button type="primary" @click="onSubmit">{{form.id?'Update':'Create'}}</el-button>
         </div>
 
     </el-dialog>
@@ -173,7 +173,6 @@
                           type: 'success',
                           duration: 10 * 1000
                         })
-                        this.form = {}
                         this.$emit('created')
                     })
                 } else {
@@ -183,7 +182,6 @@
                           type: 'success',
                           duration: 10 * 1000
                         })
-                        this.form = {}
                         this.$emit('created')
                     })
                 }

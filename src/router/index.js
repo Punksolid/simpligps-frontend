@@ -139,10 +139,10 @@ export const tenantProtectedRoutes = [
         meta: { title: 'Places', icon: 'fas fa-map-marker-alt' }
       },
       {
-        path: 'status',
-        name: 'Status',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Status', icon: 'icon-clipboard-check' }
+        path: 'situations',
+        name: 'Situations',
+        component: () => import('@/views/catalogs/situations/index'),
+        meta: { title: 'Situations', icon: 'fas fa-clipboard-check' }
       },
       {
         path: 'monitoring_assign',
