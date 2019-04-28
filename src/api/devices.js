@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getDevices(params) {
+export function fetchDevices(params) {
   return request({
     url: 'v1/devices',
     method: 'GET',

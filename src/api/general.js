@@ -31,7 +31,7 @@ export function getWialonNotifications() {
 
 export function destroyNotification(id) {
   return request({
-    url: 'v1/wialon/notifications/' + id,
+    url: 'v1/notification_triggers/' + id,
     method: 'delete'
   })
 }

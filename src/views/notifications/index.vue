@@ -10,7 +10,7 @@
         :visible.sync="dialogVisible"
         width="40%"
         :before-close="handleClose">
-          <CreateNotification @creted="fetchWialonNotifications()" @closedialog="dialogVisible = false"></CreateNotification>
+          <CreateNotification @created="getNotifications()" @closedialog="dialogVisible = false"></CreateNotification>
       </el-dialog>
 
     <el-col>
@@ -58,6 +58,7 @@
 
   import CreateNotification from '@/views/notifications/create.vue'
   import { destroyNotification, getWialonNotifications } from '../../api/general'
+  import {fetchNotificationTriggers} from "../../api/notifications";
 
   export default {
     name: 'NotificationsList',
@@ -73,12 +74,16 @@
       }
     },
     methods: {
-      fetchWialonNotifications() {
+      getNotifications() {
         this.dialogVisible = false
         this.loading = true
-        getWialonNotifications().then(response => {
-          this.notifications_list = response.data.data
-          this.loading = false
+        // getWialonNotifications().then(response => {
+        //   this.notifications_list = response.data.data
+        //   this.loading = false
+        // })
+        fetchNotificationTriggers().then(response => {
+              this.notifications_list = response.data.data
+              this.loading = false
         })
       },
       handleClose(done) {
@@ -92,7 +97,7 @@
       deleteNotification(index, row) {
         this.loading = true
         destroyNotification(row.id).then(response => {
-          this.fetchWialonNotifications()
+          this.getNotifications()
         }).catch(response => {
           console.log(response.data)
           this.loading = false
@@ -102,7 +107,7 @@
 
     },
     created() {
-      this.fetchWialonNotifications()
+      this.getNotifications()
     }
   }
 </script>

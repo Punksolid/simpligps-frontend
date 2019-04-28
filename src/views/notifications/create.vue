@@ -36,12 +36,12 @@
     </div>
 
     <el-form-item label="Units">
-      <el-select v-model="form.units" multiple placeholder="Select">
+      <el-select v-model="form.devices_ids" multiple placeholder="Select">
         <el-option
-          v-for="unit in units"
-          :key="unit.value"
-          :label="unit.label"
-          :value="unit.value">
+          v-for="device in devices"
+          :key="device.id"
+          :label="device.name"
+          :value="device.id">
         </el-option>
       </el-select>
     </el-form-item>
@@ -62,6 +62,8 @@
 import { getWialonUnits, getResources, createWialonNotification } from '../../api/general'
 import SpeedControlType from './control_types/SpeedControlType'
 import GeofenceControlType from './control_types/GeofenceControlType'
+import { postNotificationTrigger } from '../../api/notifications'
+import { fetchDevices } from '../../api/devices'
 
   export default {
      name: 'CreateNotification',
@@ -71,6 +73,7 @@ import GeofenceControlType from './control_types/GeofenceControlType'
     },
     data() {
       return {
+        devices: [],
         loading: false,
         form: {
           resource: null,
@@ -79,7 +82,7 @@ import GeofenceControlType from './control_types/GeofenceControlType'
             min_speed: 0,
             max_speed: 0
           },
-          units: [],
+          devices_ids: [],
           activate: '',
           name: ''
         },
@@ -99,14 +102,13 @@ import GeofenceControlType from './control_types/GeofenceControlType'
             label: 'Geofence',
             value: 'geofence'
           }],
-        resources: '',
-        units: ''
+        resources: ''
       }
     },
     methods: {
       onSubmit() {
         this.loading = true
-        createWialonNotification(this.form).then(response => {
+        postNotificationTrigger(this.form).then(response => {
           this.$message({
             message: 'Notification created successfully',
             type: 'success'
@@ -128,21 +130,27 @@ import GeofenceControlType from './control_types/GeofenceControlType'
       setControlType(event) {
         this.options_control_type.value = event.target.value
       },
-      fetchWialonResources() {
+      fetchWialonResources() { // todo deprecar, los resources seran manejados internamente
         getResources().then(response => {
           this.resources = response.data.data
         })
         getWialonUnits().then(response => {
-          this.units = response.data.data.map(unit => {
+          this.devices = response.data.data.map(unit => {
             return { value: unit.id, label: unit.nm }
           })
         }).catch(e => {
           console.log(e)
         })
+      },
+      getDevices() {
+          fetchDevices({ 'all': 1 }).then(response => {
+              this.devices = response.data.data
+          })
       }
     },
     created() {
-      this.fetchWialonResources()
+        // this.fetchWialonResources()
+        this.getDevices()
     }
   }
 </script>

@@ -102,7 +102,7 @@
 </template>
 
 <script>
-  import { getDevices, deleteDevice } from '../../../api/devices'
+  import { fetchDevices, deleteDevice } from '../../../api/devices'
   import RegisterDevice from './create'
 
   export default {
@@ -146,7 +146,7 @@
       fetchDevicesPage() {
         this.listLoading = true
         this.search = {}
-        getDevices(this.devicesListPage).then(response => {
+        fetchDevices(this.devicesListPage).then(response => {
           this.devicesListPage = response.data.meta
           this.devicesList = response.data.data
           this.dialogVisible = false
@@ -155,7 +155,7 @@
       },
       handleFilter() {
         this.listLoading = true
-        getDevices(this.search).then(response => {
+        fetchDevices(this.search).then(response => {
           this.devicesListPage = response.data.meta
           this.devicesListPage.page = response.data.meta.current_page
           this.devicesList = response.data.data
@@ -168,7 +168,7 @@
       },
       fetchDevicesList() {
         this.listLoading = true
-        getDevices(this.devicesList).then(response => {
+        fetchDevices(this.devicesList).then(response => {
           this.devicesList = response.data.data
           this.listLoading = false
         })
