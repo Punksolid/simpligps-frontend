@@ -7,13 +7,17 @@
     <el-form-item label="Name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="Resources">
-      <el-select v-model="form.resource" placeholder="Select">
+    <el-form-item label="Level">
+      <el-select v-model="form.level" placeholder="Select">
         <el-option
-          v-for="resource_element in resources"
-          :key="resource_element.id"
-          :label="resource_element.name"
-          :value="resource_element.id">
+          v-for="level in levels"
+          :class="level.id"
+          :key="level.id"
+          :label="level.name"
+          :value="level.id">
+            <span style="float: left">{{ level.name }}</span>
+
+            <span style="float: right; color: #8492a6; font-size: 13px"><el-tag :type="level.id">{{ level.name }}</el-tag></span>
         </el-option>
     </el-select>
     </el-form-item>
@@ -59,7 +63,7 @@
 
 <script>
 
-import { getWialonUnits, getResources, createWialonNotification } from '../../api/general'
+import { getWialonUnits } from '../../api/general'
 import SpeedControlType from './control_types/SpeedControlType'
 import GeofenceControlType from './control_types/GeofenceControlType'
 import { postNotificationTrigger } from '../../api/notifications'
@@ -73,10 +77,16 @@ import { fetchDevices } from '../../api/devices'
     },
     data() {
       return {
+          levels: [
+              { name: 'Good', id: 'good' },
+              { name: 'Success', id: 'success' },
+              { name: 'Info', id: 'info' },
+              { name: 'Warning', id: 'warning' },
+              { name: 'Danger', id: 'danger' }
+          ],
         devices: [],
         loading: false,
         form: {
-          resource: null,
           control_type: null,
           params: {
             min_speed: 0,
@@ -102,7 +112,6 @@ import { fetchDevices } from '../../api/devices'
             label: 'Geofence',
             value: 'geofence'
           }],
-        resources: ''
       }
     },
     methods: {
@@ -129,18 +138,6 @@ import { fetchDevices } from '../../api/devices'
       },
       setControlType(event) {
         this.options_control_type.value = event.target.value
-      },
-      fetchWialonResources() { // todo deprecar, los resources seran manejados internamente
-        getResources().then(response => {
-          this.resources = response.data.data
-        })
-        getWialonUnits().then(response => {
-          this.devices = response.data.data.map(unit => {
-            return { value: unit.id, label: unit.nm }
-          })
-        }).catch(e => {
-          console.log(e)
-        })
       },
       getDevices() {
           fetchDevices({ 'all': 1 }).then(response => {
