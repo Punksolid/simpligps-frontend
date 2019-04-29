@@ -7,13 +7,17 @@
     <el-form-item label="Name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="Resources">
-      <el-select v-model="form.resource" placeholder="Select">
+    <el-form-item label="Level">
+      <el-select v-model="form.level" placeholder="Select">
         <el-option
-          v-for="resource_element in resources"
-          :key="resource_element.id"
-          :label="resource_element.name"
-          :value="resource_element.id">
+          v-for="level in levels"
+          :class="level.id"
+          :key="level.id"
+          :label="level.name"
+          :value="level.id">
+            <span style="float: left">{{ level.name }}</span>
+
+            <span style="float: right; color: #8492a6; font-size: 13px"><el-tag :type="level.id">{{ level.name }}</el-tag></span>
         </el-option>
     </el-select>
     </el-form-item>
@@ -36,12 +40,12 @@
     </div>
 
     <el-form-item label="Units">
-      <el-select v-model="form.units" multiple placeholder="Select">
+      <el-select v-model="form.devices_ids" multiple placeholder="Select">
         <el-option
-          v-for="unit in units"
-          :key="unit.value"
-          :label="unit.label"
-          :value="unit.value">
+          v-for="device in devices"
+          :key="device.id"
+          :label="device.name"
+          :value="device.id">
         </el-option>
       </el-select>
     </el-form-item>
@@ -59,9 +63,11 @@
 
 <script>
 
-import { getWialonUnits, getResources, createWialonNotification } from '../../api/general'
+import { getWialonUnits } from '../../api/general'
 import SpeedControlType from './control_types/SpeedControlType'
 import GeofenceControlType from './control_types/GeofenceControlType'
+import { postNotificationTrigger } from '../../api/notifications'
+import { fetchDevices } from '../../api/devices'
 
   export default {
      name: 'CreateNotification',
@@ -71,15 +77,22 @@ import GeofenceControlType from './control_types/GeofenceControlType'
     },
     data() {
       return {
+          levels: [
+              { name: 'Good', id: 'good' },
+              { name: 'Success', id: 'success' },
+              { name: 'Info', id: 'info' },
+              { name: 'Warning', id: 'warning' },
+              { name: 'Danger', id: 'danger' }
+          ],
+        devices: [],
         loading: false,
         form: {
-          resource: null,
           control_type: null,
           params: {
             min_speed: 0,
             max_speed: 0
           },
-          units: [],
+          devices_ids: [],
           activate: '',
           name: ''
         },
@@ -99,14 +112,12 @@ import GeofenceControlType from './control_types/GeofenceControlType'
             label: 'Geofence',
             value: 'geofence'
           }],
-        resources: '',
-        units: ''
       }
     },
     methods: {
       onSubmit() {
         this.loading = true
-        createWialonNotification(this.form).then(response => {
+        postNotificationTrigger(this.form).then(response => {
           this.$message({
             message: 'Notification created successfully',
             type: 'success'
@@ -128,21 +139,15 @@ import GeofenceControlType from './control_types/GeofenceControlType'
       setControlType(event) {
         this.options_control_type.value = event.target.value
       },
-      fetchWialonResources() {
-        getResources().then(response => {
-          this.resources = response.data.data
-        })
-        getWialonUnits().then(response => {
-          this.units = response.data.data.map(unit => {
-            return { value: unit.id, label: unit.nm }
+      getDevices() {
+          fetchDevices({ 'all': 1 }).then(response => {
+              this.devices = response.data.data
           })
-        }).catch(e => {
-          console.log(e)
-        })
       }
     },
     created() {
-      this.fetchWialonResources()
+        // this.fetchWialonResources()
+        this.getDevices()
     }
   }
 </script>

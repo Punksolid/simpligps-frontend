@@ -68,9 +68,9 @@
 
 <script>
   import { createTruck, updateTruck } from '@/api/trucks'
-  import { getDevices } from '@/api/devices'
   import { fetchCarriers } from '@/api/carriers'
   import { getOperators } from '@/api/operators'
+  import {fetchDevices} from "../../../api/devices"
 
   export default {
     name: 'CreateTruck',
@@ -125,7 +125,7 @@
         }
       },
       DevicesAndCarriers: function() {
-        getDevices(this.params).then(resp => {
+        fetchDevices(this.params).then(resp => {
           this.devices = resp.data.data
         }).catch(() => {
           this.$message.error('Error fetching Devices List')
