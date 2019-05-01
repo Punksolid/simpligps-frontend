@@ -34,8 +34,8 @@
 
 <script>
   import { loggedUser } from '../../../api/users'
-  import { fetchAccountDetails, getMyNotifications, markNotificationAsRead } from '../../../api/me'
-  // import { getMyNotifications } from '../../../api/me'
+  import { getMyNotifications, markNotificationAsRead } from '../../../api/me'
+  // import { fetchAccountDetails } from '@/api/me'
 
   export default {
     name: 'Notifications',

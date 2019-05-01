@@ -63,7 +63,7 @@
 
 <script>
 
-import { getWialonUnits } from '../../api/general'
+// import { getWialonUnits } from '../../api/general'
 import SpeedControlType from './control_types/SpeedControlType'
 import GeofenceControlType from './control_types/GeofenceControlType'
 import { postNotificationTrigger } from '../../api/notifications'
@@ -111,7 +111,7 @@ import { fetchDevices } from '../../api/devices'
           {
             label: 'Geofence',
             value: 'geofence'
-          }],
+          }]
       }
     },
     methods: {
