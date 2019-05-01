@@ -26,13 +26,7 @@
 
     </el-row>
 
-    <el-dialog
-      :title="titleDialog[dialogStatus]"
-      :visible.sync="dialogVisible"
-      :show-close="false"
-      width="40%">
-      <RegisterDevice :form="elementToUpdate" @newdevice="fetchDevicesPage" @resetdata="cleanFields" @closedialog="dialogVisible = false"></RegisterDevice>
-    </el-dialog>
+    <RegisterDevice :form="formData" :title="titleDialog[dialogStatus]" :dialogvisible="dialogVisible" @newdevice="fetchDevicesPage" @closedialog="closeDialog"/>
 
     <el-col>
       <el-table
@@ -74,11 +68,11 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, devicesList)"
+              @click="handleUpdate(scope.$index, scope.row)"
               icon="fas fa-edit">
             </el-button>
             <el-button
-              @click.native.prevent="deleteRow(scope.$index, devicesList)"
+              @click.native.prevent="deleteRow(scope.$index, scope.row)"
               type="danger"
               size="mini"
               icon="fas fa-trash">
@@ -119,13 +113,7 @@
           plate: ''
         },
         devicesList: null,
-        elementToUpdate: {
-          name: '',
-          gps: '',
-          plate: '',
-          internal_number: '',
-          carrier_id: ''
-        },
+        formData: {},
         devicesListPage: {
           page: 0,
           from: 0,
@@ -145,11 +133,13 @@
     methods: {
       fetchDevicesPage() {
         this.listLoading = true
+        this.dialogVisible = false
         this.search = {}
         fetchDevices(this.devicesListPage).then(response => {
-          this.devicesListPage = response.data.meta
           this.devicesList = response.data.data
-          this.dialogVisible = false
+          this.devicesListPage = response.data.meta
+          this.listLoading = false
+        }).catch(() => {
           this.listLoading = false
         })
       },
@@ -160,55 +150,57 @@
           this.devicesListPage.page = response.data.meta.current_page
           this.devicesList = response.data.data
           this.listLoading = false
+        }).catch(() => {
+          this.listLoading = false
         })
       },
       handleCurrentChange(val) {
         this.devicesListPage.page = val
         this.fetchDevicesPage()
       },
-      fetchDevicesList() {
-        this.listLoading = true
-        fetchDevices(this.devicesList).then(response => {
-          this.devicesList = response.data.data
-          this.listLoading = false
-        })
-      },
       openDialog() {
+        this.listLoading = true
         this.dialogStatus = 'create'
         this.dialogVisible = true
       },
+      closeDialog() {
+        this.listLoading = false
+        this.formData = {}
+        this.dialogVisible = false
+      },
       deleteRow(index, deviceListData) {
+        this.listLoading = true
         this.$confirm('This will permanently delete device: ' + deviceListData[index].gps + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
-          deleteDevice(deviceListData[index].id)
-          this.fetchDevicesList()
-          this.fetchDevicesPage()
-          this.$message({
-            type: 'success',
-            message: 'Device deleted successfully'
+          deleteDevice(deviceListData[index].id).then(() => {
+            this.fetchDevicesPage()
+            this.$message({
+              type: 'success',
+              message: 'Device deleted successfully'
+            })
+          }).catch(() => {
+            this.$message.error('Error deleting device')
           })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: 'Device delete canceled'
           })
+          this.listLoading = false
         })
       },
-      handleUpdate(index, deviceListData) {
-        this.elementToUpdate = deviceListData[index]
+      handleUpdate(index, row) {
+        this.listLoading = true
+        this.formData = row
         this.dialogStatus = 'update'
         this.dialogVisible = true
-      },
-      cleanFields() {
-        this.elementToUpdate = {}
       }
     },
     created() {
-      this.fetchDevicesList()
       this.fetchDevicesPage()
     }
   }

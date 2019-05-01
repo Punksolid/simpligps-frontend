@@ -34,6 +34,7 @@
           </el-option>
         </el-select>
       </el-form-item>
+
       <el-form-item label="Carrier" prop="carrier">
         <el-select v-model="form.carrier_id" placeholder="Select Carrier">
           <el-option
@@ -41,16 +42,6 @@
             :key="carrier.id"
             :label="selected_carrier?selected_carrier:carrier.carrier_name"
             :value="carrier.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Operator" prop="operator">
-        <el-select v-model="form.operator_id" placeholder="Select Operator">
-          <el-option
-            v-for="operator in operators"
-            :key="operator.id"
-            :label="operator.name"
-            :value="operator.id">
           </el-option>
         </el-select>
       </el-form-item>
@@ -69,8 +60,7 @@
 <script>
   import { createTruck, updateTruck } from '@/api/trucks'
   import { fetchCarriers } from '@/api/carriers'
-  import { getOperators } from '@/api/operators'
-  import {fetchDevices} from "../../../api/devices"
+  import { fetchDevices } from '../../../api/devices'
 
   export default {
     name: 'CreateTruck',
@@ -86,7 +76,6 @@
         loading: false,
         devices: [],
         carriers: [],
-        operators: [],
         params: {
           all: true
         }
@@ -124,7 +113,7 @@
           })
         }
       },
-      DevicesAndCarriers: function() {
+      DevicesAndCarriers() {
         fetchDevices(this.params).then(resp => {
           this.devices = resp.data.data
         }).catch(() => {
@@ -137,9 +126,6 @@
             // Se busca 'carrier_id' en Carriers y se retorna el nombre
             this.selected_carrier = carrier.carrier_name
           }
-        })
-        getOperators(this.params).then(resp => {
-          this.operators = resp.data.data
         })
       },
       handleClose() {

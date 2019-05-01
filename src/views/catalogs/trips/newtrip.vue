@@ -16,8 +16,18 @@
             <el-form-item label="Client">
                 <el-input v-model="form.client" placeholder="Client"/>
             </el-form-item>
+          <el-form-item label="Operator" prop="operator">
+            <el-select v-model="form.operator_id" placeholder="Select Device">
+              <el-option
+                v-for="operator in operators"
+                :key="operator.id"
+                :label="operator.name"
+                :value="operator.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
             <el-form-item label="Georoute">
-                <el-select v-model="form.georoute_ref" placeholder="Select">
+                <el-select v-model="form.georoute_ref" placeholder="Select Georute">
                     <el-option
                             v-for="geofence in geofences"
                             :key="geofence.id"
@@ -27,7 +37,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Origin">
-                <el-select v-model="form.origin_id" placeholder="Origin">
+                <el-select v-model="form.origin_id" placeholder="Select Origin">
                     <el-option
                             v-for="place in places"
                             :key="place.id"
@@ -144,6 +154,7 @@
 <script>
     import { createTrip, updateTrip } from '@/api/trips'
     import { fetchGeofences, getPlaces } from '../../../api/general'
+    import { getOperators } from '@/api/operators'
     import { fetchCarriers } from '../../../api/carriers'
     import { trucksList } from '@/api/trucks'
     import { trailerboxList } from '@/api/trailerbox'
@@ -158,6 +169,7 @@
         data() {
             return {
               places: '',
+              operators: [],
               geofences: [],
               trucks: [],
               carriers: [],
@@ -187,7 +199,7 @@
                 }
             },
           handleClose() {
-            if (this.form.rp) {
+            if (this.form.rp || this.form.invoice) {
               this.$confirm('Are you sure to close? Not saved data will be lost!')
                 .then(_ => {
                   this.$emit('closedialog')
@@ -197,11 +209,16 @@
               this.$emit('closedialog')
             }
           },
-            fetchPlaces(params) {
-                getPlaces(params).then(response => {
-                    this.places = response.data.data
-                })
-            },
+          fetchOperators(params) {
+            getOperators(params).then(response => {
+              this.operators = response.data.data
+            })
+          },
+          fetchPlaces(params) {
+              getPlaces(params).then(response => {
+                  this.places = response.data.data
+              })
+          },
           getTrucks(params) {
             trucksList(params).then(response => {
               this.trucks = response.data.data
@@ -214,6 +231,7 @@
           }
         },
         mounted() {
+          this.fetchOperators({ 'all': 1 })
           this.fetchPlaces({ 'all': 1 })
           this.getTrucks({ 'all': 1 })
           this.getTrailersbox({ 'all': 1 })

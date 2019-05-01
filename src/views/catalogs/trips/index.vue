@@ -121,7 +121,10 @@
           })
         },
         openDialog() {
-          this.tripData = {}
+          this.tripData = {
+            intermediates: [],
+            trailers_ids: []
+          }
           this.titleDialog = 'New Trip'
           this.listLoading = true
           this.dialogVisible = true

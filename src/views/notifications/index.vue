@@ -51,16 +51,20 @@
             </el-table>
         </el-col>
         <el-col class="m-t-5 t-center">
-            <pagination v-show="total>0" :total="total" :page.sync="paginationQuery.page"
-                        :limit.sync="paginationQuery.limit" @pagination="getNotifications"/>
+            <pagination
+              v-show="total>0"
+              :total="total"
+              :page.sync="paginationQuery.page"
+              :limit.sync="paginationQuery.limit"
+              @pagination="getNotifications"/>
         </el-col>
     </el-row>
 </template>
 
 <script>
     import CreateNotification from '@/views/notifications/create.vue'
-    import {destroyNotification} from '../../api/general'
-    import {fetchNotificationTriggers} from '../../api/notifications'
+    import { destroyNotification } from '../../api/general'
+    import { fetchNotificationTriggers } from '../../api/notifications'
     // import { Pagination } from 'element-ui'
     import Pagination from '@/components/Pagination/index.vue'
     // import Pagination from "../../components/Pagination/index.vue"; // Secondary package based on el-pagination

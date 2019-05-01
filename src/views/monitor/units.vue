@@ -14,11 +14,15 @@
 
     <div class="m-t-20">
       <el-table
+        :data="unitsList"
         stripe
         :highlight-current-row=true
         height="610"
-        :data="unitsList">
-        <el-table-column type="expand" @row-click="deviceLocation(props.$index)">
+        :row-key="row => row.id"
+        :expand-row-keys="expandRowKeys"
+        @expand-change="handleExpandChange"
+      >
+        <el-table-column type="expand">
 
           <template slot-scope="props">
             <el-tabs type="border-card">
@@ -28,20 +32,17 @@
 
                 <el-col>
                   <GmapMap
-                    :center="{lat:24.791999, lng:-107.404263}"
+                    :center="deviceData.position"
                     :zoom="12"
                     map-type-id="roadmap"
                     style="width: 100%; height: 400px">
                     <GmapMarker
-                      :position="{
-                      lat: unitsList[props.$index].position.lat,
-                      lng: unitsList[props.$index].position.lon,
-                      }"
+                      :position="deviceData.position"
                       :icon="require('@/assets/carmarker.svg')"
-                      :title="'Unit: ' + unitsList[props.$index].name"
+                      :title="'Unit: ' + deviceData.name"
                       :clickable="true"
                       :draggable="false"
-                      @click="center=deviceMarker.position"
+                      @click="center=deviceData.position"
                     />
                   </GmapMap>
                 </el-col>
@@ -381,25 +382,6 @@
         @pagination="fetchUnitsList"/>
     </el-col>
 
-    <!-- <el-col>
-      <el-col class="t-center"><h3>Realtime Monitoring for: <b>PTS003</b></h3></el-col>
-      <el-col>
-        <GmapMap
-          :center="{lat:24.791999, lng:-107.404263}"
-          :zoom="12"
-          map-type-id="roadmap"
-          style="width: 100%; height: 400px">
-          <GmapMarker
-            v-if="marker.position"
-            :position="marker.position"
-            :clickable="true"
-            :draggable="false"
-            @click="center=m.position"
-          />
-        </GmapMap>
-      </el-col>
-    </el-col> -->
-
   </el-row>
 </template>
 
@@ -409,6 +391,7 @@
   export default {
     data() {
       return {
+        expandRowKeys: [],
         mockTable: [{
           id_group: '2016-05-03',
           hour: 'Tom',
@@ -481,7 +464,7 @@
         },
         options: [],
         selectedOptions: [],
-        deviceMarker: {
+        deviceData: {
           position: {
             lat: 0,
             lng: 0
@@ -526,11 +509,19 @@
           return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         }
       },
-      deviceLocation(index) {
-        console.log(index)
-        this.deviceMarker.position = {
-          lat: this.unitsList[index].position.lat,
-          lng: this.unitsList[index].position.lon
+      handleExpandChange(row, expandedRows) {
+        this.deviceDataUpdate(row)
+        const id = row.id
+        const lastId = this.expandRowKeys[0]
+        // disable mutiple row expanded
+        this.expandRowKeys = id === lastId ? [] : [id]
+      },
+      deviceDataUpdate(row) {
+        this.deviceData.id = row.id
+        this.deviceData.name = row.name
+        this.deviceData.position = {
+          lat: row.position.lat,
+          lng: row.position.lon
         }
       },
       handleSelectionChange() {
@@ -544,9 +535,13 @@
       this.links = this.loadAll()
       this.fetchUnitsList()
 
-     // setInterval(function() {
-     //     this.fetchUnitsList()
-     //  }.bind(this), 30000) // milisegundos
+     setInterval(function() {
+       this.fetchUnitsList()
+       if (this.expandRowKeys >= 1) {
+         var result = this.unitsList.find(item => item.id === this.expandRowKeys[0])
+         this.deviceDataUpdate(result)
+       }
+      }.bind(this), 1 * 60 * 1000) // First number is equal to Minutes.
     }
   }
 </script>

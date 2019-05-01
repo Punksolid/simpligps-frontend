@@ -13,7 +13,7 @@
       v-if="dialogVisible"
       :title="titleDialog"
       :dialogvisible="dialogVisible"
-      :form="elementToUpdate"
+      :form="formData"
       @truck_created="fetchTrucksList"
       @closedialog="closeDialog"/>
 
@@ -29,33 +29,22 @@
         @expand-change="handleExpandChange"
         stripe>
         <el-table-column type="expand">
+
           <template slot-scope="details">
             <el-row :gutter="10" v-loading="truckLoading">
-              <el-col class="panel" :xs="24" :sm="12" :lg="12">
-                <div class="panel-header bg-primary"><h3><i class="fas fa-truck"/>Truck</h3></div>
+              <el-col class="panel" :span="24">
+                <div class="panel-header bg-primary"><h3><i class="fas fa-truck"/><strong>Truck brand:</strong> {{truckData.brand}}</h3></div>
                 <el-col class="panel-body p-10 bg-gray-light">
-                  <el-col>
-                    <h3 class="name">{{truckData.brand}}</h3>
-                  </el-col>
-                  <el-col :span="12">
+                  <el-col :xs="24" :sm="12">
                   <p><b>MODEL:</b> {{truckData.model}}</p>
                   <p><b>COLOR:</b> {{truckData.color}}</p>
                   <p><b>ID:</b> {{truckData.id}}</p>
                   <p><b>GPS:</b> {{truckData.gps}}</p>
                   </el-col>
-                  <el-col :span="12">
+                  <el-col :xs="12" :sm="12">
                     <p><b>PLATE:</b> {{truckData.plate}}</p>
                     <p><b>INT. NUMBER:</b> {{truckData.internal_number}}</p>
                   </el-col>
-                </el-col>
-              </el-col>
-
-              <el-col class="panel" :xs="24" :sm="12" :lg="12">
-                <div class="panel-header bg-blue"><h3><i class="fas fa-user"/>Operator</h3></div>
-                <el-col class="panel-body p-10 bg-gray-light">
-                  <h3 class="name">{{truckData.operator.name}}</h3>
-                  <p><b>ID:</b> {{truckData.operator.id}}</p>
-                  <p><b>REF:</b> {{truckData.operator.reference_data}}</p>
                 </el-col>
               </el-col>
 
@@ -149,7 +138,7 @@
         },
         listLoading: false,
         truckLoading: false,
-        elementToUpdate: null,
+        formData: null,
         trucksListPage: {
           page: 0,
           per_page: 15,
@@ -177,7 +166,7 @@
       openDialog() {
         this.titleDialog = 'Create Truck'
         this.listLoading = true
-        this.elementToUpdate = {}
+        this.formData = {}
         this.dialogVisible = true
       },
       closeDialog() {
@@ -217,7 +206,7 @@
       },
       handleUpdate(index, truckData) {
         this.listLoading = true
-        this.elementToUpdate = truckData[index]
+        this.formData = truckData[index]
         this.titleDialog = 'Edit Truck'
         this.dialogVisible = true
       },
@@ -231,10 +220,10 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .trucktable {
     .panel {
-      box-shadow: none;
+      box-shadow: none !important;
     }
     h3 {
       font-weight: 600;
@@ -247,6 +236,11 @@
     }
     p {
       margin: 3px 0px;
+      font-size: 1.1em;
+      line-height: 1.3em;
+    }
+    .el-table__expanded-cell[class*=cell] {
+      padding: 10px !important;
     }
   }
 </style>
