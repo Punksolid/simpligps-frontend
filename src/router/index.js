@@ -70,6 +70,12 @@ export const tenantProtectedRoutes = [
         meta: { title: 'Units', icon: 'icon-cursor' }
       },
       {
+        path: 'trips',
+        name: 'Trips ',
+        component: () => import('@/views/catalogs/trips/index'),
+        meta: { title: 'Trips', icon: 'fas fa-route' }
+      },
+      {
         path: 'devicesmap',
         name: 'Devices Map',
         component: () => import('@/views/monitor/devices_map'),

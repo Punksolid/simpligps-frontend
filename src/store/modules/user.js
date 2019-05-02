@@ -70,7 +70,7 @@ const user = {
     LogOut: function({ commit, state }) {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      removeToken()
+      // removeToken()
       resetCookie()
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {

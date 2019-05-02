@@ -4,23 +4,16 @@
             <el-button
                     type="primary"
                     class="m-10 m-l-0"
-                    @click="dialogVisible = true"
+                    @click="openDialog"
                     icon="fas fa-bell p-r-10"
             >Create notification
             </el-button>
         </el-row>
 
-        <el-dialog
-                title="Create Notification"
-                :visible.sync="dialogVisible"
-                width="40%"
-                :before-close="handleClose"
-        >
-            <CreateNotification @created="getNotifications()" @closedialog="dialogVisible = false"></CreateNotification>
-        </el-dialog>
+        <CreateNotification :dialogvisible="dialogVisible" @created="getNotifications()" @closedialog="closeDialog"/>
 
         <el-col>
-            <el-table v-loading="loading" :data="notifications_list" stripe style="width: 100%">
+            <el-table v-loading="listLoading" :data="notifications_list" stripe style="width: 100%">
                 <el-table-column prop="name" label="Name" width="180"></el-table-column>
                 <el-table-column prop="control_type" label="Control Type" width="180"></el-table-column>
                 <el-table-column prop="level" label="Level">
@@ -44,13 +37,12 @@
                                 type="danger"
                                 @click="deleteNotification(scope.$index, scope.row)"
                                 icon="fas fa-trash"
-                        >Delete
-                        </el-button>
+                        > Delete</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </el-col>
-        <el-col class="m-t-5 t-center">
+        <el-col class="p-0">
             <pagination
               v-show="total>0"
               :total="total"
@@ -77,54 +69,56 @@
         },
         data() {
             return {
-                notifications_list: [],
-                dialogVisible: false,
-                centerDialogVisible: false,
-                loading: false,
-                total: 0,
-                paginationQuery: {
-                    current_page: 1,
-                    limit: 20
-                }
+              listLoading: false,
+              dialogVisible: false,
+              notifications_list: [],
+              centerDialogVisible: false,
+              total: 0,
+              paginationQuery: {
+                  current_page: 1,
+                  limit: 20
+              }
             }
         },
         methods: {
-            getNotifications() {
-                this.dialogVisible = false
-                this.loading = true
-                // getWialonNotifications().then(response => {
-                //   this.notifications_list = response.data.data
-                //   this.loading = false
-                // })
-                fetchNotificationTriggers(this.paginationQuery).then(response => {
-                    this.notifications_list = response.data.data
-                    this.total = response.data.meta.total
-                    this.loading = false
-                })
-            },
-            handleClose(done) {
-                this.$confirm('Are you sure to close? Not saved data will be lost!')
-                    .then(_ => {
-                        done()
-                    })
-                    .catch(_ => {
-                    })
-            },
-            deleteNotification(index, row) {
-                this.loading = true
-                destroyNotification(row.id)
-                    .then(response => {
-                        this.getNotifications()
-                    })
-                    .catch(response => {
-                        console.log(response.data)
-                        this.loading = false
-                    })
-                // this.deleteNotification()
-            },
-            pagination(val) {
-                this.getNotifications()
-            }
+          getNotifications() {
+              this.dialogVisible = false
+              this.listLoading = true
+              // getWialonNotifications().then(response => {
+              //   this.notifications_list = response.data.data
+              //   this.loading = false
+              // })
+              fetchNotificationTriggers(this.paginationQuery).then(response => {
+                  this.notifications_list = response.data.data
+                  this.total = response.data.meta.total
+                  this.listLoading = false
+              }).catch(() => {
+                this.listLoading = false
+              })
+          },
+          deleteNotification(index, row) {
+              this.listLoading = true
+              destroyNotification(row.id)
+                  .then(response => {
+                    this.$message.error(response.data.message)
+                    this.getNotifications()
+                  })
+                  .catch(_ => {
+                      this.listLoading = false
+                  })
+              // this.deleteNotification()
+          },
+          openDialog() {
+            this.listLoading = true
+            this.dialogVisible = true
+          },
+          closeDialog() {
+            this.listLoading = false
+            this.dialogVisible = false
+          },
+          pagination(val) {
+              this.getNotifications()
+          }
         },
         created() {
             this.getNotifications()

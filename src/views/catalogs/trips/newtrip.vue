@@ -7,17 +7,24 @@
             :before-close="handleClose">
 
         <el-form ref="form" :model="form" label-width="155px">
-            <el-form-item label="Payment Requirement">
-                <el-input v-model="form.rp" placeholder="RP"/>
-            </el-form-item>
-            <el-form-item label="Invoice">
-                <el-input v-model="form.invoice" placeholder="Invoice"/>
-            </el-form-item>
-            <el-form-item label="Client">
-                <el-input v-model="form.client" placeholder="Client"/>
-            </el-form-item>
+          <el-form-item label="Payment Requirement">
+              <el-input v-model="form.rp" placeholder="RP"/>
+          </el-form-item>
+          <el-form-item label="Invoice">
+              <el-input v-model="form.invoice" placeholder="Invoice"/>
+          </el-form-item>
+          <el-form-item label="Client">
+            <el-select v-model="form.client_id" placeholder="Select Client">
+              <el-option
+                v-for="client in clients"
+                :key="client.id"
+                :label="client.company_name"
+                :value="client.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="Operator" prop="operator">
-            <el-select v-model="form.operator_id" placeholder="Select Device">
+            <el-select v-model="form.operator_id" placeholder="Select Operator">
               <el-option
                 v-for="operator in operators"
                 :key="operator.id"
@@ -145,7 +152,7 @@
 
         <div slot="footer" class="dialog-footer text-center">
             <el-button @click="handleClose">Cancel</el-button>
-            <el-button type="primary" @click="onSubmit">{{form.id?'Update':'Create'}}</el-button>
+            <el-button type="primary" :loading="loading" @click="onSubmit">{{form.id?'Update':'Create'}}</el-button>
         </div>
 
     </el-dialog>
@@ -153,6 +160,7 @@
 
 <script>
     import { createTrip, updateTrip } from '@/api/trips'
+    import { clientsList } from '@/api/clients'
     import { fetchGeofences, getPlaces } from '../../../api/general'
     import { getOperators } from '@/api/operators'
     import { fetchCarriers } from '../../../api/carriers'
@@ -168,7 +176,9 @@
         ],
         data() {
             return {
+              loading: false,
               places: '',
+              clients: [],
               operators: [],
               geofences: [],
               trucks: [],
@@ -178,6 +188,7 @@
         },
         methods: {
             onSubmit() {
+              this.loading = true
                 if (this.form.id) {
                     updateTrip(this.form.id, this.form).then(response => {
                         this.$message({
@@ -185,7 +196,10 @@
                           type: 'success',
                           duration: 10 * 1000
                         })
-                        this.$emit('created')
+                      this.loading = false
+                      this.$emit('created')
+                    }).catch(() => {
+                      this.loading = false
                     })
                 } else {
                     createTrip(this.form).then(response => {
@@ -194,7 +208,10 @@
                           type: 'success',
                           duration: 10 * 1000
                         })
-                        this.$emit('created')
+                      this.loading = false
+                      this.$emit('created')
+                    }).catch(() => {
+                      this.loading = false
                     })
                 }
             },
@@ -208,6 +225,11 @@
             } else {
               this.$emit('closedialog')
             }
+          },
+          fetchClients(params) {
+            clientsList(params).then(response => {
+              this.clients = response.data.data
+            })
           },
           fetchOperators(params) {
             getOperators(params).then(response => {
@@ -231,6 +253,7 @@
           }
         },
         mounted() {
+          this.fetchClients({ 'all': 1 })
           this.fetchOperators({ 'all': 1 })
           this.fetchPlaces({ 'all': 1 })
           this.getTrucks({ 'all': 1 })
