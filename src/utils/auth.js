@@ -23,14 +23,16 @@ export function getToken() {
   return Cookies.get('TokenKey')
 }
 export function setToken(token) {
-  return Cookies.set('TokenKey', token)
+  // var TimeToExpire = new Date(new Date().getTime() + 15 * 60 * 1000) // Primer numero es igual a minutos.
+  return Cookies.set('TokenKey', token, { expires: 1 }) // Expiracion en un día, si se requieren minutos cambiar el numero 1 por la variable "TimeToExpire"
 }
 export function removeToken() {
   return Cookies.remove('TokenKey')
 }
 
 export function resetCookie() {
-  Cookies.remove('TokenKey')
+  Cookies.remove('Account')
+  Cookies.remove('UserId')
   Cookies.remove('TokenKey')
   return Cookies.remove('TenantID')
 }

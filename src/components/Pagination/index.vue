@@ -90,10 +90,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .pagination-container {
-  background: #fff;
-  padding: 32px 16px;
+  text-align: center;
+  padding: 20px 16px;
+  .el-pagination {
+    text-align: center;
+  }
 }
 .pagination-container.hidden {
   display: none;
