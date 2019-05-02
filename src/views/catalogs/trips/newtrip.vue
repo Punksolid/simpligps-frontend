@@ -14,7 +14,7 @@
               <el-input v-model="form.invoice" placeholder="Invoice"/>
           </el-form-item>
           <el-form-item label="Client">
-            <el-select v-model="form.client" placeholder="Select Client">
+            <el-select v-model="form.client_id" placeholder="Select Client">
               <el-option
                 v-for="client in clients"
                 :key="client.id"
