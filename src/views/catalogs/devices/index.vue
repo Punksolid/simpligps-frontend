@@ -170,13 +170,13 @@
       },
       deleteRow(index, deviceListData) {
         this.listLoading = true
-        this.$confirm('This will permanently delete device: ' + deviceListData[index].gps + ' are you sure to Continue?', 'Warning', {
+        this.$confirm('This will permanently delete device: ' + deviceListData.gps + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
-          deleteDevice(deviceListData[index].id).then(() => {
+          deleteDevice(deviceListData.id).then(() => {
             this.fetchDevicesPage()
             this.$message({
               type: 'success',
