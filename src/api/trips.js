@@ -27,3 +27,9 @@ export function deleteTrip(id) {
     method: 'DELETE'
   })
 }
+export function fetchTripLog(id) {
+  return request({
+    url: 'v1/trips/' + id + '/logs',
+    method: 'GET'
+  })
+}

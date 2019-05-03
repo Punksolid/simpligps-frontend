@@ -10,7 +10,8 @@
       </el-col>
     </el-row>
 
-  <CreateTrip :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"></CreateTrip>
+    <TripLog v-if="logDialog" :dialogvisible="logDialog" :tripdata="tripData" @closedialog="logDialog = false"/>
+    <CreateTrip v-if="titleDialog" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"></CreateTrip>
 
   <el-row>
    <el-col>
@@ -52,8 +53,13 @@
        <el-table-column
          label="Operations"
          fixed="right"
-         width="130">
+         width="180px">
          <template slot-scope="scope">
+           <el-button
+             size="mini"
+             icon="fas fa-clipboard-list"
+             @click="handleLogs(scope.row)">
+           </el-button>
            <el-button
              size="mini"
              disabled
@@ -89,16 +95,19 @@
 
 <script>
   import CreateTrip from './newtrip'
+  import TripLog from './triplog'
   import { tripList, deleteTrip } from '@/api/trips'
 
     export default {
       name: 'TripList',
       components: {
-        CreateTrip
+        CreateTrip,
+        TripLog
       },
       data() {
           return {
             dialogVisible: false,
+            logDialog: false,
             listLoading: false,
             titleDialog: 'New Trip',
             tripData: {},
@@ -133,6 +142,10 @@
           this.listLoading = false
           this.dialogVisible = false
         },
+        handleLogs(row) {
+          this.tripData = row
+          this.logDialog = true
+        },
         handleUpdate(index, row) {
           this.tripData = row
           this.listLoading = true
@@ -164,6 +177,10 @@
       },
       created() {
         this.fetchTrips()
+        if (!isNaN(this.$route.query.log)) {
+          this.tripData.id = this.$route.query.log
+          this.handleLogs(this.tripData)
+        }
       }
     }
 </script>
