@@ -34,6 +34,11 @@
         stripe
         v-loading="listLoading"
         style="width: 100%">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <Logs/>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="name"
           label="Name"
@@ -98,10 +103,12 @@
 <script>
   import { fetchDevices, deleteDevice } from '../../../api/devices'
   import RegisterDevice from './create'
+  import Logs from './logs'
 
   export default {
     name: 'DevicesList',
     components: {
+      Logs,
       RegisterDevice
     },
     data() {

@@ -35,6 +35,7 @@
       ]),
       routes() {
         return this.$router.options.routes.filter(function(route) {
+
           return !route.hidden
         })
       },

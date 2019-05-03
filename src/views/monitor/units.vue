@@ -476,12 +476,7 @@
       loadAll() {
         return [
           { 'value': 'Sanchez Trucking', 'link': 'https://github.com/vuejs/vue' },
-          { 'value': 'element Trucking', 'link': 'https://github.com/ElemeFE/element' },
-          { 'value': 'Cosas imposibles', 'link': 'https://github.com/ElemeFE/cooking' },
-          { 'value': 'Tecnocosas', 'link': 'https://github.com/ElemeFE/mint-ui' },
-          { 'value': 'Jager Trucking', 'link': 'https://github.com/vuejs/vuex' },
-          { 'value': 'Fresh Fruit co.', 'link': 'https://github.com/vuejs/vue-router' },
-          { 'value': 'babel Trucking', 'link': 'https://github.com/babel/babel' }
+
         ]
       },
       fetchUnitsList() {
