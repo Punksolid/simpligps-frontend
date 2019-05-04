@@ -5,7 +5,7 @@
 
           <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="WIALON ACCESS KEY" name="1">
-            <el-form :model="accessKey" >
+            <el-form v-loading="loading" :model="accessKey" >
               <el-form-item style="width: 100%">
                 <el-input type="text" v-model="accessKey.wialon_key" placeholder="Wialon Key">
                   <template slot="prepend">Wialon Key:</template>
@@ -34,6 +34,7 @@
     name: 'Settings',
     data() {
       return {
+        loading: false,
         activeName: '1',
         accessKey: {
           wialon_key: '',
@@ -43,12 +44,14 @@
     },
     methods: {
       onSubmit() {
+        this.loading = true
         updateAccessKey(this.accessKey).then(response => {
           Message({
             message: response.data.data.message,
             type: 'success',
             duration: 10 * 1000
           })
+          this.loading = false
         })
       },
       fillSettings() {
