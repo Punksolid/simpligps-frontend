@@ -71,9 +71,15 @@ export const tenantProtectedRoutes = [
       },
       {
         path: 'trips',
-        name: 'Trips ',
+        name: 'Trips',
         component: () => import('@/views/catalogs/trips/index'),
-        meta: { title: 'Trips', icon: 'fas fa-route' }
+        meta: { title: 'Trips', icon: 'fas fa-route' },
+        children: [{
+          path: ':tripid/details',
+          name: 'Trip Details',
+          component: () => import('@/views/catalogs/trips/details'),
+          meta: { title: 'Trips Details', icon: 'fas fa-route' }
+        }]
       },
       {
         path: 'devicesmap',
@@ -92,8 +98,10 @@ export const tenantProtectedRoutes = [
     children: [
       {
         path: 'trips',
-        name: 'Trips',
-        component: () => import('@/views/catalogs/trips/index'),
+        name: 'Trips ',
+        redirect: {
+          name: 'Trips'
+        },
         meta: { title: 'Trips', icon: 'fas fa-route' }
       },
       {

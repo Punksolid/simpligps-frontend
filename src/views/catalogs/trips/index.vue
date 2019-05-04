@@ -1,5 +1,10 @@
 <template>
-  <el-row class="panel p-10">
+  <div>
+    <div v-if="this.$route.params.tripid">
+      <TripDetails/>
+    </div>
+
+  <el-row class="panel p-10" v-else>
 
     <el-row class="searchBar">
       <el-col :span="4" class="m-b-5">
@@ -10,8 +15,7 @@
       </el-col>
     </el-row>
 
-    <TripLog v-if="logDialog" :dialogvisible="logDialog" :tripdata="tripData" @closedialog="logDialog = false"/>
-    <CreateTrip v-if="titleDialog" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"></CreateTrip>
+    <CreateTrip v-if="titleDialog" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"/>
 
   <el-row>
    <el-col>
@@ -91,23 +95,23 @@
     </el-col>
 
   </el-row>
+  </div>
 </template>
 
 <script>
   import CreateTrip from './newtrip'
-  import TripLog from './triplog'
+  import TripDetails from './details'
   import { tripList, deleteTrip } from '@/api/trips'
 
     export default {
       name: 'TripList',
       components: {
         CreateTrip,
-        TripLog
+        TripDetails
       },
       data() {
           return {
             dialogVisible: false,
-            logDialog: false,
             listLoading: false,
             titleDialog: 'New Trip',
             tripData: {},
@@ -143,8 +147,7 @@
           this.dialogVisible = false
         },
         handleLogs(row) {
-          this.tripData = row
-          this.logDialog = true
+          this.$router.push({ path: `trips/${row.id}/details` })
         },
         handleUpdate(index, row) {
           this.tripData = row
@@ -177,10 +180,6 @@
       },
       created() {
         this.fetchTrips()
-        if (!isNaN(this.$route.query.log)) {
-          this.tripData.id = this.$route.query.log
-          this.handleLogs(this.tripData)
-        }
       }
     }
 </script>
