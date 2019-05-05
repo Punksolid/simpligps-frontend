@@ -19,7 +19,7 @@
         <el-input v-model="form.phone" placeholder="Phone"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="selected_geofence" placeholder="Select Geofence" style="width: 100%">
+        <el-select v-model="form.geofence_ref" placeholder="Select Geofence" style="width: 100%">
           <el-option
             v-for="geofence in geofences"
             :key="geofence.id"
