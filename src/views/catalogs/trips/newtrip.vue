@@ -111,16 +111,51 @@
           </el-form-item>
 
             <el-form-item label="Schedule Load">
-                <el-date-picker
+              <datetime
+                  type="datetime"
+                  v-model="form.scheduled_load"
+                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                  auto
+                  >
+                </datetime>
+            </el-form-item>
+            <el-form-item label="Scheduled Departure">
+             <datetime
+                  type="datetime"
+                  v-model="form.scheduled_departure"
+                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                  auto
+                  >
+                </datetime>
+            </el-form-item>
+            <el-form-item label="Scheduled Arrival">
+              <datetime
+                  type="datetime"
+                  v-model="form.scheduled_arrival"
+                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                  auto
+                  >
+                </datetime>
+            </el-form-item>
+            <el-form-item label="Scheduled Unload">
+              <datetime
+                  type="datetime"
+                  v-model="form.scheduled_unload"
+                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                  auto
+                  >
+                </datetime>
+            </el-form-item>
+
+                <!-- <el-date-picker
                         v-model="form.scheduled_load"
                         type="date"
-                        format="dd-MM-yyyy"
-                        value-format="yyyy-MM-dd"
+                        format="dd-MM-yyyy HH:mm"
+                        value-format="yyyy-MM-dd HH:mm"
 
                         placeholder="Select Load's date">
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item label="Departure Date">
+                </el-date-picker> -->
+            <!-- <el-form-item label="Departure Date">
                 <el-date-picker
                         v-model="form.scheduled_departure"
                         type="date"
@@ -147,7 +182,7 @@
                         value-format="yyyy-MM-dd"
                         placeholder="Select Unload's date">
                 </el-date-picker>
-            </el-form-item>
+            </el-form-item> -->
         </el-form>
 
         <div slot="footer" class="dialog-footer text-center">
@@ -166,6 +201,8 @@
     import { fetchCarriers } from '../../../api/carriers'
     import { trucksList } from '@/api/trucks'
     import { trailerboxList } from '@/api/trailerbox'
+    import { Datetime } from 'vue-datetime'
+    import 'vue-datetime/dist/vue-datetime.css'
 
     export default {
         name: 'CreateTrip',
@@ -174,6 +211,9 @@
           'form',
           'dialogvisible'
         ],
+        components: {
+          datetime: Datetime
+        },
         data() {
             return {
               loading: false,

@@ -116,7 +116,7 @@ export const tenantProtectedRoutes = [
       },
       {
         path: 'trailerbox',
-        name: 'Trialerbox',
+        name: 'TrailerBox',
         component: () => import('@/views/catalogs/trailerbox/index'),
         meta: { title: 'Trucks', icon: 'fas fa-truck' }
       },
