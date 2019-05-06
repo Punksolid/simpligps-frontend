@@ -34,3 +34,10 @@ export function trucksList(params) {
     params: params
   })
 }
+export function searchTrucks(params) {
+  return request({
+    url: 'v1/trucks/search',
+    method: 'GET',
+    params: params
+  })
+}

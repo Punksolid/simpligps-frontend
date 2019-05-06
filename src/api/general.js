@@ -65,6 +65,13 @@ export function getPlaces(params) {
     params
   })
 }
+export function searchPlaces(params) {
+  return request({
+    url: 'v1/places/search',
+    method: 'GET',
+    params: params
+  })
+}
 
 export function fetchGeofences() {
   return request({
