@@ -61,8 +61,10 @@
          <template slot-scope="scope">
            <el-button
              size="mini"
-             icon="fas fa-clipboard-list"
-             @click="handleLogs(scope.row)">
+             icon="fas fa-search-plus"
+             type="primary"
+             plain
+             @click="handleDetails(scope.row)">
            </el-button>
            <el-button
              size="mini"
@@ -146,8 +148,8 @@
           this.listLoading = false
           this.dialogVisible = false
         },
-        handleLogs(row) {
-          this.$router.push({ path: `trips/${row.id}/details` })
+        handleDetails(row) {
+          this.$router.push({ path: `trips/${row.id}` })
         },
         handleUpdate(index, row) {
           this.tripData = row
@@ -179,7 +181,9 @@
         }
       },
       created() {
-        this.fetchTrips()
+        if (!this.$route.params.tripid) {
+          this.fetchTrips()
+        }
       }
     }
 </script>
