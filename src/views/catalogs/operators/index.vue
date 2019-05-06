@@ -112,7 +112,7 @@
 
 <script>
   import CreateOperator from '@/views/catalogs/operators/create'
-  import { getOperators, deleteOperator } from '../../api/operators'
+  import { getOperators, deleteOperator } from '@/api/operators'
 
   export default {
     name: 'OperatorsList',

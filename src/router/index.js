@@ -86,7 +86,7 @@ export const tenantProtectedRoutes = [
   {
     path: '/catalogs',
     component: Layout,
-    redirect: '/catalogs/operators',
+    redirect: '/catalogs/trips',
     name: 'Catalogs',
     meta: { title: 'Catalogs', icon: 'icon-docs' },
     children: [
@@ -99,7 +99,7 @@ export const tenantProtectedRoutes = [
       {
         path: 'operators',
         name: 'Operators',
-        component: () => import('@/views/catalogs/index'), // Parent router-view,
+        component: () => import('@/views/catalogs/operators/index'), // Parent router-view,
         meta: { title: 'Operators', icon: 'icon-comments' }
       },
       {
