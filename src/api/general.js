@@ -79,3 +79,10 @@ export function fetchGeofences() {
     method: 'GET'
   })
 }
+
+export function fetchLogsDevices(id) {
+  return request({
+    url: 'v1/devices/' + id + '/logs',
+    method: 'GET'
+  })
+}
