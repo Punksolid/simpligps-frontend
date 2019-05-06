@@ -27,6 +27,13 @@ export function clientsList(params) {
     params: params
   })
 }
+export function searchClients(params) {
+  return request({
+    url: 'v1/clients/search',
+    method: 'GET',
+    params: params
+  })
+}
 export function loggedClient() {
   return request({
     url: 'v1/me',

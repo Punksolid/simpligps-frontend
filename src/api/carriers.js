@@ -27,3 +27,10 @@ export function deleteCarrier(id) {
     method: 'DELETE'
   })
 }
+export function searchCarriers(params) {
+  return request({
+    url: 'v1/carriers/search',
+    method: 'GET',
+    params: params
+  })
+}

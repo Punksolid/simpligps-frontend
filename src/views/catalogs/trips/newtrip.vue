@@ -14,7 +14,13 @@
               <el-input v-model="form.invoice" placeholder="Invoice"/>
           </el-form-item>
           <el-form-item label="Client">
-            <el-select v-model="form.client_id" placeholder="Select Client">
+            <el-select 
+            v-model="form.client_id"
+            filterable 
+            remote
+            :remote-method="getSearchClients" 
+            :loading="loadingClients"
+            placeholder="Select Client">
               <el-option
                 v-for="client in clients"
                 :key="client.id"
@@ -24,7 +30,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="Operator" prop="operator">
-            <el-select v-model="form.operator_id" placeholder="Select Operator">
+            <el-select 
+            v-model="form.operator_id" 
+            filterable 
+            remote
+            :remote-method="getSearchOperators" 
+            :loading="loadingOperators"
+            placeholder="Select Operator">
               <el-option
                 v-for="operator in operators"
                 :key="operator.id"
@@ -44,9 +56,15 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Origin">
-                <el-select v-model="form.origin_id" placeholder="Select Origin">
+                <el-select 
+                v-model="form.origin_id" 
+                filterable 
+                remote
+                :remote-method="getSearchOrigin" 
+                :loading="loadingOrigin"
+                placeholder="Select Origin">
                     <el-option
-                            v-for="place in places"
+                            v-for="place in origins"
                             :key="place.id"
                             :label="place.name"
                             :value="place.id">
@@ -54,9 +72,16 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Intermediates">
-                <el-select v-model="form.intermediates" multiple placeholder="Intermediates">
+                <el-select 
+                v-model="form.intermediates" 
+                multiple 
+                filterable 
+                remote
+                :remote-method="getSearchIntermediates" 
+                :loading="loadingIntermediates"
+                placeholder="Intermediates">
                     <el-option
-                            v-for="place in places"
+                            v-for="place in intermediates"
                             :key="place.id"
                             :label="place.name"
                             :value="place.id">
@@ -64,9 +89,15 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Destination">
-                <el-select v-model="form.destination_id" placeholder="Destination">
+                <el-select 
+                v-model="form.destination_id" 
+                filterable 
+                remote
+                :remote-method="getSearchDestination" 
+                :loading="loadingDestination"
+                placeholder="Destination">
                     <el-option
-                            v-for="place in places"
+                            v-for="place in destinations"
                             :key="place.id"
                             :label="place.name"
                             :value="place.id">
@@ -79,7 +110,13 @@
             </el-form-item>
 
             <el-form-item label="Carrier">
-                <el-select v-model="form.carrier_id" placeholder="Select Carrier">
+                <el-select 
+                v-model="form.carrier_id" 
+                filterable 
+                remote
+                :remote-method="getSearchCarriers" 
+                :loading="loadingCarriers"
+                placeholder="Select Carrier">
                     <el-option
                             v-for="carrier in carriers"
                             :key="carrier.id"
@@ -89,11 +126,17 @@
                 </el-select>
             </el-form-item>
           <el-form-item label="Trucks">
-            <el-select v-model="form.truck_tract_id" placeholder="Select Truck">
+            <el-select 
+            v-model="form.truck_tract_id" 
+            filterable 
+            remote
+            :remote-method="getSearchTrucks" 
+            :loading="loadingTrucks"
+            placeholder="Select Truck">
               <el-option
                 v-for="truck in trucks"
                 :key="truck.id"
-                :label="truck.plate"
+                :label="truck.name"
                 :value="truck.id">
               </el-option>
             </el-select>
@@ -146,7 +189,7 @@
                   >
                 </datetime>
             </el-form-item>
-
+<!-- Comentado el siguiente bloque, eran los datepickers sin hora ni minutos -->
                 <!-- <el-date-picker
                         v-model="form.scheduled_load"
                         type="date"
@@ -195,11 +238,11 @@
 
 <script>
     import { createTrip, updateTrip } from '@/api/trips'
-    import { clientsList } from '@/api/clients'
-    import { fetchGeofences, getPlaces } from '../../../api/general'
-    import { getOperators } from '@/api/operators'
-    import { fetchCarriers } from '../../../api/carriers'
-    import { trucksList } from '@/api/trucks'
+    import { clientsList, searchClients } from '@/api/clients'
+    import { fetchGeofences, getPlaces, searchPlaces } from '../../../api/general'
+    import { getOperators, searchOperators } from '@/api/operators'
+    import { fetchCarriers, searchCarriers } from '../../../api/carriers'
+    import { trucksList, searchTrucks } from '@/api/trucks'
     import { trailerboxList } from '@/api/trailerbox'
     import { Datetime } from 'vue-datetime'
     import 'vue-datetime/dist/vue-datetime.css'
@@ -217,7 +260,17 @@
         data() {
             return {
               loading: false,
+              loadingClients: false,
+              loadingOperators: false,
+              loadingOrigin: false,
+              loadingIntermediates: false,
+              loadingDestination: false,
+              loadingCarriers: false,
+              loadingTrucks: false,
               places: '',
+              origins: '',
+              intermediates: '',
+              destinations: '',
               clients: [],
               operators: [],
               geofences: [],
@@ -267,7 +320,7 @@
             }
           },
           fetchClients(params) {
-            clientsList(params).then(response => {
+            clientsList({1 :'all'}).then(response => {
               this.clients = response.data.data
             })
           },
@@ -277,8 +330,13 @@
             })
           },
           fetchPlaces(params) {
+              params = {paginate:50}
               getPlaces(params).then(response => {
                   this.places = response.data.data
+                  this.origins = Object.assign(this.origins, this.places);
+                  this.intermediates = Object.assign(this.intermediates, this.places);
+                  this.destinations = Object.assign(this.destinations, this.places);
+
               })
           },
           getTrucks(params) {
@@ -289,6 +347,62 @@
           getTrailersbox(params) {
             trailerboxList(params).then(response => {
               this.trailersbox = response.data.data
+            })
+          },
+          getSearchClients(search) {
+            this.loadingClients = true
+            search = {company_name: search}
+            searchClients(search).then( response => {
+              this.clients = response.data.data
+              this.loadingClients = false
+            })
+          },
+          getSearchOperators(search) {
+            this.loadingOperators = true
+            search = {name: search}
+            searchOperators(search).then( response => {
+              this.operators = response.data.data
+              this.loadingOperators = false
+            })
+          },
+          getSearchOrigin(search) {
+            this.loadingOrigin = true
+            search = {name: search}
+            searchPlaces(search).then( response => {
+              this.origins = response.data.data
+              this.loadingOrigin = false
+            })
+          },
+          getSearchDestination(search) {
+            this.loadingDestination = true
+            search = {name: search}
+            searchPlaces(search).then( response => {
+              this.destinations = response.data.data
+              this.loadingDestination = false
+            })
+          },
+          getSearchIntermediates(search) { 
+            this.loadingIntermediates = true
+            search = {name: search}
+            searchPlaces(search).then( response => {
+              this.intermediates = response.data.data
+              this.loadingIntermediates = false
+            })
+          },
+          getSearchCarriers(search) {
+            this.loadingCarriers = true
+            search = {carrier_name: search}
+            searchCarriers(search).then( response => {
+              this.carriers = response.data.data
+              this.loadingCarriers = false
+            })
+          },
+          getSearchTrucks(search) {
+            this.loadingTrucks = true
+            search = {name: search}
+            searchTrucks(search).then( response => {
+              this.trucks = response.data.data
+              this.loadingTrucks = false
             })
           }
         },
