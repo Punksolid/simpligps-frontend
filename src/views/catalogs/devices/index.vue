@@ -35,8 +35,8 @@
         v-loading="listLoading"
         style="width: 100%">
         <el-table-column type="expand">
-          <template slot-scope="props">
-            <Logs/>
+          <template slot-scope="scope">
+            <Logs v-bind:element="scope.row.id" />
           </template>
         </el-table-column>
         <el-table-column
