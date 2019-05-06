@@ -6,6 +6,9 @@
     width="60%"
     :before-close="handleClose">
       <el-form :model="form" label-width="120px">
+      <el-form-item label="Name" prop="name">
+        <el-input v-model="form.name" clearable></el-input>
+      </el-form-item>
       <el-form-item label="Plate" prop="plate">
         <el-input v-model="form.plate" clearable></el-input>
       </el-form-item>
@@ -87,7 +90,7 @@
         if (this.form.id) {
           updateTruck(this.form.id, this.form).then(response => {
             this.$message({
-              message: 'Truck with plate: ' + response.data.data.plate + ' updated',
+              message: 'Truck with name: ' + response.data.data.name + ' updated',
               type: 'success',
               duration: 10 * 1000
             })
@@ -101,7 +104,7 @@
           this.loading = true
           createTruck(this.form).then(response => {
             this.$message({
-              message: 'Truck with plate: ' + response.data.data.plate + ' created',
+              message: 'Truck with name: ' + response.data.data.name + ' created',
               type: 'success',
               duration: 10 * 1000
             })

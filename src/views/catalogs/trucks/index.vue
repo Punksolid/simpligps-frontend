@@ -52,6 +52,11 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="name"
+          label="Name"
+          width="220">
+        </el-table-column>
+        <el-table-column
           prop="plate"
           label="Plate"
           width="220">
