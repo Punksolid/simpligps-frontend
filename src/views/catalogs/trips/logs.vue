@@ -7,7 +7,9 @@
     <el-col>
       <el-table
         :data="logs"
-        style="width: 100%">
+        style="width: 100%"
+        :row-class-name="tableRowClassName"
+        >
         <el-table-column
           prop="id"
           label="ID"
@@ -29,9 +31,6 @@
         </el-table-column>
       </el-table>
     </el-col>
-    <el-col> <!--Remove this Column after Real Response.-->
-      <p>Real response: {{ log }}</p>
-    </el-col>
   </el-row>
 </template>
 
@@ -43,25 +42,40 @@
     data() {
       return {
         TripID: null,
-        logs: [],
-        tableMock: [
-          { date: '2016-05-02', id: '2', action: 'Destination modified' },
-          { date: '2019-04-01', id: '1', action: 'Trip created' }
-        ],
+        logs: []
       }
+    },
+    methods: {
+      tableRowClassName({row, rowIndex}) {
+        if(row.level === "danger") {
+          return "bg-red"
+        } else if(row.level === "warning") {
+          return "bg-yellow"
+        }
+        return ""
+      },
     },
     created() {
       this.TripID = this.$route.params.tripid
-      fetchTripLog(this.TripID).then(resp => {
-        this.logs = resp.data.data.map(function(registry){
-          registy.data = JSON.stringify(registry.data)
-          return registry
-        })
+      fetchTripLog(this.TripID).then(response => {
+        this.logs = response.data.data.map(function(record){
+                      record.data = JSON.stringify(record.data)
+                      return record
+                    })
       }).catch(() => {})
     }
   }
 </script>
 
-<style scoped>
+<style>
+  .el-table .generic {
+    background: "#409EFF"
+  }
+  .el-table .warning {
+    background: "#E6A23C"
+  }
+  .el-table .danger {
+    background: "#F56C6C"
+  }
 
 </style>
