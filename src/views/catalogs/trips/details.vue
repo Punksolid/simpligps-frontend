@@ -31,9 +31,16 @@
             <el-col :xs="12" :sm="6" class="panel">
               <h4 class="panel-header bg-light title"><b>Trailer</b></h4>
               <el-col class="panel-content">
-                <h4><b>ID:</b> {{ details.trailers[0].id }} </h4>
-                <h4><b>Plate:</b> {{ details.trailers[0].plate }} </h4>
-                <h4><b>GPS:</b> {{ details.trailers[0].gps }} </h4>
+                <div v-if="details.trailers.length > 0">
+                  <div v-for="trailer in details.trailers" v-bind:key="trailer.id">
+                    <h4><b>ID:</b> {{ trailer.id }} </h4>
+                    <h4><b>Plate:</b> {{ trailer.plate }} </h4>
+                    <h4><b>GPS:</b> {{ trailer.gps }} </h4>
+                  </div>
+                </div>
+                <div v-else>
+                   No trailers assigned
+                </div>
               </el-col>
             </el-col>
             <!-- TRUCK PANEL -->
@@ -92,7 +99,7 @@
             loading: false,
             TripID: null,
             mode: '',
-            details: undefined
+            details: null
           }
       },
       methods: {

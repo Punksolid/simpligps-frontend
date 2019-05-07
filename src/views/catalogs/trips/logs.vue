@@ -6,26 +6,30 @@
 
     <el-col>
       <el-table
-        :data="tableMock"
-        style="width: 100%">
+        :data="logs"
+        style="width: 100%"
+        :row-class-name="tableRowClassName"
+        >
         <el-table-column
           prop="id"
           label="ID"
           width="80">
         </el-table-column>
         <el-table-column
-          prop="action"
-          label="Action"
+          prop="level"
+          label="Level"
           min-width="180">
         </el-table-column>
         <el-table-column
-          prop="date"
-          label="Date">
+          prop="data"
+          label="Context"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="created_at"
+          label="Datetime">
         </el-table-column>
       </el-table>
-    </el-col>
-    <el-col> <!--Remove this Column after Real Response.-->
-      <p>Real response: {{ log }}</p>
     </el-col>
   </el-row>
 </template>
@@ -38,22 +42,40 @@
     data() {
       return {
         TripID: null,
-        log: [],
-        tableMock: [
-          { date: '2016-05-02', id: '2', action: 'Destination modified' },
-          { date: '2019-04-01', id: '1', action: 'Trip created' }
-        ]
+        logs: []
       }
+    },
+    methods: {
+      tableRowClassName({row, rowIndex}) {
+        if(row.level === "danger") {
+          return "bg-red"
+        } else if(row.level === "warning") {
+          return "bg-yellow"
+        }
+        return ""
+      },
     },
     created() {
       this.TripID = this.$route.params.tripid
-      fetchTripLog(this.TripID).then(resp => {
-        this.log = resp.data.data
+      fetchTripLog(this.TripID).then(response => {
+        this.logs = response.data.data.map(function(record){
+                      record.data = JSON.stringify(record.data)
+                      return record
+                    })
       }).catch(() => {})
     }
   }
 </script>
 
-<style scoped>
+<style>
+  .el-table .generic {
+    background: "#409EFF"
+  }
+  .el-table .warning {
+    background: "#E6A23C"
+  }
+  .el-table .danger {
+    background: "#F56C6C"
+  }
 
 </style>
