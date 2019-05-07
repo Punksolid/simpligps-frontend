@@ -6,7 +6,7 @@
 
     <el-col>
       <el-table
-        :data="tableMock"
+        :data="logs"
         style="width: 100%">
         <el-table-column
           prop="id"
@@ -14,13 +14,18 @@
           width="80">
         </el-table-column>
         <el-table-column
-          prop="action"
-          label="Action"
+          prop="level"
+          label="Level"
           min-width="180">
         </el-table-column>
         <el-table-column
-          prop="date"
-          label="Date">
+          prop="data"
+          label="Context"
+          min-width="180">
+        </el-table-column>
+        <el-table-column
+          prop="created_at"
+          label="Datetime">
         </el-table-column>
       </el-table>
     </el-col>
@@ -38,17 +43,20 @@
     data() {
       return {
         TripID: null,
-        log: [],
+        logs: [],
         tableMock: [
           { date: '2016-05-02', id: '2', action: 'Destination modified' },
           { date: '2019-04-01', id: '1', action: 'Trip created' }
-        ]
+        ],
       }
     },
     created() {
       this.TripID = this.$route.params.tripid
       fetchTripLog(this.TripID).then(resp => {
-        this.log = resp.data.data
+        this.logs = resp.data.data.map(function(registry){
+          registy.data = JSON.stringify(registry.data)
+          return registry
+        })
       }).catch(() => {})
     }
   }
