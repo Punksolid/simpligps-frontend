@@ -76,16 +76,19 @@ export const tenantProtectedRoutes = [
         meta: { title: 'Trips', icon: 'fas fa-route' },
         children: [{
           path: ':tripid',
-          name: 'Trip Details',
-          component: () => import('@/views/catalogs/trips/details'),
-          meta: { title: 'Trip Detail', icon: 'fas fa-route' }
-        },
-          {
-          path: ':tripid/logs',
-          name: 'Trip Log',
-          component: () => import('@/views/catalogs/trips/logs'),
-          meta: { title: 'Trip Log', icon: 'fas fa-route' }
-        }]
+          children: [{
+            path: '',
+            name: 'Trip Details',
+            component: () => import('@/views/catalogs/trips/details'),
+            meta: { title: 'Trip Detail', icon: 'fas fa-route' }
+          }, {
+            path: 'logs',
+            name: 'Trip Log',
+            component: () => import('@/views/catalogs/trips/logs'),
+            meta: { title: 'Trip Log', icon: 'fas fa-route' }
+          }]
+          }
+        ]
       },
       {
         path: 'devicesmap',

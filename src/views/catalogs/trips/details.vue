@@ -1,111 +1,151 @@
 <template>
-    <el-row class="panel p-10 details" v-loading="loading">
-      <el-col class="bg-orange m-b-10">
-        <h3 class="m-10 dis-inline-b"><b>Details of Trip:</b> {{ this.$route.params.tripid }}</h3>
-      </el-col>
+    <div class="panel p-0 details" v-loading="loading">
 
-      <el-row>
-        <!-- OPERATOR PANEL -->
-        <el-col :span="10" class="panel p-5 dis-flex">
-          <el-col :xs="2" :sm="3" class="dis-flex align-center"><i class="fas fa-hard-hat fa-3x"></i></el-col>
-          <el-col :span="23">
-            <h4 class=""><b>Operator:</b> {{ details.operator.name }}</h4>
-            <h4><b>Operator phone:</b> {{ details.operator.phone }}</h4>
-          </el-col>
-        </el-col>
-        <!-- CLIENT PANEL -->
-        <el-col :span="12" class="panel p-5 dis-flex">
-          <el-col :xs="2" :sm="3" class="dis-flex align-center"><i class="fas fa-user fa-2x"></i></el-col>
-          <el-col :span="23">
-            <h4 class=""><b>Client:</b> {{ details.client.company_name }}</h4>
-            <h4><b>Client Description:</b> {{ details.client.description }}</h4>
-          </el-col>
-        </el-col>
-        <el-col :span="2" class="panel p-5 bg-gray-light text-center">
-            <i class="fas fa-list-alt fa-2x"></i>
-            <h4>Logs</h4>
-        </el-col>
-      </el-row>
+      <div v-if="this.$route.meta.title === 'Trip Detail'">
 
-      <el-row :gutter="10">
-        <!-- ORIGIN PANEL -->
-        <el-col :span="8" class="panel p-5 dis-flex">
-         <el-col :xs="2" :sm="3" class="dis-flex align-center"><i class="fas fa-map-marker-alt fa-2x"></i></el-col>
-         <el-col :span="23">
-           <h4 class=""><b>Origin name:</b> {{ details.origin.name }}</h4>
-           <h4><b>Origin Address:</b> {{ details.origin.address }}</h4>
-         </el-col>
-        </el-col>
-        <!-- INTERMEDIATES PANEL -->
-        <el-col :span="8" class="panel p-5 bg-gray-light dis-flex">
-          <el-col :xs="2" :sm="3" class="dis-flex align-center"><i class="fas fa-map-signs fa-2x"></i></el-col>
-          <el-col :span="23">
-            <h4 class=""><b>Intermediates name:</b> {{ details.origin.name }}</h4>
-            <h4><b>Origin Address:</b> {{ details.origin.address }}</h4>
+        <el-row>
+          <el-col class="bg-orange m-b-10">
+            <h3 class="m-10"><b>Details of Trip:</b> {{ this.$route.params.tripid }}</h3>
           </el-col>
-        </el-col>
-        <!-- DESTINATION PANEL -->
-        <el-col :span="8" class="panel p-5 bg-blue dis-flex">
-          <el-col :xs="2" :sm="3" class="dis-flex align-center"><i class="fas fa-flag fa-2x"></i></el-col>
-          <el-col :span="23">
-            <h4 class=""><b>Origin name:</b> {{ details.destination.name }}</h4>
-            <h4><b>Origin Address:</b> {{ details.destination.address }}</h4>
-          </el-col>
-        </el-col>
+        </el-row>
 
-      </el-row>
+        <div class="p-10">
+          <el-row type="flex">
+            <!-- OPERATOR PANEL -->
+            <el-col :xs="12" :sm="6" class="panel p-5">
+              <div class="panel-content">
+                <el-col class="dis-flex align-center"><i class="fas fa-user-circle fa-5x"></i></el-col>
+                <el-col>
+                  <h4 class="bold m-b-0 text-center">Operator:</h4>
+                    <h2 class="operator text-center">{{ details.operator.name }}</h2>
+                  <h4><b>Operator ID:</b>
+                    {{ details.operator.id }}
+                  </h4>
+                  <h4><b>Phone:</b>
+                    {{ details.operator.phone }}
+                  </h4>
+                </el-col>
+              </div>
+            </el-col>
+            <!-- TRAILER PANEL -->
+            <el-col :xs="12" :sm="6" class="panel">
+              <h4 class="panel-header bg-light title"><b>Trailer</b></h4>
+              <el-col class="panel-content">
+                <h4><b>ID:</b> {{ details.trailers[0].id }} </h4>
+                <h4><b>Plate:</b> {{ details.trailers[0].plate }} </h4>
+                <h4><b>GPS:</b> {{ details.trailers[0].gps }} </h4>
+              </el-col>
+            </el-col>
+            <!-- TRUCK PANEL -->
+            <el-col :xs="12" :sm="6" class="panel">
+              <h4 class="panel-header bg-light title"><b>Truck</b></h4>
+              <el-col class="panel-content">
+                <h4><b>ID:</b> {{ details.truck.id }} </h4>
+                <h4><b>Plate:</b> {{ details.truck.plate }} </h4>
+                <h4><b>Brand:</b> {{ details.truck.brand }} </h4>
+                <h4><b>Model:</b> {{ details.truck.model }} </h4>
+                <h4><b>Color:</b> {{ details.truck.color }} </h4>
+              </el-col>
+            </el-col>
+            <!-- CLIENT PANEL -->
+            <el-col :xs="12" :sm="6" class="panel">
+              <h4 class="panel-header bg-light title"><b>Client</b></h4>
+              <el-col class="panel-content">
+                <h4><b>Name:</b> {{ details.client.company_name }} </h4>
+                <h4><b>Description:</b> {{ details.client.description }} </h4>
+                <h4><b>ID:</b> {{ details.client.id }} </h4>
+                <h4><b>Email:</b> {{ details.client.email }} </h4>
+                <h4><b>Phone:</b> {{ details.client.phone }} </h4>
+              </el-col>
+            </el-col>
+          </el-row>
 
-    </el-row>
+          <Tripline :details="details"/>
+
+        </div>
+
+        <div class="panel-footer t-right">
+          <router-link :to="{name: 'Trip Log', params: this.TripID}">
+            <span class="fa-stack fa-2x logs">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-clipboard-list fa-inverse fa-stack-1x"></i>
+            </span>
+          </router-link>
+        </div>
+      </div> <!-- View if Details Finish -->
+
+      <TripLog v-else/>
+
+    </div>
 </template>
 
 <script>
   import { tripDetails } from '../../../api/trips'
+  import Tripline from './Tripline'
+  import TripLog from './logs'
 
-    export default {
-        name: 'TripDetails',
+  export default {
+      name: 'TripDetails',
+      components: { TripLog, Tripline },
       data() {
           return {
             loading: false,
             TripID: null,
-            details: {
-              operator: {
-                name: ''
-              },
-              client: {
-                name: ''
-              }
-            }
+            mode: '',
+            details: undefined
           }
       },
       methods: {
-        viewLogs() {
-          this.$router.push({ name: 'Trip Log', params: { tripid: this.tripID }})
+        tripType() {
+          if (this.$route.meta.title === 'Trip Log') {
+            this.mode = 'log'
+          } else {
+            this.mode = 'details'
+              this.loading = true
+              tripDetails(this.TripID).then(resp => {
+                this.details = resp.data.data
+                this.loading = false
+              }).catch(() => {
+                this.loading = false
+              })
+            }
         }
       },
       created() {
-        this.loading = true
         this.TripID = this.$route.params.tripid
-        tripDetails(this.TripID).then(resp => {
-          this.details = resp.data.data
-          this.loading = false
-        }).catch(() => {
-          this.loading = false
-        })
+        this.tripType()
       }
     }
 </script>
 
 <style lang="scss">
   .panel.details {
+    .panel-content {
+      padding: 10px;
+    }
+    h2.operator  {
+      font-size: 1.5em;
+      margin: 0px 0px 10px;
+      font-weight: 400;
+    }
     h4 {
       font-weight: 300;
       margin: 5px 0px;
+      &.title {
+        font-size: 1.3em;
+      }
+      b {
+        font-weight: 600;
+      }
     }
     .align-center {
       vertical-align: center;
       justify-content: center;
       align-content: center;
       align-items: center;
+    }
+    .logs {
+      margin-top: -30px;
     }
   }
 </style>

@@ -35,13 +35,7 @@
       </el-col>
     </el-row>
 
-    <el-dialog
-      :title="titleDialog"
-      :visible.sync="dialogVisible"
-      :show-close="false"
-      width="40%">
-      <CreateOperator :form="elementToUpdate" @operatorcreated="fetchOperators" @closedialog="closeDialog()"></CreateOperator>
-    </el-dialog>
+    <CreateOperator :title="titleDialog" :dialogvisible="dialogVisible" :form="elementToUpdate" @operatorcreated="fetchOperators" @closedialog="closeDialog()"></CreateOperator>
 
     <el-col>
       <el-table
@@ -138,7 +132,7 @@
         },
         titleDialog: 'Create Operator',
         elementToUpdate: {
-          active: false
+          active: true
         },
         dialogVisible: false
       }
@@ -171,7 +165,7 @@
       openDialog() {
         this.titleDialog = 'Create Operator'
         this.listLoading = true
-        this.elementToUpdate = {}
+        this.elementToUpdate = { active: true }
         this.dialogVisible = true
       },
       closeDialog() {
@@ -180,6 +174,7 @@
       },
       handleUpdate(index, operatorsList) {
         this.elementToUpdate = operatorsList[index]
+        this.listLoading = true
         this.titleDialog = 'Edit Operator'
         this.dialogVisible = true
       },
