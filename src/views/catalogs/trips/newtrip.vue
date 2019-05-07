@@ -418,7 +418,10 @@
           fetchCarriers({ 'all': 1 }).then(response => {
               this.carriers = response.data.data
           })
-        }
+        },
+        created() {
+
+        },
     }
 </script>
 

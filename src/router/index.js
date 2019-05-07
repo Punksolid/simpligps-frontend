@@ -73,12 +73,25 @@ export const tenantProtectedRoutes = [
         meta: { title: "Units", icon: "icon-cursor" }
       },
       {
-        // Carga el componente con la ruta correcta pero lo muestra en el sidebar a pesar del hidden:true
-        path: "trips/:trip_id/details",
-        name: "Trip Details",
-        component: () => import("../views/catalogs/trips/details.vue"),
-        hidden: true,
-        meta: { title: "Trips", icon: "fas fa-route" }
+        path: 'trips',
+        name: 'Trips',
+        component: () => import('@/views/catalogs/trips/index'),
+        meta: { title: 'Trips', icon: 'fas fa-route' },
+        children: [{
+          path: ':tripid',
+          children: [{
+            path: '',
+            name: 'Trip Details',
+            component: () => import('@/views/catalogs/trips/details'),
+            meta: { title: 'Trip Detail', icon: 'fas fa-route' }
+          }, {
+            path: 'logs',
+            name: 'Trip Log',
+            component: () => import('@/views/catalogs/trips/logs'),
+            meta: { title: 'Trip Log', icon: 'fas fa-route' }
+          }]
+          }
+        ]
       },
       {
         path: "trips",
@@ -102,10 +115,12 @@ export const tenantProtectedRoutes = [
     meta: { title: 'Catalogs', icon: 'icon-docs' },
     children: [
       {
-        path: "trips",
-        name: "Trips",
-        component: () => import("@/views/catalogs/trips/index"),
-        meta: { title: "Trips", icon: "fas fa-route" }
+        path: 'trips',
+        name: 'Trips ',
+        redirect: {
+          name: 'Trips'
+        },
+        meta: { title: 'Trips', icon: 'fas fa-route' }
       },
       {
         path: 'operators',

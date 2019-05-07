@@ -27,3 +27,15 @@ export function deleteTrip(id) {
     method: 'DELETE'
   })
 }
+export function tripDetails(id) {
+  return request({
+    url: 'v1/trips/' + id,
+    method: 'GET'
+  })
+}
+export function fetchTripLog(id) {
+  return request({
+    url: 'v1/trips/' + id + '/logs',
+    method: 'GET'
+  })
+}
