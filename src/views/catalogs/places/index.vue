@@ -35,6 +35,18 @@
           min-width="150">
         </el-table-column>
         <el-table-column
+          prop="high_risk"
+          label="High Risk"
+          width="110">
+          <template slot-scope="scope">
+            <el-tag
+              :type="scope.row.high_risk ? 'success' : 'info' "
+              disable-transitions>
+              {{ scope.row.high_risk ? 'Active' : 'Inactive' }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
           label="Operations"
           fixed="right"
           width="130">
@@ -109,7 +121,7 @@
         },
         openDialog() {
           this.titleDialog = 'Create Place'
-          this.placeData = {}
+          this.placeData = { high_risk: false }
           this.listLoading = true
           this.dialogVisible = true
         },

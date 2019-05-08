@@ -475,8 +475,7 @@
     methods: {
       loadAll() {
         return [
-          { 'value': 'Sanchez Trucking', 'link': 'https://github.com/vuejs/vue' },
-
+          { 'value': 'Sanchez Trucking', 'link': 'https://github.com/vuejs/vue' }
         ]
       },
       fetchUnitsList() {

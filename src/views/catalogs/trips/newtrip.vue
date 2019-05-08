@@ -14,13 +14,13 @@
               <el-input v-model="form.invoice" placeholder="Invoice"/>
           </el-form-item>
           <el-form-item label="Client">
-            <el-select 
-            v-model="form.client_id"
-            filterable 
-            remote
-            :remote-method="getSearchClients" 
-            :loading="loadingClients"
-            placeholder="Select Client">
+            <el-select
+              v-model="form.client_id"
+              filterable
+              remote
+              :remote-method="getSearchClients"
+              :loading="loadingClients"
+              placeholder="Select Client">
               <el-option
                 v-for="client in clients"
                 :key="client.id"
@@ -30,11 +30,11 @@
             </el-select>
           </el-form-item>
           <el-form-item label="Operator" prop="operator">
-            <el-select 
-            v-model="form.operator_id" 
-            filterable 
+            <el-select
+            v-model="form.operator_id"
+            filterable
             remote
-            :remote-method="getSearchOperators" 
+            :remote-method="getSearchOperators"
             :loading="loadingOperators"
             placeholder="Select Operator">
               <el-option
@@ -56,11 +56,11 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Origin">
-                <el-select 
-                v-model="form.origin_id" 
-                filterable 
+                <el-select
+                v-model="form.origin_id"
+                filterable
                 remote
-                :remote-method="getSearchOrigin" 
+                :remote-method="getSearchOrigin"
                 :loading="loadingOrigin"
                 placeholder="Select Origin">
                     <el-option
@@ -72,12 +72,12 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Intermediates">
-                <el-select 
-                v-model="form.intermediates" 
-                multiple 
-                filterable 
+                <el-select
+                v-model="form.intermediates"
+                multiple
+                filterable
                 remote
-                :remote-method="getSearchIntermediates" 
+                :remote-method="getSearchIntermediates"
                 :loading="loadingIntermediates"
                 placeholder="Intermediates">
                     <el-option
@@ -89,11 +89,11 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Destination">
-                <el-select 
-                v-model="form.destination_id" 
-                filterable 
+                <el-select
+                v-model="form.destination_id"
+                filterable
                 remote
-                :remote-method="getSearchDestination" 
+                :remote-method="getSearchDestination"
                 :loading="loadingDestination"
                 placeholder="Destination">
                     <el-option
@@ -110,11 +110,11 @@
             </el-form-item>
 
             <el-form-item label="Carrier">
-                <el-select 
-                v-model="form.carrier_id" 
-                filterable 
+                <el-select
+                v-model="form.carrier_id"
+                filterable
                 remote
-                :remote-method="getSearchCarriers" 
+                :remote-method="getSearchCarriers"
                 :loading="loadingCarriers"
                 placeholder="Select Carrier">
                     <el-option
@@ -126,11 +126,11 @@
                 </el-select>
             </el-form-item>
           <el-form-item label="Trucks">
-            <el-select 
-            v-model="form.truck_tract_id" 
-            filterable 
+            <el-select
+            v-model="form.truck_tract_id"
+            filterable
             remote
-            :remote-method="getSearchTrucks" 
+            :remote-method="getSearchTrucks"
             :loading="loadingTrucks"
             placeholder="Select Truck">
               <el-option
@@ -320,7 +320,7 @@
             }
           },
           fetchClients(params) {
-            clientsList({1 :'all'}).then(response => {
+            clientsList({ 1: 'all' }).then(response => {
               this.clients = response.data.data
             })
           },
@@ -330,13 +330,12 @@
             })
           },
           fetchPlaces(params) {
-              params = {paginate:50}
+              params = { paginate: 50 }
               getPlaces(params).then(response => {
                   this.places = response.data.data
-                  this.origins = Object.assign(this.origins, this.places);
-                  this.intermediates = Object.assign(this.intermediates, this.places);
-                  this.destinations = Object.assign(this.destinations, this.places);
-
+                  this.origins = Object.assign(this.origins, this.places)
+                  this.intermediates = Object.assign(this.intermediates, this.places)
+                  this.destinations = Object.assign(this.destinations, this.places)
               })
           },
           getTrucks(params) {
@@ -351,56 +350,56 @@
           },
           getSearchClients(search) {
             this.loadingClients = true
-            search = {company_name: search}
-            searchClients(search).then( response => {
+            search = { company_name: search }
+            searchClients(search).then(response => {
               this.clients = response.data.data
               this.loadingClients = false
             })
           },
           getSearchOperators(search) {
             this.loadingOperators = true
-            search = {name: search}
-            searchOperators(search).then( response => {
+            search = { name: search }
+            searchOperators(search).then(response => {
               this.operators = response.data.data
               this.loadingOperators = false
             })
           },
           getSearchOrigin(search) {
             this.loadingOrigin = true
-            search = {name: search}
-            searchPlaces(search).then( response => {
+            search = { name: search }
+            searchPlaces(search).then(response => {
               this.origins = response.data.data
               this.loadingOrigin = false
             })
           },
           getSearchDestination(search) {
             this.loadingDestination = true
-            search = {name: search}
-            searchPlaces(search).then( response => {
+            search = { name: search }
+            searchPlaces(search).then(response => {
               this.destinations = response.data.data
               this.loadingDestination = false
             })
           },
-          getSearchIntermediates(search) { 
+          getSearchIntermediates(search) {
             this.loadingIntermediates = true
-            search = {name: search}
-            searchPlaces(search).then( response => {
+            search = { name: search }
+            searchPlaces(search).then(response => {
               this.intermediates = response.data.data
               this.loadingIntermediates = false
             })
           },
           getSearchCarriers(search) {
             this.loadingCarriers = true
-            search = {carrier_name: search}
-            searchCarriers(search).then( response => {
+            search = { carrier_name: search }
+            searchCarriers(search).then(response => {
               this.carriers = response.data.data
               this.loadingCarriers = false
             })
           },
           getSearchTrucks(search) {
             this.loadingTrucks = true
-            search = {name: search}
-            searchTrucks(search).then( response => {
+            search = { name: search }
+            searchTrucks(search).then(response => {
               this.trucks = response.data.data
               this.loadingTrucks = false
             })
@@ -421,7 +420,7 @@
         },
         created() {
 
-        },
+        }
     }
 </script>
 

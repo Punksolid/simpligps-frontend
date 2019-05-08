@@ -27,7 +27,7 @@ export function deleteOperator(id) {
     method: 'DELETE'
   })
 }
-export function searchOperators(params) { 
+export function searchOperators(params) {
   return request({
     url: 'v1/operators/search',
     method: 'GET',

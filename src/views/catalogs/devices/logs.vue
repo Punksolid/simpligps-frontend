@@ -40,7 +40,7 @@
 
   export default {
     name: 'Logs',
-    props:{
+    props: {
       element: Number
     },
     data() {
@@ -50,20 +50,18 @@
       }
     },
     methods: {
-      tableRowClassName({row, rowIndex}) {
-        if(row.level === "danger") {
-          return "bg-red"
-        } else if(row.level === "warning") {
-          return "bg-yellow"
+      tableRowClassName({ row, rowIndex }) {
+        if (row.level === 'danger') {
+          return 'bg-red'
+        } else if (row.level === 'warning') {
+          return 'bg-yellow'
         }
-
-        return ""
-
+        return ''
       },
       getDevicesLogs(param) {
         this.loading = true
         fetchLogsDevices(param).then(response => {
-          this.logs_list = response.data.data.map(function(record){
+          this.logs_list = response.data.data.map(function(record) {
             record.data = JSON.stringify(record.data)
             return record
           })
@@ -73,15 +71,12 @@
       }
     },
     mounted() {
-      
       this.getDevicesLogs(this.element)
-
     },
     created() {
-      
-    },
+
+    }
 
   }
 </script>
-
 

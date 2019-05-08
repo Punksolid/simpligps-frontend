@@ -46,19 +46,19 @@
       }
     },
     methods: {
-      tableRowClassName({row, rowIndex}) {
-        if(row.level === "danger") {
-          return "bg-red"
-        } else if(row.level === "warning") {
-          return "bg-yellow"
+      tableRowClassName({ row, rowIndex }) {
+        if (row.level === 'danger') {
+          return 'bg-red'
+        } else if (row.level === 'warning') {
+          return 'bg-yellow'
         }
-        return ""
-      },
+        return ''
+      }
     },
     created() {
       this.TripID = this.$route.params.tripid
       fetchTripLog(this.TripID).then(response => {
-        this.logs = response.data.data.map(function(record){
+        this.logs = response.data.data.map(function(record) {
                       record.data = JSON.stringify(record.data)
                       return record
                     })
