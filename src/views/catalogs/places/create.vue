@@ -5,20 +5,20 @@
     :before-close="handleClose"
     width="40%">
 
-    <el-form ref="form" :model="form">
-      <el-form-item>
+    <el-form ref="form" :model="form" label-width="130px">
+      <el-form-item label="Place name:">
         <el-input v-model="form.name" placeholder="Place Name"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Person in charge:">
         <el-input v-model="form.person_in_charge" placeholder="Person in charge"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Address:">
         <el-input v-model="form.address" placeholder="Address"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Phone:">
         <el-input v-model="form.phone" placeholder="Phone"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="Geofence:">
         <el-select v-model="form.geofence_ref" placeholder="Select Geofence" style="width: 100%">
           <el-option
             v-for="geofence in geofences"
@@ -27,6 +27,9 @@
             :value="geofence.id">
           </el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item label="High Risk">
+        <el-switch v-model="form.high_risk" active-color="#13ce66"/>
       </el-form-item>
     </el-form>
 
