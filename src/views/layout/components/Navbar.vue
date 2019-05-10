@@ -14,7 +14,7 @@
       <notifications/>
 
       <li class="dropdown" id="user-header">
-        <router-link to="">
+        <router-link to="/">
 
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
@@ -31,6 +31,11 @@
             <router-link class="inlineBlock" to="/">
               <el-dropdown-item>
                 Home
+              </el-dropdown-item>
+            </router-link>
+            <router-link :to="{ path: '/select_account' }">
+              <el-dropdown-item divided>
+              Select Account
               </el-dropdown-item>
             </router-link>
             <router-link to="/user_settings">
@@ -61,9 +66,11 @@ import Hamburger from '@/components/Hamburger'
 import { loggedUser } from '../../../api/users'
 import App from '../../../App'
 import Notifications from '@/views/layout/components/Notifications'
+import MyAccounts from '../../login/myaccounts'
 
 export default {
   components: {
+    MyAccounts,
     App,
     Breadcrumb,
     Hamburger,
@@ -77,7 +84,8 @@ export default {
   },
   data() {
     return {
-      logged_user: ''
+      logged_user: '',
+      accountDialog: false
     }
   },
   methods: {

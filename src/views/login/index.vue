@@ -1,5 +1,5 @@
 <template>
-  <div class="form-body" :v-loading="selectLoading">
+  <div class="form-body" v-loading="bodyLoading">
     <div class="row">
       <div class="img-holder">
         <div class="bg"/>
@@ -58,7 +58,7 @@
                 </el-form-item>
               </el-form>
 
-              <MyAccounts/>
+              <MyAccounts @bodyloading="bodyLoading = false"/>
 
               <el-row>
                 <el-col class="t-right float-right">
@@ -140,7 +140,7 @@
         redirect: undefined,
         dialogVisible: false,
         loading: false,
-        selectLoading: false,
+        bodyLoading: false,
         pwdType: 'password',
         apiPingSuccess: false
       }
@@ -175,8 +175,9 @@
           if (valid) {
             this.loading = true
             this.$store.dispatch('Login', this.loginForm).then(() => {
-                this.loading = false
-                event.$emit('getaccounts')
+              this.loading = false
+              this.bodyLoading = true
+              event.$emit('getaccounts')
             }).catch(() => {
               this.loading = false
             })
@@ -213,6 +214,9 @@
     created() {
       this.checkFormType()
       this.backendStatus()
+      if (this.$route.params.mode === 'select_account') {
+        event.$emit('getaccounts')
+      }
     }
   }
 </script>
