@@ -71,6 +71,7 @@
           } else if (this.my_accounts.length === 1) {
             this.setTenant(this.my_accounts[0])
           } else {
+            this.$store.dispatch('LogOut')
             this.noaccountDialog = true
           }
         }).catch(() => {
@@ -103,8 +104,7 @@
       }
     },
     created() {
-      if (this.$attrs.selectaccount) {
-        this.dialogVisible = true
+      if (this.$route.name === 'My Accounts') {
         this.defaultAccount()
       }
       event.$on('getaccounts', (data) => {
