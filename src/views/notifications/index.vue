@@ -25,7 +25,7 @@
                     </template>
 
                 </el-table-column>
-                <el-table-column prop="active" label="Actions">
+                <el-table-column prop="active" label="Status">
                     <template slot-scope="scope">
                         <el-tag type="primary">{{ scope.row.active ? 'Active':'Inactive' }}</el-tag>
                     </template>
@@ -37,7 +37,7 @@
                                 type="danger"
                                 @click="deleteNotification(scope.$index, scope.row)"
                                 icon="fas fa-trash"
-                        > Delete</el-button>
+                        ></el-button>
                     </template>
                 </el-table-column>
             </el-table>
