@@ -8,6 +8,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/Layout'
+import MyAccounts from '../views/login/myaccounts'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -31,6 +32,15 @@ export const tenantProtectedRoutes = [
   {
     path: '/login/:mode',
     component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/select_account',
+    component: MyAccounts,
+    name: 'Select Account',
+    props: {
+      selectaccount: true
+    },
     hidden: true
   },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
