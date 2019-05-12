@@ -43,8 +43,8 @@
           type="expand"
         >
           <template slot-scope="scope">
-            <el-tabs>
-              <el-tab-pane v-loading="detailsLoading">
+            <el-tabs v-loading="scope.row.loading">
+              <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i>Logs</span>
                 <Logs v-bind:element="scope.row.id" />
               </el-tab-pane>
@@ -55,11 +55,11 @@
                   <div class="card-panel-icon-wrapper icon-people">
                     <i class="el-icon-info"></i>
                   </div>
-                  <div>
-                      <h3>Truck: {{ scope.row.truck.name }} </h3>
-                      <h3>Plate: {{ scope.row.truck.plate }}</h3>
-                      <h3>Color: {{ scope.row.truck.color}}</h3>
-                      <h3>Brand: {{ scope.row.truck.brand}}</h3> 
+                  <div v-if="scope.row.truck">
+                      <h3>Truck: {{ scope.row.truck.name   || "default" }} </h3>
+                      <h3>Plate: {{ scope.row.truck.plate  || "default" }}</h3>
+                      <h3>Color: {{ scope.row.truck.color || "default" }}</h3>
+                      <h3>Brand: {{ scope.row.truck.brand || "default" }}</h3> 
                   </div>
                 </div>
               </el-tab-pane>
@@ -165,24 +165,20 @@
       showMoreDetails(row, expandedRows){
         console.log(row)
         this.detailsLoading = true
+        row.loading = true
         fetchDevice(row.id).then(response => {
           this.devicesList = this.devicesList.map(function(element){
             if(element.id === row.id){
               console.log(element)
               element = response.data.data
-              element.expanded = true
+              element.loading = false
               return element
             } 
             return element
           })
-        }). catch(response => {
-          
         }).finally(res => {
           this.detailsLoading = false
         })
-
-
-        // console.log(status)
       },
       fetchDevicesPage() {
         this.listLoading = true
@@ -190,11 +186,10 @@
         this.search = {}
         fetchDevices(this.devicesListPage).then(response => {
           this.devicesList = response.data.data.map(function(device){
-            device.expanded = false
+            device.loading = false
             return device
           })
           this.devicesListPage = response.data.meta
-        }).catch(() => {
         }).finally(res => {
           this.listLoading = false
         })
@@ -205,11 +200,10 @@
           this.devicesListPage = response.data.meta
           this.devicesListPage.page = response.data.meta.current_page
           this.devicesList = response.data.data
-          this.listLoading = false
-        }).catch(() => {
+        }).finally(res => {
           this.listLoading = false
         })
-      },
+      }, /**206 */
       handleCurrentChange(val) {
         this.devicesListPage.page = val
         this.fetchDevicesPage()
