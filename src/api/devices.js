@@ -7,6 +7,13 @@ export function fetchDevices(params) {
     params
   })
 }
+export function fetchDevice(id) {
+  return request({
+    url: 'v1/devices/' + id,
+    method: 'GET',
+    params: ''
+  })
+}
 export function newDevice(params) {
   return request({
     url: 'v1/devices',

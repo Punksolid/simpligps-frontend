@@ -14,7 +14,7 @@
             <el-input placeholder="GPS" v-model="search.gps" @keyup.enter.native="handleFilter"/>
           </el-form-item>
           <el-form-item>
-            <el-input placeholder="Plate" v-model="search.plate" @keyup.enter.native="handleFilter">
+            <el-input placeholder="Brand" v-model="search.brand" @keyup.enter.native="handleFilter">
               <el-button slot="append" icon="fas fa-search" @click="handleFilter"></el-button>
             </el-input>
           </el-form-item>
@@ -33,12 +33,38 @@
         :data="devicesList"
         stripe
         v-loading="listLoading"
-        style="width: 100%">
-        <el-table-column type="expand">
+        style="width: 100%"
+        @expand-change="showMoreDetails"
+        >
+
+        <el-table-column 
+          type="expand"
+        >
           <template slot-scope="scope">
-            <Logs v-bind:element="scope.row.id" />
+            <el-tabs>
+              <el-tab-pane v-loading="detailsLoading">
+                <span slot="label"><i class="el-icon-date"></i>Logs</span>
+                <Logs v-bind:element="scope.row.id" />
+              </el-tab-pane>
+              <el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i> Truck</span>
+                <div class="card-panel-icon-wrapper icon-people">
+
+                  <div class="card-panel-icon-wrapper icon-people">
+                    <i class="el-icon-info"></i>
+                  </div>
+                  <div>
+                      <!-- <h3>Truck: {{ scope.row.truck.name }} </h3>
+                      <h3>Plate: {{ scope.row.truck.plate }}</h3>
+                      <h3>Color: {{ scope.row.truck.color}}</h3>
+                      <h3>Brand: {{ scope.row.truck.brand}}</h3>  -->
+                  </div>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
           </template>
         </el-table-column>
+        
         <el-table-column
           prop="name"
           label="Name"
@@ -51,19 +77,14 @@
           sortable>
         </el-table-column>
         <el-table-column
-          prop="plate"
-          label="Plate"
+          prop="brand"
+          label="Brand"
           width="180"
           sortable>
         </el-table-column>
         <el-table-column
           prop="internal_number"
           label="Internal Number"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="carrier_id"
-          label="Carrier ID"
           width="180">
         </el-table-column>
         <el-table-column
@@ -101,7 +122,7 @@
 </template>
 
 <script>
-  import { fetchDevices, deleteDevice } from '../../../api/devices'
+  import { fetchDevices, deleteDevice, fetchDevice } from '../../../api/devices'
   import RegisterDevice from './create'
   import Logs from './logs'
 
@@ -117,7 +138,7 @@
         search: {
           name: '',
           gps: '',
-          plate: ''
+          brand: ''
         },
         devicesList: null,
         formData: {},
@@ -134,10 +155,34 @@
           update: 'Edit Device',
           create: 'Register Device'
         },
-        dialogVisible: false
+        dialogVisible: false,
+        detailsLoading: false
       }
     },
     methods: {
+      showMoreDetails(row, expandedRows){
+        console.log(row)
+
+        this.detailsLoading = true
+        fetchDevice(row.id).then(response => {
+
+
+          this.devicesList = this.devicesList.map(function(element){
+            if(element.id === row.id){
+              console.log(element)
+              return element = response.data.data
+            } 
+            return element
+          })
+          this.row = response.data.data
+          this.detailsLoading = false
+        }). catch(response => {
+          this.detailsLoading = false
+        })
+
+
+        // console.log(status)
+      },
       fetchDevicesPage() {
         this.listLoading = true
         this.dialogVisible = false
