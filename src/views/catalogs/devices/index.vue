@@ -34,6 +34,8 @@
         stripe
         v-loading="listLoading"
         style="width: 100%"
+        :highlight-current-row="true"
+        :row-key="row => row.id"
         @expand-change="showMoreDetails"
         >
 
@@ -54,10 +56,10 @@
                     <i class="el-icon-info"></i>
                   </div>
                   <div>
-                      <!-- <h3>Truck: {{ scope.row.truck.name }} </h3>
+                      <h3>Truck: {{ scope.row.truck.name }} </h3>
                       <h3>Plate: {{ scope.row.truck.plate }}</h3>
                       <h3>Color: {{ scope.row.truck.color}}</h3>
-                      <h3>Brand: {{ scope.row.truck.brand}}</h3>  -->
+                      <h3>Brand: {{ scope.row.truck.brand}}</h3> 
                   </div>
                 </div>
               </el-tab-pane>
@@ -162,21 +164,20 @@
     methods: {
       showMoreDetails(row, expandedRows){
         console.log(row)
-
         this.detailsLoading = true
         fetchDevice(row.id).then(response => {
-
-
           this.devicesList = this.devicesList.map(function(element){
             if(element.id === row.id){
               console.log(element)
-              return element = response.data.data
+              element = response.data.data
+              element.expanded = true
+              return element
             } 
             return element
           })
-          this.row = response.data.data
-          this.detailsLoading = false
         }). catch(response => {
+          
+        }).finally(res => {
           this.detailsLoading = false
         })
 
@@ -188,10 +189,13 @@
         this.dialogVisible = false
         this.search = {}
         fetchDevices(this.devicesListPage).then(response => {
-          this.devicesList = response.data.data
+          this.devicesList = response.data.data.map(function(device){
+            device.expanded = false
+            return device
+          })
           this.devicesListPage = response.data.meta
-          this.listLoading = false
         }).catch(() => {
+        }).finally(res => {
           this.listLoading = false
         })
       },
