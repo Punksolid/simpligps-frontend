@@ -163,13 +163,11 @@
     },
     methods: {
       showMoreDetails(row, expandedRows){
-        console.log(row)
         this.detailsLoading = true
         row.loading = true
         fetchDevice(row.id).then(response => {
           this.devicesList = this.devicesList.map(function(element){
             if(element.id === row.id){
-              console.log(element)
               element = response.data.data
               element.loading = false
               return element
