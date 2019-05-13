@@ -14,31 +14,59 @@
             <el-input placeholder="GPS" v-model="search.gps" @keyup.enter.native="handleFilter"/>
           </el-form-item>
           <el-form-item>
-            <el-input placeholder="Plate" v-model="search.plate" @keyup.enter.native="handleFilter">
+            <el-input placeholder="Brand" v-model="search.brand" @keyup.enter.native="handleFilter">
               <el-button slot="append" icon="fas fa-search" @click="handleFilter"></el-button>
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button icon="fas fa-trash-alt" plain @click="fetchDevicesPage"></el-button>
+            <el-button icon="fas fa-trash-alt" plain @click="getDevices"></el-button>
           </el-form-item>
         </el-form>
       </el-col>
 
     </el-row>
 
-    <RegisterDevice :form="formData" :title="titleDialog[dialogStatus]" :dialogvisible="dialogVisible" @newdevice="fetchDevicesPage" @closedialog="closeDialog"/>
+    <RegisterDevice :form="formData" :title="titleDialog[dialogStatus]" :dialogvisible="dialogVisible" @newdevice="getDevices" @closedialog="closeDialog"/>
 
     <el-col>
       <el-table
         :data="devicesList"
         stripe
         v-loading="listLoading"
-        style="width: 100%">
-        <el-table-column type="expand">
+        style="width: 100%"
+        :highlight-current-row="true"
+        :row-key="row => row.id"
+        @expand-change="showMoreDetails"
+        >
+
+        <el-table-column 
+          type="expand"
+        >
           <template slot-scope="scope">
-            <Logs v-bind:element="scope.row.id" />
+            <el-tabs v-loading="scope.row.loading">
+              <el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i>Logs</span>
+                <Logs v-bind:element="scope.row.id" />
+              </el-tab-pane>
+              <el-tab-pane>
+                <span slot="label"><i class="el-icon-date"></i> Truck</span>
+                <div class="card-panel-icon-wrapper icon-people">
+
+                  <div class="card-panel-icon-wrapper icon-people">
+                    <i class="el-icon-info"></i>
+                  </div>
+                  <div v-if="scope.row.truck">
+                      <h3>Truck: {{ scope.row.truck.name   || "default" }} </h3>
+                      <h3>Plate: {{ scope.row.truck.plate  || "default" }}</h3>
+                      <h3>Color: {{ scope.row.truck.color || "default" }}</h3>
+                      <h3>Brand: {{ scope.row.truck.brand || "default" }}</h3> 
+                  </div>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
           </template>
         </el-table-column>
+        
         <el-table-column
           prop="name"
           label="Name"
@@ -51,19 +79,14 @@
           sortable>
         </el-table-column>
         <el-table-column
-          prop="plate"
-          label="Plate"
+          prop="brand"
+          label="Brand"
           width="180"
           sortable>
         </el-table-column>
         <el-table-column
           prop="internal_number"
           label="Internal Number"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="carrier_id"
-          label="Carrier ID"
           width="180">
         </el-table-column>
         <el-table-column
@@ -88,28 +111,30 @@
     </el-col>
 
     <el-col class="m-t-5 t-center">
-      <el-pagination
-        class="dis-inline-b"
-        :current-page.sync="devicesListPage.current_page"
-        :total="devicesListPage.total"
-        :page-size="devicesListPage.per_page"
-        @current-change="handleCurrentChange"
-        @pagination="fetchDevicesPage" />
+        <pagination
+          v-show="paginationQuery.total"
+          :total="paginationQuery.total"
+          :page.sync="paginationQuery.page"
+          :limit.sync="paginationQuery.limit"
+          @pagination="getDevices"/>
     </el-col>
 
   </el-row>
 </template>
 
 <script>
-  import { fetchDevices, deleteDevice } from '../../../api/devices'
+  import { fetchDevices, deleteDevice, fetchDevice } from '../../../api/devices'
   import RegisterDevice from './create'
   import Logs from './logs'
+  import Pagination from '../../../components/Pagination/index.vue'
+
 
   export default {
     name: 'DevicesList',
     components: {
       Logs,
-      RegisterDevice
+      RegisterDevice,
+      Pagination
     },
     data() {
       return {
@@ -117,61 +142,70 @@
         search: {
           name: '',
           gps: '',
-          plate: ''
+          brand: ''
         },
         devicesList: null,
         formData: {},
-        devicesListPage: {
-          page: 0,
-          from: 0,
-          last_page: 0,
-          per_page: 15,
-          to: 0,
-          total: 0
+        paginationQuery: {
+            limit: 15,
+            total: 0,
         },
         dialogStatus: '',
         titleDialog: {
           update: 'Edit Device',
           create: 'Register Device'
         },
-        dialogVisible: false
+        dialogVisible: false,
+        detailsLoading: false
       }
     },
     methods: {
-      fetchDevicesPage() {
+      pagination(val) {
+        this.getNotifications()
+      },
+      showMoreDetails(row, expandedRows){
+        this.detailsLoading = true
+        row.loading = true
+        fetchDevice(row.id).then(response => {
+          this.devicesList = this.devicesList.map(function(element){
+            if(element.id === row.id){
+              element = response.data.data
+              element.loading = false
+              return element
+            } 
+            return element
+          })
+        }).finally(res => {
+          this.detailsLoading = false
+        })
+      },
+      getDevices() {
         this.listLoading = true
         this.dialogVisible = false
         this.search = {}
-        fetchDevices(this.devicesListPage).then(response => {
-          this.devicesList = response.data.data
-          this.devicesListPage = response.data.meta
-          this.listLoading = false
-        }).catch(() => {
+        fetchDevices(this.paginationQuery).then(response => {
+          this.paginationQuery.total = response.data.meta.total
+          this.devicesList = response.data.data.map(function(device){
+            device.loading = false
+            return device
+          })
+        }).finally(res => {
           this.listLoading = false
         })
       },
       handleFilter() {
         this.listLoading = true
         fetchDevices(this.search).then(response => {
-          this.devicesListPage = response.data.meta
-          this.devicesListPage.page = response.data.meta.current_page
-          this.devicesList = response.data.data
-          this.listLoading = false
-        }).catch(() => {
+          this.paginationQuery = response.data.meta
+        }).finally(res => {
           this.listLoading = false
         })
-      },
-      handleCurrentChange(val) {
-        this.devicesListPage.page = val
-        this.fetchDevicesPage()
-      },
+      }, /**206 */
       openDialog() {
-        this.listLoading = true
         this.dialogStatus = 'create'
         this.dialogVisible = true
       },
       closeDialog() {
-        this.listLoading = false
         this.formData = {}
         this.dialogVisible = false
       },
@@ -184,7 +218,7 @@
           type: 'warning'
         }).then(() => {
           deleteDevice(deviceListData.id).then(() => {
-            this.fetchDevicesPage()
+            this.getDevices()
             this.$message({
               type: 'success',
               message: 'Device deleted successfully'
@@ -208,11 +242,7 @@
       }
     },
     created() {
-      this.fetchDevicesPage()
+      this.getDevices()
     }
   }
 </script>
-
-<style scoped>
-
-</style>
