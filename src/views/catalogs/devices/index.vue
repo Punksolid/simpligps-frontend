@@ -19,14 +19,14 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button icon="fas fa-trash-alt" plain @click="fetchDevicesPage"></el-button>
+            <el-button icon="fas fa-trash-alt" plain @click="getDevices"></el-button>
           </el-form-item>
         </el-form>
       </el-col>
 
     </el-row>
 
-    <RegisterDevice :form="formData" :title="titleDialog[dialogStatus]" :dialogvisible="dialogVisible" @newdevice="fetchDevicesPage" @closedialog="closeDialog"/>
+    <RegisterDevice :form="formData" :title="titleDialog[dialogStatus]" :dialogvisible="dialogVisible" @newdevice="getDevices" @closedialog="closeDialog"/>
 
     <el-col>
       <el-table
@@ -111,13 +111,12 @@
     </el-col>
 
     <el-col class="m-t-5 t-center">
-      <el-pagination
-        class="dis-inline-b"
-        :current-page.sync="devicesListPage.current_page"
-        :total="devicesListPage.total"
-        :page-size="devicesListPage.per_page"
-        @current-change="handleCurrentChange"
-        @pagination="fetchDevicesPage" />
+        <pagination
+          v-show="paginationQuery.total"
+          :total="paginationQuery.total"
+          :page.sync="paginationQuery.page"
+          :limit.sync="paginationQuery.limit"
+          @pagination="getDevices"/>
     </el-col>
 
   </el-row>
@@ -127,12 +126,15 @@
   import { fetchDevices, deleteDevice, fetchDevice } from '../../../api/devices'
   import RegisterDevice from './create'
   import Logs from './logs'
+  import Pagination from '../../../components/Pagination/index.vue'
+
 
   export default {
     name: 'DevicesList',
     components: {
       Logs,
-      RegisterDevice
+      RegisterDevice,
+      Pagination
     },
     data() {
       return {
@@ -144,13 +146,9 @@
         },
         devicesList: null,
         formData: {},
-        devicesListPage: {
-          page: 0,
-          from: 0,
-          last_page: 0,
-          per_page: 15,
-          to: 0,
-          total: 0
+        paginationQuery: {
+            limit: 15,
+            total: 0,
         },
         dialogStatus: '',
         titleDialog: {
@@ -162,6 +160,9 @@
       }
     },
     methods: {
+      pagination(val) {
+        this.getNotifications()
+      },
       showMoreDetails(row, expandedRows){
         this.detailsLoading = true
         row.loading = true
@@ -178,16 +179,16 @@
           this.detailsLoading = false
         })
       },
-      fetchDevicesPage() {
+      getDevices() {
         this.listLoading = true
         this.dialogVisible = false
         this.search = {}
-        fetchDevices(this.devicesListPage).then(response => {
+        fetchDevices(this.paginationQuery).then(response => {
+          this.paginationQuery.total = response.data.meta.total
           this.devicesList = response.data.data.map(function(device){
             device.loading = false
             return device
           })
-          this.devicesListPage = response.data.meta
         }).finally(res => {
           this.listLoading = false
         })
@@ -195,24 +196,16 @@
       handleFilter() {
         this.listLoading = true
         fetchDevices(this.search).then(response => {
-          this.devicesListPage = response.data.meta
-          this.devicesListPage.page = response.data.meta.current_page
-          this.devicesList = response.data.data
+          this.paginationQuery = response.data.meta
         }).finally(res => {
           this.listLoading = false
         })
       }, /**206 */
-      handleCurrentChange(val) {
-        this.devicesListPage.page = val
-        this.fetchDevicesPage()
-      },
       openDialog() {
-        this.listLoading = true
         this.dialogStatus = 'create'
         this.dialogVisible = true
       },
       closeDialog() {
-        this.listLoading = false
         this.formData = {}
         this.dialogVisible = false
       },
@@ -225,7 +218,7 @@
           type: 'warning'
         }).then(() => {
           deleteDevice(deviceListData.id).then(() => {
-            this.fetchDevicesPage()
+            this.getDevices()
             this.$message({
               type: 'success',
               message: 'Device deleted successfully'
@@ -249,11 +242,7 @@
       }
     },
     created() {
-      this.fetchDevicesPage()
+      this.getDevices()
     }
   }
 </script>
-
-<style scoped>
-
-</style>
