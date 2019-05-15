@@ -27,6 +27,13 @@ export function deleteTrip(id) {
     method: 'DELETE'
   })
 }
+export function assignTripTags(id, params) {
+  return request({
+    url: 'v1/trips/' + id + '/tags',
+    method: 'POST',
+    data: params
+  })
+}
 export function tripDetails(id) {
   return request({
     url: 'v1/trips/' + id,
