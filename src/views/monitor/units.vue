@@ -52,8 +52,6 @@
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Details</span>
 
-
-
                 <el-col class="panel" :xs="24" :sm="12" :lg="12">
                   <div class="panel-header bg-orange"><h3>Trailer</h3></div>
                   <div class="panel-body p-10 bg-gray-light">
@@ -211,7 +209,6 @@
 
                 </div>
               </el-tab-pane>
-
 
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Add group risk</span>

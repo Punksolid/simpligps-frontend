@@ -56,108 +56,108 @@
         return {
           sensor_type: [{
             name: 'Any',
-            value: ""
+            value: ''
           },
           {
-            value:"mileage",
-            name: "Mileage sensor"
+            value: 'mileage',
+            name: 'Mileage sensor'
           },
           {
-            value:"odometer",
-            name: "Relative odometer"
+            value: 'odometer',
+            name: 'Relative odometer'
           },
           {
-            value:"engine operation",
-            name: "Engine ignition sensor"
+            value: 'engine operation',
+            name: 'Engine ignition sensor'
           },
           {
-            value:"alarm trigger",
-            name: "Alarm trigger"
+            value: 'alarm trigger',
+            name: 'Alarm trigger'
           },
           {
-            value:"private mode",
-            name: "Private mode"
+            value: 'private mode',
+            name: 'Private mode'
           },
           {
-            value:"real-time motion sensor",
-            name: "Real-time motion sensor"
+            value: 'real-time motion sensor',
+            name: 'Real-time motion sensor'
           },
           {
-            value:"digital",
-            name: "Custom digital sensor"
+            value: 'digital',
+            name: 'Custom digital sensor'
           },
           {
-            value:"voltage",
-            name: "Voltage sensor"
+            value: 'voltage',
+            name: 'Voltage sensor'
           },
           {
-            value:"weight",
-            name: "Weight sensor"
+            value: 'weight',
+            name: 'Weight sensor'
           },
           {
-            value:"accelerometer",
-            name: "Accelerometer"
+            value: 'accelerometer',
+            name: 'Accelerometer'
           },
           {
-            value:"temperature",
-            name: "Temperature sensor"
+            value: 'temperature',
+            name: 'Temperature sensor'
           },
           {
-            value:"temperature coefficient",
-            name: "Temperature coefficient"
+            value: 'temperature coefficient',
+            name: 'Temperature coefficient'
           },
           {
-            value:"engine rpm",
-            name: "Engine revs sensor"
+            value: 'engine rpm',
+            name: 'Engine revs sensor'
           },
           {
-            value:"engine efficiency",
-            name: "Engine efficiency sensor"
+            value: 'engine efficiency',
+            name: 'Engine efficiency sensor'
           },
           {
-            value:"engine hours",
-            name: "Absolute engine hours"
+            value: 'engine hours',
+            name: 'Absolute engine hours'
           },
           {
-            value:"relative engine hours",
-            name: "Relative engine hours"
+            value: 'relative engine hours',
+            name: 'Relative engine hours'
           },
           {
-            value:"impulse fuel consumption",
-            name: "Impulse fuel consumption sensor"
+            value: 'impulse fuel consumption',
+            name: 'Impulse fuel consumption sensor'
           },
           {
-            value:"absolute fuel consumption",
-            name: "Absolute fuel consumption sensor"
+            value: 'absolute fuel consumption',
+            name: 'Absolute fuel consumption sensor'
           },
           {
-            value:"instant fuel consumption",
-            name: "Instant fuel consumption sensor"
+            value: 'instant fuel consumption',
+            name: 'Instant fuel consumption sensor'
           },
           {
-            value:"fuel level",
-            name: "Fuel level sensor"
+            value: 'fuel level',
+            name: 'Fuel level sensor'
           },
           {
-            value:"fuel level impulse sensor",
-            name: "Fuel level impulse sensor"
+            value: 'fuel level impulse sensor',
+            name: 'Fuel level impulse sensor'
           },
           {
-            value:"counter",
-            name: "Counter sensor"
+            value: 'counter',
+            name: 'Counter sensor'
           },
           {
-            value:"custom",
-            name: "Custom sensor"
+            value: 'custom',
+            name: 'Custom sensor'
           },
           {
-            value:"driver",
-            name: "Driver binding"
+            value: 'driver',
+            name: 'Driver binding'
           },
           {
-            value:"trailer",
-            name: "Trailer binding"
-          }   
+            value: 'trailer',
+            name: 'Trailer binding'
+          }
           ],
           sensor_name: '*'
         }
