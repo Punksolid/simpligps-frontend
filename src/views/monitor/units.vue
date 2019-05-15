@@ -52,23 +52,7 @@
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Details</span>
 
-                <el-col class="panel" :xs="24" :sm="12" :lg="12">
-                  <div class="panel-header bg-primary"><h3>Operator</h3></div>
-                  <div class="panel-body p-10 bg-gray-light">
-                    <h3><b>José Ramón Ontiveros</b></h3>
-                    <p>ID: 1476</p>
-                    <p>Phone: 665-147-9136</p>
-                  </div>
-                </el-col>
 
-                <el-col class="panel" :xs="24" :sm="12" :lg="12">
-                  <div class="panel-header bg-primary"><h3>Truck</h3></div>
-                  <div class="panel-body p-10 bg-gray-light">
-                    <h3><b>Freightliner Columbia</b></h3>
-                    <p>ID: 5346</p>
-                    <p>GPS: 41°24’12.2″N - 2°10’26.5″E</p>
-                  </div>
-                </el-col>
 
                 <el-col class="panel" :xs="24" :sm="12" :lg="12">
                   <div class="panel-header bg-orange"><h3>Trailer</h3></div>
@@ -228,70 +212,6 @@
                 </div>
               </el-tab-pane>
 
-              <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Truck and operator</span>
-                <div class="card-panel-icon-wrapper icon-people">
-
-                  <div class="card-panel-icon-wrapper icon-people">
-                    <i class="el-icon-info"></i>
-                  </div>
-                  <div>
-                    <h3>operator:</h3>
-                    <h4>Juan Burgos</h4>
-                    <h3>Id: #6664</h3>
-                    <h3>Phone: 55-567-7654</h3>
-                    <div>
-
-                      <el-popover
-                        placement="right"
-                        width="400"
-                        trigger="click">
-                        <el-table :data="truckData">
-                          <el-table-column width="100" property="id_number" label="Id"></el-table-column>
-                          <el-table-column width="100" property="number" label="Truck #"></el-table-column>
-                          <el-table-column width="150" property="brand" label="Brand"></el-table-column>
-                          <el-table-column width="200" property="model" label="Model"></el-table-column>
-                          <el-table-column width="200" property="gps" label="GPS"></el-table-column>
-
-                        </el-table>
-                        <el-button style="margin-right: 10px" type="success" slot="reference">Truck</el-button>
-                      </el-popover>
-
-                      <el-popover
-                        placement="right"
-                        width="400"
-                        trigger="click">
-                        <el-table :data="trailerData">
-                          <el-table-column width="150" property="id_number" label="Id"></el-table-column>
-                          <el-table-column width="100" property="number" label="Economic number"></el-table-column>
-                          <el-table-column width="200" property="brand" label="Brand"></el-table-column>
-                          <el-table-column width="200" property="plate" label="plate"></el-table-column>
-                          <el-table-column width="200" property="gps" label="GPS"></el-table-column>
-
-                        </el-table>
-                        <el-button style="margin-right: 10px" type="success" slot="reference">Trailer</el-button>
-                      </el-popover>
-
-                      <el-popover
-                        placement="right"
-                        width="400"
-                        trigger="click">
-                        <el-table :data="carrierData">
-                          <el-table-column width="150" property="id_number" label="Id"></el-table-column>
-                          <el-table-column width="100" property="name" label="Name"></el-table-column>
-                          <el-table-column width="200" property="contact" label="contact"></el-table-column>
-                          <el-table-column width="200" property="phone" label="Phone"></el-table-column>
-
-                        </el-table>
-                        <el-button type="success" slot="reference">Carrier</el-button>
-                      </el-popover>
-
-                    </div>
-
-                  </div>
-
-                </div>
-              </el-tab-pane>
 
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Add group risk</span>

@@ -2,17 +2,17 @@
   <el-dialog
     title="Create Notification"
     :visible.sync="dialogvisible"
-    width="40%"
+    width="45%"
     :before-close="handleClose">
       <el-form
         ref="form"
         :model="form"
-        label-width="150px">
+        label-width="120px">
         <el-form-item label="Name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="Level">
-          <el-select v-model="form.level" placeholder="Select">
+          <el-select v-model="form.level" placeholder="Select Level">
             <el-option
               v-for="level in levels"
               :class="level.id"
@@ -26,7 +26,7 @@
         </el-form-item>
 
         <el-form-item label="Control Type By">
-          <el-select v-model="form.control_type" placeholder="Select">
+          <el-select v-model="form.control_type" placeholder="Select Type">
             <el-option
               v-for="type in options_control_type"
               :key="type.value"
@@ -42,8 +42,10 @@
           <GeofenceControlType :form="form"/>
         </div>
 
+        <SensorControlType v-if="form.control_type === 'sensor'" :form="form"/>
+
         <el-form-item label="Units">
-          <el-select v-model="form.devices_ids" multiple placeholder="Select">
+          <el-select v-model="form.devices_ids" multiple placeholder="Select Unit">
             <el-option
               v-for="device in devices"
               :key="device.id"
@@ -70,14 +72,16 @@
 // import { getWialonUnits } from '../../api/general'
 import SpeedControlType from './control_types/SpeedControlType'
 import GeofenceControlType from './control_types/GeofenceControlType'
+import SensorControlType from './control_types/SensorControlType'
 import { postNotificationTrigger } from '../../api/notifications'
 import { fetchDevices } from '../../api/devices'
 
   export default {
      name: 'CreateNotification',
     components: {
-       SpeedControlType,
-       GeofenceControlType
+      SpeedControlType,
+      GeofenceControlType,
+      SensorControlType
     },
     props: {
       dialogvisible: {
@@ -101,18 +105,15 @@ import { fetchDevices } from '../../api/devices'
           devices_ids: [],
           params: {
             min_speed: 0,
-            max_speed: 0
+            max_speed: 0,
+            sensor_name: '*'
           },
           active: 0,
           name: ''
         },
         options_control_type: [{
           label: 'Speed',
-          value: 'speed',
-          params: {
-            min_speed: '',
-            max_speed: ''
-          }
+          value: 'speed'
         },
           {
             label: 'Panic Button',
@@ -121,6 +122,10 @@ import { fetchDevices } from '../../api/devices'
           {
             label: 'Geofence',
             value: 'geofence'
+          },
+          {
+            label: 'Sensor',
+            value: 'sensor'
           }]
       }
     },

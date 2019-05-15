@@ -25,7 +25,7 @@
                     </template>
 
                 </el-table-column>
-                <el-table-column prop="active" label="Actions">
+                <el-table-column prop="active" label="Status">
                     <template slot-scope="scope">
                         <el-tag type="primary">{{ scope.row.active ? 'Active':'Inactive' }}</el-tag>
                     </template>
@@ -37,7 +37,7 @@
                                 type="danger"
                                 @click="deleteNotification(scope.$index, scope.row)"
                                 icon="fas fa-trash"
-                        > Delete</el-button>
+                        ></el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -75,7 +75,6 @@
               centerDialogVisible: false,
               total: 0,
               paginationQuery: {
-                  current_page: 1,
                   limit: 20
               }
             }
@@ -84,15 +83,10 @@
           getNotifications() {
               this.dialogVisible = false
               this.listLoading = true
-              // getWialonNotifications().then(response => {
-              //   this.notifications_list = response.data.data
-              //   this.loading = false
-              // })
               fetchNotificationTriggers(this.paginationQuery).then(response => {
                   this.notifications_list = response.data.data
                   this.total = response.data.meta.total
-                  this.listLoading = false
-              }).catch(() => {
+              }).finally(() => {
                 this.listLoading = false
               })
           },
@@ -106,7 +100,6 @@
                   .catch(_ => {
                       this.listLoading = false
                   })
-              // this.deleteNotification()
           },
           openDialog() {
             this.listLoading = true

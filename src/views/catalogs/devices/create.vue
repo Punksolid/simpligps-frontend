@@ -12,21 +12,11 @@
       <el-form-item label="GPS">
         <el-input v-model="form.gps"></el-input>
       </el-form-item>
-      <el-form-item label="Plate">
-        <el-input v-model="form.plate"></el-input>
+      <el-form-item label="Brand">
+        <el-input v-model="form.brand"></el-input>
       </el-form-item>
       <el-form-item label="Internal Number">
         <el-input v-model="form.internal_number"></el-input>
-      </el-form-item>
-      <el-form-item label="Carrier ID">
-        <el-select v-model="form.carrier_id" placeholder="Select Carrier">
-          <el-option
-            v-for="carrier in carriers"
-            :key="carrier.id"
-            :label="carrier.carrier_name"
-            :value="carrier.id">
-          </el-option>
-        </el-select>
       </el-form-item>
     </el-form>
     <div class="t-center">
@@ -38,7 +28,6 @@
 
 <script>
   import { newDevice, updateDevice } from '@/api/devices'
-  import { fetchCarriers } from '@/api/carriers'
 
   export default {
     name: 'RegisterDevice',
@@ -54,11 +43,6 @@
         }
       },
     methods: {
-      getCarriers() {
-        fetchCarriers().then(resp => {
-          this.carriers = resp.data.data
-        }).catch(() => {})
-      },
       onSubmit() {
         this.loading = true
         if (this.form.id == null) {
@@ -101,7 +85,6 @@
       }
     },
     created() {
-      this.getCarriers()
     }
   }
 </script>
