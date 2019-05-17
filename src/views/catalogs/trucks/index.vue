@@ -32,7 +32,8 @@
 
           <template slot-scope="details">
             <el-row :gutter="10" v-loading="truckLoading">
-              <el-col class="panel" :span="24">
+
+              <el-col class="panel">
                 <div class="panel-header bg-primary"><h3><i class="fas fa-truck"/><strong>Truck brand:</strong> {{truckData.brand}}</h3></div>
                 <el-col class="panel-body p-10 bg-gray-light">
                   <el-col :xs="24" :sm="12">
@@ -45,6 +46,23 @@
                     <p><b>PLATE:</b> {{truckData.plate}}</p>
                     <p><b>INT. NUMBER:</b> {{truckData.internal_number}}</p>
                   </el-col>
+                </el-col>
+              </el-col>
+
+              <el-col class="panel operators" v-if="!truckLoading">
+                <div class="panel-header bg-orange">
+                  <h3><i class="fas fa-hard-hat"/>
+                    <strong v-if="truckData.operators.length >= 1">Operators detail:</strong>
+                    <strong v-else>No Operators assigned.</strong>
+                  </h3>
+                </div>
+                <el-col class="panel-body p-10 bg-gray-light">
+                    <el-col v-for="operator in truckData.operators" :key="operator.id" :xs="24" :sm="11" class="border-right">
+                      <p><b>NAME:</b> {{operator.name}}</p>
+                      <p><b>ID:</b> {{operator.id}}</p>
+                      <p><b>PHONE:</b> {{operator.phone}}</p>
+                      <p><b>ACTIVE:</b> <el-tag :type="operator.active ? 'success':'info'" size="small">{{ operator.active ? 'Active':'Inactive' }}</el-tag></p>
+                    </el-col>
                 </el-col>
               </el-col>
 
@@ -198,7 +216,6 @@
         this.expandRowKeys = id === lastId ? [] : [id]
       },
       fetchTruckDetail(id) {
-        // this.$refs.truckTable.toggleRowExpansion(row)
         this.truckLoading = true
         TruckDetail(id).then(resp => {
           this.truckData = resp.data.data
@@ -229,6 +246,13 @@
   .trucktable {
     .panel {
       box-shadow: none !important;
+      &.operators {
+        .panel-header {
+          h3 {
+            margin: 0px;
+          }
+        }
+      }
     }
     h3 {
       font-weight: 600;
@@ -240,8 +264,8 @@
         border-radius: 5px;
     }
     p {
+      color: #828282;
       margin: 3px 0px;
-      font-size: 1.1em;
       line-height: 1.3em;
     }
     .el-table__expanded-cell[class*=cell] {

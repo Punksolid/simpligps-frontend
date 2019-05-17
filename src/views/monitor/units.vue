@@ -15,6 +15,7 @@
     <div class="m-t-20">
       <el-table
         :data="unitsList"
+        v-loading="listLoading"
         stripe
         :highlight-current-row=true
         height="610"
@@ -49,116 +50,87 @@
 
               </el-tab-pane>
 
-              <el-tab-pane>
+              <el-tab-pane class="details">
                 <span slot="label"><i class="el-icon-date"></i> Details</span>
 
-                <el-col class="panel" :xs="24" :sm="12" :lg="12">
-                  <div class="panel-header bg-orange"><h3>Trailer</h3></div>
-                  <div class="panel-body p-10 bg-gray-light">
-                    <h3><b>Utility #556</b></h3>
-                    <p>ID: 1476</p>
-                    <p>Plate: E67-KLM-3</p>
-                    <p>GPS: 41°24’12.2″N 2°10’26.5″E</p>
+                <el-row :gutter="10">
+                <el-col :xs="24" :sm="12">
+                  <div class="panel">
+                    <div class="panel-header bg-orange"><i class="fas fa-truck-loading"/><h3>Trailer</h3></div>
+                    <div class="panel-body p-10 bg-gray-light">
+                      <h3><b>Utility #556</b></h3>
+                      <p>ID: 1476</p>
+                      <p>Plate: E67-KLM-3</p>
+                      <p>GPS: 41°24’12.2″N 2°10’26.5″E</p>
+                    </div>
                   </div>
                 </el-col>
 
-                <el-col class="panel" :xs="24" :sm="12" :lg="12">
-                  <div class="panel-header bg-orange"><h3><b>Carrier</b></h3></div>
-                  <div class="panel-body p-10 bg-gray-light">
-                    <h3><b>Frutas interactivas S.A.</b></h3>
-                    <p>ID: 1476</p>
-                    <p>Phone: 665-147-9136</p>
-                    <p>Contact: Pedro Páramo</p>
+                <el-col :xs="24" :sm="12">
+                  <div class="panel">
+                    <div class="panel-header bg-blue"><h3><i class="fas fa-shipping-fast"/> Carrier</h3></div>
+                    <div class="panel-body p-10 bg-gray-light">
+                      <h3><b>Frutas interactivas S.A.</b></h3>
+                      <p>ID: 1476</p>
+                      <p>Phone: 665-147-9136</p>
+                      <p>Contact: Pedro Páramo</p>
+                    </div>
                   </div>
-                </el-col> <!-- Detail Tab Finish -->
+                </el-col>
 
+                </el-row> <!-- Detail Tab Finish -->
               </el-tab-pane>
 
-              <el-tab-pane>
+              <el-tab-pane class="newmonitoring">
                 <span slot="label"><i class="el-icon-date"></i> New Monitoring</span>
-
-                <el-col :span="24">
-                  <el-col class="p-10">
-                    <span>Location: </span>
-                    <el-input style="width: 30%" placeholder="Location" v-model="input"/>
-                    <span>Observations: </span>
-                    <el-input style="width: 30%" placeholder="Observations" v-model="input"></el-input>
+                <el-row :gutter="10">
+                  <el-col :xs="24" :sm="12">
+                    <el-input placeholder="Location" v-model="newmonitoring.location">
+                      <template slot="prepend">Location:</template>
+                    </el-input>
                   </el-col>
+                  <el-col :xs="24" :sm="12">
+                    <el-input placeholder="Observations" v-model="newmonitoring.observations">
+                      <template slot="prepend">Observations:</template>
+                    </el-input>
+                  </el-col>
+                </el-row>
 
-                  <div style="padding: 10px">
-                        <el-select v-model="value" placeholder="Status">
-                          <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                        </el-select>
-                        <el-select style="margin-left: 10px" v-model="value" placeholder="Situation">
-                          <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                        </el-select>
-                      <div class="m-t-20">
-                        <el-checkbox label="Send notification to Transport Carrier" border></el-checkbox>
-                        <el-checkbox label="Send notification to Cooled traffic" border></el-checkbox>
-                        <el-checkbox label="Send notification to Traffic Cattle/Leather/Autoservice" border></el-checkbox>
-                      </div>
-                  </div>
+                <el-row :gutter="10" class="m-t-10">
+                  <el-col :xs="24" :sm="12">
+                      <el-select style="width: 100%" v-model="newmonitoring.status" placeholder="Status">
+                        <el-option
+                          v-for="item in status"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
+                  </el-col>
+                  <el-col :xs="24" :sm="12" class="dis-flex align-items-center">
+                      <el-select style="width: 100%" v-model="newmonitoring.situation" placeholder="Situation">
+                        <el-option
+                          v-for="item in situations"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
+                  </el-col>
+                  <el-col class="m-t-10">
+                    <el-checkbox-group v-model="newmonitoring.sendto">
+                      <el-checkbox v-for="item in notify" :label="item.value" :value="item.value" :key="item.value">
+                        {{ item.label }}
+                      </el-checkbox>
+                    </el-checkbox-group>
+                  </el-col>
+                </el-row>
 
-                  <div style="padding: 10px">
-
-                    <el-button type="primary">Save</el-button>
-                    <el-button type="danger">Cancel</el-button>
-
-                  </div>
-
+                <el-col class="t-center m-t-10">
+                  <el-button type="primary" @click="handleMonitoring()">Save</el-button>
+                  <el-button type="info" @click="newmonitoring = {}">Cancel</el-button>
                 </el-col>
 
-              </el-tab-pane>
-
-              <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Monitoring Route</span>
-                <div>
-                  <div class="block">
-                    <div style="margin-top: 10px"> Operator 1
-                      <el-cascader
-                        style="padding: 10px"
-                        :options="options"
-                        v-model="selectedOptions"
-                        @change="handleChange">
-                      </el-cascader>
-                    </div>
-                    <div style="margin-top: 10px"> Operator 2
-                      <el-cascader
-                        style="padding: 10px"
-                        :options="options"
-                        v-model="selectedOptions"
-                        @change="handleChange">
-                      </el-cascader>
-                    </div>
-                    <div style="margin-top: 10px"> Trailer 1
-                      <el-cascader
-                        style="padding: 10px"
-                        :options="options"
-                        v-model="selectedOptions"
-                        @change="handleChange">
-                      </el-cascader>
-                    </div>
-                    <div style="margin-top: 10px"> Trailer 2
-                      <el-cascader
-                        style="padding: 10px"
-                        :options="options"
-                        v-model="selectedOptions"
-                        @change="handleChange">
-                      </el-cascader>
-                    </div>
-
-                  </div>
-                </div>
               </el-tab-pane>
 
               <el-tab-pane>
@@ -168,11 +140,12 @@
                     <el-table
                       :data="monitoringLog"
                       stripe
+                      size="small"
                       style="width: 100%">
                       <el-table-column
                         prop="log_id"
                         label="ID"
-                        width="180">
+                        width="100">
                       </el-table-column>
                       <el-table-column
                         prop="trip"
@@ -192,7 +165,7 @@
                       <el-table-column
                         prop="location"
                         label="Location"
-                        width="180">
+                        min-width="250">
                       </el-table-column>
                       <el-table-column
                         prop="observations"
@@ -212,9 +185,7 @@
 
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Add group risk</span>
-                <div class="card-panel-icon-wrapper icon-people">
-
-                </div>
+                <div class="card-panel-icon-wrapper icon-people"></div>
                 <div class="card-panel-description">
                   <template>
                     <el-table
@@ -308,6 +279,7 @@
   export default {
     data() {
       return {
+        listLoading: false,
         expandRowKeys: [],
         mockTable: [{
           id_group: '2016-05-03',
@@ -367,8 +339,24 @@
           status: 'operator logged out'
 
         }],
-        input: '',
-        value: {},
+        newmonitoring: {
+          sendto: []
+        },
+        status: [
+          { label: 'Active', value: 'active' },
+          { label: 'Inactive', value: 'inactive' },
+          { label: 'Pending', value: 'pending' }
+        ],
+        situations: [
+          { label: 'Situation1', value: '1' },
+          { label: 'Situation2', value: '2' },
+          { label: 'Situation3', value: '3' }
+        ],
+        notify: [
+          { label: 'Send notification to Transport Carrier', value: 'carrier' },
+          { label: 'Send notification to Cooled traffic', value: 'traffic' },
+          { label: 'Send notification to Traffic Cattle/Leather/Autoservice', value: 'cattle' }
+        ],
         truckData: [],
         trailerData: [],
         carrierData: [],
@@ -379,8 +367,6 @@
           per_page: 15,
           total: 30
         },
-        options: [],
-        selectedOptions: [],
         deviceData: {
           position: {
             lat: 0,
@@ -394,6 +380,10 @@
         return [
           { 'value': 'Sanchez Trucking', 'link': 'https://github.com/vuejs/vue' }
         ]
+      },
+      handleMonitoring() {
+        this.newmonitoring = { sendto: [] }
+        this.$message.success('Monitoring Saved')
       },
       fetchUnitsList() {
         this.listLoading = true
@@ -456,3 +446,33 @@
     }
   }
 </script>
+<style lang="scss" scoped>
+    .details {
+      .panel {
+        .panel-header h3 {
+          display: inline-block;
+          margin: 5px;
+          font-weight: 600;
+        }
+        h3 {
+          margin: 10px 0px;
+          font-weight: 600;
+        }
+        p {
+          margin: 5px 0px;
+        }
+      }
+    }
+  @media screen and (max-width: 768px) {
+    .newmonitoring {
+      .el-input, .el-select {
+        margin-bottom: 5px;
+      }
+      .el-checkbox+.el-checkbox {
+        margin-left: 0px;
+        display: block;
+        margin: 10px 0px;
+      }
+    }
+  }
+</style>
