@@ -53,7 +53,7 @@
     </el-tab-pane>
 
     <el-tab-pane label="Device" name="device">
-      <el-col class="panel device" v-if="! loading">
+      <el-col class="panel device" v-if="data.device">
         <div class="panel-header bg-blue">
           <h3><i class="fas fa-mobile-alt"/><strong>Device:</strong> {{data.device.name}} / ID: {{data.device.id}}</h3>
         </div>
