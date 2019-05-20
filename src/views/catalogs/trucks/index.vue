@@ -25,30 +25,13 @@
         class="trucktable"
         :row-key="row => row.id"
         :expand-row-keys="expandRowKeys"
-        ref="truckTable"
         @expand-change="handleExpandChange"
         stripe>
         <el-table-column type="expand">
-
           <template slot-scope="details">
-            <el-row :gutter="10" v-loading="truckLoading">
-              <el-col class="panel" :span="24">
-                <div class="panel-header bg-primary"><h3><i class="fas fa-truck"/><strong>Truck brand:</strong> {{truckData.brand}}</h3></div>
-                <el-col class="panel-body p-10 bg-gray-light">
-                  <el-col :xs="24" :sm="12">
-                  <p><b>MODEL:</b> {{truckData.model}}</p>
-                  <p><b>COLOR:</b> {{truckData.color}}</p>
-                  <p><b>ID:</b> {{truckData.id}}</p>
-                  <p><b>GPS:</b> {{truckData.gps}}</p>
-                  </el-col>
-                  <el-col :xs="12" :sm="12">
-                    <p><b>PLATE:</b> {{truckData.plate}}</p>
-                    <p><b>INT. NUMBER:</b> {{truckData.internal_number}}</p>
-                  </el-col>
-                </el-col>
-              </el-col>
 
-            </el-row>
+            <TruckDetails :data="truckData" :loading="truckLoading"/>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -126,21 +109,19 @@
 <script>
   import CreateTruck from './create.vue'
   import { trucksList, deleteTruck, TruckDetail } from '../../../api/trucks'
+  import TruckDetails from './details'
 
   export default {
     name: 'Trucks',
     components: {
+      TruckDetails,
       CreateTruck
     },
     data() {
       return {
         expandRowKeys: [],
         trucksListData: [],
-        truckData: {
-          operator: {
-            name: ''
-          }
-        },
+        truckData: {},
         listLoading: false,
         truckLoading: false,
         formData: null,
@@ -156,14 +137,14 @@
     methods: {
       deleteRow(index, truckData) {
         this.listLoading = true
-        this.$confirm('This will permanently delete the truck with plate: ' + truckData[index].plate + ' are you sure to Continue?', 'Warning', {
+        this.$confirm('This will permanently delete the truck named: ' + truckData[index].name + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
           deleteTruck(truckData[index].id).then(response => {
-            this.$message('Truck with plate: ' + truckData[index].plate + ' deleted.')
+            this.$message('Truck named: ' + truckData[index].name + ' deleted.')
             this.fetchTrucksList()
           })
         })
@@ -191,19 +172,23 @@
         })
       },
       handleExpandChange(row, expandedRows) {
-        this.fetchTruckDetail(row.id)
         const id = row.id
         const lastId = this.expandRowKeys[0]
         // disable mutiple row expanded
         this.expandRowKeys = id === lastId ? [] : [id]
+        if (this.expandRowKeys.length > 0) {
+          this.fetchTruckDetail(row.id)
+        }
       },
       fetchTruckDetail(id) {
-        // this.$refs.truckTable.toggleRowExpansion(row)
         this.truckLoading = true
+        this.truckData = {}
         TruckDetail(id).then(resp => {
           this.truckData = resp.data.data
+        }).catch(() => {
+        }).finally(() => {
           this.truckLoading = false
-        }).catch(() => {})
+        })
       },
       resetFilter() {
         this.search = {}
@@ -225,27 +210,8 @@
     }
   }
 </script>
-<style lang="scss">
-  .trucktable {
-    .panel {
-      box-shadow: none !important;
-    }
-    h3 {
-      font-weight: 600;
-      margin: 3px 0px 10px;
-    }
-    .name {
-        background: #e5e5e5;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    p {
-      margin: 3px 0px;
-      font-size: 1.1em;
-      line-height: 1.3em;
-    }
-    .el-table__expanded-cell[class*=cell] {
-      padding: 10px !important;
-    }
+<style>
+  .el-table__expanded-cell[class*=cell] {
+    padding: 10px 15px !important;
   }
 </style>

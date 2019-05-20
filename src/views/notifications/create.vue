@@ -45,7 +45,7 @@
         <SensorControlType v-if="form.control_type === 'sensor'" :form="form"/>
 
         <el-form-item label="Units">
-          <el-select v-model="form.devices_ids" multiple placeholder="Select Unit">
+          <el-select v-model="form.devices_ids" multiple placeholder="Select Unit" :loading="devicesLoading">
             <el-option
               v-for="device in devices"
               :key="device.id"
@@ -92,6 +92,7 @@ import { fetchDevices } from '../../api/devices'
     data() {
       return {
         loading: false,
+        devicesLoading: false,
         levels: [
             { name: 'Good', id: 'good' },
             { name: 'Success', id: 'success' },
@@ -101,15 +102,10 @@ import { fetchDevices } from '../../api/devices'
         ],
         devices: [],
         form: {
-          control_type: null,
-          devices_ids: [],
           params: {
-            min_speed: 0,
-            max_speed: 0,
             sensor_name: '*'
           },
-          active: 0,
-          name: ''
+          active: true
         },
         options_control_type: [{
           label: 'Speed',
@@ -144,26 +140,36 @@ import { fetchDevices } from '../../api/devices'
           this.loading = false
         })
       },
-      handleClose(done) {
+      handleClose() {
+        if (this.form.name) {
         this.$confirm('Are you sure to close this alert?')
           .then(_ => {
             this.$emit('closedialog')
-            done()
           })
           .catch(_ => {})
+        } else {
+          this.$emit('closedialog')
+        }
       },
       setControlType(event) {
         this.options_control_type.value = event.target.value
       },
       getDevices() {
+        this.devicesLoading = true
           fetchDevices({ 'all': 1 }).then(response => {
-              this.devices = response.data.data
+            this.devices = response.data.data
+            this.devicesLoading = false
+          }).catch(() => {
+            this.devicesLoading = false
           })
       }
     },
     created() {
         // this.fetchWialonResources()
         this.getDevices()
+    },
+    beforeDestroy() {
+      this.form = { params: { sensor_name: '*' }, active: true }
     }
   }
 </script>

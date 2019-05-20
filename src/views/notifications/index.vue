@@ -10,7 +10,7 @@
             </el-button>
         </el-row>
 
-        <CreateNotification :dialogvisible="dialogVisible" @created="getNotifications()" @closedialog="closeDialog"/>
+        <CreateNotification v-if="dialogVisible" :dialogvisible="dialogVisible" @created="getNotifications()" @closedialog="closeDialog"/>
 
         <el-col>
             <el-table v-loading="listLoading" :data="notifications_list" stripe style="width: 100%">
@@ -27,7 +27,7 @@
                 </el-table-column>
                 <el-table-column prop="active" label="Status">
                     <template slot-scope="scope">
-                        <el-tag type="primary">{{ scope.row.active ? 'Active':'Inactive' }}</el-tag>
+                        <el-tag :type="scope.row.active ? 'success':'info'">{{ scope.row.active ? 'Active':'Inactive' }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="Operations" width="150" fixed="right">
@@ -91,15 +91,25 @@
               })
           },
           deleteNotification(index, row) {
-              this.listLoading = true
+            this.listLoading = true
+            this.$confirm('This will permanently delete Notification named: ' + row.name + '. Continue?', 'Warning', {
+              center: true,
+              type: 'warning'
+            }).then(() => {
               destroyNotification(row.id)
-                  .then(response => {
-                    this.$message.error(response.data.message)
-                    this.getNotifications()
-                  })
-                  .catch(_ => {
-                      this.listLoading = false
-                  })
+                .then(response => {
+                  this.$message.error(response.data.message)
+                  this.getNotifications()
+                }).catch(_ => {
+                  this.listLoading = false
+                })
+            }).catch(() => {
+              this.listLoading = false
+              this.$message({
+                type: 'info',
+                message: 'Delete canceled'
+              })
+            })
           },
           openDialog() {
             this.listLoading = true

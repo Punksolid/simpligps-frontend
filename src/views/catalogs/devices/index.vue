@@ -39,7 +39,7 @@
         @expand-change="showMoreDetails"
         >
 
-        <el-table-column 
+        <el-table-column
           type="expand"
         >
           <template slot-scope="scope">
@@ -59,14 +59,14 @@
                       <h3>Truck: {{ scope.row.truck.name   || "default" }} </h3>
                       <h3>Plate: {{ scope.row.truck.plate  || "default" }}</h3>
                       <h3>Color: {{ scope.row.truck.color || "default" }}</h3>
-                      <h3>Brand: {{ scope.row.truck.brand || "default" }}</h3> 
+                      <h3>Brand: {{ scope.row.truck.brand || "default" }}</h3>
                   </div>
                 </div>
               </el-tab-pane>
             </el-tabs>
           </template>
         </el-table-column>
-        
+
         <el-table-column
           prop="name"
           label="Name"
@@ -128,7 +128,6 @@
   import Logs from './logs'
   import Pagination from '../../../components/Pagination/index.vue'
 
-
   export default {
     name: 'DevicesList',
     components: {
@@ -148,7 +147,7 @@
         formData: {},
         paginationQuery: {
             limit: 15,
-            total: 0,
+            total: 0
         },
         dialogStatus: '',
         titleDialog: {
@@ -163,16 +162,16 @@
       pagination(val) {
         this.getNotifications()
       },
-      showMoreDetails(row, expandedRows){
+      showMoreDetails(row, expandedRows) {
         this.detailsLoading = true
         row.loading = true
         fetchDevice(row.id).then(response => {
-          this.devicesList = this.devicesList.map(function(element){
-            if(element.id === row.id){
+          this.devicesList = this.devicesList.map(function(element) {
+            if (element.id === row.id) {
               element = response.data.data
               element.loading = false
               return element
-            } 
+            }
             return element
           })
         }).finally(res => {
@@ -185,7 +184,7 @@
         this.search = {}
         fetchDevices(this.paginationQuery).then(response => {
           this.paginationQuery.total = response.data.meta.total
-          this.devicesList = response.data.data.map(function(device){
+          this.devicesList = response.data.data.map(function(device) {
             device.loading = false
             return device
           })
@@ -200,7 +199,7 @@
         }).finally(res => {
           this.listLoading = false
         })
-      }, /**206 */
+      }, /** 206 **/
       openDialog() {
         this.dialogStatus = 'create'
         this.dialogVisible = true

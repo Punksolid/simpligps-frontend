@@ -16,13 +16,14 @@
       </el-row>
 
       <CreateTrip v-if="titleDialog" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"/>
+      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>
 
       <el-row>
        <el-col>
          <el-table
            :data="tripsList"
            v-loading="listLoading"
-           style="width: 100%">
+           class="triplist">
            <el-table-column
              prop="id"
              label="ID"
@@ -48,16 +49,34 @@
              prop="destination_name"
              label="Destination">
            </el-table-column>
+
            <el-table-column
              prop="tag"
              label="TAG"
-             width="100px"
-           >
+             width="100px">
+             <template slot-scope="scope" v-if="scope.row.tag">
+               <template v-if="scope.row.tag.length > 1">
+                 <el-tooltip effect="light" placement="top">
+                   <template slot="content">
+                     <el-tag v-for="tag in scope.row.tag" :key="tag.index" type="success" size="small" style="margin-right: 2px;">
+                       {{ tag }}
+                     </el-tag>
+                   </template>
+                   <el-button size="mini" type="success" plain>TAGS</el-button>
+                 </el-tooltip>
+               </template>
+
+               <template v-else>
+                 <el-tag type="success">{{ scope.row.tag[0] }}</el-tag>
+               </template>
+
+             </template>
            </el-table-column>
+
            <el-table-column
              label="Operations"
              fixed="right"
-             width="180px">
+             width="200px">
              <template slot-scope="scope">
                <el-button
                  size="mini"
@@ -65,6 +84,11 @@
                  type="primary"
                  plain
                  @click="handleDetails(scope.row)">
+               </el-button>
+               <el-button
+                 size="mini"
+                 @click="handleTags(scope.row)"
+                 icon="fas fa-hashtag">
                </el-button>
                <el-button
                  size="mini"
@@ -104,16 +128,19 @@
   import CreateTrip from './newtrip'
   import TripDetails from './details'
   import { tripList, deleteTrip } from '@/api/trips'
+  import TripTags from './tags'
 
     export default {
       name: 'TripList',
       components: {
+        TripTags,
         CreateTrip,
         TripDetails
       },
       data() {
           return {
             dialogVisible: false,
+            tagsDialog: false,
             listLoading: false,
             titleDialog: 'New Trip',
             tripData: {},
@@ -147,9 +174,15 @@
         closeDialog() {
           this.listLoading = false
           this.dialogVisible = false
+          this.tagsDialog = false
         },
         handleDetails(row) {
           this.$router.push({ name: 'Trip Details', params: { tripid: row.id }})
+        },
+        handleTags(row) {
+          this.listLoading = true
+          this.tripData = row
+          this.tagsDialog = true
         },
         handleUpdate(index, row) {
           this.tripData = row
@@ -188,6 +221,16 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .triplist {
+    width: 100%;
 
+    .el-button + .el-button {
+      margin-left: 3px;
+    }
+
+    .el-button--mini, .el-button--mini.is-round {
+      padding: 7px 10px;
+    }
+  }
 </style>

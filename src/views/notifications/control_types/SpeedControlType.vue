@@ -17,6 +17,10 @@
     name: 'SpeedControlType',
     props: [
       'form'
-    ]
+    ],
+    created() {
+      this.form.params.min_speed = 1
+      this.form.params.max_speed = 1
+    }
   }
 </script>
