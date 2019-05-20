@@ -1,4 +1,6 @@
 import { Message } from 'element-ui'
+import store from '../store'
+
 
 export function ErrorsHandling(error) {
   if (error.code === 'ECONNABORTED') {
@@ -39,6 +41,9 @@ export function ErrorsHandling(error) {
       message: error.response.data.message,
       type: 'error',
       duration: 5 * 1000
+    })
+    store.dispatch('LogOut').then(() => {
+      location.reload() // 为了重新实例化vue-router对象 避免bug
     })
   }
   if (error.response.status === 500) { // Internal server error
