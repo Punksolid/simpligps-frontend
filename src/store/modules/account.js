@@ -21,8 +21,11 @@ const account = {
     SelectAccount({ commit }, account_uuid_selected) {
       return new Promise((resolve, reject) => {
           return request({
-            url: 'v1/me/accounts/' + account_uuid_selected,
-            method: 'GET'
+            url: 'v1/me/set_account/',
+            method: 'POST',
+            params: {
+              uuid: account_uuid_selected
+            }
           }).then(response => {
               commit('SET_ACCOUNT', response.data.data)
               resolve()
