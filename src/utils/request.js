@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import { Message, MessageBox } from 'element-ui'
 import store from '../store'
-import { getToken, getTenantID } from './auth'
+import { getToken, getTenantID, setToken } from './auth'
 import { ErrorsHandling } from './errors_handling'
 
 // create an axios instance
@@ -30,6 +30,9 @@ service.interceptors.request.use(
 
 // Add a response interceptor
 service.interceptors.response.use(function(response) {
+  if (response.headers['x-token']) {
+    setToken(response.headers['x-token'])
+  }
   // Do something with response data
   return response
 }, function(error) {

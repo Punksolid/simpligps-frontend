@@ -90,7 +90,7 @@
         if (this.form.id) {
           updateTruck(this.form.id, this.form).then(response => {
             this.$message({
-              message: 'Truck with name: ' + response.data.data.name + ' updated',
+              message: 'Truck named: ' + response.data.data.name + ' updated',
               type: 'success',
               duration: 10 * 1000
             })

@@ -25,48 +25,13 @@
         class="trucktable"
         :row-key="row => row.id"
         :expand-row-keys="expandRowKeys"
-        ref="truckTable"
         @expand-change="handleExpandChange"
         stripe>
         <el-table-column type="expand">
-
           <template slot-scope="details">
-            <el-row :gutter="10" v-loading="truckLoading">
 
-              <el-col class="panel">
-                <div class="panel-header bg-primary"><h3><i class="fas fa-truck"/><strong>Truck brand:</strong> {{truckData.brand}}</h3></div>
-                <el-col class="panel-body p-10 bg-gray-light">
-                  <el-col :xs="24" :sm="12">
-                  <p><b>MODEL:</b> {{truckData.model}}</p>
-                  <p><b>COLOR:</b> {{truckData.color}}</p>
-                  <p><b>ID:</b> {{truckData.id}}</p>
-                  <p><b>GPS:</b> {{truckData.gps}}</p>
-                  </el-col>
-                  <el-col :xs="12" :sm="12">
-                    <p><b>PLATE:</b> {{truckData.plate}}</p>
-                    <p><b>INT. NUMBER:</b> {{truckData.internal_number}}</p>
-                  </el-col>
-                </el-col>
-              </el-col>
+            <TruckDetails :data="truckData" :loading="truckLoading"/>
 
-              <el-col class="panel operators" v-if="!truckLoading">
-                <div class="panel-header bg-orange">
-                  <h3><i class="fas fa-hard-hat"/>
-                    <strong v-if="truckData.operators.length >= 1">Operators detail:</strong>
-                    <strong v-else>No Operators assigned.</strong>
-                  </h3>
-                </div>
-                <el-col class="panel-body p-10 bg-gray-light">
-                    <el-col v-for="operator in truckData.operators" :key="operator.id" :xs="24" :sm="11" class="border-right">
-                      <p><b>NAME:</b> {{operator.name}}</p>
-                      <p><b>ID:</b> {{operator.id}}</p>
-                      <p><b>PHONE:</b> {{operator.phone}}</p>
-                      <p><b>ACTIVE:</b> <el-tag :type="operator.active ? 'success':'info'" size="small">{{ operator.active ? 'Active':'Inactive' }}</el-tag></p>
-                    </el-col>
-                </el-col>
-              </el-col>
-
-            </el-row>
           </template>
         </el-table-column>
         <el-table-column
@@ -144,21 +109,19 @@
 <script>
   import CreateTruck from './create.vue'
   import { trucksList, deleteTruck, TruckDetail } from '../../../api/trucks'
+  import TruckDetails from './details'
 
   export default {
     name: 'Trucks',
     components: {
+      TruckDetails,
       CreateTruck
     },
     data() {
       return {
         expandRowKeys: [],
         trucksListData: [],
-        truckData: {
-          operator: {
-            name: ''
-          }
-        },
+        truckData: {},
         listLoading: false,
         truckLoading: false,
         formData: null,
@@ -174,14 +137,14 @@
     methods: {
       deleteRow(index, truckData) {
         this.listLoading = true
-        this.$confirm('This will permanently delete the truck with plate: ' + truckData[index].plate + ' are you sure to Continue?', 'Warning', {
+        this.$confirm('This will permanently delete the truck named: ' + truckData[index].name + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
           deleteTruck(truckData[index].id).then(response => {
-            this.$message('Truck with plate: ' + truckData[index].plate + ' deleted.')
+            this.$message('Truck named: ' + truckData[index].name + ' deleted.')
             this.fetchTrucksList()
           })
         })
@@ -209,18 +172,23 @@
         })
       },
       handleExpandChange(row, expandedRows) {
-        this.fetchTruckDetail(row.id)
         const id = row.id
         const lastId = this.expandRowKeys[0]
         // disable mutiple row expanded
         this.expandRowKeys = id === lastId ? [] : [id]
+        if (this.expandRowKeys.length > 0) {
+          this.fetchTruckDetail(row.id)
+        }
       },
       fetchTruckDetail(id) {
         this.truckLoading = true
+        this.truckData = {}
         TruckDetail(id).then(resp => {
           this.truckData = resp.data.data
+        }).catch(() => {
+        }).finally(() => {
           this.truckLoading = false
-        }).catch(() => {})
+        })
       },
       resetFilter() {
         this.search = {}
@@ -242,34 +210,8 @@
     }
   }
 </script>
-<style lang="scss">
-  .trucktable {
-    .panel {
-      box-shadow: none !important;
-      &.operators {
-        .panel-header {
-          h3 {
-            margin: 0px;
-          }
-        }
-      }
-    }
-    h3 {
-      font-weight: 600;
-      margin: 3px 0px 10px;
-    }
-    .name {
-        background: #e5e5e5;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    p {
-      color: #828282;
-      margin: 3px 0px;
-      line-height: 1.3em;
-    }
-    .el-table__expanded-cell[class*=cell] {
-      padding: 10px !important;
-    }
+<style>
+  .el-table__expanded-cell[class*=cell] {
+    padding: 10px 15px !important;
   }
 </style>
