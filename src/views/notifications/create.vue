@@ -15,12 +15,11 @@
           <el-select v-model="form.level" placeholder="Select Level">
             <el-option
               v-for="level in levels"
-              :class="level.id"
               :key="level.id"
               :label="level.name"
               :value="level.id">
                 <span style="float: left">{{ level.name }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px"><el-tag :type="level.id">{{ level.name }}</el-tag></span>
+                <span style="float: right; color: #8492a6; font-size: 13px"><el-tag :type="level.type" :color=" level.color ">{{ level.name }}</el-tag></span>
             </el-option>
         </el-select>
         </el-form-item>
@@ -94,11 +93,15 @@ import { fetchDevices } from '../../api/devices'
         loading: false,
         devicesLoading: false,
         levels: [
-            { name: 'Good', id: 'good' },
-            { name: 'Success', id: 'success' },
-            { name: 'Info', id: 'info' },
-            { name: 'Warning', id: 'warning' },
-            { name: 'Danger', id: 'danger' }
+          // success, info, warning, danger, 'empty'
+            { name:'Emergency', id: 'emergency', color:'#dc3545', type: 'success'},
+            { name:'  Alert  ', id: "alert", color:'#8492a6', type: ''},
+            { name:' Critical', id: 'critical', color:'#F56C6C', type: 'success'},
+            { name:' Error ', id: 'error', color:'#A50203', type: 'success'},
+            { name:' Warning ', id: 'warning', color:'#E6A23C', type: 'success'},
+            { name:' Notice ', id: 'notice', color:'#f8f9fa', type: 'info'},
+            { name:'  Info  ', id: 'info', color:'#909399', type: 'success'},
+            { name:' Debug  ', id: 'debug', color:'#67C23A', type: 'danger'},
         ],
         devices: [],
         form: {
