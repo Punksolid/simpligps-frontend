@@ -45,8 +45,8 @@
           <template slot-scope="scope">
             <el-tabs v-loading="scope.row.loading">
               <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i>Logs</span>
-                <Logs v-bind:element="scope.row.id" />
+                <span slot="label"><i class="el-icon-date"></i> Logs</span>
+                <Logs :element="scope.row.id" />
               </el-tab-pane>
               <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> Truck</span>
@@ -91,7 +91,6 @@
         </el-table-column>
         <el-table-column
           label="Operations"
-          fixed="right"
           width="130">
           <template slot-scope="scope">
             <el-button
