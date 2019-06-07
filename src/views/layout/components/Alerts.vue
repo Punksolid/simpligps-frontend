@@ -77,11 +77,11 @@
       </el-col>
     </el-row>
     <span slot="footer" class="dialog-footer">
-    <el-button type="warning" @click="handleClose">Attended</el-button>
+    <el-button type="warning" @click="attendAlert">Attend</el-button>
     </span>
   </el-dialog>
 
-  <AttendAlerts :alertinfo="wialon" :position="unitPositions"/>
+  <AttendAlerts :alertinfo="wialon" :notification_to_attend="notification" :position="unitPositions"/>
 
 </el-row>
 </template>
@@ -106,7 +106,8 @@
           unitPositions: {
             lat: 0,
             lng: 0
-          }
+          },
+          notification: null
         }
       },
       methods: {
@@ -122,10 +123,18 @@
         unitPosition() {
           this.unitPositions.lat = Number(this.wialon[0].LATD)
           this.unitPositions.lng = Number(this.wialon[0].LOND)
+        },
+        attendAlert() {
+          this.dialogVisible = false
+          event.$emit('attend-alert', this.notification)
         }
+      },
+      mounted() {
+        console.log(this.wialon)
       },
       created() {
         event.$on('activate-alert', (data) => {
+          this.notification = data
           this.wialon = []
           this.wialon.push(data)
           this.unitPosition()

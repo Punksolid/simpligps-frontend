@@ -86,3 +86,11 @@ export function fetchLogsDevices(id) {
     method: 'GET'
   })
 }
+
+export function createNotificationResolution(form) {
+  return request({
+    url: 'v1/account/notifications/resolve',
+    method: 'POST',
+    data: form
+  })
+}
