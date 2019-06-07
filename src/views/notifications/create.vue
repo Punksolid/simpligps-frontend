@@ -94,14 +94,14 @@ import { fetchDevices } from '../../api/devices'
         devicesLoading: false,
         levels: [
           // success, info, warning, danger, 'empty'
-            { name:'Emergency', id: 'emergency', color:'#dc3545', type: 'success'},
-            { name:'  Alert  ', id: "alert", color:'#8492a6', type: ''},
-            { name:' Critical', id: 'critical', color:'#F56C6C', type: 'success'},
-            { name:' Error ', id: 'error', color:'#A50203', type: 'success'},
-            { name:' Warning ', id: 'warning', color:'#E6A23C', type: 'success'},
-            { name:' Notice ', id: 'notice', color:'#f8f9fa', type: 'info'},
-            { name:'  Info  ', id: 'info', color:'#909399', type: 'success'},
-            { name:' Debug  ', id: 'debug', color:'#67C23A', type: 'danger'},
+            { name: 'Emergency', id: 'emergency', color: '#dc3545', type: 'success' },
+            { name: 'Alert', id: 'alert', color: '#8492a6', type: '' },
+            { name: 'Critical', id: 'critical', color: '#F56C6C', type: 'success' },
+            { name: 'Error ', id: 'error', color: '#A50203', type: 'success' },
+            { name: 'Warning', id: 'warning', color: '#E6A23C', type: 'success' },
+            { name: 'Notice', id: 'notice', color: '#f8f9fa', type: 'info' },
+            { name: 'Info', id: 'info', color: '#909399', type: 'success' },
+            { name: 'Debug', id: 'debug', color: '#67C23A', type: 'danger' }
         ],
         devices: [],
         form: {
@@ -176,4 +176,3 @@ import { fetchDevices } from '../../api/devices'
     }
   }
 </script>
-

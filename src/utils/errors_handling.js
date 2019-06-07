@@ -1,7 +1,6 @@
 import { Message } from 'element-ui'
 import store from '../store'
 
-
 export function ErrorsHandling(error) {
   if (error.code === 'ECONNABORTED') {
     Message({
