@@ -31,7 +31,7 @@
       <!-- Body Left Side / Events-message -->
       <el-col :span="12">
         <el-table
-          :data="[{ date: '2019-05-02', events: 'Panic button', hour: '16:53:27' }, { date: '2019-05-04', events: 'Speed', hour: '14:53:27' }]"
+          :data="getPreviousNotifications()"
           stripe
           max-height="250"
           style="width: 100%"
@@ -133,6 +133,13 @@ export default {
       if (!this.dialogVisible) {
         this.dialogAlert = true;
       }
+    },
+    getPreviousNotifications() {
+      return [{
+        date: this.notification_to_attend.time_ago,
+        events: this.notification_to_attend.NOTIFICATION
+      }]
+      // return [{ date: '2019-05-02', events: 'Panic button', hour: '16:53:27' }, { date: '2019-05-04', events: 'Speed', hour: '14:53:27' }]
     }
   },
   created() {
