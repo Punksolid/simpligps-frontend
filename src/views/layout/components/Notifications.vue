@@ -18,10 +18,7 @@
             <el-dropdown-item v-for="notification in notifications" :key="notification.id">
               <span @click="handleAlert(notification)">
                 <i class="fas fa-bell"></i>
-                {{ notification.message }}
-              </span>
-              <span @click="notificationReaded(notification.id)">
-                <i class="fas fa-check p-l-10 p-r-0"></i>
+                {{ notification.message }} <label class="small">{{ notification.time_ago }}</label>
               </span>
             </el-dropdown-item>
           </ul>
