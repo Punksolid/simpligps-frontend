@@ -178,7 +178,7 @@
             tripData: {},
             tripsList: [],
             tripsListPage: {},
-            showEditForm:true
+            showEditForm:false
           }
       },
       methods: {
@@ -218,7 +218,7 @@
           this.tagsDialog = true
         },
         handleUpdate(index, row) {
-
+          this.showEditForm = true
         },
         deleteRow(index, tripData) {
           this.listLoading = true
