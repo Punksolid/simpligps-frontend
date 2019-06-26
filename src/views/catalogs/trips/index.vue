@@ -36,7 +36,13 @@
            >
            </el-table-column>
            <el-table-column
-             prop="client"
+             prop="invoice"
+             label="Invoice"
+             min-width="50px"
+           >
+           </el-table-column>
+           <el-table-column
+             prop="client_name"
              label="Client"
              min-width="80px"
            >
@@ -48,6 +54,26 @@
            <el-table-column
              prop="destination_name"
              label="Destination">
+           </el-table-column>
+           <el-table-column
+             prop="stops"
+             label="Stops">
+           </el-table-column>
+           <el-table-column
+             prop="truck_name"
+             label="Truck">
+           </el-table-column>
+           <el-table-column
+             prop="scheduled_load"
+             label="Scheduled Load">
+           </el-table-column>
+           <el-table-column
+             prop="scheduled_departure"
+             label="Scheduled Departure">
+           </el-table-column>
+           <el-table-column
+             prop="scheduled_arrival"
+             label="Scheduled Arrival">
            </el-table-column>
 
            <el-table-column
@@ -92,7 +118,6 @@
                </el-button>
                <el-button
                  size="mini"
-                 disabled
                  icon="fas fa-edit"
                  @click="handleUpdate(scope.$index, scope.row)">
                </el-button>
@@ -121,6 +146,11 @@
       </el-col>
 
     </el-row>
+    <el-dialog 
+    :visible="showEditForm"
+    title="Edit Trip">
+      <EditTrip></EditTrip>
+    </el-dialog>
   </div>
 </template>
 
@@ -129,13 +159,15 @@
   import TripDetails from './details'
   import { tripList, deleteTrip } from '@/api/trips'
   import TripTags from './tags'
+  import EditTrip from './EditTrip'
 
     export default {
       name: 'TripList',
       components: {
         TripTags,
         CreateTrip,
-        TripDetails
+        TripDetails,
+        EditTrip
       },
       data() {
           return {
@@ -145,7 +177,8 @@
             titleDialog: 'New Trip',
             tripData: {},
             tripsList: [],
-            tripsListPage: {}
+            tripsListPage: {},
+            showEditForm:true
           }
       },
       methods: {
@@ -185,10 +218,7 @@
           this.tagsDialog = true
         },
         handleUpdate(index, row) {
-          this.tripData = row
-          this.listLoading = true
-          this.titleDialog = 'Edit Trip'
-          this.dialogVisible = true
+
         },
         deleteRow(index, tripData) {
           this.listLoading = true

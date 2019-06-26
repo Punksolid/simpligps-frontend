@@ -1,6 +1,16 @@
 import request from '@/utils/request'
 
+/**
+ * @deprecated in favor of fetchOperators
+ */
 export function getOperators(params) {
+  return request({
+    url: 'v1/operators',
+    method: 'GET',
+    params
+  })
+}
+export function fetchOperators(params) {
   return request({
     url: 'v1/operators',
     method: 'GET',

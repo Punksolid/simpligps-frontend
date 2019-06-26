@@ -45,7 +45,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-            <el-form-item label="Georoute">
+          <el-form-item label="Georoute">
                 <el-select v-model="form.georoute_ref" placeholder="Select Georute">
                     <el-option
                             v-for="geofence in geofences"
@@ -71,23 +71,41 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="Intermediates">
+            <el-divider>Intermediates</el-divider>
+            <!-- <template v-for="(intermediate, index) in intermediates" :key="index" > -->
+              <div v-for="(intermediate,index) in intermediates" :key="intermediate.id" >
+                <el-form-item label="Intermediate">
                 <el-select
-                v-model="form.intermediates"
-                multiple
+                v-model="intermediate.place_id"
                 filterable
                 remote
                 :remote-method="getSearchIntermediates"
                 :loading="loadingIntermediates"
                 placeholder="Intermediates">
                     <el-option
-                            v-for="place in intermediates"
+                            v-for="place in places"
                             :key="place.id"
                             :label="place.name"
                             :value="place.id">
                     </el-option>
                 </el-select>
+                <datetime
+                  type="datetime"
+                  v-model="intermediate.at_time"
+                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                  auto
+                  >
+                </datetime>
+
+                <el-button v-if="index == Object.keys(intermediates).length - 1" @click="addIntermediateBlock()" class="el-icon-circle-plus"></el-button>
+                <el-button  @click="removeIntermediateBlock(index)" class="el-icon-remove"></el-button>
+            
             </el-form-item>
+            </div>
+            <!-- </template> -->
+
+
+            <el-divider></el-divider>
             <el-form-item label="Destination">
                 <el-select
                 v-model="form.destination_id"
@@ -124,6 +142,7 @@
                             :value="carrier.id">
                     </el-option>
                 </el-select>
+
             </el-form-item>
           <el-form-item label="Trucks">
             <el-select
@@ -152,6 +171,7 @@
               </el-option>
             </el-select>
           </el-form-item>
+            <el-divider>Dates</el-divider>
 
             <el-form-item label="Schedule Load">
               <datetime
@@ -189,43 +209,7 @@
                   >
                 </datetime>
             </el-form-item>
-<!-- Comentado el siguiente bloque, eran los datepickers sin hora ni minutos -->
-                <!-- <el-date-picker
-                        v-model="form.scheduled_load"
-                        type="date"
-                        format="dd-MM-yyyy HH:mm"
-                        value-format="yyyy-MM-dd HH:mm"
 
-                        placeholder="Select Load's date">
-                </el-date-picker> -->
-            <!-- <el-form-item label="Departure Date">
-                <el-date-picker
-                        v-model="form.scheduled_departure"
-                        type="date"
-                        format="dd-MM-yyyy"
-                        value-format="yyyy-MM-dd"
-
-                        placeholder="Select Depature's date">
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item label="Scheduled Arrival">
-                <el-date-picker
-                        v-model="form.scheduled_arrival"
-                        type="date"
-                        format="dd-MM-yyyy"
-                        value-format="yyyy-MM-dd"
-                        placeholder="Select Arrival's Date">
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item label="Scheduled Unload">
-                <el-date-picker
-                        v-model="form.scheduled_unload"
-                        type="date"
-                        format="dd-MM-yyyy"
-                        value-format="yyyy-MM-dd"
-                        placeholder="Select Unload's date">
-                </el-date-picker>
-            </el-form-item> -->
         </el-form>
 
         <div slot="footer" class="dialog-footer text-center">
@@ -269,19 +253,25 @@
               loadingTrucks: false,
               places: '',
               origins: '',
-              intermediates: '',
+              // intermediates: '',
               destinations: '',
               clients: [],
               operators: [],
               geofences: [],
               trucks: [],
               carriers: [],
-              trailersbox: []
+              trailersbox: [],
+              intermediates: [{
+                  id: null,
+                  place_id: null,
+                  at_time : null
+                }]
             }
         },
         methods: {
             onSubmit() {
               this.loading = true
+              this.form.intermediates = this.intermediates
                 if (this.form.id) {
                     updateTrip(this.form.id, this.form).then(response => {
                         this.$message({
@@ -334,7 +324,7 @@
               getPlaces(params).then(response => {
                   this.places = response.data.data
                   this.origins = Object.assign(this.origins, this.places)
-                  this.intermediates = Object.assign(this.intermediates, this.places)
+                  // this.intermediates = Object.assign(this.intermediates, this.places) // todo lugar viene de places
                   this.destinations = Object.assign(this.destinations, this.places)
               })
           },
@@ -384,7 +374,7 @@
             this.loadingIntermediates = true
             search = { name: search }
             searchPlaces(search).then(response => {
-              this.intermediates = response.data.data
+              // this.intermediates = response.data.data
               this.loadingIntermediates = false
             })
           },
@@ -403,6 +393,16 @@
               this.trucks = response.data.data
               this.loadingTrucks = false
             })
+          },
+          addIntermediateBlock() {
+            
+            this.intermediates.push({
+              place_id: null,
+              at_time: null,
+            })
+          },
+          removeIntermediateBlock(id) {
+            this.intermediates.splice(id,1)
           }
         },
         mounted() {
