@@ -2,7 +2,7 @@
     <el-dialog
             :title="title"
             :visible.sync="dialogvisible"
-            width="40%"
+            width="50%"
             custom-class="newtrip"
             :before-close="handleClose">
 
@@ -72,38 +72,41 @@
                 </el-select>
             </el-form-item>
             <el-divider>Intermediates</el-divider>
-            <!-- <template v-for="(intermediate, index) in intermediates" :key="index" > -->
-              <div v-for="(intermediate,index) in intermediates" :key="intermediate.id" >
-                <el-form-item label="Intermediate">
-                <el-select
-                v-model="intermediate.place_id"
-                filterable
-                remote
-                :remote-method="getSearchIntermediates"
-                :loading="loadingIntermediates"
-                placeholder="Intermediates">
-                    <el-option
-                            v-for="place in places"
-                            :key="place.id"
-                            :label="place.name"
-                            :value="place.id">
-                    </el-option>
-                </el-select>
-                <datetime
-                  type="datetime"
-                  v-model="intermediate.at_time"
-                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-                  auto
-                  >
-                </datetime>
-
-                <el-button v-if="index == Object.keys(intermediates).length - 1" @click="addIntermediateBlock()" class="el-icon-circle-plus"></el-button>
-                <el-button  @click="removeIntermediateBlock(index)" class="el-icon-remove"></el-button>
-            
+              <div v-for="(intermediate, index) in intermediates" :key="intermediate.id" >
+                <el-form-item label="Intermediates" class="intermediates">
+                  <div class="dis-flex">
+                    <el-select
+                    v-model="intermediate.place_id"
+                    filterable
+                    remote
+                    :remote-method="getSearchIntermediates"
+                    :loading="loadingIntermediates"
+                    placeholder="Intermediates">
+                        <el-option
+                                v-for="place in places"
+                                :key="place.id"
+                                :label="place.name"
+                                :value="place.id">
+                        </el-option>
+                    </el-select>
+                    <datetime
+                      type="datetime"
+                      placeholder="Check in"
+                      v-model="intermediate.at_time"
+                      :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                      auto/>
+                    <datetime
+                      type="datetime"
+                      placeholder="Departure Time"
+                      v-model="intermediate.exiting"
+                      :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                      auto/>
+                    <el-button type="danger" plain @click="removeIntermediateBlock(index)" class="el-icon-remove" size="mini"/>
+                    <el-button type="success" plain v-if="index == Object.keys(intermediates).length - 1" @click="addIntermediateBlock()" class="el-icon-circle-plus" size="mini"/>
+                  </div>
             </el-form-item>
             </div>
             <!-- </template> -->
-
 
             <el-divider></el-divider>
             <el-form-item label="Destination">
@@ -214,14 +217,14 @@
 
         <div slot="footer" class="dialog-footer text-center">
             <el-button @click="handleClose">Cancel</el-button>
-            <el-button type="primary" :loading="loading" @click="onSubmit">{{form.id?'Update':'Create'}}</el-button>
+            <el-button type="primary" :loading="loading" @click="onSubmit">Create trip</el-button>
         </div>
 
     </el-dialog>
 </template>
 
 <script>
-    import { createTrip, updateTrip } from '@/api/trips'
+    import { createTrip } from '@/api/trips'
     import { clientsList, searchClients } from '@/api/clients'
     import { fetchGeofences, getPlaces, searchPlaces } from '../../../api/general'
     import { getOperators, searchOperators } from '@/api/operators'
@@ -262,9 +265,10 @@
               carriers: [],
               trailersbox: [],
               intermediates: [{
-                  id: null,
-                  place_id: null,
-                  at_time : null
+                id: null,
+                place_id: null,
+                at_time: null,
+                exiting: null
                 }]
             }
         },
@@ -272,31 +276,17 @@
             onSubmit() {
               this.loading = true
               this.form.intermediates = this.intermediates
-                if (this.form.id) {
-                    updateTrip(this.form.id, this.form).then(response => {
-                        this.$message({
-                          message: 'Trip ID: ' + response.data.data.id + ' updated',
-                          type: 'success',
-                          duration: 10 * 1000
-                        })
-                      this.loading = false
-                      this.$emit('created')
-                    }).catch(() => {
-                      this.loading = false
-                    })
-                } else {
-                    createTrip(this.form).then(response => {
-                        this.$message({
-                          message: 'Trip ID: ' + response.data.data.id + ' created',
-                          type: 'success',
-                          duration: 10 * 1000
-                        })
-                      this.loading = false
-                      this.$emit('created')
-                    }).catch(() => {
-                      this.loading = false
-                    })
-                }
+              createTrip(this.form).then(response => {
+                  this.$message({
+                    message: 'Trip ID: ' + response.data.data.id + ' created',
+                    type: 'success',
+                    duration: 10 * 1000
+                  })
+                this.loading = false
+                this.$emit('created')
+              }).catch(() => {
+                this.loading = false
+              })
             },
           handleClose() {
             if (this.form.rp || this.form.invoice) {
@@ -395,14 +385,13 @@
             })
           },
           addIntermediateBlock() {
-            
             this.intermediates.push({
               place_id: null,
-              at_time: null,
+              at_time: null
             })
           },
           removeIntermediateBlock(id) {
-            this.intermediates.splice(id,1)
+            this.intermediates.splice(id, 1)
           }
         },
         mounted() {
@@ -424,13 +413,44 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .newtrip {
     .el-form-item {
       margin-bottom: 5px;
     }
     .el-select {
       width: 100%;
+    }
+    .vdatetime-input {
+      -webkit-appearance: none;
+      background-color: #FFF;
+      border-radius: 4px;
+      border: 1px solid #DCDFE6;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      color: #606266;
+      display: inline-block;
+      font-size: inherit;
+      height: 36px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 15px;
+      -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+      transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+      width: 100%;
+    }
+    .intermediates {
+      .dis-flex > div {
+        margin: 0 2px;
+        flex: 1;
+      }
+      .el-button--mini {
+        padding: 0px 9px;
+        font-size: 1.1em;
+      }
+      .el-button+.el-button {
+        margin: 0px 2px;
+      }
     }
   }
 </style>

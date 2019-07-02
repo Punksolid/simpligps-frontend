@@ -15,7 +15,8 @@
         </el-col>
       </el-row>
 
-      <CreateTrip v-if="titleDialog" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"/>
+      <CreateTrip v-if="dialogVisible" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"/>
+      <EditTrip v-if="showEditTrip" :form="tripData" :title="titleDialog" :dialogvisible="showEditTrip" @created="fetchTrips" @closedialog="closeDialog"/>
       <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>
 
       <el-row>
@@ -38,7 +39,7 @@
            <el-table-column
              prop="invoice"
              label="Invoice"
-             min-width="50px"
+             min-width="70px"
            >
            </el-table-column>
            <el-table-column
@@ -53,7 +54,8 @@
            </el-table-column>
            <el-table-column
              prop="destination_name"
-             label="Destination">
+             label="Destination"
+             min-width="100px">
            </el-table-column>
            <el-table-column
              prop="stops"
@@ -65,15 +67,19 @@
            </el-table-column>
            <el-table-column
              prop="scheduled_load"
-             label="Scheduled Load">
+             label="Scheduled Load"
+             min-width="140px"
+           >
            </el-table-column>
            <el-table-column
              prop="scheduled_departure"
-             label="Scheduled Departure">
+             label="Scheduled Departure"
+             min-width="160px">
            </el-table-column>
            <el-table-column
              prop="scheduled_arrival"
-             label="Scheduled Arrival">
+             label="Scheduled Arrival"
+             min-width="140px">
            </el-table-column>
 
            <el-table-column
@@ -146,11 +152,6 @@
       </el-col>
 
     </el-row>
-    <el-dialog 
-    :visible="showEditForm"
-    title="Edit Trip">
-      <EditTrip></EditTrip>
-    </el-dialog>
   </div>
 </template>
 
@@ -172,20 +173,19 @@
       data() {
           return {
             dialogVisible: false,
+            showEditTrip: false,
             tagsDialog: false,
             listLoading: false,
             titleDialog: 'New Trip',
             tripData: {},
             tripsList: [],
-            tripsListPage: {},
-            showEditForm:true
+            tripsListPage: {}
           }
       },
       methods: {
         fetchTrips() {
-          this.dialogVisible = false
+          this.closeDialog()
           this.listLoading = true
-
           tripList(this.tripsList).then(response => {
             this.tripsList = response.data.data
             this.tripsListPage = response.data.meta
@@ -204,9 +204,16 @@
           this.listLoading = true
           this.dialogVisible = true
         },
+        handleUpdate(index, row) {
+          this.tripData = row
+          this.titleDialog = 'Edit Trip'
+          this.listLoading = true
+          this.showEditTrip = true
+        },
         closeDialog() {
           this.listLoading = false
           this.dialogVisible = false
+          this.showEditTrip = false
           this.tagsDialog = false
         },
         handleDetails(row) {
@@ -216,9 +223,6 @@
           this.listLoading = true
           this.tripData = row
           this.tagsDialog = true
-        },
-        handleUpdate(index, row) {
-
         },
         deleteRow(index, tripData) {
           this.listLoading = true

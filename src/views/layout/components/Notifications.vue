@@ -29,40 +29,40 @@
 </template>
 
 <script>
-import { loggedUser } from "../../../api/users";
-import { getMyNotifications, markNotificationAsRead } from "../../../api/me";
+import { loggedUser } from '../../../api/users'
+import { getMyNotifications, markNotificationAsRead } from '../../../api/me'
 // import { fetchAccountDetails } from '@/api/me'
 
 export default {
-  name: "Notifications",
+  name: 'Notifications',
   data() {
     return {
-      user: "",
+      user: '',
       notifications: []
-    };
+    }
   },
   methods: {
     fetchUser() {
       loggedUser()
         .then(response => {
-          this.user = response.data.data;
+          this.user = response.data.data
         })
         .catch(e => {
-          console.log(e);
-        });
+          console.log(e)
+        })
     },
     fetchNotifications() {
       getMyNotifications().then(response => {
-        this.notifications = response.data.data;
-      });
+        this.notifications = response.data.data
+      })
     },
     notificationReaded(uuid) {
       markNotificationAsRead(uuid).then(resp => {
-        this.discardNotificationByUuid(uuid);
-      });
+        this.discardNotificationByUuid(uuid)
+      })
     },
     handleAlert(notification) {
-      event.$emit("activate-alert", notification);
+      event.$emit('activate-alert', notification)
       // markNotificationAsRead(uuid) // todo, apply queue, get the catch and discard locally
       // this.discardNotificationByUuid(data.uuid)
     },
@@ -72,37 +72,37 @@ export default {
         index,
         array
       ) {
-        return uuid !== value.id;
-      });
+        return uuid !== value.id
+      })
     }
   },
   computed: {},
   created() {
-    event.$on("notifications-refresh", params => {
-      this.fetchNotifications();
-    });
+    event.$on('notifications-refresh', params => {
+      this.fetchNotifications()
+    })
 
-    this.fetchNotifications();
+    this.fetchNotifications()
 
     // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
 
-    console.log("App.Account." + this.$store.getters.account_id);
+    console.log('App.Account.' + this.$store.getters.account_id)
     window.Echo.private(
-      "App.Account." + this.$store.getters.account_id
+      'App.Account.' + this.$store.getters.account_id
     ).notification(notification => {
-      console.log("NOTIFICATION");
+      console.log('NOTIFICATION')
       this.notifications.push({
         id: notification.id,
         message: notification.message,
         link: notification.link
-      });
-      event.$emit("activate-alert", notification);
+      })
+      event.$emit('activate-alert', notification)
       // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
-    });
+    })
 
-    this.fetchUser();
+    this.fetchUser()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
