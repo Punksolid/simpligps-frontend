@@ -33,3 +33,10 @@ export function loggedUser() {
     method: 'GET'
   })
 }
+export function getUserLogs(params) {
+  return request({
+    url: 'v1/account/access_logs',
+    method: 'GET',
+    params: params
+  })
+}
