@@ -22,15 +22,22 @@
                     </template>
                 </el-step>
                 <el-step v-for="item in details.intermediates" :key="item.id" :title="item.name" icon="fas fa-map-pin">
+
                     <template slot="description">
-                      <el-tooltip placement="top" class="tooltip-desc">
-                      <p><i class="fas fa-map-marker-alt"/> {{ item.address }}</p>
+                        <h4><i class="fas fa-clock"/> {{ item.address }}</h4>
+                        <el-tooltip placement="top" class="tooltip-desc">
+                          <h4><b>{{ item.name }}</b></h4>
+
                         <template slot="content">
                           <p><b>ID:</b> {{ item.id }}</p>
                           <p><b>Contact:</b> {{ item.person_in_charge }}</p>
                           <p><b>Phone:</b> {{ item.phone }}</p>
                         </template>
                       </el-tooltip>
+                        <h4>Programed Enter: {{ item.at_time }}</h4>
+                        <h4><i class="fas fa-clock"/>Programed Departure {{ item.exiting }}</h4>
+                        <h4><i class="fas fa-clock"/>Real Enter: {{ item.real_at_time }}</h4>
+                        <h4><i class="fas fa-clock"/>Real Departure {{ item.real_exiting }}</h4>
                     </template>
                 </el-step>
                 <el-step title="Destination">
