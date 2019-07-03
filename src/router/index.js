@@ -63,12 +63,21 @@ export const tenantProtectedRoutes = [
   {
     path: '/users',
     component: Layout,
+    redirect: '/users/list',
+    name: 'Users',
+    meta: { title: 'Users', icon: 'icon-eye' },
     children: [
       {
-        path: '',
+        path: 'list',
         component: () => import('@/views/users/index'),
-        name: 'Users',
-        meta: { title: 'Users', icon: 'icon-users', noCache: true }
+        name: 'Users list',
+        meta: { title: 'Users list', icon: 'icon-users', noCache: true }
+      },
+      {
+        path: 'logs',
+        component: () => import('@/views/users/logs'),
+        name: 'Access log',
+        meta: { title: 'Access Log', icon: 'icon-users', noCache: true }
       }
     ]
   },
