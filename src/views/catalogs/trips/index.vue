@@ -224,9 +224,6 @@
           this.tripData = row
           this.tagsDialog = true
         },
-        handleUpdate(index, row) {
-          this.showEditForm = true
-        },
         deleteRow(index, tripData) {
           this.listLoading = true
           this.$confirm('This will permanently delete Trip ID: ' + tripData.id + ' are you sure to Continue?', 'Warning', {
