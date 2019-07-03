@@ -70,7 +70,7 @@
   import { reasonsList, deleteReason } from '@/api/reasons'
 
   export default {
-    name: 'CanselationReasons',
+    name: 'CancelationReasons',
     components: {
       CreateReason
     },
@@ -99,7 +99,7 @@
       },
       openDialog() {
         this.reasonData = {}
-        this.titleDialog = 'New Canselation Reason'
+        this.titleDialog = 'New Cancelation Reason'
         this.listLoading = true
         this.dialogVisible = true
       },
@@ -110,7 +110,7 @@
       handleUpdate(index, row) {
         this.listLoading = true
         this.reasonData = row
-        this.titleDialog = 'Edit Canselation Reason'
+        this.titleDialog = 'Edit Cancelation Reason'
         this.dialogVisible = true
       },
       deleteRow(index, reasonData) {

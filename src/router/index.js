@@ -185,10 +185,10 @@ export const tenantProtectedRoutes = [
         meta: { title: 'Situations', icon: 'fas fa-clipboard-check' }
       },
       {
-        path: 'canselation_reasons',
-        name: 'Canselation Reasons',
+        path: 'cancelation_reasons',
+        name: 'Cancelation Reasons',
         component: () => import('@/views/catalogs/cancelations/index'),
-        meta: { title: 'Canselation Reasons', icon: 'fas fa-clipboard-check' }
+        meta: { title: 'Cancelation Reasons', icon: 'fas fa-clipboard-check' }
       },
       {
         path: 'trips',
