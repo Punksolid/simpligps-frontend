@@ -91,47 +91,46 @@
 </template>
 
 <script>
-import { createNotificationResolution } from "@/api/general.js";
-import AlertsVue from "./Alerts.vue";
+import { createNotificationResolution } from '@/api/general.js'
 
 export default {
-  name: "AttendAlerts",
-  props: ["alertinfo", "position", "notification_to_attend"],
+  name: 'AttendAlerts',
+  props: ['alertinfo', 'position', 'notification_to_attend'],
   data() {
     return {
       dialogAlert: false,
-      notification: "",
+      notification: '',
       form: {
-        message: "",
-        solved: "1",
+        message: '',
+        solved: '1',
         notifications_ids: []
       }
-    };
+    }
   },
   methods: {
     handleClose(done) {
-      this.$confirm("Are you sure to close this alert?", "Confirm").then(_ => {
-        done((this.dialogAlert = false));
-      });
+      this.$confirm('Are you sure to close this alert?', 'Confirm').then(_ => {
+        done((this.dialogAlert = false))
+      })
     },
     resolveNotification() {
-      console.log("sending form");
-      this.form.notifications_ids.push(this.notification.id);
-      console.log(this.form);
+      console.log('sending form')
+      this.form.notifications_ids.push(this.notification.id)
+      console.log(this.form)
       createNotificationResolution(this.form)
         .then(response => {
           // this.$alert('Waaa', 'title')
-          event.$emit("notifications-refresh")
+          event.$emit('notifications-refresh')
         })
         .finally(() => {
-          this.form.message = ""
+          this.form.message = ''
           this.form.solve = 1
-          this.dialogAlert = false;
-        });
+          this.dialogAlert = false
+        })
     },
     activateAlert() {
       if (!this.dialogVisible) {
-        this.dialogAlert = true;
+        this.dialogAlert = true
       }
     },
     getPreviousNotifications() {
@@ -143,14 +142,14 @@ export default {
     }
   },
   created() {
-    event.$on("attend-alert", data => {
-      console.log("revisa notification en attendaler");
-      this.notification = data;
-      this.alert = data;
-      this.activateAlert();
-    });
+    event.$on('attend-alert', data => {
+      console.log('revisa notification en attendaler')
+      this.notification = data
+      this.alert = data
+      this.activateAlert()
+    })
   }
-};
+}
 </script>
 
 <style lang="scss">

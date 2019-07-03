@@ -17,3 +17,5 @@ package-lock.json
 config/dev\.env\.js
 
 \.env
+
+dev\.env
