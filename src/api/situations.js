@@ -4,7 +4,7 @@ export function situationsList(params) {
   return request({
     url: 'v1/situations',
     method: 'GET',
-    data: params
+    params: params
   })
 }
 export function createSituation(params) {

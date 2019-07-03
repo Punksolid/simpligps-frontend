@@ -3,19 +3,19 @@
 
     <el-row class="searchBar">
       <el-col :span="4" class="m-b-5">
-        <el-button type="primary" @click="openDialog" icon="fas fa-clipboard-check p-r-10">New Situation</el-button>
+        <el-button type="primary" @click="openDialog" icon="fas fa-clipboard-check p-r-10">New Reason</el-button>
       </el-col>
       <el-col :xl="20" :sm="20" :xs="24">
         <!-- Right Side for Search Options -->
       </el-col>
     </el-row>
 
-    <CreateSituation :form="situationData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchSituations" @closedialog="closeDialog"></CreateSituation>
+    <CreateReason :form="reasonData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchReasons" @closedialog="closeDialog"/>
 
     <el-row>
       <el-col>
         <el-table
-          :data="situationsList"
+          :data="reasonsList"
           v-loading="listLoading"
           style="width: 100%">
           <el-table-column
@@ -55,52 +55,51 @@
       <el-pagination
         class="dis-inline-b"
         layout="total, prev, pager, next, jumper"
-        :current-page.sync="situationsListPage.current_page"
-        :page-size="situationsListPage.per_page"
-        :total="situationsListPage.total"
+        :current-page.sync="reasonsListPage.current_page"
+        :page-size="reasonsListPage.per_page"
+        :total="reasonsListPage.total"
         @current-change="handleCurrentChange"
-        @pagination="fetchSituations" />
+        @pagination="fetchReasons" />
     </el-col>
 
   </el-row>
 </template>
 
 <script>
-  import CreateSituation from './create'
-  import { situationsList, deleteSituation } from '@/api/situations'
+  import CreateReason from './create'
+  import { reasonsList, deleteReason } from '@/api/reasons'
 
   export default {
-    name: 'Situations',
+    name: 'CanselationReasons',
     components: {
-      CreateSituation
+      CreateReason
     },
     data() {
       return {
         dialogVisible: false,
         listLoading: false,
-        titleDialog: 'New Situation',
-        situationData: {},
-        situationsList: [],
-        situationsListPage: {}
+        titleDialog: 'New Reason',
+        reasonData: {},
+        reasonsList: [],
+        reasonsListPage: {}
       }
     },
     methods: {
-      fetchSituations() {
+      fetchReasons() {
         this.dialogVisible = false
         this.listLoading = true
-
-        situationsList(this.situationsList).then(response => {
-          this.situationsList = response.data.data
-          this.situationsListPage = response.data.meta
-          this.situationsListPage.page = response.data.meta.current_page
+        reasonsList(this.reasonsListPage).then(response => {
+          this.reasonsList = response.data.data
+          this.reasonsListPage = response.data.meta
+          this.reasonsListPage.page = response.data.meta.current_page
           this.listLoading = false
         }).catch(() => {
           this.listLoading = false
         })
       },
       openDialog() {
-        this.situationData = {}
-        this.titleDialog = 'New Situation'
+        this.reasonData = {}
+        this.titleDialog = 'New Canselation Reason'
         this.listLoading = true
         this.dialogVisible = true
       },
@@ -110,21 +109,21 @@
       },
       handleUpdate(index, row) {
         this.listLoading = true
-        this.situationData = row
-        this.titleDialog = 'Edit Situation'
+        this.reasonData = row
+        this.titleDialog = 'Edit Canselation Reason'
         this.dialogVisible = true
       },
-      deleteRow(index, situationData) {
+      deleteRow(index, reasonData) {
         this.listLoading = true
-        this.$confirm('This will permanently delete Situation: ' + situationData.name + ' are you sure to Continue?', 'Warning', {
+        this.$confirm('This will permanently delete Reason: ' + reasonData.name + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
-          deleteSituation(situationData.id).then(resp => {
-            this.$message.error('Situation: ' + resp.data.data.name + ' deleted.')
-            this.fetchSituations()
+          deleteReason(reasonData.id).then(resp => {
+            this.$message.error('Reason: ' + resp.data.data.name + ' deleted.')
+            this.fetchReasons()
           }).catch(() => {
             this.listLoading = false
           })
@@ -133,12 +132,12 @@
         })
       },
       handleCurrentChange(val) {
-        this.situationsListPage.page = val
-        this.fetchSituations()
+        this.reasonsListPage.page = val
+        this.fetchReasons()
       }
     },
     created() {
-      this.fetchSituations()
+      this.fetchReasons()
     }
   }
 </script>
