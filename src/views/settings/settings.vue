@@ -7,15 +7,15 @@
           <el-collapse-item title="WIALON ACCESS KEY" name="1">
             <el-form v-loading="loading" :model="accessKey" >
               <el-form-item style="width: 100%">
-                <el-input type="text" v-model="accessKey.wialon_key" placeholder="Wialon Key">
+                <el-input type="text" v-model="accessKey.wialon_key" :disabled="!editable" placeholder="Wialon Key">
                   <template slot="prepend">Wialon Key:</template>
                   <template slot="append">
-                    <el-checkbox v-model="accessKey.import" class="m-0">Import</el-checkbox>
+                    <el-checkbox v-model="accessKey.import" :disabled="!editable" class="m-0">Import</el-checkbox>
                   </template>
                 </el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="onSubmit">Update Key</el-button>
+                <el-button v-if="editable" type="primary" @click="onSubmit">Update Key</el-button>
               </el-form-item>
             </el-form>
           </el-collapse-item>
@@ -28,7 +28,6 @@
 
 <script>
   import { getSettings, updateAccessKey } from '../../api/settings'
-  import { Message } from 'element-ui'
 
   export default {
     name: 'Settings',
@@ -39,24 +38,32 @@
         accessKey: {
           wialon_key: '',
           import: false
-        }
+        },
+        editable: true
       }
     },
     methods: {
       onSubmit() {
         this.loading = true
         updateAccessKey(this.accessKey).then(response => {
-          Message({
+          this.$message({
             message: response.data.data.message,
             type: 'success',
             duration: 10 * 1000
           })
           this.loading = false
-        })
+        }).catch(() => {})
       },
       fillSettings() {
         getSettings().then(response => {
           this.accessKey.wialon_key = response.data.data.wialon_key
+          if (this.accessKey.wialon_key.length > 1) {
+            this.editable = false
+          }
+        }).catch(resp => {
+          this.$message.error({
+            message: resp.data.message
+          })
         })
       }
     },

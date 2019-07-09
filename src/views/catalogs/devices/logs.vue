@@ -3,7 +3,7 @@
     <el-col class="bg-gray-light p-10 m-b-5 bd-3">
       <el-button v-if="!editable" type="primary" icon="fas fa-plus" @click="editable = !editable" size="small"> Add Log</el-button>
       <el-input v-else v-model="message" placeholder="Please input your custom log/message." clearable @clear="editable = false">
-        <el-button :disabled="message.length === 0" slot="append" icon="fas fa-check" @click="newLog" :loading="submiting"> Add log</el-button>
+        <el-button :disabled="message.length === 0" slot="append" icon="fas fa-check" @click="postLog" :loading="submiting"> Add log</el-button>
       </el-input>
     </el-col>
 
@@ -82,20 +82,25 @@
             return record
           })
           // this.logs_list = response.data.data
+        }).catch(() => {
+        }).finally(() => {
           this.loading = false
         })
       },
       postLog() {
         this.submiting = true
         newLog('devices', this.element, this.message).then(resp => {
-          console.log(resp)
           this.$message({
-            message: 'The custom log was submitted successfully',
+            message: 'Custom log was submitted successfully',
             type: 'success'
           })
           this.message = ''
           this.editable = false
-        }).finally(() => { this.submiting = false })
+          this.getDevicesLogs(this.element)
+        }).catch(() => {
+        }).finally(() => {
+          this.submiting = false
+        })
       }
     },
     mounted() {
