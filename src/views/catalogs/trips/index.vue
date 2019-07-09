@@ -17,7 +17,7 @@
 
       <CreateTrip v-if="dialogVisible" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"/>
       <EditTrip v-if="showEditTrip" :form="tripData" :title="titleDialog" :dialogvisible="showEditTrip" @created="fetchTrips" @closedialog="closeDialog"/>
-      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>
+      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>'
 
       <el-row>
        <el-col>
@@ -248,7 +248,7 @@
         }
       },
       created() {
-        if (this.$route.meta.title === 'Trips') {
+        if (this.$route.name === 'Trips') {
           this.fetchTrips()
         }
       }
