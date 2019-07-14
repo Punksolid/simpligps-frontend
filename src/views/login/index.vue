@@ -103,7 +103,7 @@
 </template>
 
 <script>
-  import '@/styles/bootstrap.min.css'
+  // import '@/styles/bootstrap.min.css'
   // import { login } from '@/api/login'
   import MyAccounts from '../login/myaccounts'
   import ResetPassword from '../login/resetpassword'

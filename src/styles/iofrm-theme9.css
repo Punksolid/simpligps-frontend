@@ -75,10 +75,6 @@
     background-image: url("../assets/monitorist.jpg");
 }
 
-.form-holder {
-    margin-left: 550px;
-}
-
 .form-holder .form-content ::-webkit-input-placeholder {
     color: #526489;
 }

@@ -14,12 +14,13 @@
       allow-create
       default-first-option
       placeholder="Choose tags for your Trip"
+      :loading="fetching"
       style="width: 100%">
       <el-option
-        v-for="tag in currenttags"
+        v-for="tag in CurrentTags"
         :key="tag.index"
-        :label="tag"
-        :value="tag">
+        :label="tag.name.en"
+        :value="tag.id">
       </el-option>
     </el-select>
     </div>
@@ -31,9 +32,10 @@
 
 <script>
   import { assignTripTags } from '../../../api/trips'
+  import { fetchCreatedTags } from '../../../api/general'
 
   export default {
-        name: 'TripTags',
+      name: 'TripTags',
       props: {
         visible: {
           type: Boolean,
@@ -46,19 +48,16 @@
       },
       data() {
         return {
+          fetching: false,
           loading: false,
           tags: [],
-          currenttags: [
-            'Tag1',
-            'Tag2',
-            'Tag3'
-            ]
+          CurrentTags: []
         }
       },
       methods: {
       assignTag() {
         this.loading = true
-        assignTripTags(this.data.id).then(resp => {
+        assignTripTags(this.data.id, this.tags).then(resp => {
           this.$emit('close')
           this.$message.success('Tags assigned to Trip: ' + this.data.id)
         }).catch(() => {
@@ -67,9 +66,21 @@
           this.loading = false
         })
       },
+      getCreatedTags() {
+        this.fetching = true
+        fetchCreatedTags().then(resp => {
+          this.CurrentTags = resp.data.data
+        }).catch(() => {})
+          .finally(() => {
+            this.fetching = false
+          })
+      },
       handleClose() {
           this.$emit('close')
       }
+    },
+    created() {
+        this.getCreatedTags()
     }
   }
 </script>

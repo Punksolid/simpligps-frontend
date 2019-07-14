@@ -39,9 +39,7 @@
         @expand-change="showMoreDetails"
         >
 
-        <el-table-column
-          type="expand"
-        >
+        <el-table-column type="expand">
           <template slot-scope="scope">
             <el-tabs v-loading="scope.row.loading">
               <el-tab-pane>

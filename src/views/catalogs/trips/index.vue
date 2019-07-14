@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div v-if="this.$route.params.tripid">
-      <TripDetails/>
-    </div>
-
-    <el-row class="panel p-10" v-else>
+    <el-row class="panel p-10">
 
       <el-row class="searchBar">
         <el-col :span="4" class="m-b-5">
@@ -23,8 +19,28 @@
        <el-col>
          <el-table
            :data="tripsList"
-           v-loading="listLoading"
-           class="triplist">
+           :highlight-current-row="true"
+           :row-key="row => row.id"
+           @expand-change="showMoreDetails"
+           class="triplist"
+           v-loading="listLoading">
+
+           <el-table-column type="expand">
+             <template slot-scope="scope">
+               <el-tabs v-loading="scope.row.loading">
+                 <el-tab-pane>
+                   <span slot="label"><i class="fas fa-info-circle"></i> Details</span>
+                    <!-- <TripDetails v-if="this.$route.params.tripid" :element="scope.row.id"/> -->
+                     <TripDetails :element="scope.row.id"/>
+                 </el-tab-pane>
+                 <el-tab-pane>
+                   <span slot="label"><i class="fas fa-clipboard-list"></i> Logs</span>
+                   <TripLog :element="scope.row.id"/>
+                 </el-tab-pane>
+               </el-tabs>
+             </template>
+           </el-table-column>
+
            <el-table-column
              prop="id"
              label="ID"
@@ -33,7 +49,7 @@
            <el-table-column
              prop="rp"
              label="RP"
-             min-width="50px"
+             min-width="80px"
            >
            </el-table-column>
            <el-table-column
@@ -107,16 +123,8 @@
 
            <el-table-column
              label="Operations"
-             fixed="right"
-             width="200px">
+             width="150px">
              <template slot-scope="scope">
-               <el-button
-                 size="mini"
-                 icon="fas fa-search-plus"
-                 type="primary"
-                 plain
-                 @click="handleDetails(scope.row)">
-               </el-button>
                <el-button
                  size="mini"
                  @click="handleTags(scope.row)"
@@ -148,7 +156,7 @@
           :page-size="tripsListPage.per_page"
           :total="tripsListPage.total"
           @current-change="handleCurrentChange"
-          @pagination="tripsList" />
+          @pagination="tripsList"></el-pagination>
       </el-col>
 
     </el-row>
@@ -158,17 +166,19 @@
 <script>
   import CreateTrip from './newtrip'
   import TripDetails from './details'
-  import { tripList, deleteTrip } from '@/api/trips'
+  import { tripList, deleteTrip, tripDetails } from '@/api/trips'
   import TripTags from './tags'
   import EditTrip from './EditTrip'
+  import TripLog from './logs'
 
     export default {
       name: 'TripList',
       components: {
-        TripTags,
-        CreateTrip,
-        TripDetails,
-        EditTrip
+          TripLog,
+          TripTags,
+          CreateTrip,
+          TripDetails,
+          EditTrip
       },
       data() {
           return {
@@ -176,6 +186,7 @@
             showEditTrip: false,
             tagsDialog: false,
             listLoading: false,
+            detailsLoading: false,
             titleDialog: 'New Trip',
             tripData: {},
             tripsList: [],
@@ -194,6 +205,22 @@
           }).catch(() => {
             this.listLoading = false
           })
+        },
+        showMoreDetails(row, expandedRows) {
+            /** this.$router.push({ name: 'Trip Details', params: { tripid: row.id }}) **/
+            row.loading = true
+            tripDetails(row.id).then(response => {
+                this.tripsList = this.tripsList.map(function(element) {
+                    if (element.id === row.id) {
+                        element = response.data.data
+                        element.loading = false
+                        return element
+                    }
+                    return element
+                })
+            }).finally(res => {
+                row.loading = false
+            })
         },
         openDialog() {
           this.tripData = {
@@ -217,7 +244,7 @@
           this.tagsDialog = false
         },
         handleDetails(row) {
-          this.$router.push({ name: 'Trip Details', params: { tripid: row.id }})
+          // this.$router.push({ name: 'Trip Details', params: { tripid: row.id }})
         },
         handleTags(row) {
           this.listLoading = true
@@ -248,9 +275,10 @@
         }
       },
       created() {
-        if (this.$route.name === 'Trips') {
           this.fetchTrips()
-        }
+        /* if (this.$route.name === 'Trips') {
+          this.fetchTrips()
+        } */
       }
     }
 </script>

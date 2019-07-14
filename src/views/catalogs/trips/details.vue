@@ -1,23 +1,23 @@
 <template>
-    <div class="panel p-0 details" v-loading="loading">
+    <div class="panel p-0 details" :v-loading="loading">
 
-      <div v-if="this.$route.meta.title === 'Trip Detail'">
-
+      <div>
+        <!-- <div v-if="this.$route.meta.title === 'Trip Detail'"> -->
         <el-row>
           <el-col class="bg-orange m-b-10">
-            <h3 class="m-10"><b>Details of Trip:</b> {{ this.$route.params.tripid }}</h3>
+            <h3 class="m-10"><b>Details of Trip:</b> {{ this.element }}</h3>
           </el-col>
         </el-row>
 
-        <div class="p-10">
-          <el-row type="flex">
+        <div class="p-5">
+          <el-row class="cards">
             <!-- OPERATOR PANEL -->
-            <el-col :xs="12" :sm="6" class="panel p-5">
+            <el-col :xs="24" :sm="5" class="panel p-5">
               <div class="panel-content">
                 <el-col class="dis-flex align-center"><i class="fas fa-user-circle fa-5x"></i></el-col>
                 <el-col>
                   <h4 class="bold m-b-0 text-center">Operator:</h4>
-                    <h2 class="operator text-center">{{ details.operator.name }}</h2>
+                    <h2 class="operator text-center">{{ details.operator.name || '' }}</h2>
                   <h4><b>Operator ID:</b>
                     {{ details.operator.id }}
                   </h4>
@@ -27,8 +27,17 @@
                 </el-col>
               </div>
             </el-col>
+            <!-- INFO -->
+            <el-col :xs="12" :sm="4" class="panel">
+              <h4 class="panel-header bg-light title"><b>INFO</b></h4>
+              <el-col class="panel-content">
+                <h4 class="title"><b>{{ details.origin.name || '' }}</b></h4>
+                <h4><b>RP:</b> {{ details.rp }}</h4>
+                <h4><b>Trip ID:</b> {{ details.id }}</h4>
+              </el-col>
+            </el-col>
             <!-- TRAILER PANEL -->
-            <el-col :xs="12" :sm="6" class="panel">
+            <el-col :xs="12" :sm="5" class="panel">
               <h4 class="panel-header bg-light title"><b>Trailer</b></h4>
               <el-col class="panel-content">
                 <div v-if="details.trailers.length > 0">
@@ -44,7 +53,7 @@
               </el-col>
             </el-col>
             <!-- TRUCK PANEL -->
-            <el-col :xs="12" :sm="6" class="panel">
+            <el-col :xs="12" :sm="5" class="panel">
               <h4 class="panel-header bg-light title"><b>Truck</b></h4>
               <el-col class="panel-content">
                 <h4><b>ID:</b> {{ details.truck.id }} </h4>
@@ -55,7 +64,7 @@
               </el-col>
             </el-col>
             <!-- CLIENT PANEL -->
-            <el-col :xs="12" :sm="6" class="panel">
+            <el-col :xs="12" :sm="5" class="panel">
               <h4 class="panel-header bg-light title"><b>Client</b></h4>
               <el-col class="panel-content">
                 <h4><b>Name:</b> {{ details.client.company_name }} </h4>
@@ -71,17 +80,7 @@
 
         </div>
 
-        <div class="panel-footer t-right">
-          <router-link :to="{name: 'Trip Log', params: this.TripID}">
-            <span class="fa-stack fa-2x logs">
-              <i class="fas fa-circle fa-stack-2x"></i>
-              <i class="fas fa-clipboard-list fa-inverse fa-stack-1x"></i>
-            </span>
-          </router-link>
-        </div>
-      </div> <!-- View if Details Finish -->
-
-      <TripLog v-else/>
+      </div>
 
     </div>
 </template>
@@ -89,44 +88,53 @@
 <script>
   import { tripDetails } from '../../../api/trips'
   import Tripline from './Tripline'
-  import TripLog from './logs'
 
   export default {
       name: 'TripDetails',
-      components: { TripLog, Tripline },
+      components: { Tripline },
+      props: {
+        element: Number
+      },
       data() {
           return {
             loading: false,
             TripID: null,
-            mode: '',
-            details: null
+            details: {
+                operator: { name: '' },
+                origin: { name: '' },
+                destination: {},
+                trailers: [],
+                truck: {},
+                client: {},
+                intermediates: []
+            }
           }
       },
       methods: {
-        tripType() {
-          if (this.$route.meta.title === 'Trip Log') {
-            this.mode = 'log'
-          } else {
-            this.mode = 'details'
+          fetchTripDetails() {
               this.loading = true
-              tripDetails(this.TripID).then(resp => {
+              tripDetails(this.element).then(resp => {
                 this.details = resp.data.data
                 this.loading = false
               }).catch(() => {
                 this.loading = false
               })
             }
-        }
-      },
+        },
       created() {
-        this.TripID = this.$route.params.tripid
-        this.tripType()
+        this.fetchTripDetails()
+        // this.TripID = this.$route.params.tripid
+        // this.tripType()
       }
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .panel.details {
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+    }
     .panel-content {
       padding: 10px;
     }
@@ -137,7 +145,7 @@
     }
     h4 {
       font-weight: 300;
-      margin: 5px 0px;
+      margin: 0px 0px 5px;
       &.title {
         font-size: 1.3em;
       }
