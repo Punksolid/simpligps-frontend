@@ -96,7 +96,12 @@ export function newLog(type, id, message) {
     }
   })
 }
-
+export function fetchCreatedTags() {
+  return request({
+    url: 'v1/tags',
+    method: 'GET'
+  })
+}
 export function createNotificationResolution(form) {
   return request({
     url: 'v1/account/notifications/resolve',

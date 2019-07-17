@@ -1,7 +1,7 @@
 <template>
   <el-row class="panel p-10">
     <el-col class="bg-orange">
-      <h3 class="m-10"><b>LOGS OF Trip ID:</b> {{ this.$route.params.tripid }}</h3>
+      <h3 class="m-10"><b>LOGS OF Trip ID:</b> {{ this.TripID }}</h3>
     </el-col>
 
     <el-col class="bg-gray-light p-10 m-b-5 bd-3">
@@ -55,6 +55,9 @@
 
   export default {
     name: 'TripLog',
+      props: {
+        element: Number
+      },
     data() {
       return {
         loading: false,
@@ -103,7 +106,8 @@
       }
     },
     created() {
-      this.TripID = this.$route.params.tripid
+        this.TripID = this.element
+      // this.TripID = this.$route.params.tripid
       this.getTripLogs()
     }
   }
