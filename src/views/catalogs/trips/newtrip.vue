@@ -2,7 +2,7 @@
     <el-dialog
             :title="title"
             :visible.sync="dialogvisible"
-            width="50%"
+            width="60%"
             custom-class="newtrip"
             :before-close="handleClose">
 
@@ -56,6 +56,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Origin">
+              <div class="inline-inputs dis-flex">
                 <el-select
                 v-model="form.origin_id"
                 filterable
@@ -63,13 +64,26 @@
                 :remote-method="getSearchOrigin"
                 :loading="loadingOrigin"
                 placeholder="Select Origin">
-                    <el-option
-                            v-for="place in origins"
-                            :key="place.id"
-                            :label="place.name"
-                            :value="place.id">
-                    </el-option>
+                  <el-option
+                          v-for="place in origins"
+                          :key="place.id"
+                          :label="place.name"
+                          :value="place.id">
+                  </el-option>
                 </el-select>
+              <datetime
+                type="datetime"
+                placeholder="Scheduled Load"
+                v-model="form.scheduled_load"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                auto/>
+              <datetime
+                type="datetime"
+                placeholder="Scheduled Departure"
+                v-model="form.scheduled_departure"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                auto/>
+              </div>
             </el-form-item>
             <el-divider>Intermediates</el-divider>
               <div v-for="(intermediate, index) in intermediates" :key="intermediate.id" >
@@ -110,6 +124,7 @@
 
             <el-divider></el-divider>
             <el-form-item label="Destination">
+              <div class="inline-inputs dis-flex">
                 <el-select
                 v-model="form.destination_id"
                 filterable
@@ -124,6 +139,19 @@
                             :value="place.id">
                     </el-option>
                 </el-select>
+                <datetime
+                  type="datetime"
+                  placeholder="Scheduled Arrival"
+                  v-model="form.scheduled_arrival"
+                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                  auto/>
+                <datetime
+                  type="datetime"
+                  placeholder="Scheduled Unload"
+                  v-model="form.scheduled_unload"
+                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                  auto/>
+              </div>
             </el-form-item>
 
             <el-form-item label="Mon Type">
@@ -147,7 +175,7 @@
                 </el-select>
 
             </el-form-item>
-          <el-form-item label="Trucks">
+          <el-form-item label="Truck">
             <el-select
             v-model="form.truck_tract_id"
             filterable
@@ -174,44 +202,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-            <el-divider>Dates</el-divider>
-
-            <el-form-item label="Schedule Load">
-              <datetime
-                  type="datetime"
-                  v-model="form.scheduled_load"
-                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-                  auto
-                  >
-                </datetime>
-            </el-form-item>
-            <el-form-item label="Scheduled Departure">
-             <datetime
-                  type="datetime"
-                  v-model="form.scheduled_departure"
-                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-                  auto
-                  >
-                </datetime>
-            </el-form-item>
-            <el-form-item label="Scheduled Arrival">
-              <datetime
-                  type="datetime"
-                  v-model="form.scheduled_arrival"
-                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-                  auto
-                  >
-                </datetime>
-            </el-form-item>
-            <el-form-item label="Scheduled Unload">
-              <datetime
-                  type="datetime"
-                  v-model="form.scheduled_unload"
-                  :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-                  auto
-                  >
-                </datetime>
-            </el-form-item>
 
         </el-form>
 
@@ -417,6 +407,14 @@
   .newtrip {
     .el-form-item {
       margin-bottom: 5px;
+    }
+    .inline-inputs.dis-flex {
+      > div:nth-child(2) {
+        margin: 0px 3px;
+      }
+      > div {
+        width: auto;
+      }
     }
     .el-select {
       width: 100%;
