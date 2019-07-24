@@ -12,7 +12,7 @@
         <el-input v-model="form.internal_number" clearable></el-input>
       </el-form-item>
       <el-form-item label="Carrier" prop="carrier">
-        <el-select v-model="form.carrier_id" placeholder="Select Carrier">
+        <el-select v-model="form.carrier_id" placeholder="Select Carrier" class="width-100p">
           <el-option
             v-for="carrier in carriers"
             :key="carrier.id"
@@ -21,8 +21,22 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="GPS" prop="gps">
-        <el-input v-model="form.gps" clearable></el-input>
+      <el-form-item label="Device" prop="gps">
+        <el-select
+          v-model="form.device_id"
+          filterable
+          remote
+          :remote-method="SearchDevices"
+          :loading="loadingDevices"
+          placeholder="Select Device"
+          class="width-100p">
+          <el-option
+            v-for="device in devices"
+            :key="device.id"
+            :label="device.name"
+            :value="device.id">
+          </el-option>
+        </el-select>
       </el-form-item>
 
       <el-row>
@@ -39,6 +53,7 @@
 <script>
   import { createTrailerBox, updateTrailerBox } from '@/api/trailerbox'
   import { fetchCarriers } from '@/api/carriers'
+  import { fetchDevices, searchDevices } from '../../../api/devices'
 
   export default {
     name: 'CreateTrailerbox',
@@ -52,7 +67,9 @@
         selected_carrier: null,
         dialogVisible: false,
         loading: false,
+        loadingDevices: false,
         carriers: [],
+        devices: [],
         params: {
           all: true
         }
@@ -68,25 +85,24 @@
               type: 'success',
               duration: 10 * 1000
             })
-            this.loading = false
             this.$emit('closedialog')
           }).catch(() => {
             this.$message.error('Error while updating Trailerbox, try again.')
-            this.loading = false
+          }).finally(() => {
+              this.loading = false
           })
         } else {
-          this.loading = true
           createTrailerBox(this.form).then(response => {
             this.$message({
               message: 'Trailerbox with plate: ' + response.data.data.plate + ' created',
               type: 'success',
               duration: 10 * 1000
             })
-            this.loading = false
             this.$emit('created')
           }).catch(() => {
             this.$message.error('Error while creating Trialerbox, try again.')
-            this.loading = false
+          }).finally(() => {
+              this.loading = false
           })
         }
       },
@@ -99,6 +115,22 @@
           }
         })
       },
+        getDevices() {
+          this.loadingDevices = true
+          fetchDevices().then(resp => {
+              this.devices = resp.data.data
+          }).finally(() => {
+              this.loadingDevices = true
+          })
+        },
+        SearchDevices(search) {
+            this.loadingDevices = true
+            search = { name: search }
+            searchDevices(search).then(response => {
+                this.devices = response.data.data
+                this.loadingDevices = false
+            })
+        },
       handleClose() {
         if (this.form.plate) {
           this.$confirm('Are you sure to close? Not saved data will be lost!')
@@ -111,7 +143,8 @@
       }
     },
     created() {
-      this.getCarriers()
+        this.getCarriers()
+        this.getDevices()
     }
   }
 </script>

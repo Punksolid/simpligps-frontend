@@ -36,15 +36,10 @@
           min-width="130">
         </el-table-column>
         <el-table-column
-          prop="carrier_id"
-          label="Carrier ID"
+          prop="carrier_name"
+          label="Carrier"
           sortable
           min-width="100">
-        </el-table-column>
-        <el-table-column
-          prop="gps"
-          label="GPS"
-          min-width="150">
         </el-table-column>
         <el-table-column
           label="Operations"
@@ -144,7 +139,7 @@
       handleUpdate(index, trailerboxData) {
         this.listLoading = true
         this.elementToUpdate = trailerboxData[index]
-        this.titleDialog = 'Edit Truck'
+        this.titleDialog = 'Edit Trailerbox'
         this.dialogVisible = true
       },
       handleCurrentChange(val) {

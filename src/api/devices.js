@@ -4,7 +4,14 @@ export function fetchDevices(params) {
   return request({
     url: 'v1/devices',
     method: 'GET',
-    params
+    params: params
+  })
+}
+export function searchDevices(params) {
+  return request({
+    url: 'v1/devices/search',
+    method: 'GET',
+    params: params
   })
 }
 export function fetchDevice(id) {

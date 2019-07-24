@@ -61,7 +61,7 @@
            <el-table-column
              prop="client_name"
              label="Client"
-             min-width="80px"
+             min-width="120px"
            >
            </el-table-column>
            <el-table-column
