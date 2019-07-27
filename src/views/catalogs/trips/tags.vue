@@ -18,9 +18,9 @@
       style="width: 100%">
       <el-option
         v-for="tag in CurrentTags"
-        :key="tag.index"
+        :key="tag.id"
         :label="tag.name.en"
-        :value="tag.id">
+        :value="tag.name.en">
       </el-option>
     </el-select>
     </div>

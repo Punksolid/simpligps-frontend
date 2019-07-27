@@ -21,7 +21,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Device" prop="gps">
+      <el-form-item label="Device" prop="device">
         <el-select
           v-model="form.device_id"
           filterable
