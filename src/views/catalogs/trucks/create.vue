@@ -27,27 +27,41 @@
       <el-form-item label="Color" prop="color">
         <el-input v-model="form.color" clearable></el-input>
       </el-form-item>
-      <el-form-item label="Device" prop="device">
-        <el-select v-model="form.device_id" placeholder="Select Device">
-          <el-option
-            v-for="device in devices"
-            :key="device.id"
-            :label="device.name"
-            :value="device.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
+        <el-form-item label="Device" prop="device">
+          <el-select
+            v-model="form.device_id"
+            filterable
+            remote
+            :remote-method="SearchDevices"
+            :loading="loadingDevices"
+            placeholder="Select Device"
+            class="width-100p">
+            <el-option
+              v-for="device in devices"
+              :key="device.id"
+              :label="device.name"
+              :value="device.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
 
-      <el-form-item label="Carrier" prop="carrier">
-        <el-select v-model="form.carrier_id" placeholder="Select Carrier">
-          <el-option
-            v-for="carrier in carriers"
-            :key="carrier.id"
-            :label="selected_carrier?selected_carrier:carrier.carrier_name"
-            :value="carrier.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
+        <el-form-item label="Carrier" prop="carrier">
+          <el-select
+            v-model="form.carrier_id"
+            filterable
+            remote
+            :remote-method="SearchCarriers"
+            :loading="loadingCarriers"
+            placeholder="Select Carrier"
+            class="width-100p">
+            <el-option
+              v-for="carrier in carriers"
+              :key="carrier.id"
+              :label="selected_carrier?selected_carrier:carrier.carrier_name"
+              :value="carrier.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
 
       <el-row>
         <el-col class="t-center p-10">
@@ -62,8 +76,8 @@
 
 <script>
   import { createTruck, updateTruck } from '@/api/trucks'
-  import { fetchCarriers } from '@/api/carriers'
-  import { fetchDevices } from '../../../api/devices'
+  import { fetchCarriers, searchCarriers } from '@/api/carriers'
+  import { fetchDevices, searchDevices } from '../../../api/devices'
 
   export default {
     name: 'CreateTruck',
@@ -77,6 +91,8 @@
         selected_carrier: null,
         dialogVisible: false,
         loading: false,
+        loadingDevices: false,
+        loadingCarriers: false,
         devices: [],
         carriers: [],
         params: {
@@ -116,22 +132,43 @@
           })
         }
       },
-      DevicesAndCarriers() {
-        fetchDevices(this.params).then(resp => {
-          this.devices = resp.data.data
-        }).catch(() => {
-          this.$message.error('Error fetching Devices List')
-        })
-        fetchCarriers(this.params).then(resp => {
-          this.carriers = resp.data.data
-          if (this.form.id) {
-            const carrier = this.carriers.find(carrier => carrier.id === this.form.carrier_id)
-            // Se busca 'carrier_id' en Carriers y se retorna el nombre
-            this.selected_carrier = carrier.carrier_name
-          }
-        })
+      SearchDevices(search) {
+          this.loadingDevices = true
+          search = { name: search }
+          searchDevices(search).then(response => {
+              this.devices = response.data.data
+          }).finally(() => {
+              this.loadingDevices = false
+          })
       },
-      handleClose() {
+      SearchCarriers(search) {
+          this.loadingCarriers = true
+          search = { carrier_name: search }
+          searchCarriers(search).then(response => {
+              this.carriers = response.data.data
+          }).finally(() => {
+              this.loadingCarriers = false
+          })
+        },
+        DevicesAndCarriers() {
+            this.loadingDevices = true
+            fetchDevices(this.params).then(resp => {
+                this.devices = resp.data.data
+            }).catch(() => {
+                this.$message.error('Error fetching Devices List')
+            }).finally(() => {
+                this.loadingDevices = false
+            })
+            fetchCarriers(this.params).then(resp => {
+                this.carriers = resp.data.data
+                if (this.form.id) {
+                    const carrier = this.carriers.find(carrier => carrier.id === this.form.carrier_id)
+                    // Se busca 'carrier_id' en Carriers y se retorna el nombre
+                    this.selected_carrier = carrier.carrier_name
+                }
+            })
+        },
+        handleClose() {
         if (this.form.plate) {
           this.$confirm('Are you sure to close? Not saved data will be lost!')
             .then(_ => {

@@ -14,6 +14,14 @@
                       <h4><i class="fas fa-user"/> {{ details.origin.person_in_charge }}</h4>
                       <h4><i class="fas fa-phone"/> {{ details.origin.phone }}</h4>
                       <h4><i class="fas fa-map-marker-alt"/> {{ details.origin.address }}</h4>
+                      <h4><i class="fas fa-truck-loading"/> <b>Scheduled Load:</b><br>
+                        {{ details.origin.at_time }}</h4>
+                      <h4><i class="fas fa-truck"/> <b>Scheduled Departure:</b><br>
+                        {{ details.origin.exiting }}</h4>
+                      <h4><i class="fas fa-truck-loading"/> <b>Real Load:</b><br>
+                        {{ details.origin.real_at_time }}</h4>
+                      <h4><i class="fas fa-truck"/> <b>Real Departure:</b><br>
+                        {{ details.origin.real_exiting }}</h4>
                     </template>
                 </el-step>
                 <el-step v-for="item in details.intermediates" :key="item.id" :title="item.name" :icon="currentStatus(item)">
@@ -46,6 +54,14 @@
                       <h4><i class="fas fa-user"/> {{ details.destination.person_in_charge }}</h4>
                       <h4><i class="fas fa-phone"/> {{ details.destination.phone }}</h4>
                       <h4><i class="fas fa-map-marker-alt"/> {{ details.destination.address }}</h4>
+                      <h4><i class="fas fa-truck-loading"/> <b>Scheduled Arrival:</b><br>
+                        {{ details.destination.at_time }}</h4>
+                      <h4><i class="fas fa-truck"/> <b>Scheduled Unload:</b><br>
+                        {{ details.destination.exiting }}</h4>
+                      <h4><i class="fas fa-truck-loading"/> <b>Real Arrival:</b><br>
+                        {{ details.destination.real_at_time }}</h4>
+                      <h4><i class="fas fa-truck"/> <b>Real Unload:</b><br>
+                        {{ details.destination.real_exiting }}</h4>
                     </template>
                 </el-step>
             </el-steps>

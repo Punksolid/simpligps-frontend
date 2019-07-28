@@ -20,18 +20,16 @@
       </el-col>
     </el-tab-pane>
 
-    <el-tab-pane label="Operators" name="operators">
+    <el-tab-pane label="Operator" name="operator">
       <el-col class="panel operators" v-if="! loading">
         <div class="panel-header bg-orange">
-          <h3><i class="fas fa-hard-hat"/>
-            <strong>{{data.operators.length >= 1 ? 'Operators detail:':'No Operators assigned.'}}</strong>
-          </h3>
+          <h3><i class="fas fa-hard-hat"/><strong>{{data.current_operator.name ? 'Operator detail:':'No Operator assigned.'}}</strong></h3>
         </div>
-        <el-col class="panel-body p-10 bg-gray-light">
-          <el-col v-for="operator in data.operators" :key="operator.id" :xs="24" :sm="11" class="operator-card">
-            <p><b>NAME:</b> {{operator.name}} (ID: {{operator.id}})</p>
-            <p><b>PHONE:</b> {{operator.phone}}</p>
-            <p><b>ACTIVE:</b> <el-tag :type="operator.active ? 'success':'info'" size="small">{{ operator.active ? 'Active':'Inactive' }}</el-tag></p>
+        <el-col class="panel-body p-10 bg-gray-light" v-if="data.current_operator.name ">
+          <el-col>
+            <p><b>NAME:</b> {{data.current_operator.name}} (ID: {{data.current_operator.id}})</p>
+            <p><b>PHONE:</b> {{data.current_operator.phone}}</p>
+            <p><b>STATUS:</b> <el-tag :type="data.current_operator.active ? 'success':'info'" size="small">{{ data.current_operator.active ? 'Active':'Inactive' }}</el-tag></p>
           </el-col>
         </el-col>
       </el-col>
@@ -102,7 +100,7 @@
         -webkit-border-radius: 10px;
         -moz-border-radius: 10px;
         border-radius: 10px;
-        padding: 5px !important;
+        padding: 10px !important;
       }
     }
   }
