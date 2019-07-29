@@ -123,8 +123,15 @@
 
            <el-table-column
              label="Operations"
-             width="150px">
+             width="180px">
              <template slot-scope="scope">
+               <el-button
+                 size="mini"
+                type="success"
+                plain
+                @click="handleStart(scope.row.id)"
+                icon="fas fa-shipping-fast">
+               </el-button>
                <el-button
                  size="mini"
                  @click="handleTags(scope.row)"
@@ -138,10 +145,17 @@
                <el-button
                  size="mini"
                  type="danger"
+                 plain
+                 icon="fas fa-sync-alt"
+                 @click="handleAutoUpdates(scope.row.id)">
+               </el-button>
+               <!-- <el-button
+                 size="mini"
+                 type="danger"
                  disabled
                  icon="fas fa-trash"
                  @click.native.prevent="deleteRow(scope.$index, scope.row)">
-               </el-button>
+               </el-button> -->
              </template>
            </el-table-column>
          </el-table>
@@ -170,6 +184,7 @@
   import TripTags from './tags'
   import EditTrip from './EditTrip'
   import TripLog from './logs'
+  import { startTrip, tripAutoUpdates } from '../../../api/trips'
 
     export default {
       name: 'TripList',
@@ -206,8 +221,31 @@
             this.listLoading = false
           })
         },
+          handleStart(id) {
+            this.listLoading = true
+              const updates = { enable_automatic_updates: true }
+              startTrip(id, updates).then(resp => {
+                  this.$message.success('Trip ID: ' + id + ' started successfully')
+                  // Disabled Response while Message is detailed.
+                  // this.$message.success(resp.data.message)
+              }).catch(() => {
+                  this.$message.error('Trip ID: ' + id + " Trip couldn't be initialized")
+              }).finally(() => {
+                  this.listLoading = false
+              })
+          },
+          handleAutoUpdates(id) {
+            this.listLoading = true
+            tripAutoUpdates(id).then(resp => {
+                this.$message.success(resp.data.message)
+            }).catch(resp => {
+                this.$message.error(resp.data.message)
+            }).finally(() => {
+                this.listLoading = false
+            })
+          },
         showMoreDetails(row, expandedRows) {
-            /** this.$router.push({ name: 'Trip Details', params: { tripid: row.id }}) **/
+            // this.$router.push({ name: 'Trip Details', params: { tripid: row.id }})
             row.loading = true
             tripDetails(row.id).then(response => {
                 this.tripsList = this.tripsList.map(function(element) {

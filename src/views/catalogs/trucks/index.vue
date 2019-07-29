@@ -185,6 +185,10 @@
         this.truckData = {}
         TruckDetail(id).then(resp => {
           this.truckData = resp.data.data
+            this.truckData.position = {
+              lat: this.truckData.position.lat,
+              lng: this.truckData.position.lon
+            }
         }).catch(() => {
         }).finally(() => {
           this.truckLoading = false
