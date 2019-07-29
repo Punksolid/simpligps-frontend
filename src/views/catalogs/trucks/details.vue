@@ -20,6 +20,35 @@
       </el-col>
     </el-tab-pane>
 
+    <el-tab-pane label="Map" name="Map">
+      <el-col class="panel">
+        <div class="panel-header bg-primary dis-flex">
+          <h3><i class="fas fa-map-marker-alt"/>
+            <span v-if="data.position.lat"><strong>Position of Truck:</strong> {{data.name}} (ID: {{data.id}})</span>
+            <span v-else>Device Not Assigned</span>
+          </h3>
+        </div>
+        <el-col class="panel-body p-10 bg-gray-light">
+          <el-col v-if="data.position.lat">
+            <GmapMap
+              :center="data.position"
+              :zoom="12"
+              map-type-id="roadmap"
+              style="width: 100%; height: 400px">
+              <GmapMarker
+                :position="data.position"
+                :icon="require('@/assets/carmarker.svg')"
+                :title="'Unit: ' + data.name"
+                :clickable="true"
+                :draggable="false"
+                @click="center=data.position"
+              />
+            </GmapMap>
+          </el-col>
+        </el-col>
+      </el-col>
+    </el-tab-pane>
+
     <el-tab-pane label="Operator" name="operator">
       <el-col class="panel operators" v-if="! loading">
         <div class="panel-header bg-orange">

@@ -27,6 +27,19 @@ export function deleteTrip(id) {
     method: 'DELETE'
   })
 }
+export function startTrip(id, params) {
+  return request({
+    url: 'v1/trips/' + id + '/give_exit',
+    method: 'POST',
+    data: params
+  })
+}
+export function tripAutoUpdates(id) {
+  return request({
+    url: 'v1/trips/' + id + '/automatic_updates',
+    method: 'DELETE'
+  })
+}
 export function assignTripTags(id, params) {
   return request({
     url: 'v1/trips/' + id + '/tags',
