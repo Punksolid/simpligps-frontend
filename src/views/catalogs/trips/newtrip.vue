@@ -13,7 +13,7 @@
           <el-form-item label="Invoice">
               <el-input v-model="form.invoice" placeholder="Invoice"/>
           </el-form-item>
-          <el-form-item label="Client">
+          <el-form-item label="Client *">
             <el-select
               v-model="form.client_id"
               filterable
@@ -45,7 +45,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Georoute">
+          <el-form-item label="Georoute *">
                 <el-select v-model="form.georoute_ref" placeholder="Select Georute">
                     <el-option
                             v-for="geofence in geofences"
@@ -55,7 +55,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="Origin">
+            <el-form-item label="Origin *">
               <div class="inline-inputs dis-flex">
                 <el-select
                 v-model="form.origin_id"
@@ -123,7 +123,7 @@
             <!-- </template> -->
 
             <el-divider></el-divider>
-            <el-form-item label="Destination">
+            <el-form-item label="Destination *">
               <div class="inline-inputs dis-flex">
                 <el-select
                 v-model="form.destination_id"
@@ -154,7 +154,7 @@
               </div>
             </el-form-item>
 
-            <el-form-item label="Mon Type">
+            <el-form-item label="Mon Type *">
                 <el-input v-model="form.mon_type" placeholder="Mon Type"/>
             </el-form-item>
 
@@ -207,7 +207,7 @@
 
         <div slot="footer" class="dialog-footer text-center">
             <el-button @click="handleClose">Cancel</el-button>
-            <el-button type="primary" :loading="loading" @click="onSubmit">Create trip</el-button>
+            <el-button type="primary" :loading="loading" @click="onSubmit">Create Trip Planification</el-button>
         </div>
 
     </el-dialog>
