@@ -12,7 +12,6 @@
       </el-row>
 
       <CreateTrip v-if="dialogVisible" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible" @created="fetchTrips" @closedialog="closeDialog"/>
-      <EditTrip v-if="showEditTrip" :form="tripData" :title="titleDialog" :dialogvisible="showEditTrip" @created="fetchTrips" @closedialog="closeDialog"/>
       <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>'
 
       <el-row>
@@ -140,7 +139,7 @@
                <el-button
                  size="mini"
                  icon="fas fa-edit"
-                 @click="handleUpdate(scope.$index, scope.row)">
+                 @click="handleUpdate(scope.row)">
                </el-button>
                <el-button
                  size="mini"
@@ -182,7 +181,7 @@
   import TripDetails from './details'
   import { tripList, deleteTrip, tripDetails } from '@/api/trips'
   import TripTags from './tags'
-  import EditTrip from './EditTrip'
+  // import EditTrip from './EditTrip'
   import TripLog from './logs'
   import { startTrip, tripAutoUpdates } from '../../../api/trips'
 
@@ -192,13 +191,11 @@
           TripLog,
           TripTags,
           CreateTrip,
-          TripDetails,
-          EditTrip
+          TripDetails
       },
       data() {
           return {
             dialogVisible: false,
-            showEditTrip: false,
             tagsDialog: false,
             listLoading: false,
             detailsLoading: false,
@@ -269,16 +266,15 @@
           this.listLoading = true
           this.dialogVisible = true
         },
-        handleUpdate(index, row) {
+        handleUpdate(row) {
           this.tripData = row
           this.titleDialog = 'Edit Trip'
           this.listLoading = true
-          this.showEditTrip = true
+          this.dialogVisible = true
         },
         closeDialog() {
           this.listLoading = false
           this.dialogVisible = false
-          this.showEditTrip = false
           this.tagsDialog = false
         },
         handleDetails(row) {

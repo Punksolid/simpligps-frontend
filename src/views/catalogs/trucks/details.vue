@@ -1,6 +1,6 @@
 <template>
-  <el-row :gutter="10" v-loading="loading">
-  <el-tabs v-model="activeTab">
+  <el-row :gutter="10">
+  <el-tabs v-model="activeTab" v-loading="loading">
 
     <el-tab-pane label="Truck" name="truck">
       <el-col class="panel">
@@ -21,7 +21,7 @@
     </el-tab-pane>
 
     <el-tab-pane label="Map" name="Map">
-      <el-col class="panel">
+      <el-col class="panel" v-if="! loading">
         <div class="panel-header bg-primary dis-flex">
           <h3><i class="fas fa-map-marker-alt"/>
             <span v-if="data.position.lat"><strong>Position of Truck:</strong> {{data.name}} (ID: {{data.id}})</span>
@@ -38,7 +38,7 @@
               <GmapMarker
                 :position="data.position"
                 :icon="require('@/assets/carmarker.svg')"
-                :title="'Unit: ' + data.name"
+                :title="`Truck: ${data.name}`"
                 :clickable="true"
                 :draggable="false"
                 @click="center=data.position"

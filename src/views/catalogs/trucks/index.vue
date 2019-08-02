@@ -25,12 +25,12 @@
         class="trucktable"
         :row-key="row => row.id"
         :expand-row-keys="expandRowKeys"
-        @expand-change="handleExpandChange"
+        @expand-change="showMoreDetails"
         stripe>
         <el-table-column type="expand">
-          <template slot-scope="details">
+          <template slot-scope="scope">
 
-            <TruckDetails :data="truckData" :loading="truckLoading"/>
+            <TruckDetails :data="scope.row" :loading="scope.row.loading"/>
 
           </template>
         </el-table-column>
@@ -78,11 +78,11 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, trucksListData)"
+              @click="handleUpdate(scope.row)"
               icon="fas fa-edit">
             </el-button>
             <el-button
-              @click.native.prevent="deleteRow(scope.$index, trucksListData)"
+              @click.native.prevent="deleteRow(scope.row)"
               type="danger"
               size="mini"
               icon="fas fa-trash">
@@ -121,9 +121,7 @@
       return {
         expandRowKeys: [],
         trucksListData: [],
-        truckData: {},
         listLoading: false,
-        truckLoading: false,
         formData: null,
         trucksListPage: {
           page: 0,
@@ -135,16 +133,16 @@
       }
     },
     methods: {
-      deleteRow(index, truckData) {
+      deleteRow(truckData) {
         this.listLoading = true
-        this.$confirm('This will permanently delete the truck named: ' + truckData[index].name + ' are you sure to Continue?', 'Warning', {
+        this.$confirm('This will permanently delete the truck named: ' + truckData.name + ' are you sure to Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
           confirmButtonClass: 'btn-danger',
           type: 'warning'
         }).then(() => {
-          deleteTruck(truckData[index].id).then(response => {
-            this.$message('Truck named: ' + truckData[index].name + ' deleted.')
+          deleteTruck(truckData.id).then(response => {
+            this.$message('Truck named: ' + truckData.name + ' deleted.')
             this.fetchTrucksList()
           })
         })
@@ -171,36 +169,33 @@
           this.listLoading = false
         })
       },
-      handleExpandChange(row, expandedRows) {
-        const id = row.id
-        const lastId = this.expandRowKeys[0]
-        // disable mutiple row expanded
-        this.expandRowKeys = id === lastId ? [] : [id]
-        if (this.expandRowKeys.length > 0) {
-          this.fetchTruckDetail(row.id)
-        }
-      },
-      fetchTruckDetail(id) {
-        this.truckLoading = true
-        this.truckData = {}
-        TruckDetail(id).then(resp => {
-          this.truckData = resp.data.data
-            this.truckData.position = {
-              lat: this.truckData.position.lat,
-              lng: this.truckData.position.lon
-            }
-        }).catch(() => {
-        }).finally(() => {
-          this.truckLoading = false
-        })
+      showMoreDetails(row, expandedRows) {
+          this.truckLoading = true
+          row.loading = true
+          TruckDetail(row.id).then(response => {
+              this.trucksListData = this.trucksListData.map(function(element) {
+                  if (element.id === row.id) {
+                      element = response.data.data
+                      element.position = {
+                          lat: element.position.lat,
+                          lng: element.position.lon
+                      }
+                      element.loading = false
+                      return element
+                  }
+                  return element
+              })
+          }).finally(res => {
+              row.loading = false
+          })
       },
       resetFilter() {
         this.search = {}
         this.fetchTrucksList()
       },
-      handleUpdate(index, truckData) {
+      handleUpdate(truckData) {
         this.listLoading = true
-        this.formData = truckData[index]
+        this.formData = truckData
         this.titleDialog = 'Edit Truck'
         this.dialogVisible = true
       },

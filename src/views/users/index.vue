@@ -28,7 +28,7 @@
 
     </el-row>
 
-    <create-user :title="titleDialog" :form="elementToUpdate" :dialogvisible="dialogVisible" @created="fetchUsersList" @closedialog="closeDialog"></create-user>
+    <create-user :dialogvisible="dialogVisible" @created="fetchUsersList" @closedialog="closeDialog"></create-user>
 
     <el-col class="m-t-10">
 
@@ -57,13 +57,8 @@
         <el-table-column
           label="Operations"
           fixed="right"
-          width="130">
+          width="100">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              @click="handleUpdate(scope.$index, scope.row)"
-              icon="fas fa-edit">
-            </el-button>
             <el-button
               @click.native.prevent="deleteRow(scope.$index, scope.row)"
               type="danger"
@@ -108,14 +103,12 @@
           email: ''
         },
         listLoading: true,
-        elementToUpdate: {},
         usersListPage: {
           page: 0,
           per_page: 15,
           total: 0
         },
         dialogStatus: '',
-        titleDialog: 'Create User',
         dialogVisible: false
       }
     },
@@ -140,8 +133,6 @@
       },
       openDialog() {
         this.listLoading = true
-        this.titleDialog = 'Create User'
-        this.elementToUpdate = {}
         this.dialogVisible = true
       },
       closeDialog() {
@@ -163,11 +154,6 @@
       resetFilter() {
         this.search = {}
         this.fetchUsersList()
-      },
-      handleUpdate(index, userData) {
-        this.elementToUpdate = userData
-        this.titleDialog = 'Edit User'
-        this.dialogVisible = true
       },
       handleCurrentChange(val) {
         this.usersListPage.page = val
