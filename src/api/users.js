@@ -7,13 +7,6 @@ export function createUser(params) {
     data: params
   })
 }
-export function updateUser(id, params) {
-  return request({
-    url: 'v1/users/' + id,
-    method: 'PUT',
-    data: params
-  })
-}
 export function deleteUser(user_id) {
   return request({
     url: 'v1/users/' + user_id,

@@ -172,7 +172,8 @@
             return element
           })
         }).finally(res => {
-          this.detailsLoading = false
+            row.loading = false
+            this.detailsLoading = false
         })
       },
       getDevices() {

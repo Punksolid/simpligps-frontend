@@ -42,6 +42,10 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-col>
+      <el-button type="primary" v-if="! lastPage" @click="loadMoreLogs(element)" :loading="loading">Load more</el-button>
+    </el-col>
   </div>
 </template>
 
@@ -57,6 +61,8 @@
       return {
         loading: false,
         logs_list: [],
+        paginationQuery: {},
+        lastPage: false,
         message: '',
         editable: false,
         submiting: false
@@ -81,12 +87,32 @@
             record.data = JSON.stringify(record.data)
             return record
           })
-          // this.logs_list = response.data.data
+          this.paginationQuery = response.data.meta
+            if (this.paginationQuery.current_page === this.paginationQuery.last_page) {
+                this.lastPage = true
+            }
         }).catch(() => {
         }).finally(() => {
           this.loading = false
         })
       },
+        loadMoreLogs(id) {
+            this.loading = true
+            var params = { page: this.paginationQuery.current_page + 1 }
+            fetchLogs('devices', id, params).then(resp => {
+                this.logs_list =
+                resp.data.data.map(function(record) {
+                record.data = JSON.stringify(record.data)
+                return record
+                    })
+                this.paginationQuery = resp.data.meta
+                if (this.paginationQuery.current_page === this.paginationQuery.last_page) {
+                    this.lastPage = true
+                }
+            }).finally(() => {
+              this.loading = false
+          })
+        },
       postLog() {
         this.submiting = true
         newLog('devices', this.element, this.message).then(resp => {

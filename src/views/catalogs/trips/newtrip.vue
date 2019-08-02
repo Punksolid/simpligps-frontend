@@ -76,15 +76,18 @@
                 placeholder="Scheduled Load"
                 v-model="form.scheduled_load"
                 :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-                auto/>
+                auto>
+              </datetime>
               <datetime
                 type="datetime"
                 placeholder="Scheduled Departure"
                 v-model="form.scheduled_departure"
                 :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-                auto/>
+                auto>
+              </datetime>
               </div>
             </el-form-item>
+
             <el-divider>Intermediates</el-divider>
               <div v-for="(intermediate, index) in intermediates" :key="intermediate.id" >
                 <el-form-item label="Intermediates" class="intermediates">
@@ -120,7 +123,6 @@
                   </div>
             </el-form-item>
             </div>
-            <!-- </template> -->
 
             <el-divider></el-divider>
             <el-form-item label="Destination">
@@ -207,14 +209,14 @@
 
         <div slot="footer" class="dialog-footer text-center">
             <el-button @click="handleClose">Cancel</el-button>
-            <el-button type="primary" :loading="loading" @click="onSubmit">Create trip</el-button>
+            <el-button type="primary" :loading="loading" @click="onSubmit">{{ this.editMode ? 'Update Trip' : 'Create Trip'}}</el-button>
         </div>
 
     </el-dialog>
 </template>
 
 <script>
-    import { createTrip } from '@/api/trips'
+    import { createTrip, updateTrip } from '@/api/trips'
     import { clientsList, searchClients } from '@/api/clients'
     import { fetchGeofences, getPlaces, searchPlaces } from '../../../api/general'
     import { getOperators, searchOperators } from '@/api/operators'
@@ -236,6 +238,7 @@
         },
         data() {
             return {
+              editMode: false,
               loading: false,
               loadingClients: false,
               loadingOperators: false,
@@ -266,17 +269,21 @@
             onSubmit() {
               this.loading = true
               this.form.intermediates = this.intermediates
-              createTrip(this.form).then(response => {
-                  this.$message({
-                    message: 'Trip ID: ' + response.data.data.id + ' created',
-                    type: 'success',
-                    duration: 10 * 1000
-                  })
-                this.loading = false
-                this.$emit('created')
-              }).catch(() => {
-                this.loading = false
-              })
+                if (!this.editMode) {
+                    createTrip(this.form).then(response => {
+                        this.$message.success('Trip ID: ' + response.data.data.id + ' created.')
+                        this.$emit('created')
+                    }).finally(() => {
+                        this.loading = false
+                    })
+                } else {
+                    updateTrip(this.form.id, this.form).then(response => {
+                        this.$message.success('Trip ID: ' + response.data.data.id + ' updated.')
+                        this.$emit('created')
+                    }).finally(() => {
+                        this.loading = false
+                    })
+                }
             },
           handleClose() {
             if (this.form.rp || this.form.invoice) {
@@ -303,9 +310,11 @@
               params = { paginate: 50 }
               getPlaces(params).then(response => {
                   this.places = response.data.data
-                  this.origins = Object.assign(this.origins, this.places)
+                  // this.origins = Object.assign(this.origins, this.places)
                   // this.intermediates = Object.assign(this.intermediates, this.places) // todo lugar viene de places
-                  this.destinations = Object.assign(this.destinations, this.places)
+                  // this.destinations = Object.assign(this.destinations, this.places)
+                  this.origins = this.places
+                  this.destinations = this.places
               })
           },
           getTrucks(params) {
@@ -382,6 +391,28 @@
           },
           removeIntermediateBlock(id) {
             this.intermediates.splice(id, 1)
+          },
+          checkEditMode() {
+              if (this.form.id) {
+                  this.editMode = true
+                  this.form.origin_id = this.form.origin.id
+                  this.form.scheduled_load = this.dateFormat(this.form.origin.at_time)
+                  this.form.scheduled_departure = this.dateFormat(this.form.origin.exiting)
+                  this.form.destination_id = this.form.destination.id
+                  this.form.scheduled_arrival = this.dateFormat(this.form.destination.at_time)
+                  this.form.scheduled_unload = this.dateFormat(this.form.destination.exiting)
+                  this.intermediates = this.form.intermediates
+                  this.form.intermediates = this.form.intermediates.map(item => {
+                      item.place_id = item.id
+                      item.at_time = this.dateFormat(item.at_time)
+                      item.exiting = this.dateFormat(item.at_time)
+                      return item
+                  })
+              }
+          },
+          dateFormat(time) {
+              var newTime = time.slice(0, 10) + 'T' + time.slice(11, 19) + '.000Z'
+              return newTime
           }
         },
         mounted() {
@@ -396,9 +427,9 @@
           fetchCarriers({ 'all': 1 }).then(response => {
               this.carriers = response.data.data
           })
-        },
+          this.checkEditMode()
+    },
         created() {
-
         }
     }
 </script>
