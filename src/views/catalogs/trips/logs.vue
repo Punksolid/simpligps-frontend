@@ -46,12 +46,16 @@
         </el-table-column>
       </el-table>
     </el-col>
+
+    <el-col class="m-t-10">
+      <el-button type="primary" v-if="! lastPage" @click="loadMoreLogs(element)" :loading="loading">{{ this.loading ? 'Loading...' : 'Load more' }}</el-button>
+    </el-col>
+
   </el-row>
 </template>
 
 <script>
-  import { fetchTripLog } from '../../../api/trips'
-  import { newLog } from '../../../api/general'
+  import { newLog, fetchLogs } from '../../../api/general'
 
   export default {
     name: 'TripLog',
@@ -63,6 +67,8 @@
         loading: false,
         TripID: null,
         logs: [],
+        paginationQuery: {},
+        lastPage: false,
         message: '',
         editable: false,
         submiting: false
@@ -77,17 +83,38 @@
         }
         return ''
       },
-      getTripLogs() {
-        this.loading = true
-        fetchTripLog(this.TripID).then(response => {
-          this.logs = response.data.data.map(function(record) {
-            record.data = JSON.stringify(record.data)
-            return record
+      getTripLogs(id) {
+          this.loading = true
+          fetchLogs('trips', id).then(response => {
+              this.logs = response.data.data.map(function(record) {
+                  record.data = JSON.stringify(record.data)
+                  return record
+              })
+              this.paginationQuery = response.data.meta
+              if (this.paginationQuery.current_page === this.paginationQuery.last_page) {
+                  this.lastPage = true
+              }
+          }).catch(() => {
+          }).finally(() => {
+              this.loading = false
           })
-        }).catch(() => {
-        }).finally(() => {
-          this.loading = false
-        })
+      },
+      loadMoreLogs(id) {
+          this.loading = true
+          var params = { page: this.paginationQuery.current_page + 1 }
+          fetchLogs('trips', id, params).then(resp => {
+              var newLogs = resp.data.data.map(function(record) {
+                  record.data = JSON.stringify(record.data)
+                  return record
+              })
+              this.logs = this.logs.concat(newLogs)
+              this.paginationQuery = resp.data.meta
+              if (this.paginationQuery.current_page === this.paginationQuery.last_page) {
+                  this.lastPage = true
+              }
+          }).finally(() => {
+              this.loading = false
+          })
       },
       postLog() {
         this.submiting = true
@@ -98,7 +125,7 @@
           })
           this.message = ''
           this.editable = false
-          this.getTripLogs()
+          this.getTripLogs(this.element)
         }).catch(() => {
         }).finally(() => {
           this.submiting = false
@@ -108,7 +135,7 @@
     created() {
         this.TripID = this.element
       // this.TripID = this.$route.params.tripid
-      this.getTripLogs()
+      this.getTripLogs(this.element)
     }
   }
 </script>
