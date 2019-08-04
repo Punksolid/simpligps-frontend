@@ -2,11 +2,11 @@
     <el-row class="panel timeline m-t-10">
         <el-col class="p-30">
             <el-steps :direction="this.$store.state.app.device==='desktop'?'horizontal':'vertical'" :active="activePosition">
-                <el-step title="Origin">
+                <el-step title="Origin" :status="currentStatus(this.details.origin)">
                   <template slot="icon">
                     <span class="fa-stack fa-2x">
                       <i class="far fa-circle fa-stack-2x"></i>
-                      <i :class="'fas fa-stack-1x ' + originStatus()"></i>
+                      <i class="fas fa-stack-1x" :class="[this.details.origin.status === 2 ? 'fa-check':'fa-map-marker-alt']"></i>
                     </span>
                   </template>
                     <template slot="description">
@@ -24,7 +24,7 @@
                         {{ details.origin.real_exiting }}</h4>
                     </template>
                 </el-step>
-                <el-step v-for="item in details.intermediates" :key="item.id" :title="item.name" :icon="currentStatus(item)">
+                <el-step v-for="item in details.intermediates" :key="item.index" :title="item.name" :status="currentStatus(item)" :icon="iconStatus(item)">
                     <template slot="description">
                         <h4><i class="fas fas fa-map-marker-alt"/> {{ item.address }}</h4>
                         <el-tooltip placement="top" class="tooltip-desc">
@@ -37,16 +37,16 @@
                         </template>
                       </el-tooltip>
                         <h4>Programed Enter: {{ item.at_time }}</h4>
-                        <h4><i class="fas fa-clock"/>Programed Departure {{ item.exiting }}</h4>
-                        <h4><i class="fas fa-clock"/>Real Enter: {{ item.real_at_time }}</h4>
-                        <h4><i class="fas fa-clock"/>Real Departure {{ item.real_exiting }}</h4>
+                        <h4><i class="fas fa-clock"/> Programed Departure {{ item.exiting }}</h4>
+                        <h4><i class="fas fa-clock"/> Real Enter: {{ item.real_at_time }}</h4>
+                        <h4><i class="fas fa-clock"/> Real Departure {{ item.real_exiting }}</h4>
                     </template>
                 </el-step>
-                <el-step title="Destination">
+                <el-step title="Destination" :status="currentStatus(this.details.destination)">
                   <template slot="icon">
                     <span class="fa-stack fa-2x">
                       <i class="far fa-circle fa-stack-2x"></i>
-                      <i :class="'fas fa-stack-1x ' + destinationStatus()"></i>
+                      <i class="fas fa-stack-1x" :class="[this.details.destination.status === 2 ? 'fa-check':'fa-flag']"></i>
                     </span>
                   </template>
                     <template slot="description">
@@ -69,9 +69,9 @@
       <el-col :span="24" class="colours p-15">
         <el-col :xs="24" :sm="3"><div class="process-colour"></div><span>Current Position</span></el-col>
         <el-col :xs="24" :sm="3"><div class="finish-colour"></div><span>Past Position</span></el-col>
-        <el-col :xs="24" :sm="5"><div class="waiting-colour"></div><span>Intermediate / Waiting</span></el-col>
+        <el-col :xs="24" :sm="5"><div class="waiting-colour"></div><span>Waiting</span></el-col>
       </el-col>
-      <!-- <el-button type="primary" @click="currentPosition">Check Position</el-button> -->
+      <el-button class="m-10" type="primary" @click="currentPosition">Check Position</el-button>
     </el-row>
 </template>
 <script>
@@ -82,48 +82,43 @@
       },
         data() {
           return {
-              activePosition: 0
+              activePosition: null
           }
         },
       methods: {
           currentPosition() {
-              if (this.details.destination.status >= 1) {
-                  this.activePosition = this.details.intermediates.length + 1
-              } else {
-                  this.details.intermediates.forEach((value, key) => {
-                      if (value.status === 1) {
-                          this.activePosition = key
-                      }
-                  })
+              this.details.intermediates.forEach((value, key) => {
+                  if (value.status === 1) {
+                      this.activePosition = key
+                  }
+              })
+              if (this.details.origin.status >= 1) {
+                  this.activePosition = 0
               }
-          },
-          originStatus() {
-              if (this.details.origin.status === 2) {
-                  return 'fa-check'
-              } else if (this.details.origin.status === 1) {
-                  return 'fa-truck'
-              } else {
-                  return 'fa-map-marker-alt'
+              if (this.details.destination.status >= 1) {
+                  this.activePosition = this.details.stops + 1
               }
           },
           currentStatus(item) {
               if (item.status === 2) {
-                  return 'fas fa-check'
-              } else if (item.status === 1) {
-                  return 'fas fa-truck'
-              } else {
-                    return 'fas fa-map-pin'
+                  return 'finish'
+              }
+              if (item.status === 1) {
+                  return 'process'
+              }
+              if (item.status === 0) {
+                  return 'wait'
               }
           },
-          destinationStatus() {
-              if (this.details.destination.status === 2) {
-                  return 'fa-check'
-              } else if (this.details.destination.status === 1) {
-                  return 'fa-truck'
-              } else {
-                  return 'fa-flag'
+          iconStatus(item) {
+              if (item.status === 2) {
+                  return 'fas fa-check'
               }
-          }
+              if (item.status === 1) {
+                  return 'fas fa-truck'
+              }
+              return 'fas fa-map-pin'
+              }
       },
         created() {
           this.currentPosition()
@@ -132,7 +127,7 @@
 </script>
 <style lang="scss">
   $cActive: #fca803;
-  $cFinished: #2a9cb6;
+  $cFinished: #67C23A;
   $cWaiting: #C0C4CC;
   .timeline {
     margin-bottom: 0px !important;
