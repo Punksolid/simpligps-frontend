@@ -53,9 +53,3 @@ export function tripDetails(id) {
     method: 'GET'
   })
 }
-export function fetchTripLog(id) {
-  return request({
-    url: 'v1/trips/' + id + '/logs',
-    method: 'GET'
-  })
-}

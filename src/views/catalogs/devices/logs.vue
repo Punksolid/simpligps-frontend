@@ -8,7 +8,7 @@
     </el-col>
 
     <el-table
-    :data="logs_list"
+    :data="logs"
     border
     id="logs"
     v-loading="loading"
@@ -42,6 +42,11 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-col class="m-t-10">
+      <el-button type="primary" v-if="! lastPage" @click="loadMoreLogs(element)" :loading="loading">{{ this.loading ? 'Loading...' : 'Load more' }}</el-button>
+    </el-col>
+
   </div>
 </template>
 
@@ -56,7 +61,9 @@
     data() {
       return {
         loading: false,
-        logs_list: [],
+        logs: [],
+        paginationQuery: {},
+        lastPage: false,
         message: '',
         editable: false,
         submiting: false
@@ -77,14 +84,34 @@
       getDevicesLogs(id) {
         this.loading = true
         fetchLogs('devices', id).then(response => {
-          this.logs_list = response.data.data.map(function(record) {
+          this.logs = response.data.data.map(function(record) {
             record.data = JSON.stringify(record.data)
             return record
           })
-          // this.logs_list = response.data.data
+          this.paginationQuery = response.data.meta
+            if (this.paginationQuery.current_page === this.paginationQuery.last_page) {
+                this.lastPage = true
+            }
         }).catch(() => {
         }).finally(() => {
           this.loading = false
+        })
+      },
+      loadMoreLogs(id) {
+          this.loading = true
+          var params = { page: this.paginationQuery.current_page + 1 }
+          fetchLogs('devices', id, params).then(resp => {
+              var newLogs = resp.data.data.map(function(record) {
+                      record.data = JSON.stringify(record.data)
+                      return record
+                  })
+              this.logs = this.logs.concat(newLogs)
+              this.paginationQuery = resp.data.meta
+              if (this.paginationQuery.current_page === this.paginationQuery.last_page) {
+                  this.lastPage = true
+              }
+          }).finally(() => {
+            this.loading = false
         })
       },
       postLog() {
@@ -105,8 +132,6 @@
     },
     mounted() {
       this.getDevicesLogs(this.element)
-    },
-    created() {
     }
   }
 </script>

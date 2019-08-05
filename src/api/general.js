@@ -80,10 +80,11 @@ export function fetchGeofences() {
   })
 }
 
-export function fetchLogs(type, id) {
+export function fetchLogs(type, id, params) {
   return request({
     url: 'v1/' + type + '/' + id + '/logs',
-    method: 'GET'
+    method: 'GET',
+    params: params
   })
 }
 
