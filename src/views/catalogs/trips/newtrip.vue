@@ -160,7 +160,7 @@
                 <el-input v-model="form.mon_type" placeholder="Mon Type"/>
             </el-form-item>
 
-            <el-form-item label="Carrier">
+            <el-form-item label="Carrier *">
                 <el-select
                 v-model="form.carrier_id"
                 filterable

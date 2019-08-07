@@ -10,9 +10,6 @@
             <el-input placeholder="Name" v-model="search.name" @keyup.enter.native="handleFilter"/>
           </el-form-item>
           <el-form-item>
-            <el-input placeholder="Carrier" v-model="search.carrier" @keyup.enter.native="handleFilter"/>
-          </el-form-item>
-          <el-form-item>
             <el-input placeholder="Phone" v-model="search.phone" @keyup.enter.native="handleFilter">
               <el-button slot="append" icon="fas fa-search" @click="handleFilter"></el-button>
             </el-input>
@@ -46,12 +43,6 @@
       <el-table-column
         prop="name"
         label="Name"
-        sortable>
-      </el-table-column>
-       <el-table-column
-        prop="carrier"
-        label="Carrier"
-        width="180"
         sortable>
       </el-table-column>
       <el-table-column
@@ -118,7 +109,6 @@
         listLoading: false,
         search: {
           name: '',
-          carrier: '',
           phone: ''
         },
         operatorsList: [],
