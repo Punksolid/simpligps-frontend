@@ -43,7 +43,7 @@
 
         <SensorControlType v-if="form.control_type === 'sensor'" :form="form"/>
 
-        <el-form-item label="Units">
+        <el-form-item label="Devices">
           <el-select v-model="form.devices_ids" multiple placeholder="Select Unit" :loading="devicesLoading">
             <el-option
               v-for="device in devices"
