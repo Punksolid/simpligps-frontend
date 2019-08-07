@@ -6,28 +6,25 @@
     width="60%"
     :before-close="handleClose">
       <el-form :model="form" label-width="120px">
-      <el-form-item label="Name" prop="name">
+      <el-form-item label="Name *" prop="name">
         <el-input v-model="form.name" clearable></el-input>
       </el-form-item>
-      <el-form-item label="Plate" prop="plate">
+      <el-form-item label="Plate *" prop="plate">
         <el-input v-model="form.plate" clearable></el-input>
       </el-form-item>
       <el-form-item label="Model" prop="model">
         <el-input v-model="form.model" clearable></el-input>
       </el-form-item>
-      <el-form-item label="Internal Number" prop="internal_number">
+      <el-form-item label="Internal Number *" prop="internal_number">
         <el-input v-model="form.internal_number" clearable></el-input>
       </el-form-item>
       <el-form-item label="Brand" prop="brand">
         <el-input v-model="form.brand" clearable></el-input>
       </el-form-item>
-      <el-form-item label="GPS" prop="gps">
-        <el-input v-model="form.gps" clearable></el-input>
-      </el-form-item>
       <el-form-item label="Color" prop="color">
         <el-input v-model="form.color" clearable></el-input>
       </el-form-item>
-        <el-form-item label="Device" prop="device">
+        <el-form-item label="Device *" prop="device">
           <el-select
             v-model="form.device_id"
             filterable
@@ -45,7 +42,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="Carrier" prop="carrier">
+        <el-form-item label="Carrier *" prop="carrier">
           <el-select
             v-model="form.carrier_id"
             filterable
