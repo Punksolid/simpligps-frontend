@@ -30,6 +30,7 @@
                         <el-tag :type="scope.row.active ? 'success':'info'">{{ scope.row.active ? 'Active':'Inactive' }}</el-tag>
                     </template>
                 </el-table-column>
+              <el-table-column prop="devices" label="Devices" min-width="150"></el-table-column>
                 <el-table-column label="Operations" width="150" fixed="right">
                     <template slot-scope="scope">
                         <el-button

@@ -4,24 +4,27 @@
       <el-dropdown trigger="click">
         <i class="icon-bell">
           <span
-            v-if="notifications.length"
+            v-if="pagination.total"
             class="badge badge-danger badge-header"
-          >{{ notifications.length }}</span>
+          >{{ pagination.total }}</span>
         </i>
 
         <el-dropdown-menu slot="dropdown" class="dropdown-menu">
           <li class="dropdown-header bg-red">
-            <p class="m-0 p-1">{{ notifications.length }} Pending Notifications</p>
+            <p class="m-0 p-1">{{ pagination.total }} Pending Notifications</p>
           </li>
 
-          <ul class="dropdown-menu-list">
+          <ul class="dropdown-menu-list" v-loading="this.loading">
             <el-dropdown-item v-for="notification in notifications" :key="notification.id">
               <span @click="handleAlert(notification)">
-                <i class="fas fa-bell"></i>
-                {{ notification.message }} <label class="small">{{ notification.time_ago }}</label>
+                <i class="fas fa-bell"/>{{ notification.message }} <label class="f-10">{{ notification.time_ago }}</label>
               </span>
             </el-dropdown-item>
           </ul>
+
+          <li class="dropdown-footer text-center" @click="fetchNotifications" v-if="! this.last_page">
+            <el-button type="text" :loading="this.loading">{{this.loading ? 'Loading..':'Load more'}}</el-button>
+          </li>
         </el-dropdown-menu>
       </el-dropdown>
     </router-link>
@@ -38,7 +41,13 @@ export default {
   data() {
     return {
       user: '',
-      notifications: []
+      loading: false,
+      notifications: [],
+      last_page: false,
+      pagination: {
+          current_page: 0,
+          last_page: 0
+      }
     }
   },
   methods: {
@@ -52,8 +61,22 @@ export default {
         })
     },
     fetchNotifications() {
-      getMyNotifications().then(response => {
-        this.notifications = response.data.data
+        this.loading = true
+        const page = this.pagination.current_page
+        const last_page = this.pagination.last_page
+        let getPage = 0
+
+        if (page < last_page) {
+            getPage = { page: page + 1 }
+        }
+      getMyNotifications(getPage).then(resp => {
+        this.notifications = this.notifications.concat(resp.data.data)
+        this.pagination = resp.data.meta
+          if (this.pagination.current_page === this.pagination.last_page) {
+              this.last_page = true
+          }
+      }).finally(() => {
+          this.loading = false
       })
     },
     notificationReaded(uuid) {
@@ -151,5 +174,11 @@ export default {
 .el-dropdown-menu__item:not(.is-disabled):hover {
   background-color: #b8605d;
   color: #ffffff;
+}
+.dropdown-footer {
+  background-color: #f4f4f4;
+  .el-button--text {
+    color: #777777;
+  }
 }
 </style>

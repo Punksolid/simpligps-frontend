@@ -36,10 +36,11 @@ export function getMyPermissions() {
   })
 }
 
-export function getMyNotifications() {
+export function getMyNotifications(params) {
   return request({
     url: 'v1/account/notifications',
-    method: 'GET'
+    method: 'GET',
+    params: params
   })
 }
 
