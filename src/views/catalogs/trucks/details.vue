@@ -50,7 +50,7 @@
     </el-tab-pane>
 
     <el-tab-pane label="Operator" name="operator">
-      <el-col class="panel operators" v-if="! loading">
+      <el-col class="panel operators" v-if="data.current_operator">
         <div class="panel-header bg-orange">
           <h3><i class="fas fa-hard-hat"/><strong>{{data.current_operator.name ? 'Operator detail:':'No Operator assigned.'}}</strong></h3>
         </div>
