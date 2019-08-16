@@ -97,6 +97,7 @@
                     filterable
                     remote
                     :remote-method="getSearchIntermediates"
+                    @change="restorePlaces()"
                     :loading="loadingIntermediates"
                     placeholder="Intermediates">
                         <el-option
@@ -310,12 +311,20 @@
               params = { paginate: 50 }
               getPlaces(params).then(response => {
                   this.places = response.data.data
+                  this.places_copy = response.data.data
                   // this.origins = Object.assign(this.origins, this.places)
                   // this.intermediates = Object.assign(this.intermediates, this.places) // todo lugar viene de places
                   // this.destinations = Object.assign(this.destinations, this.places)
                   this.origins = this.places
                   this.destinations = this.places
               })
+          },
+          restorePlaces() {
+              // Restore Places from Backup
+              this.places = this.places_copy
+              // Or fetch places again.
+              // this.fetchPlaces({ 'all': 1 })
+
           },
           getTrucks(params) {
             trucksList(params).then(response => {
@@ -363,7 +372,7 @@
             this.loadingIntermediates = true
             search = { name: search }
             searchPlaces(search).then(response => {
-              // this.intermediates = response.data.data
+              this.places = response.data.data
               this.loadingIntermediates = false
             })
           },

@@ -41,27 +41,7 @@
 
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <el-tabs v-loading="scope.row.loading">
-              <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Logs</span>
-                <Logs :element="scope.row.id" />
-              </el-tab-pane>
-              <el-tab-pane>
-                <span slot="label"><i class="el-icon-date"></i> Truck</span>
-                <div class="card-panel-icon-wrapper icon-people">
-
-                  <div class="card-panel-icon-wrapper icon-people">
-                    <i class="el-icon-info"></i>
-                  </div>
-                  <div v-if="scope.row.truck">
-                      <h3>Truck: {{ scope.row.truck.name   || "default" }} </h3>
-                      <h3>Plate: {{ scope.row.truck.plate  || "default" }}</h3>
-                      <h3>Color: {{ scope.row.truck.color || "default" }}</h3>
-                      <h3>Brand: {{ scope.row.truck.brand || "default" }}</h3>
-                  </div>
-                </div>
-              </el-tab-pane>
-            </el-tabs>
+            <DeviceDetails :scope="scope.row"/>
           </template>
         </el-table-column>
 
@@ -122,13 +102,13 @@
 <script>
   import { fetchDevices, deleteDevice, fetchDevice } from '../../../api/devices'
   import RegisterDevice from './create'
-  import Logs from './logs'
   import Pagination from '../../../components/Pagination/index.vue'
+  import DeviceDetails from './details'
 
   export default {
     name: 'DevicesList',
     components: {
-      Logs,
+      DeviceDetails,
       RegisterDevice,
       Pagination
     },
@@ -166,6 +146,14 @@
           this.devicesList = this.devicesList.map(function(element) {
             if (element.id === row.id) {
               element = response.data.data
+              element.position = {
+                lat: 24.807197,
+                lng: -107.397143
+              }
+                /** element.position = {
+                  lat: element.position.lat,
+                  lng: element.position.lon
+                } **/
               element.loading = false
               return element
             }
