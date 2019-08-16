@@ -14,7 +14,42 @@
       <CreateTrip v-if="dialogVisible" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible"
                   @created="fetchTrips" @closedialog="closeDialog"/>
       <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>
-      '
+      
+      <el-dialog
+        title="Closing Trip"
+        :visible.sync="closingTripDialog"
+        width="30%"
+        :before-close="handleCloseTripDialog">
+        <span>Please Set Time for Destination Arrival</span>
+
+        <el-form :model="closeTripForm">
+          <el-form-item label="Closing Trip" >
+            <!-- <el-input v-model="closeTripForm.real_at_time" autocomplete="off"></el-input> -->
+            <datetime
+              type="datetime"
+              placeholder="Destination Arrival"
+              v-model="closeTripForm.real_at_time"
+              :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+              auto>
+            </datetime>
+          </el-form-item>
+          <el-form-item label="Zones">
+            <!-- <el-input v-model="closeTripForm.exiting" placeholder="Please select a zone"></el-input> -->
+            <datetime
+                type="datetime"
+                placeholder="Destination Departure"
+                v-model="closeTripForm.real_exiting"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                auto>
+            </datetime>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="closingTripDialog = false">Cancel</el-button>
+          <el-button type="primary" @click="setTimesAndCloseTrip">Close Trip</el-button>
+        </span>
+
+      </el-dialog>
 
       <el-row>
         <el-col>
@@ -187,11 +222,13 @@
 <script>
   import CreateTrip from './newtrip'
   import TripDetails from './details'
-  import { tripList, deleteTrip, tripDetails } from '@/api/trips'
+  import { tripList, deleteTrip, tripDetails, updateCheckpoint } from '@/api/trips'
   import TripTags from './tags'
   // import EditTrip from './EditTrip'
   import TripLog from './logs'
   import { startTrip, tripAutoUpdates } from '../../../api/trips'
+  import { Datetime } from 'vue-datetime'
+  import 'vue-datetime/dist/vue-datetime.css'
 
   export default {
     name: 'TripList',
@@ -199,7 +236,8 @@
       TripLog,
       TripTags,
       CreateTrip,
-      TripDetails
+      TripDetails,
+      datetime: Datetime
     },
     data() {
       return {
@@ -210,13 +248,47 @@
         titleDialog: 'New Trip',
         tripData: {},
         tripsList: [],
-        tripsListPage: {}
+        tripsListPage: {},
+        closingTripDialog: false,
+        checkpointToUpdateId: 0,
+        closeTripForm: {
+          real_at_time: "",
+          real_exiting: ""
+        }
       }
     },
     methods: {
       handleCloseTrip(trip) {
-        console.table(trip)
+        
+        console.table(this.isTripCompleted(trip.destination))
+        this.checkpointToUpdateId = trip.destination.checkpoint_id
+        this.open()
 
+      },
+      setTimesAndCloseTrip() {
+        
+        console.log("setTimesAndCloseTrip")
+        updateCheckpoint(this.checkpointToUpdateId,this.closeTripForm).then(response => {
+          console.log("Done")
+          console.log(response)
+        }).catch((err) => {
+            console.log("an error ocurred")
+            console.log(err)
+        })
+          this.closingTripDialog = false
+      },
+      open() {
+        this.closingTripDialog = true
+      },
+      handleCloseTripDialog() {
+        this.closingTripDialog = false
+      },
+      isTripCompleted(checkpoint) {
+          if (!checkpoint.real_at_time) {
+              return false
+          }
+        
+        return true
       },
       fetchTrips() {
         this.closeDialog()

@@ -53,3 +53,22 @@ export function tripDetails(id) {
     method: 'GET'
   })
 }
+export function updateCheckpoint(id, params) {
+  /**
+   *         $call = $this->patchJson("/api/v1/checkpoints/{$checkpoint->pivot->id}", $form);
+
+        $call->assertJson([
+            'data' => [
+                'name' => $place1->name,
+                'real_at_time' => $form['real_at_time'],
+                'real_exiting' => $form['real_exiting']
+            ]
+        ]);
+   */
+  return request({
+    url: 'v1/checkpoints/'+ id,
+    data: params,
+    method: 'PATCH'
+  })
+}
+
