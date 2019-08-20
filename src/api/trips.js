@@ -66,7 +66,7 @@ export function updateCheckpoint(id, params) {
         ]);
    */
   return request({
-    url: 'v1/checkpoints/'+ id,
+    url: 'v1/checkpoints/' + id,
     data: params,
     method: 'PATCH'
   })

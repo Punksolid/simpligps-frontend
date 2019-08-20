@@ -11,10 +11,15 @@
         </el-col>
       </el-row>
 
-      <CreateTrip v-if="dialogVisible" :form="tripData" :title="titleDialog" :dialogvisible="dialogVisible"
-                  @created="fetchTrips" @closedialog="closeDialog"/>
+      <CreateTrip
+v-if="dialogVisible"
+:form="tripData"
+:title="titleDialog"
+:dialogvisible="dialogVisible"
+                  @created="fetchTrips"
+@closedialog="closeDialog"/>
       <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>
-      
+
       <el-dialog
         title="Closing Trip"
         :visible.sync="closingTripDialog"
@@ -142,7 +147,11 @@
                 <template v-if="scope.row.tag.length > 1">
                   <el-tooltip effect="light" placement="top">
                     <template slot="content">
-                      <el-tag v-for="tag in scope.row.tag" :key="tag.index" type="success" size="small"
+                      <el-tag
+v-for="tag in scope.row.tag"
+:key="tag.index"
+type="success"
+size="small"
                               style="margin-right: 2px;">
                         {{ tag }}
                       </el-tag>
@@ -252,27 +261,24 @@
         closingTripDialog: false,
         checkpointToUpdateId: 0,
         closeTripForm: {
-          real_at_time: "",
-          real_exiting: ""
+          real_at_time: '',
+          real_exiting: ''
         }
       }
     },
     methods: {
       handleCloseTrip(trip) {
-        
         console.table(this.isTripCompleted(trip.destination))
         this.checkpointToUpdateId = trip.destination.checkpoint_id
         this.open()
-
       },
       setTimesAndCloseTrip() {
-        
-        console.log("setTimesAndCloseTrip")
-        updateCheckpoint(this.checkpointToUpdateId,this.closeTripForm).then(response => {
-          console.log("Done")
+        console.log('setTimesAndCloseTrip')
+        updateCheckpoint(this.checkpointToUpdateId, this.closeTripForm).then(response => {
+          console.log('Done')
           console.log(response)
         }).catch((err) => {
-            console.log("an error ocurred")
+            console.log('an error ocurred')
             console.log(err)
         })
           this.closingTripDialog = false
@@ -287,7 +293,7 @@
           if (!checkpoint.real_at_time) {
               return false
           }
-        
+
         return true
       },
       fetchTrips() {
