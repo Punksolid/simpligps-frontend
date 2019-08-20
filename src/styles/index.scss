@@ -57,6 +57,10 @@ a:hover {
   text-decoration: none;
 }
 
+div:focus {
+  outline: none;
+}
+
 .clearfix {
   &:after {
     visibility: hidden;
@@ -72,6 +76,7 @@ a:hover {
 .app-main {
   min-height: 100%
 }
+// main-container global css
 .app-container {
   padding: 20px;
 }

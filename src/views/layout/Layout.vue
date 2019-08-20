@@ -27,7 +27,7 @@
 
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
-import Alerts from '@/views/layout/components/Alerts'
+import Alerts from './components/Alerts'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
