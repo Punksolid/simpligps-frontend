@@ -324,7 +324,6 @@
               this.places = this.places_copy
               // Or fetch places again.
               // this.fetchPlaces({ 'all': 1 })
-
           },
           getTrucks(params) {
             trucksList(params).then(response => {
