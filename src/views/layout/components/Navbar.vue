@@ -64,14 +64,14 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import { loggedUser } from '../../../api/users'
-import App from '../../../App'
+// import App from '../../../App'
 import Notifications from '@/views/layout/components/Notifications'
-import MyAccounts from '../../login/myaccounts'
+// import MyAccounts from '../../login/myaccounts'
 
 export default {
   components: {
-    MyAccounts,
-    App,
+    // MyAccounts,
+    // App,
     Breadcrumb,
     Hamburger,
     Notifications
