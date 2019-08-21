@@ -1,7 +1,19 @@
-import NewTrip from 'src/views/catalogs/trips/newtrip.vue'
+import { mount, shallowMount } from '@vue/test-utils'
+import NewTrip from '@/views/catalogs/trips/newtrip.vue'
 
 describe('Newtrip.vue', () => {
-  const wrapper = mount(NewTrip)
+
+  let wrapper
+
+  beforeEach(() => {
+
+    wrapper = shallowMount(NewTrip)
+    wrapper.setProps({
+      form: {
+        rp: 'a'
+      }
+    })
+  })
 
   it('can press a create trip planification button', () => {
 

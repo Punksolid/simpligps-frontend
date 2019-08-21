@@ -225,16 +225,28 @@
     import { trucksList, searchTrucks } from '@/api/trucks'
     import { trailerboxList } from '@/api/trailerbox'
     import { Datetime } from 'vue-datetime'
-    import 'vue-datetime/dist/vue-datetime.css'
+    import Element from 'element-ui'
+
+    // import 'vue-datetime/dist/vue-datetime.css' //los import de css al parecer no van aquí
 
     export default {
         name: 'CreateTrip',
-        props: [
-          'title',
-          'form',
-          'dialogvisible'
-        ],
+        props: {
+          title: {
+            type: String
+          },
+          form: {
+            type: Object,
+            default: function() {
+              return { rp: '' }
+            }
+          },
+          dialogvisible: {
+            type: Boolean
+          }
+        },
         components: {
+          Element,
           datetime: Datetime
         },
         data() {
@@ -443,6 +455,7 @@
 </script>
 
 <style lang="scss">
+  /*@import 'vue-datetime/dist/vue-datetime.css'; los imports van aquí pero no sé como comprobar si funciona*/
   .newtrip {
     .el-form-item {
       margin-bottom: 5px;
