@@ -31,7 +31,7 @@
       <!-- Body Left Side / Events-message -->
       <el-col :span="12">
         <el-table
-          :data="getPreviousNotifications()"
+          :data="getPreviousNotifications"
           stripe
           max-height="250"
           style="width: 100%"
