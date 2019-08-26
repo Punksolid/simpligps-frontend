@@ -1,158 +1,67 @@
 <template>
-  <el-dialog
-    :title="title"
-    :visible="dialogvisible"
-    width="30%"
-    :before-close="handleClose">
-        <el-form :model="form" label-width="100px">
-            <el-form-item label="Operator">
-                <el-select
-                    v-model="form.operator_id"
-                    filterable
-                    remote
-                    :remote-method="getSearchOperators"
-                    :loading="loadingOperators"
-                    placeholder="Select Operator">
-                    <el-option
-                        v-for="operator in operators"
-                        :key="operator.id"
-                        :label="operator.name"
-                        :value="operator.id">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="Trucks">
-                <el-select
-                v-model="form.truck_tract_id"
-                filterable
-                remote
-                :remote-method="getSearchTrucks"
-                :loading="loadingTrucks"
-                placeholder="Select Truck">
-                <el-option
-                    v-for="truck in trucks"
-                    :key="truck.id"
-                    :label="truck.name"
-                    :value="truck.id">
-                </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="Trailersbox">
-                <el-select
-                v-model="form.trailers_ids"
-                multiple
-                :loading="loadingTrailerBoxes"
-                placeholder="Select Trailersbox">
-                <el-option
-                    v-for="trailerbox in trailersbox"
-                    :key="trailerbox.id"
-                    :label="trailerbox.plate"
-                    :value="trailerbox.id">
-                </el-option>
-                </el-select>
-            </el-form-item>
-        </el-form>
-    <div slot="footer" class="dialog-footer text-center">
-      <el-button @click="handleClose">Cancel</el-button>
-      <el-button type="primary" :loading="loading" @click="sendForm">Update Trip</el-button>
-    </div>
-  </el-dialog>
+    <TripForm
+      mode="edit"
+      :tripData="trip"
+      @loading="loading = !loading"
+    />
 </template>
 
 <script>
-import { fetchOperators, searchOperators } from '@/api/operators'
-import { trucksList, searchTrucks } from '@/api/trucks'
-import { trailerboxList } from '@/api/trailerbox'
-// import { updateTrip } from '@/api/trips'
 
-export default {
+  import TripForm from './Form'
+  import { fetchTripDetails } from '../../../api/trips'
+
+  export default {
     name: 'EditTrip',
-    props: [
-      'title',
-      'form',
-      'dialogvisible'
-    ],
+    components: { TripForm },
+    props: {
+      id: {
+        type: Number,
+        required: true
+      }
+    },
     data() {
-        return {
-            loading: false,
-            loadingOperators: false,
-            loadingTrucks: false,
-            loadingTrailerBoxes: false,
-            operators: [],
-            trucks: [],
-            trailersbox: []
-            /** form: {
-                operator_id: null,
-                truck_tract_id: null,
-                trailers_ids: null
-            } **/
+      return {
+        loading: false,
+        trip: {
+          'id': 1,
+          'rp': 'este es el rp',
+          'invoice': 'bbb',
+          'client_id': 'uuu',
+          'intermediates': [
+            {
+              'place_id': 444, // number of a place
+              'at_time': 'a timestamp',
+              'exiting': 'another timestamps'
+            }, {
+              'place_id': 444, // number of a place
+              'at_time': 'a timestamp',
+              'exiting': 'another timestamps'
+            }
+          ],
+          'origin_id': 111, // a number of a place,
+          'destination_id': 222, // number of a place
+          'mon_type': 231, // ni idea de que es esto aun
+          'carrier_id': 221, // relacion
+          'truck_tract_id': 222,
+          'operator_id': 987,
+          'trailers_ids': [
+            546546 // arrays de ids de trailers boxes
+          ],
+          'scheduled_load': 'timestamps',
+          'scheduled_departure': 'timestamps',
+          'scheduled_arrival': 'timestamps',
+          'scheduled_unload': 'timestamps'
         }
+      }
     },
     methods: {
-      sendForm() {
-        console.table(Object.values(this.form))
-        // TEMP CLOSE AFTER SUBMIT
-        this.$emit('created')
-        /* updateTrip(this.form.id, this.form).then(response => {
-          this.$message({
-            message: 'Trip ID: ' + response.data.data.id + ' updated',
-            type: 'success',
-            duration: 10 * 1000
-          })
-          this.loading = false
-          this.$emit('created')
-        }).catch(() => {
-          this.loading = false
-        }) */
-      },
-      handleClose() {
-        if (this.form.id) {
-          this.$confirm('Are you sure to close? Not saved data will be lost!')
-            .then(_ => {
-              this.$emit('closedialog')
-            }).catch(() => {
-          })
-        } else {
-          this.$emit('closedialog')
-        }
-      },
-      getOperators() {
-          fetchOperators({ 'all': 1 }).then(response => {
-              this.operators = response.data.data
-              this.loadingOperators = false
-          })
-      },
-      getSearchOperators(search) {
-          this.loadingOperators = true
-          search = { name: search }
-          searchOperators(search).then(response => {
-            this.operators = response.data.data
-            this.loadingOperators = false
-          })
-      },
-      getTrucks(params) {
-          trucksList(params).then(response => {
-            this.trucks = response.data.data
-          })
-      },
-      getSearchTrucks(search) {
-          this.loadingTrucks = true
-          search = { name: search }
-          searchTrucks(search).then(response => {
-            this.trucks = response.data.data
-            this.loadingTrucks = false
-          })
-      },
-      getTrailersbox(params) {
-          trailerboxList(params).then(response => {
-            this.trailersbox = response.data.data
-          })
+      prepareForm() {
+        this.loading = false
       }
     },
     mounted() {
-        this.getOperators()
-        this.getTrailersbox()
-        this.getTrucks()
+      this.prepareForm()
     }
-}
+  }
 </script>

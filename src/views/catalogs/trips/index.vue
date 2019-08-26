@@ -4,7 +4,7 @@
 
       <el-row class="searchBar">
         <el-col :span="4" class="m-b-5">
-          <el-button type="primary" @click="openDialog" icon="fas fa-route p-r-10">New Trip</el-button>
+          <el-button type="primary" @click="newTrip" icon="fas fa-route p-r-10">New Trip</el-button>
         </el-col>
         <el-col :xl="20" :sm="20" :xs="24">
           <!-- Right Side for Search Options -->
@@ -12,12 +12,12 @@
       </el-row>
 
       <CreateTrip
-v-if="dialogVisible"
-:form="tripData"
-:title="titleDialog"
-:dialogvisible="dialogVisible"
-                  @created="fetchTrips"
-@closedialog="closeDialog"/>
+        v-if="dialogVisible"
+        :trip="tripId"
+        :title="titleDialog"
+        :dialog-visibility="dialogVisible"
+        @created="fetchTrips"
+        @close-dialog="closeDialog"></CreateTrip>
       <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>
 
       <el-dialog
@@ -38,7 +38,7 @@ v-if="dialogVisible"
               auto>
             </datetime>
           </el-form-item>
-          <el-form-item label="Zones">
+          <el-form-item label="Destination Departure">
             <!-- <el-input v-model="closeTripForm.exiting" placeholder="Please select a zone"></el-input> -->
             <datetime
                 type="datetime"
@@ -148,10 +148,10 @@ v-if="dialogVisible"
                   <el-tooltip effect="light" placement="top">
                     <template slot="content">
                       <el-tag
-v-for="tag in scope.row.tag"
-:key="tag.index"
-type="success"
-size="small"
+                    v-for="tag in scope.row.tag"
+                    :key="tag.index"
+                    type="success"
+                    size="small"
                               style="margin-right: 2px;">
                         {{ tag }}
                       </el-tag>
@@ -231,11 +231,11 @@ size="small"
 <script>
   import CreateTrip from './newtrip'
   import TripDetails from './details'
-  import { tripList, deleteTrip, tripDetails, updateCheckpoint } from '@/api/trips'
+  import { tripList, deleteTrip, updateCheckpoint } from '@/api/trips'
   import TripTags from './tags'
   // import EditTrip from './EditTrip'
   import TripLog from './logs'
-  import { startTrip, tripAutoUpdates } from '../../../api/trips'
+  import { fetchTripDetails, startTrip, tripAutoUpdates } from '../../../api/trips'
   import { Datetime } from 'vue-datetime'
   import 'vue-datetime/dist/vue-datetime.css'
 
@@ -250,12 +250,13 @@ size="small"
     },
     data() {
       return {
+        updateTripId: null,
         dialogVisible: false,
         tagsDialog: false,
         listLoading: false,
         detailsLoading: false,
         titleDialog: 'New Trip',
-        tripData: {},
+        tripId: null,
         tripsList: [],
         tripsListPage: {},
         closingTripDialog: false,
@@ -334,7 +335,7 @@ size="small"
       showMoreDetails(row, expandedRows) {
         // this.$router.push({ name: 'Trip Details', params: { tripid: row.id }})
         row.loading = true
-        tripDetails(row.id).then(response => {
+        fetchTripDetails(row.id).then(response => {
           this.tripsList = this.tripsList.map(function(element) {
             if (element.id === row.id) {
               element = response.data.data
@@ -347,19 +348,16 @@ size="small"
           row.loading = false
         })
       },
-      openDialog() {
-        this.tripData = {
-          intermediates: [],
-          trailers_ids: []
-        }
+      newTrip() {
+        this.tripId = null
         this.titleDialog = 'New Trip'
         this.listLoading = true
         this.dialogVisible = true
       },
       handleUpdate(row) {
         this.tripData = row
+        this.tripId = row.id
         this.titleDialog = 'Edit Trip'
-        this.listLoading = true
         this.dialogVisible = true
       },
       closeDialog() {

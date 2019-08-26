@@ -47,7 +47,7 @@ export function assignTripTags(id, params) {
     data: params
   })
 }
-export function tripDetails(id) {
+export function fetchTripDetails(id) {
   return request({
     url: 'v1/trips/' + id,
     method: 'GET'

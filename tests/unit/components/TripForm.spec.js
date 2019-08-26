@@ -1,13 +1,11 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import NewTrip from '@/views/catalogs/trips/newtrip.vue'
-import TripMock from '@/mock/trips.js'
-import { tripDetails } from '@/api/trips'
-import nock from 'nock'
-import { Select } from 'element-ui'
-
-describe('Newtrip.vue', () => {
+import TripForm from '@/views/catalogs/trips/components/TripForm.vue'
+import { fetchTripDetails } from '../../../src/api/trips'
+//tripform.spec
+describe('EditTrip.vue', () => {
   let wrapper
-  const tripResponse = {
+  const tripDetails = {
+    'data': {
       'id': 32,
       'rp': 'Prueba Salida',
       'folio': null,
@@ -59,7 +57,7 @@ describe('Newtrip.vue', () => {
         'checkpoint_id': 80,
         'at_time': '2019-08-06 22:39:00',
         'exiting': '2019-08-07 22:39:00',
-        'real_at_time': '2019-08-22 07:25:48',
+        'real_at_time': null,
         'real_exiting': '2019-08-22 07:25:48',
         'status': 2
       },
@@ -94,48 +92,38 @@ describe('Newtrip.vue', () => {
         'email_frequency': 1
       }
     }
-
-
-  // beforeEach(() => {
-  //   wrapper = mount(NewTrip, {
-  //     propsData: {
-  //       trip: tripResponse
-  //     }
-  //   })
-  // })
-  //
-  // afterEach(() => {
-  //   wrapper.destroy()
-  //
-  // })
-
-  it('can press a create trip planification button and put loading', () => {
-    const wrapper_create = mount(NewTrip)
-    const submit = wrapper_create.find('#submit')
-    expect(submit.html()).toContain('Create Trip Planification')
-
-    expect(wrapper_create.vm.loadings.general).toBe(false)
-
-    submit.trigger('click')
-
-    // expect(wrapper_create.vm.loadings.general).toBe(true)
-    expect(submit.vm.loading).toBe(true)
-  })
-
-  it('should disable the origin to be modified when real_at_time is set on origin', () => {
-    const wrapper = shallowMount(NewTrip, {
+  }
+  beforeEach(() => {
+    wrapper = shallowMount(TripForm, {
       propsData: {
-        trip: tripResponse
+        tripData: tripDetails
       }
     })
+  })
 
-    const origin_select = wrapper.find('#origin')
+  it('should puede presionar boton de Editar Viaje', () => {
+    wrapper.setProps({ 'mode': 'edit' })
+    // console.log(wrapper.vm.$props)
+    const submit = wrapper.find('#submit')
 
-    console.log(wrapper.vm.locks.origin)
-    expect(origin_select.props('disabled')).toBe(true)
-    wrapper.vm.locks.origin = true
-    console.log(wrapper.vm.locks.origin)
+    expect(submit.html()).toContain('Update Trip')
 
+    expect(wrapper.vm.loading).toBe(false)
 
+    submit.trigger('click')
+    expect(wrapper.vm.loading).toBe(true)
+  })
+
+  it('should populate the fields in the form', function() {
+
+    expect(wrapper.vm.form.rp).toBe(tripDetails.data.rp)
+    console.table(wrapper.vm.tripData)
+    // const rp_field = wrapper.find('#rp')
+
+    // console.table(wrapper.vm.form)
+    // console.table(rp_field.vm.value)
+
+    // expect(rp_field.vm.value).toBe(fetchTripDetails.data.rp)
   })
 })
+

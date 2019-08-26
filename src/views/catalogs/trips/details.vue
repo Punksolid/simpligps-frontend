@@ -31,7 +31,7 @@
             <el-col :xs="12" :sm="4" class="panel">
               <h4 class="panel-header bg-light title"><b>INFO</b></h4>
               <el-col class="panel-content">
-                <h4 class="title"><b>{{ details.origin.name || '' }}</b></h4>
+                <h4 class="title" v-if="details.origin"><b>{{ details.origin.name || '' }}</b></h4>
                 <h4><b>RP:</b> {{ details.rp }}</h4>
                 <h4><b>Trip ID:</b> {{ details.id }}</h4>
               </el-col>
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  import { tripDetails } from '../../../api/trips'
+  import { fetchTripDetails } from '../../../api/trips'
   import Tripline from './Tripline'
 
   export default {
@@ -113,7 +113,7 @@
       methods: {
           fetchTripDetails() {
               this.loading = true
-              tripDetails(this.element).then(resp => {
+              fetchTripDetails(this.element).then(resp => {
                 this.details = resp.data.data
                 this.loading = false
               }).catch(() => {
