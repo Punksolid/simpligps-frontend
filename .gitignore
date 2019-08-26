@@ -20,3 +20,7 @@ config/dev\.env\.js
 \.env
 
 dev\.env
+
+.env.production
+
+.env.staging
