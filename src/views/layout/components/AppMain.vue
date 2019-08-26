@@ -11,11 +11,11 @@
 
 <script>
 
-  import Breadcrumb from '@/components/Breadcrumb'
+  // import Breadcrumb from '@/components/Breadcrumb'
 
   export default {
     name: 'AppMain',
-    components: { Breadcrumb },
+    components: { },
     computed: {
     path() {
        return this.$route.name

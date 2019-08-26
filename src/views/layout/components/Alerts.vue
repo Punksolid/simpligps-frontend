@@ -129,9 +129,6 @@
           event.$emit('attend-alert', this.notification)
         }
       },
-      mounted() {
-        console.log(this.wialon)
-      },
       created() {
         event.$on('activate-alert', (data) => {
           this.notification = data

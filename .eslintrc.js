@@ -22,7 +22,10 @@ module.exports = {
         "allowFirstLine": false
       }
     }],
+    "vue/singleline-html-element-content-newline": "off",
+    "vue/multiline-html-element-content-newline":"off",
     "vue/name-property-casing": ["error", "PascalCase"],
+    "vue/no-v-html": "off",
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
@@ -45,7 +48,7 @@ module.exports = {
     'curly': [2, 'multi-line'],
     'dot-location': [2, 'property'],
     'eol-last': 2,
-    'eqeqeq': [2, 'allow-null'],
+    'eqeqeq': ["error", "always", {"null": "ignore"}],
     'generator-star-spacing': [2, {
       'before': true,
       'after': true
@@ -75,7 +78,7 @@ module.exports = {
     'no-class-assign': 2,
     'no-cond-assign': 2,
     'no-const-assign': 2,
-    'no-control-regex': 2,
+    'no-control-regex': 0,
     'no-delete-var': 2,
     'no-dupe-args': 2,
     'no-dupe-class-members': 2,
@@ -195,4 +198,3 @@ module.exports = {
     'array-bracket-spacing': [2, 'never']
   }
 }
-

@@ -5,7 +5,7 @@
  var  $topbar        = $('.topbar');
  var  $sidebar       = $('.sidebar');
  var  $sidebarFooter = $('.sidebar-footer');
- 
+
 /****  Initiation of Main Functions  ****/
 $(document).ready(function() {
 
@@ -188,7 +188,7 @@ function handleboxedLayout() {
                     setTimeout(function(){
                         $('.page-content').height($(document).height());
                     },100);
-                } 
+                }
             }
             else{
                 if(pageContentHeight < windowHeight) {
@@ -214,10 +214,10 @@ function handleboxedLayout() {
                 }
             }
         }
-        
-        $.backstretch(["../assets/global/images/gallery/bg1.jpg", "../assets/global/images/gallery/bg2.jpg", "../assets/global/images/gallery/bg3.jpg", "../assets/global/images/gallery/bg4.jpg"], 
+
+        $.backstretch(["../assets/global/images/gallery/bg1.jpg", "../assets/global/images/gallery/bg2.jpg", "../assets/global/images/gallery/bg3.jpg", "../assets/global/images/gallery/bg4.jpg"],
         {duration: 4000, fade: 600});
-    
+
     }
 }
 

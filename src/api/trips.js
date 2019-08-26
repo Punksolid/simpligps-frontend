@@ -47,7 +47,7 @@ export function assignTripTags(id, params) {
     data: params
   })
 }
-export function tripDetails(id) {
+export function fetchTripDetails(id) {
   return request({
     url: 'v1/trips/' + id,
     method: 'GET'
@@ -66,7 +66,7 @@ export function updateCheckpoint(id, params) {
         ]);
    */
   return request({
-    url: 'v1/checkpoints/'+ id,
+    url: 'v1/checkpoints/' + id,
     data: params,
     method: 'PATCH'
   })

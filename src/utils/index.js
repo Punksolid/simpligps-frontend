@@ -1,7 +1,13 @@
 /**
- * Created by jiachenpan on 16/11/18.
+ * Created by PanJiaChen on 16/11/18.
  */
 
+/**
+ * Parse the time to string
+ * @param {(Object|string|number)} time
+ * @param {string} cFormat
+ * @returns {string}
+ */
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -40,23 +46,17 @@ export function parseTime(time, cFormat) {
   return time_str
 }
 
-export function param2Obj(url) {
-  const search = url.split('?')[1]
-  if (!search) {
-    return {}
-  }
-  return JSON.parse(
-    '{"' +
-    decodeURIComponent(search)
-      .replace(/"/g, '\\"')
-      .replace(/&/g, '","')
-      .replace(/=/g, '":"') +
-    '"}'
-  )
-}
-
+/**
+ * @param {number} time
+ * @param {string} option
+ * @returns {string}
+ */
 export function formatTime(time, option) {
-  time = +time * 1000
+  if (('' + time).length === 10) {
+    time = parseInt(time) * 1000
+  } else {
+    time = +time
+  }
   const d = new Date(time)
   const now = Date.now()
 
@@ -89,6 +89,22 @@ export function formatTime(time, option) {
   }
 }
 
-export function isExternal(path) {
-  return /^(https?:|mailto:|tel:)/.test(path)
+/**
+ * @param {string} url
+ * @returns {Object}
+ */
+export function param2Obj(url) {
+  const search = url.split('?')[1]
+  if (!search) {
+    return {}
+  }
+  return JSON.parse(
+    '{"' +
+      decodeURIComponent(search)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"')
+        .replace(/\+/g, ' ') +
+      '"}'
+  )
 }

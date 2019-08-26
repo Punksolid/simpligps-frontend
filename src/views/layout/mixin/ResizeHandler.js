@@ -1,8 +1,7 @@
 import store from '@/store'
 
 const { body } = document
-const WIDTH = 1024
-const RATIO = 3
+const WIDTH = 992 // refer to Bootstrap's responsive design
 
 export default {
   watch: {
@@ -13,25 +12,29 @@ export default {
     }
   },
   beforeMount() {
-    window.addEventListener('resize', this.resizeHandler)
+    window.addEventListener('resize', this.$_resizeHandler)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.$_resizeHandler)
   },
   mounted() {
-    const isMobile = this.isMobile()
+    const isMobile = this.$_isMobile()
     if (isMobile) {
-      store.dispatch('ToggleDevice', 'mobile')
+      store.dispatch('ToggleDevice', 'mobile', {root: true})
       store.dispatch('CloseSideBar', { withoutAnimation: true })
     }
   },
   methods: {
-    isMobile() {
+    // use $_ for mixins properties
+    // https://vuejs.org/v2/style-guide/index.html#Private-property-names-essential
+    $_isMobile() {
       const rect = body.getBoundingClientRect()
-      return rect.width - RATIO < WIDTH
+      return rect.width - 1 < WIDTH
     },
-    resizeHandler() {
+    $_resizeHandler() {
       if (!document.hidden) {
-        const isMobile = this.isMobile()
+        const isMobile = this.$_isMobile()
         store.dispatch('ToggleDevice', isMobile ? 'mobile' : 'desktop')
-
         if (isMobile) {
           store.dispatch('CloseSideBar', { withoutAnimation: true })
         }
