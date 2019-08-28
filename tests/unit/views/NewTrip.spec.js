@@ -123,19 +123,14 @@ describe('Newtrip.vue', () => {
   })
 
   it('should disable the origin to be modified when real_at_time is set on origin', () => {
-    const wrapper = shallowMount(NewTrip, {
+    const wrapper = mount(NewTrip, {
       propsData: {
         trip: tripResponse
       }
     })
 
-    const origin_select = wrapper.find('#origin')
 
-    console.log(wrapper.vm.locks.origin)
-    expect(origin_select.props('disabled')).toBe(true)
-    wrapper.vm.locks.origin = true
-    console.log(wrapper.vm.locks.origin)
-
+    expect(wrapper.vm.locks.origin).toBe(true)
 
   })
 })
