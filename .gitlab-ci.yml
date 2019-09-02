@@ -3,7 +3,7 @@ build site:
   stage: test
   script:
     - npm install --progress=false
-    - npm run test:unit
+    - npm run test:ci
   artifacts:
     expire_in: 1 week
     paths:
