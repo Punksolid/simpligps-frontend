@@ -7,7 +7,7 @@
     :before-close="handleClose">
 
     <el-form
-      v-loading="loadings.general"
+      :loading="loadings.general"
       ref="form"
       :model="form"
       label-width="155px">
@@ -100,49 +100,69 @@
       </el-form-item>
 
       <el-divider>Intermediates</el-divider>
-      <div v-for="(intermediate, index) in intermediates" :key="intermediate.id">
-        <el-form-item label="Intermediates" class="intermediates">
-          <div class="dis-flex">
-            <el-select
-              :disabled="locks.intermediates.includes(intermediate.checkpoint_id)"
-              v-model="intermediate.place_id"
-              filterable
-              remote
-              :remote-method="getSearchIntermediates"
-              @change="restorePlaces()"
-              :loading="loadings.intermediates"
-              placeholder="Intermediates">
-              <el-option
-                v-for="(place, index) in places"
-                :key="`${index}-${place.id}`"
-                :label="place.name"
-                :value="place.id">
-              </el-option>
-            </el-select>
-            <datetime
-              type="datetime"
-              placeholder="Check in"
-              v-model="intermediate.at_time"
-              :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-              auto/>
-            <datetime
-              type="datetime"
-              placeholder="Departure Time"
-              v-model="intermediate.exiting"
-              :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
-              auto/>
-            <el-button type="danger" plain @click="removeIntermediateBlock(index)" class="el-icon-remove" size="mini"/>
-            <el-button
-              type="success"
-              plain
-              v-if="index == Object.keys(intermediates).length - 1"
-                                     @click="addIntermediateBlock()"
-              class="el-icon-circle-plus"
-              size="mini"></el-button>
-          </div>
-        </el-form-item>
-      </div>
+      <template v-if="form.intermediates.length > 0">
+        <div class="intermediates-fields" v-for="(intermediate, index) in form.intermediates" :key="intermediate.id">
+          <el-form-item label="Intermediates" class="intermediates">
+            <div class="dis-flex">
+              <el-select
+                :disabled="locks.intermediates.includes(intermediate.checkpoint_id)"
+                v-model="intermediate.place_id"
+                filterable
+                remote
+                :remote-method="getSearchIntermediates"
+                @change="restorePlaces()"
+                :loading="loadings.intermediates"
+                placeholder="Intermediates">
+                <el-option
+                  v-for="(place, index) in places"
+                  :key="`${index}-${place.id}`"
+                  :label="place.name"
+                  :value="place.id">
+                </el-option>
+              </el-select>
+              <datetime
+                type="datetime"
+                placeholder="Check in"
+                v-model="intermediate.at_time"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                auto/>
+              <datetime
+                type="datetime"
+                placeholder="Departure Time"
+                v-model="intermediate.exiting"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                auto/>
+              <el-button
+                :disabled="locks.intermediates.includes(intermediate.checkpoint_id)"
+                type="danger"
+                plain
+                @click="removeIntermediateBlock(index)"
+                class="el-icon-remove"
+                size="mini"></el-button>
+              <el-button
+                type="success"
+                plain
+                v-if="index == Object.keys(form.intermediates).length - 1"
+                @click="addIntermediateBlock()"
+                class="el-icon-circle-plus"
+                size="mini"></el-button>
+            </div>
+          </el-form-item>
+        </div>
+      </template>
 
+      <div v-if="form.intermediates.length === 0">
+        <el-form-item>
+          <el-button
+            icon="el-icon-plus"
+            type="primary"
+            :plain="true"
+            :circle="true"
+            id="add-intermediate"
+            @click="addIntermediateBlock"
+          ></el-button>
+        </el-form-item>
+        </div>
       <el-divider></el-divider>
       <el-form-item label="Destination *">
         <div class="inline-inputs dis-flex">
@@ -331,7 +351,6 @@
           trucks: false
         },
         places: [{}],
-        // intermediates: '',
         destinations: '',
         clients: [],
         operators: [],
@@ -339,13 +358,8 @@
         trucks: [],
         carriers: [],
         trailers: [],
-        intermediates: [{
-          id: null,
-          place_id: null,
-          at_time: null,
-          exiting: null
-        }],
         form: {
+          intermediates: [],
           georoute_ref: null,
           origin_id: null,
           carrier_id: null,
@@ -356,7 +370,7 @@
     methods: {
       onSubmit() {
         this.loadings.general = true
-        this.form.intermediates = this.intermediates
+
         if (!this.editMode) {
           createTrip(this.form).then(response => {
             this.$message.success('Trip ID: ' + response.data.data.id + ' created.')
@@ -471,13 +485,24 @@
         })
       },
       addIntermediateBlock() {
-        this.intermediates.push({
-          place_id: null,
-          at_time: null
-        })
+        if (this.form.intermediates.length === 0) {
+          this.form.intermediates = Object.assign([], this.form.intermediates, [{
+            id: null,
+            place_id: null,
+            at_time: null,
+            exiting: null
+          }])
+        } else {
+          this.form.intermediates.push({
+            id: null,
+            place_id: null,
+            at_time: null,
+            exiting: null
+          })
+        }
       },
       removeIntermediateBlock(id) {
-        this.intermediates.splice(id, 1)
+        this.form.intermediates.splice(id, 1)
       },
       isCreation() {
         if (this.trip === null) {
@@ -528,9 +553,12 @@
         this.form.destination_id = this.resource.destination.id
         this.form.scheduled_arrival = this.dateFormat(this.resource.destination.at_time)
         this.form.scheduled_unload = this.dateFormat(this.resource.destination.exiting)
-        this.intermediates = this.resource.intermediates
 
-        this.form.intermediates = this.resource.intermediates.map(item => {
+        // this.form.intermediates.push(this.resource.intermediates)
+
+        this.form.intermediates = Object.assign(this.form.intermediates, this.resource.intermediates)
+
+        this.form.intermediates = this.form.intermediates.map(item => {
           this.places.push({
             id: item.id,
             name: item.name
@@ -554,30 +582,29 @@
         this.form.trailers_ids = this.resource.trailers.map((trailer) => {
           return trailer.id
         })
-
       },
       prepareEditMode: function() {
         if (this.isCreation()) {
           return
         }
+
         this.editMode = true
         if (typeof this.trip === 'number') {
           this.loadings.general = true
-          fetchTripDetails(this.trip).then(response => {
 
+          fetchTripDetails(this.trip).then(response => {
             this.resource = response.data.data
+
             this.prepareFormData()
             this.lockCheckpoints()
-
           }).catch(() => this.$emit('close-form'))
             .finally(() => {
               this.loadings.general = false
             })
         } else {
-          // this.resource = this.trip
+          this.resource = this.trip
           this.prepareFormData()
           this.lockCheckpoints()
-
         }
       },
       dateFormat(time) {
