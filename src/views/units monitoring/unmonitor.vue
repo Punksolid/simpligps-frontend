@@ -90,7 +90,7 @@
                         <td class="text-right"><a class="edit btn btn-sm btn-default" href="javascript:;"><i class="icon-note"></i></a>  <a class="delete btn btn-sm btn-danger" href="javascript:;"><i class="icons-office-52"></i></a>
                         </td>
                       </tr></tbody>
-                  </table><div class="row"><div class="col-md-6"><div class="dataTables_info" id="table-editable_info" role="status" aria-live="polite">Showing 1 to 12 of 12 entries</div></div><div class="col-md-6"></div></div></div>
+                  </table><div class="row"><div class="col-md-6"><div class="dataTables_info" id="table-editable_info" role="status" aria-live="polite">Showing 1 to 12 of 12 entries</div></div><div class="col-md-6"></div></div>
 </div>
  </template>
 

@@ -1,8 +1,9 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
 import NewTrip from '@/views/catalogs/trips/newtrip.vue'
 import TripMock from '@/mock/trips.js'
 import nock from 'nock'
-import { Select } from 'element-ui'
+import { Select, use } from 'element-ui'
+import ElementUI from 'element-ui'
 
 describe('Newtrip.vue', () => {
   let wrapper
@@ -142,6 +143,19 @@ describe('Newtrip.vue', () => {
     wrapper.destroy()
 
   })
+  it('should edit any field and clic submit', function() {
+    const localVue = createLocalVue()
+    localVue.use(ElementUI)
+    const wrapper_shallow = shallowMount(NewTrip,  {
+      propsData: {
+        trip: tripResponse
+      }
+    })
+
+    wrapper_shallow.vm.form.rp = 'RP CHANGED'
+
+    expect(wrapper_shallow.vm.$data.form.rp).toBe('RP CHANGED')
+  })
 
   it('can press a create trip planification button and put loading', () => {
     const wrapper_create = mount(NewTrip)
@@ -184,9 +198,7 @@ describe('Newtrip.vue', () => {
         trip: tripResponse
       }
     })
-    console.log(wrapper_stub.find('.intermediates-fields').find(Select).vm.value)
     expect(wrapper_stub.find('.el-icon-remove').exists()).toBeTruthy()
     expect(wrapper_stub.vm.form.intermediates[0].checkpoint_id).toEqual(tripResponse.intermediates[0].checkpoint_id)
-
   })
 })

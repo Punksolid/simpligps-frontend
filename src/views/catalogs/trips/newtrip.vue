@@ -12,10 +12,10 @@
       :model="form"
       label-width="155px">
       <el-form-item label="Payment Requirement">
-        <el-input v-model="form.rp" placeholder="RP"/>
+        <el-input id="rp" v-model="form.rp" placeholder="RP"></el-input>
       </el-form-item>
       <el-form-item label="Invoice">
-        <el-input v-model="form.invoice" placeholder="Invoice"/>
+        <el-input v-model="form.invoice" placeholder="Invoice"></el-input>
       </el-form-item>
       <el-form-item label="Client *">
         <el-select
@@ -359,11 +359,22 @@
         carriers: [],
         trailers: [],
         form: {
+          carrier_id: '',
+          client_id: '',
+          destination_id: '',
+          georoute_ref: '',
           intermediates: [],
-          georoute_ref: null,
+          invoice: '',
+          mon_type: '',
+          operator_id: '',
           origin_id: null,
-          carrier_id: null,
-          trailers_ids: []
+          rp: '',
+          scheduled_arrival: '',
+          scheduled_departure: '',
+          scheduled_load: '',
+          scheduled_unload: '',
+          trailers_ids: [],
+          truck_id: ''
         }
       }
     },

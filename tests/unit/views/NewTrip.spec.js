@@ -11,7 +11,7 @@ describe('NewTrip.vue', () => {
   it('can show form with empty fields', () => {
       wrapper = mount(NewTrip)
 
-      expect(wrapper.vm.$data.form.georoute_ref).toBeNull()
+      expect(wrapper.vm.$data.form.georoute_ref).toBe('')
       expect(wrapper.vm.$data.form.origin_id).toBeNull()
   })
 
@@ -19,7 +19,6 @@ describe('NewTrip.vue', () => {
     wrapper = shallowMount(NewTrip)
     const plus_button = wrapper.find('#add-intermediate')
     expect(plus_button.exists()).toBe(true)
-
   })
 
   it('should not show intermediates fields by default', function() {
