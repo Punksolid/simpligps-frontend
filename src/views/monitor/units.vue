@@ -189,7 +189,7 @@
          var result = this.unitsList.find(item => item.id === this.expandRowKeys[0])
          this.deviceDataUpdate(result)
        }
-      }.bind(this), 1 * 60 * 1000) // First number is equal to Minutes.
+      }.bind(this), 15 * 60 * 1000) // First number is equal to Minutes.
     }
   }
 </script>

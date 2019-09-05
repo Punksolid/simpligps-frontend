@@ -29,9 +29,9 @@
         :trip="tripId"
         :title="titleDialog"
         :dialog-visibility="dialogVisible"
-        @created="fetchTrips"
+        @created="getTripList"
         @close-dialog="closeDialog"></CreateTrip>
-      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" :tags="tagList" @close="fetchTrips"/>
+      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" :tags="tagList" @close="getTripList"/>
 
       <el-dialog
         title="Closing Trip"
@@ -244,14 +244,15 @@
 <script>
   import CreateTrip from './newtrip'
   import TripDetails from './details'
-  import { tripList, deleteTrip, updateCheckpoint } from '@/api/trips'
+  import { fetchTripList, deleteTrip, updateCheckpoint } from '@/api/trips'
   import TripTags from './tags'
   import { fetchCreatedTags } from '../../../api/general'
   // import EditTrip from './EditTrip'
   import TripLog from './logs'
   import { fetchTripDetails, startTrip, tripAutoUpdates } from '../../../api/trips'
   import { Datetime } from 'vue-datetime'
-  import 'vue-datetime/dist/vue-datetime.css'
+  import { Dialog, Button, Table, Select, TimeSelect, Dropdown , TableColumn, Pagination, Row, Col } from 'element-ui'
+
 
   export default {
     name: 'TripList',
@@ -260,7 +261,15 @@
       TripTags,
       CreateTrip,
       TripDetails,
-      datetime: Datetime
+      datetime: Datetime,
+      'el-row': Row,
+      'el-col': Col,
+      'el-button': Button,
+      'el-select': Dropdown,
+      'el-dialog': Dialog,
+      'el-pagination': Pagination,
+      'el-table-column': TableColumn,
+      'el-table': Table
     },
     data() {
       return {
@@ -273,14 +282,17 @@
         tripId: null,
         tripsList: [],
         tagList: [],
-            filterTags: [],
-            tripsListPage: {},
+        filterTags: [],
+        tripsListPage: {
+          current_page: 1
+        },
         closingTripDialog: false,
         checkpointToUpdateId: 0,
         closeTripForm: {
           real_at_time: '',
           real_exiting: ''
-        }
+        },
+
       }
     },
     methods: {
@@ -290,13 +302,9 @@
         this.open()
       },
       setTimesAndCloseTrip() {
-        console.log('setTimesAndCloseTrip')
+
         updateCheckpoint(this.checkpointToUpdateId, this.closeTripForm).then(response => {
-          console.log('Done')
-          console.log(response)
-        }).catch((err) => {
-            console.log('an error ocurred')
-            console.log(err)
+          // @todo update checkpoint
         })
           this.closingTripDialog = false
       },
@@ -313,10 +321,9 @@
 
         return true
       },
-      fetchTrips() {
-        this.closeDialog()
+      getTripList() {
         this.listLoading = true
-        tripList(this.tripsList).then(response => {
+        fetchTripList(this.tripsListPage).then(response => {
           this.tripsList = response.data.data
           this.tripsListPage = response.data.meta
           this.tripsListPage.page = response.data.meta.current_page
@@ -407,7 +414,7 @@
         }).then(() => {
           deleteTrip(tripData.id).then(response => {
             this.$message.error('Trip ID: ' + tripData.id + ' deleted.')
-            this.fetchTrips()
+            this.getTripList()
           }).catch(() => {
             this.listLoading = false
           })
@@ -417,11 +424,11 @@
       },
       handleCurrentChange(val) {
         this.tripsListPage.page = val
-        this.fetchTrips()
+        this.getTripList()
       }
     },
-    created() {
-      this.fetchTrips()
+    mounted() {
+      this.getTripList()
       this.getTags()
       /* if (this.$route.name === 'Trips') {
         this.fetchTrips()

@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function tripList(params) {
+export function fetchTripList(params) {
   return request({
     url: 'v1/trips',
     method: 'GET',
-    data: params
+    params: params
   })
 }
 export function createTrip(params) {
