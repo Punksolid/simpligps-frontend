@@ -8,17 +8,16 @@
     <div class="t-center">
     <span class="t-center">Select or create tag(s) for Trip ID: {{ data.id }} </span>
     <el-select
-      v-model="tags"
+      v-model="tagList.tags"
       multiple
       filterable
       allow-create
       default-first-option
       placeholder="Choose tags for your Trip"
-      :loading="fetching"
       style="width: 100%">
       <el-option
-        v-for="tag in CurrentTags"
-        :key="tag.id"
+        v-for="tag in tags"
+        :key="tag.index"
         :label="tag.name.en"
         :value="tag.name.en">
       </el-option>
@@ -32,7 +31,6 @@
 
 <script>
   import { assignTripTags } from '../../../api/trips'
-  import { fetchCreatedTags } from '../../../api/general'
 
   export default {
       name: 'TripTags',
@@ -44,43 +42,36 @@
         data: {
           type: Object,
           required: true
+        },
+        tags: {
+            type: Array,
+            required: true
         }
       },
       data() {
         return {
           fetching: false,
           loading: false,
-          tags: [],
-          CurrentTags: []
+          tagList: {
+              tags: []
+          }
         }
       },
       methods: {
       assignTag() {
         this.loading = true
-        assignTripTags(this.data.id, this.tags).then(resp => {
+        assignTripTags(this.data.id, this.tagList).then(resp => {
           this.$emit('close')
           this.$message.success('Tags assigned to Trip: ' + this.data.id)
         }).catch(() => {
-          this.$message.error('Error assigning tags, please try again.')
+          // this.$message.error('Error assigning tags, please try again.')
         }).finally(() => {
           this.loading = false
         })
       },
-      getCreatedTags() {
-        this.fetching = true
-        fetchCreatedTags().then(resp => {
-          this.CurrentTags = resp.data.data
-        }).catch(() => {})
-          .finally(() => {
-            this.fetching = false
-          })
-      },
       handleClose() {
           this.$emit('close')
       }
-    },
-    created() {
-        this.getCreatedTags()
     }
   }
 </script>

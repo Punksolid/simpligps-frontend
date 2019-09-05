@@ -6,8 +6,21 @@
         <el-col :span="4" class="m-b-5">
           <el-button type="primary" @click="newTrip" icon="fas fa-route p-r-10">New Trip</el-button>
         </el-col>
-        <el-col :xl="20" :sm="20" :xs="24">
-          <!-- Right Side for Search Options -->
+        <el-col :span="20" style="text-align: right">
+          <el-select
+            v-model="filterTags"
+            :loading="fetching"
+            multiple
+            collapse-tags
+            style="margin-left: 20px;"
+            placeholder="Filter by Tags">
+            <el-option
+              v-for="tag in tagList"
+              :key="tag.id"
+              :label="tag.name.en"
+              :value="tag.name.en">
+            </el-option>
+          </el-select>
         </el-col>
       </el-row>
 
@@ -18,7 +31,7 @@
         :dialog-visibility="dialogVisible"
         @created="fetchTrips"
         @close-dialog="closeDialog"></CreateTrip>
-      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" @close="closeDialog"/>
+      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" :tags="tagList" @close="fetchTrips"/>
 
       <el-dialog
         title="Closing Trip"
@@ -125,7 +138,7 @@
             <el-table-column
               prop="scheduled_load"
               label="Scheduled Load"
-              min-width="140px"
+              min-width="160px"
             >
             </el-table-column>
             <el-table-column
@@ -136,32 +149,32 @@
             <el-table-column
               prop="scheduled_arrival"
               label="Scheduled Arrival"
-              min-width="140px">
+              min-width="160px">
             </el-table-column>
 
             <el-table-column
               prop="tag"
               label="TAG"
               width="100px">
-              <template slot-scope="scope" v-if="scope.row.tag">
-                <template v-if="scope.row.tag.length > 1">
+              <template slot-scope="scope" v-if="scope.row.tags">
+                <template v-if="scope.row.tags.length > 1">
                   <el-tooltip effect="light" placement="top">
                     <template slot="content">
                       <el-tag
-                    v-for="tag in scope.row.tag"
+                    v-for="tag in scope.row.tags"
                     :key="tag.index"
                     type="success"
                     size="small"
                               style="margin-right: 2px;">
-                        {{ tag }}
+                        {{ tag.slug }}
                       </el-tag>
                     </template>
                     <el-button size="mini" type="success" plain>TAGS</el-button>
                   </el-tooltip>
                 </template>
 
-                <template v-else>
-                  <el-tag type="success">{{ scope.row.tag[0] }}</el-tag>
+                <template v-else-if="scope.row.tags[0]">
+                  <el-tag type="success">{{ scope.row.tags[0].slug }}</el-tag>
                 </template>
 
               </template>
@@ -233,6 +246,7 @@
   import TripDetails from './details'
   import { tripList, deleteTrip, updateCheckpoint } from '@/api/trips'
   import TripTags from './tags'
+  import { fetchCreatedTags } from '../../../api/general'
   // import EditTrip from './EditTrip'
   import TripLog from './logs'
   import { fetchTripDetails, startTrip, tripAutoUpdates } from '../../../api/trips'
@@ -258,7 +272,9 @@
         titleDialog: 'New Trip',
         tripId: null,
         tripsList: [],
-        tripsListPage: {},
+        tagList: [],
+            filterTags: [],
+            tripsListPage: {},
         closingTripDialog: false,
         checkpointToUpdateId: 0,
         closeTripForm: {
@@ -309,7 +325,15 @@
           this.listLoading = false
         })
       },
-      handleStart(id) {
+      getTags() {
+            this.fetching = true
+            fetchCreatedTags().then(resp => {
+                this.tagList = resp.data.data
+            }).catch(() => {})
+                .finally(() => {
+                    this.fetching = false
+                })
+          },handleStart(id) {
         this.listLoading = true
         const updates = { enable_automatic_updates: true }
         startTrip(id, updates).then(resp => {
@@ -398,6 +422,7 @@
     },
     created() {
       this.fetchTrips()
+      this.getTags()
       /* if (this.$route.name === 'Trips') {
         this.fetchTrips()
       } */
