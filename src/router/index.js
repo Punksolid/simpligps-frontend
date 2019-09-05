@@ -213,7 +213,7 @@ export const tenantProtectedRoutes = [
     children: [
       {
         path: '',
-        component: () => import('@/views/general_report/genreport'),
+        component: () => import('@/views/reports/GeneralReportView'),
         name: 'General report',
         meta: { title: 'General report', icon: 'icon-bar-chart', noCache: true }
       }

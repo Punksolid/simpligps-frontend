@@ -273,7 +273,6 @@
   import { Datetime } from 'vue-datetime'
   import { Dialog, Button, Form, FormItem, Input, Select, Divider, Option } from 'element-ui'
   import { fetchTripDetails } from '../../../api/trips'
-  // import 'vue-datetime/dist/vue-datetime.css' //los import de css al parecer no van aquí
 
   export default {
     name: 'CreateTrip',
