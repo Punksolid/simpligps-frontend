@@ -16,8 +16,8 @@
           />
         </el-form-item>
 
-        <el-form-item id="monitoring-type" label="Monitoring Type">
-          <TagsSelect v-model="form.monitoringType" placeholder="No filter"/>
+        <el-form-item id="monitoring-type" label="Tag">
+          <TagsSelect v-model="form.tag" placeholder="No filter"/>
         </el-form-item>
 
           <el-form-item id="origin-place" label="Origin">
@@ -49,7 +49,7 @@ import { DatePicker, Button, Dropdown, Form, FormItem } from 'element-ui'
 import TagsSelect from '../../components/Forms/TagsSelect'
 import PlacesRemoteSearch from '../../components/Forms/PlacesRemoteSearch'
 import CarrierRemoteSearch from '../../components/Forms/CarrierRemoteSearch'
-import { fetchTripDetails, fetchTripList } from '../../api/trips'
+import {fetchTripDetails, fetchTripList, fetchTripsReport} from '../../api/trips'
 
 export default {
   name: 'GeneralReportView',
@@ -62,8 +62,9 @@ export default {
     return {
       form: {
         intervalTime: [
-          new Date(2020, 9, 10, 8, 40),
-          new Date(2021, 9, 10, 9, 40)], // start and date in the same field
+          '',
+          ''
+        ], // start and date in the same field
         monitoringType: '',
         originPlaceId: '',
         destinationPlaceId: '',
@@ -75,9 +76,25 @@ export default {
   methods: {
     getReport() {
       this.loading = true
-      fetchTripList(this.form).then(response => {
-        console.log(this.form)
-      }).finally(() => {
+
+      fetchTripsReport({
+          start_date: (0 in this.form.intervalTime)? this.form.intervalTime[0] : null,
+          end_date: (1 in this.form.intervalTime)? this.form.intervalTime[1] : null,
+          origin_id: this.form.originPlaceId,
+          destination_id: this.form.destinationPlaceId,
+          carrier_id: this.form.carrierId,
+          tag: this.form.tag
+      }).then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'file.xls'); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+      }).catch((error) => {
+          this.$message.error('There are no trips with the given criteria');
+      })
+          .finally(() => {
         this.loading = false
       })
     }

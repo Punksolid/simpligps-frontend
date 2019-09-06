@@ -71,4 +71,12 @@ export function updateCheckpoint(id, params) {
     method: 'PATCH'
   })
 }
+export function fetchTripsReport(params) {
+  return request({
+    url: 'v1/reports',
+    params: params,
+    method: 'POST',
+    responseType: 'blob'
+  })
+}
 

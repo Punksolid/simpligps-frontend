@@ -39,7 +39,7 @@
     methods: {
       getPlaces(search = null) {
         this.loading = false
-        fetchCarriers({ name: search }).then((response) => {
+        fetchCarriers({ carrier_name: search }).then((response) => {
           this.carriers = response.data.data.map((carrier) => {
             return {
               label: carrier.carrier_name,
