@@ -15,14 +15,17 @@
           </el-col>
         </el-col>
       </el-col>
+    </el-tab-pane>
 
-      <el-col class="panel" v-if="! scope.loading">
-        <div class="panel-header bg-primary dis-flex">
-          <h3><i class="fas fa-map-marker-alt"/>
-            <span v-if="scope.position.lat"><strong>Position of Device:</strong> {{scope.name}} (ID: {{scope.id}})</span>
-            <span v-else>Device Not Assigned</span>
-          </h3>
-        </div>
+    <el-tab-pane>
+      <span slot="label"><i class="fas fa-map-marker-alt"/> Map</span>
+        <el-col class="panel" v-if="! scope.loading">
+          <div class="panel-header bg-primary dis-flex">
+            <h3><i class="fas fa-map-marker-alt"/>
+              <span v-if="scope.position.lat"><strong>Position of Device:</strong> {{scope.name}} (ID: {{scope.id}})</span>
+              <span v-else>Device Not Assigned</span>
+            </h3>
+          </div>
         <el-col class="panel-body bg-gray-light">
           <el-col v-if="scope.position.lat">
             <GmapMap
@@ -43,14 +46,20 @@
         </el-col>
       </el-col>
     </el-tab-pane>
+
     <el-tab-pane>
       <span slot="label"><i class="el-icon-date"></i> Logs</span>
       <Logs :element="scope.id" />
     </el-tab-pane>
-    <el-tab-pane>
+    <el-tab-pane v-if="scope.truck">
       <span slot="label"><i class="fas fa-truck"></i> Truck</span>
       <el-col class="panel" v-if="! scope.loading">
-        <div class="panel-header bg-primary"><h3><i class="fas fa-truck"/><strong>Truck plate:</strong> {{scope.truck.plate || ''}} (ID: {{scope.truck.id}})</h3></div>
+        <div class="panel-header bg-primary">
+          <h3><i class="fas fa-truck"/>
+            <span v-if="scope.truck"><strong>Truck plate:</strong> {{scope.truck.plate || ''}} (ID: {{scope.truck.id}})</span>
+            <span v-else>No Truck Data</span>
+          </h3>
+        </div>
         <el-col class="panel-body p-10 bg-gray-light">
           <el-col :xs="24" :sm="12">
             <p><b>BRAND:</b> {{scope.truck.brand}}</p>

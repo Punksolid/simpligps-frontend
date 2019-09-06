@@ -1,11 +1,11 @@
 <template>
-  <div class="block" style="background-color: #fff">
-    <div style="padding: 30px">
-      <el-form v-model="form">
-        <div class="block">
-          <span class="demonstration">Date Range</span>
+  <el-row>
+    <el-col :xs="24" :sm="17" class="panel p-15">
+      <el-form v-model="form" label-width="140px">
+
+        <el-form-item label="Date Range">
           <el-date-picker
-            align="right"
+            align="left"
             end-placeholder="End date"
             range-separator="To"
             start-placeholder="Start date"
@@ -13,45 +13,35 @@
             v-model="form.intervalTime"
             format="yyyy-MM-dd hh:mm"
             value-format="yyyy-MM-dd hh:mm"
-          >
-          </el-date-picker>
-        </div>
+          />
+        </el-form-item>
 
-        <div style="margin-top: 30px">
-          <el-form-item id="monitoring-type" label="Monitoring Type">
+        <el-form-item id="monitoring-type" label="Monitoring Type">
+          <TagsSelect v-model="form.monitoringType" placeholder="No filter"/>
+        </el-form-item>
 
-            <TagsSelect v-model="form.monitoringType" placeholder="No filter"/>
-          </el-form-item>
-        </div>
-
-        <div style="margin-top: 30px">
           <el-form-item id="origin-place" label="Origin">
             <PlacesRemoteSearch v-model="form.originPlaceId"/>
           </el-form-item>
-        </div>
-        <div style="margin-top: 30px">
+
           <el-form-item id="destination-place" label="Destination">
             <PlacesRemoteSearch v-model="form.destinationPlaceId"/>
           </el-form-item>
-        </div>
 
-        <div style="margin-top: 30px">
           <el-form-item id="carrier" label="Carrier">
             <CarrierRemoteSearch v-model="form.carrierId"></CarrierRemoteSearch>
           </el-form-item>
-        </div>
-        <div style="margin-top: 30px">
 
-          <el-button
-            id="generate"
-            type="success"
-            v-loading="loading"
-            @click="getReport()">Download</el-button
-          >
-        </div>
-      </el-form>
-    </div>
-  </div>
+    </el-form>
+      <div class="text-center">
+        <el-button
+          id="generate"
+          type="success"
+          :loading="loading"
+          @click="getReport">Download</el-button>
+      </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
@@ -66,11 +56,7 @@ export default {
   components: {
     CarrierRemoteSearch,
     PlacesRemoteSearch,
-    TagsSelect,
-    'el-date-picker': DatePicker,
-    'el-button': Button,
-    'el-form': Form,
-    'el-form-item': FormItem
+    TagsSelect
   },
   data() {
     return {
@@ -98,3 +84,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .el-select {
+    width: 100%;
+  }
+</style>

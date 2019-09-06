@@ -151,8 +151,7 @@
         </div>
       </template>
 
-      <div v-if="form.intermediates.length === 0">
-        <el-form-item>
+      <div v-if="form.intermediates.length === 0" class="text-center">
           <el-button
             icon="el-icon-plus"
             type="primary"
@@ -161,7 +160,6 @@
             id="add-intermediate"
             @click="addIntermediateBlock"
           ></el-button>
-        </el-form-item>
         </div>
       <el-divider></el-divider>
       <el-form-item label="Destination *">

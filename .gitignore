@@ -24,3 +24,5 @@ dev\.env
 .env.production
 
 .env.staging
+
+\.env\.development
