@@ -71,7 +71,6 @@
         <el-col :xs="24" :sm="3"><div class="finish-colour"></div><span>Past Position</span></el-col>
         <el-col :xs="24" :sm="5"><div class="waiting-colour"></div><span>Waiting</span></el-col>
       </el-col>
-      <el-button class="m-10" type="primary" @click="currentPosition">Check Position</el-button>
     </el-row>
 </template>
 <script>

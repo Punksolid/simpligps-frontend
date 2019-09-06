@@ -98,7 +98,7 @@
             <el-table-column
               prop="id"
               label="ID"
-              width="50px">
+              min-width="100px">
             </el-table-column>
             <el-table-column
               prop="rp"
@@ -182,7 +182,7 @@
 
             <el-table-column
               label="Operations"
-              width="180px">
+              width="230px">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -261,15 +261,7 @@
       TripTags,
       CreateTrip,
       TripDetails,
-      datetime: Datetime,
-      'el-row': Row,
-      'el-col': Col,
-      'el-button': Button,
-      'el-select': Dropdown,
-      'el-dialog': Dialog,
-      'el-pagination': Pagination,
-      'el-table-column': TableColumn,
-      'el-table': Table
+      datetime: Datetime
     },
     data() {
       return {
@@ -282,6 +274,7 @@
         tripId: null,
         tripsList: [],
         tagList: [],
+        fetching: false,
         filterTags: [],
         tripsListPage: {
           current_page: 1
@@ -291,8 +284,7 @@
         closeTripForm: {
           real_at_time: '',
           real_exiting: ''
-        },
-
+        }
       }
     },
     methods: {

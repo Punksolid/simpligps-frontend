@@ -146,14 +146,12 @@
           this.devicesList = this.devicesList.map(function(element) {
             if (element.id === row.id) {
               element = response.data.data
-              element.position = {
-                lat: 24.807197,
-                lng: -107.397143
-              }
-                /** element.position = {
+              if (element.position.lat) {
+                element.position = {
                   lat: element.position.lat,
                   lng: element.position.lon
-                } **/
+                }
+              }
               element.loading = false
               return element
             }
