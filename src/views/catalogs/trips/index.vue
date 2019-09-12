@@ -6,22 +6,12 @@
         <el-col :span="4" class="m-b-5">
           <el-button type="primary" @click="newTrip" icon="fas fa-route p-r-10">New Trip</el-button>
         </el-col>
-        <el-col :span="20" style="text-align: right">
-          <el-select
-            v-model="filterTags"
-            :loading="fetching"
-            multiple
-            collapse-tags
-            style="margin-left: 20px;"
-            placeholder="Filter by Tags">
-            <el-option
-              v-for="tag in tagList"
-              :key="tag.id"
-              :label="tag.name.en"
-              :value="tag.name.en">
-            </el-option>
-          </el-select>
+        <el-col :span="4" class="m-b-12">
+          <TripImportButton
+          @close-success="getTripList"
+          />
         </el-col>
+
       </el-row>
 
       <CreateTrip
@@ -31,7 +21,7 @@
         :dialog-visibility="dialogVisible"
         @created="getTripList"
         @close-dialog="closeDialog"></CreateTrip>
-      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" :tags="tagList" @close="getTripList"/>
+      <TagsDialog v-if="tagsDialog" :visible.sync="tagsDialog" :tripId="tripData.id" :tripTagsSelected="tripData.tags" @close="getTripList"/>
 
       <el-dialog
         title="Closing Trip"
@@ -191,7 +181,6 @@
                   icon="fas fa-shipping-fast">
                 </el-button>
                 <el-button
-                  class="action-buttons"
                   size="mini"
                   @click="handleTags(scope.row)"
                   icon="fas fa-hashtag">
@@ -245,7 +234,7 @@
   import CreateTrip from './newtrip'
   import TripDetails from './details'
   import { fetchTripList, deleteTrip, updateCheckpoint } from '@/api/trips'
-  import TripTags from './tags'
+  import TagsDialog from './components/TagsDialog'
   import { fetchCreatedTags } from '../../../api/general'
   // import EditTrip from './EditTrip'
   import TripLog from './logs'
@@ -254,19 +243,22 @@
   import { Tooltip, Dialog, Button, Table, Select, Dropdown, TableColumn, Pagination, Row, Col, Tag } from 'element-ui'
   import { ElSelect } from 'element-ui'
 
+  import TripImportButton from './components/TripImportButton'
+  import AttachTagsButton from './components/AttachTagsButton'
+
   export default {
     name: 'TripList',
     components: {
+      AttachTagsButton,
+      TripImportButton,
       TripLog,
-      TripTags,
+      TagsDialog,
       CreateTrip,
       TripDetails,
-      ElSelect,
       datetime: Datetime,
       'el-tooltip': Tooltip,
       'el-dialog': Dialog,
       'el-row': Row,
-      'el-select': Dropdown,
       'el-col': Col,
       'el-button': Button,
       'el-table': Table,
@@ -322,7 +314,7 @@
 
         return true
       },
-      async getTripList() {
+      getTripList() {
         this.listLoading = true
         fetchTripList(this.tripsListPage).then(response => {
           this.tripsList = response.data.data
@@ -333,7 +325,7 @@
         }).finally(() => {
           this.listLoading = false
         })
-        console.log('outside')
+        this.tagsDialog = false
       },
       getTags() {
             this.fetching = true
