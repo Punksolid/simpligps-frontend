@@ -153,7 +153,7 @@
             </el-table-column>
 
             <el-table-column
-              prop="tag"
+              prop="tags"
               label="TAG"
               width="100px">
               <template slot-scope="scope" v-if="scope.row.tags">
@@ -176,7 +176,6 @@
                 <template v-else-if="scope.row.tags[0]">
                   <el-tag type="success">{{ scope.row.tags[0].slug }}</el-tag>
                 </template>
-
               </template>
             </el-table-column>
 
@@ -192,6 +191,7 @@
                   icon="fas fa-shipping-fast">
                 </el-button>
                 <el-button
+                  class="action-buttons"
                   size="mini"
                   @click="handleTags(scope.row)"
                   icon="fas fa-hashtag">
@@ -251,8 +251,8 @@
   import TripLog from './logs'
   import { fetchTripDetails, startTrip, tripAutoUpdates } from '../../../api/trips'
   import { Datetime } from 'vue-datetime'
-  import { Dialog, Button, Table, Select, TimeSelect, Dropdown , TableColumn, Pagination, Row, Col } from 'element-ui'
-
+  import { Tooltip, Dialog, Button, Table, Select, Dropdown, TableColumn, Pagination, Row, Col, Tag } from 'element-ui'
+  import { ElSelect } from 'element-ui'
 
   export default {
     name: 'TripList',
@@ -261,7 +261,18 @@
       TripTags,
       CreateTrip,
       TripDetails,
-      datetime: Datetime
+      ElSelect,
+      datetime: Datetime,
+      'el-tooltip': Tooltip,
+      'el-dialog': Dialog,
+      'el-row': Row,
+      'el-select': Dropdown,
+      'el-col': Col,
+      'el-button': Button,
+      'el-table': Table,
+      'el-pagination': Pagination,
+      'el-table-column': TableColumn,
+      'el-tag': Tag
     },
     data() {
       return {
@@ -289,12 +300,10 @@
     },
     methods: {
       handleCloseTrip(trip) {
-        console.table(this.isTripCompleted(trip.destination))
         this.checkpointToUpdateId = trip.destination.checkpoint_id
         this.open()
       },
       setTimesAndCloseTrip() {
-
         updateCheckpoint(this.checkpointToUpdateId, this.closeTripForm).then(response => {
           // @todo update checkpoint
         })
@@ -313,7 +322,7 @@
 
         return true
       },
-      getTripList() {
+      async getTripList() {
         this.listLoading = true
         fetchTripList(this.tripsListPage).then(response => {
           this.tripsList = response.data.data
@@ -321,8 +330,10 @@
           this.tripsListPage.page = response.data.meta.current_page
           this.listLoading = false
         }).catch(() => {
+        }).finally(() => {
           this.listLoading = false
         })
+        console.log('outside')
       },
       getTags() {
             this.fetching = true
@@ -332,7 +343,8 @@
                 .finally(() => {
                     this.fetching = false
                 })
-          },handleStart(id) {
+          },
+      handleStart(id) {
         this.listLoading = true
         const updates = { enable_automatic_updates: true }
         startTrip(id, updates).then(resp => {

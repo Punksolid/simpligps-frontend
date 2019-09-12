@@ -31,6 +31,7 @@
 
 <script>
   import { assignTripTags } from '../../../api/trips'
+  import { Dialog, Button, Select, Dropdown } from 'element-ui'
 
   export default {
       name: 'TripTags',
@@ -47,6 +48,12 @@
             type: Array,
             required: true
         }
+      },
+      components: {
+        'el-dialog': Dialog,
+        'el-button': Button,
+        'el-select': Dropdown
+
       },
       data() {
         return {

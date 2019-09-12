@@ -19,4 +19,4 @@ test site:
 deploy:
   stage: deploy
   script:
-    - curl --request GET "https://forge.laravel.com/servers/222171/sites/652441/deploy/http?token=703GMBDLBa4bCi5FgLRrjlr8QLfi1ylWxOhmuPfq"
+    - curl --request GET " https://forge.laravel.com/servers/315791/sites/847392/deploy/http?token=yj4fwkZh1MbpgrBZsNeU8WMrjJnvH6S8Kt4oahGi"
