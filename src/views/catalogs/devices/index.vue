@@ -26,7 +26,7 @@
 
     </el-row>
 
-    <RegisterDevice :form="formData" :title="titleDialog[dialogStatus]" :dialogvisible="dialogVisible" @newdevice="getDevices" @closedialog="closeDialog"/>
+    <RegisterDevice :form="formData" :title="titleDialog[dialogStatus]" :dialogvisible="dialogVisible" @newdevice="getDevices" @closedialog="getDevices"/>
 
     <el-col>
       <el-table

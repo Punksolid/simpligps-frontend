@@ -6,22 +6,12 @@
         <el-col :span="4" class="m-b-5">
           <el-button type="primary" @click="newTrip" icon="fas fa-route p-r-10">New Trip</el-button>
         </el-col>
-        <el-col :span="20" style="text-align: right">
-          <el-select
-            v-model="filterTags"
-            :loading="fetching"
-            multiple
-            collapse-tags
-            style="margin-left: 20px;"
-            placeholder="Filter by Tags">
-            <el-option
-              v-for="tag in tagList"
-              :key="tag.id"
-              :label="tag.name.en"
-              :value="tag.name.en">
-            </el-option>
-          </el-select>
+        <el-col :span="4" class="m-b-12">
+          <TripImportButton
+          @close-success="getTripList"
+          />
         </el-col>
+
       </el-row>
 
       <CreateTrip
@@ -31,7 +21,7 @@
         :dialog-visibility="dialogVisible"
         @created="getTripList"
         @close-dialog="closeDialog"></CreateTrip>
-      <TripTags v-if="tagsDialog" :visible.sync="tagsDialog" :data="tripData" :tags="tagList" @close="getTripList"/>
+      <TagsDialog v-if="tagsDialog" :visible.sync="tagsDialog" :tripId="tripData.id" :tripTagsSelected="tripData.tags" @close="getTripList"/>
 
       <el-dialog
         title="Closing Trip"
@@ -153,7 +143,7 @@
             </el-table-column>
 
             <el-table-column
-              prop="tag"
+              prop="tags"
               label="TAG"
               width="100px">
               <template slot-scope="scope" v-if="scope.row.tags">
@@ -176,7 +166,6 @@
                 <template v-else-if="scope.row.tags[0]">
                   <el-tag type="success">{{ scope.row.tags[0].slug }}</el-tag>
                 </template>
-
               </template>
             </el-table-column>
 
@@ -245,23 +234,37 @@
   import CreateTrip from './newtrip'
   import TripDetails from './details'
   import { fetchTripList, deleteTrip, updateCheckpoint } from '@/api/trips'
-  import TripTags from './tags'
+  import TagsDialog from './components/TagsDialog'
   import { fetchCreatedTags } from '../../../api/general'
   // import EditTrip from './EditTrip'
   import TripLog from './logs'
   import { fetchTripDetails, startTrip, tripAutoUpdates } from '../../../api/trips'
   import { Datetime } from 'vue-datetime'
-  import { Dialog, Button, Table, Select, TimeSelect, Dropdown , TableColumn, Pagination, Row, Col } from 'element-ui'
+  import { Tooltip, Dialog, Button, Table, Select, Dropdown, TableColumn, Pagination, Row, Col, Tag } from 'element-ui'
+  import { ElSelect } from 'element-ui'
 
+  import TripImportButton from './components/TripImportButton'
+  import AttachTagsButton from './components/AttachTagsButton'
 
   export default {
     name: 'TripList',
     components: {
+      AttachTagsButton,
+      TripImportButton,
       TripLog,
-      TripTags,
+      TagsDialog,
       CreateTrip,
       TripDetails,
-      datetime: Datetime
+      datetime: Datetime,
+      'el-tooltip': Tooltip,
+      'el-dialog': Dialog,
+      'el-row': Row,
+      'el-col': Col,
+      'el-button': Button,
+      'el-table': Table,
+      'el-pagination': Pagination,
+      'el-table-column': TableColumn,
+      'el-tag': Tag
     },
     data() {
       return {
@@ -289,12 +292,10 @@
     },
     methods: {
       handleCloseTrip(trip) {
-        console.table(this.isTripCompleted(trip.destination))
         this.checkpointToUpdateId = trip.destination.checkpoint_id
         this.open()
       },
       setTimesAndCloseTrip() {
-
         updateCheckpoint(this.checkpointToUpdateId, this.closeTripForm).then(response => {
           // @todo update checkpoint
         })
@@ -321,8 +322,10 @@
           this.tripsListPage.page = response.data.meta.current_page
           this.listLoading = false
         }).catch(() => {
+        }).finally(() => {
           this.listLoading = false
         })
+        this.tagsDialog = false
       },
       getTags() {
             this.fetching = true
@@ -332,7 +335,8 @@
                 .finally(() => {
                     this.fetching = false
                 })
-          },handleStart(id) {
+          },
+      handleStart(id) {
         this.listLoading = true
         const updates = { enable_automatic_updates: true }
         startTrip(id, updates).then(resp => {

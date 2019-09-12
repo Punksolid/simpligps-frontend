@@ -79,4 +79,14 @@ export function fetchTripsReport(params) {
     responseType: 'blob'
   })
 }
+export function importTripsList(params) {
+  return request({
+    url: 'v1/imports',
+    params: params,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
 

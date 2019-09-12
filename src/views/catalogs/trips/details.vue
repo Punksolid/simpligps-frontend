@@ -15,7 +15,7 @@
             <el-col :xs="24" :sm="5" class="panel p-5">
               <div class="panel-content">
                 <el-col class="dis-flex align-center"><i class="fas fa-user-circle fa-5x"></i></el-col>
-                <el-col>
+                <el-col v-if="details.operator">
                   <h4 class="bold m-b-0 text-center">Operator:</h4>
                     <h2 class="operator text-center">{{ details.operator.name || '' }}</h2>
                   <h4><b>Operator ID:</b>
@@ -53,7 +53,7 @@
               </el-col>
             </el-col>
             <!-- TRUCK PANEL -->
-            <el-col :xs="12" :sm="5" class="panel">
+            <el-col v-if="details.truck" :xs="12" :sm="5" class="panel">
               <h4 class="panel-header bg-light title"><b>Truck</b></h4>
               <el-col class="panel-content">
                 <h4><b>ID:</b> {{ details.truck.id }} </h4>

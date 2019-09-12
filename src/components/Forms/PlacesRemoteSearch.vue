@@ -1,6 +1,6 @@
 <template>
   <el-select
-    
+
     v-model="selectedPlace"
     filterable
     remote
