@@ -33,7 +33,7 @@
 
 <script>
   import { assignTripTags } from '../../../../api/trips'
-  import { Dialog, Button, Select, Dropdown } from 'element-ui'
+  import { Dialog, Button, Select, Form, Option } from 'element-ui'
   import { fetchCreatedTags } from '../../../../api/general'
 
   export default {
@@ -55,8 +55,9 @@
     components: {
       'el-dialog': Dialog,
       'el-button': Button,
-      'el-select': Select
-
+      'el-select': Select,
+      'el-form': Form,
+      'el-option': Option
     },
     data() {
       return {

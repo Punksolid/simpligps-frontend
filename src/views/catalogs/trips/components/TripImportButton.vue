@@ -37,16 +37,14 @@
 </template>
 
 <script>
-  import { Button, Dialog } from 'element-ui'
-  import { importTripsList } from '../../../../api/trips'
-  import request from '@/utils/request'
-
+  import { Button, Dialog, Upload } from 'element-ui'
 
   export default {
     name: 'TripImportButton',
     components: {
       'el-button': Button,
-      'el-dialog': Dialog
+      'el-dialog': Dialog,
+      'el-upload': Upload
     },
     data() {
       return {
@@ -76,7 +74,6 @@
         this.openDialog = false
       },
       errorResponse(errorResponse, file, fileList) {
-
         // this.errorResponse = errorResponse.slice(1,-1)
         // console.log(this.errorResponse)
         this.errorsText = errorResponse

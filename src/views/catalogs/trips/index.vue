@@ -181,6 +181,7 @@
                   icon="fas fa-shipping-fast">
                 </el-button>
                 <el-button
+                  class="action-buttons"
                   size="mini"
                   @click="handleTags(scope.row)"
                   icon="fas fa-hashtag">
@@ -236,20 +237,27 @@
   import { fetchTripList, deleteTrip, updateCheckpoint } from '@/api/trips'
   import TagsDialog from './components/TagsDialog'
   import { fetchCreatedTags } from '../../../api/general'
-  // import EditTrip from './EditTrip'
   import TripLog from './logs'
   import { fetchTripDetails, startTrip, tripAutoUpdates } from '../../../api/trips'
   import { Datetime } from 'vue-datetime'
-  import { Tooltip, Dialog, Button, Table, Select, Dropdown, TableColumn, Pagination, Row, Col, Tag } from 'element-ui'
-  import { ElSelect } from 'element-ui'
+  import {
+    Tooltip,
+    Dialog,
+    Button,
+    Table,
+    TableColumn,
+    Pagination,
+    Row,
+    Col,
+    Tag,
+    Form
+  } from 'element-ui'
 
   import TripImportButton from './components/TripImportButton'
-  import AttachTagsButton from './components/AttachTagsButton'
 
   export default {
     name: 'TripList',
     components: {
-      AttachTagsButton,
       TripImportButton,
       TripLog,
       TagsDialog,
@@ -264,7 +272,8 @@
       'el-table': Table,
       'el-pagination': Pagination,
       'el-table-column': TableColumn,
-      'el-tag': Tag
+      'el-tag': Tag,
+      'el-form': Form
     },
     data() {
       return {
@@ -426,7 +435,7 @@
     mounted() {
       this.getTripList()
       this.getTags()
-      /* if (this.$route.name === 'Trips') {
+            /* if (this.$route.name === 'Trips') {
         this.fetchTrips()
       } */
     }

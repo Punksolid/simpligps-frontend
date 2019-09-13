@@ -45,18 +45,25 @@
 </template>
 
 <script>
-import { DatePicker, Button, Dropdown, Form, FormItem } from 'element-ui'
+import { DatePicker, Button, Form, FormItem } from 'element-ui'
 import TagsSelect from '../../components/Forms/TagsSelect'
 import PlacesRemoteSearch from '../../components/Forms/PlacesRemoteSearch'
 import CarrierRemoteSearch from '../../components/Forms/CarrierRemoteSearch'
-import {fetchTripDetails, fetchTripList, fetchTripsReport} from '../../api/trips'
+import { fetchTripsReport } from '../../api/trips'
+import { Row, Col } from 'element-ui'
 
 export default {
   name: 'GeneralReportView',
   components: {
     CarrierRemoteSearch,
     PlacesRemoteSearch,
-    TagsSelect
+    TagsSelect,
+    'el-row': Row,
+    'el-col': Col,
+    'el-form': Form,
+    'el-form-item': FormItem,
+    'el-date-picker': DatePicker,
+    'el-button': Button
   },
   data() {
     return {
@@ -78,21 +85,22 @@ export default {
       this.loading = true
 
       fetchTripsReport({
-          start_date: (0 in this.form.intervalTime)? this.form.intervalTime[0] : null,
-          end_date: (1 in this.form.intervalTime)? this.form.intervalTime[1] : null,
+          start_date: (0 in this.form.intervalTime) ? this.form.intervalTime[0] : null,
+          end_date: (1 in this.form.intervalTime) ? this.form.intervalTime[1] : null,
           origin_id: this.form.originPlaceId,
           destination_id: this.form.destinationPlaceId,
           carrier_id: this.form.carrierId,
           tag: this.form.tag
       }).then(response => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'file.xls'); //or any other extension
-          document.body.appendChild(link);
-          link.click();
+          const url = window.URL.createObjectURL(new Blob([response.data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'file.xls') // or any other extension
+          document.body.appendChild(link)
+          link.click()
       }).catch((error) => {
-          this.$message.error('There are no trips with the given criteria');
+          console.log(error.message)
+          this.$message.error('There are no trips with the given criteria')
       })
           .finally(() => {
         this.loading = false
