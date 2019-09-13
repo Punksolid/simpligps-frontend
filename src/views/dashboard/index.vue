@@ -30,6 +30,11 @@
         <el-col class="number"><h1><span>{{ total_users }}</span> Users</h1></el-col>
         <el-col class="panel-footer bg-gray-light"><h3><router-link to="/users/">VIEW ALL</router-link> </h3></el-col>
       </el-col>
+      <el-col class="panel bg-red" :xs="24" :sm="12" :md="12" :lg="12">
+        <keep-alive>
+          <OnlineUsersCard></OnlineUsersCard>
+        </keep-alive>
+      </el-col>
     </el-row>
 
   </div>
@@ -38,9 +43,11 @@
   <script>
     import { mapGetters } from 'vuex'
     import { getDashboardElements } from '@/api/general'
+    import OnlineUsersCard from '../../components/Card/OnlineUsersCard'
 
     export default {
       name: 'Dashboard',
+      components: { OnlineUsersCard },
       computed: {
         ...mapGetters([
           'name',

@@ -45,7 +45,7 @@ Vue.use(VueGoogleMaps, {
 window.event = new Vue()
 window.Pusher = require('pusher-js')
 window.Echo = new Echo({
-  authEndpoint: process.env.BASE + 'broadcasting/auth',
+  authEndpoint: process.env.VUE_APP_BASE + 'broadcasting/auth',
   broadcaster: 'pusher',
   key: '535c65dd1f4182513a5f',
   auth: {

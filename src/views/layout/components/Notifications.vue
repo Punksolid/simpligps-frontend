@@ -13,7 +13,6 @@
           <li class="dropdown-header bg-red">
             <p class="m-0 p-1">{{ pagination.total }} Pending Notifications</p>
           </li>
-
           <ul class="dropdown-menu-list" v-loading="this.loading">
             <el-dropdown-item v-for="notification in notifications" :key="notification.id">
               <span @click="handleAlert(notification)">
@@ -21,7 +20,6 @@
               </span>
             </el-dropdown-item>
           </ul>
-
           <li class="dropdown-footer text-center" @click="fetchNotifications" v-if="! this.last_page">
             <el-button type="text" :loading="this.loading">{{this.loading ? 'Loading..':'Load more'}}</el-button>
           </li>
