@@ -1,5 +1,5 @@
 <template>
-    <div class="panel p-0 details" :v-loading="loading">
+    <div class="panel p-0 details" v-loading="loading">
 
       <div>
         <!-- <div v-if="this.$route.meta.title === 'Trip Detail'"> -->
@@ -34,6 +34,10 @@
                 <h4 class="title" v-if="details.origin"><b>{{ details.origin.name || '' }}</b></h4>
                 <h4><b>RP:</b> {{ details.rp }}</h4>
                 <h4><b>Trip ID:</b> {{ details.id }}</h4>
+                <h4>Tracking:
+                <el-tag v-if="details.activated" size="mini" type="success">ON</el-tag>
+                <el-tag v-if="!details.activated" size="mini" type="info">OFF</el-tag>
+                </h4>
               </el-col>
             </el-col>
             <!-- TRAILER PANEL -->
