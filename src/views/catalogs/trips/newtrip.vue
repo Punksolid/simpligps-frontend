@@ -73,7 +73,7 @@
           >
             <el-option
               v-for="(place, index) in places"
-              :key="`${index}-${place.id}`"
+              :key="`origin-${index}-${place.id}`"
               :label="place.name"
               :value="place.id"
             >
@@ -174,7 +174,7 @@
             placeholder="Destination">
             <el-option
               v-for="(place, index) in places"
-              :key="`${index}-${place.id}`"
+              :key="`dest-${index}-${place.id}`"
               :label="place.name"
               :value="place.id">
             </el-option>
@@ -349,7 +349,7 @@
           trucks: false
         },
         places: [{}],
-        destinations: '',
+        destinations: [],
         clients: [],
         operators: [],
         geofences: [],
@@ -466,6 +466,7 @@
         search = { name: search }
         searchPlaces(search).then(response => {
           this.destinations = response.data.data
+          this.places = response.data.data
           this.loadings.destination = false
         })
       },
