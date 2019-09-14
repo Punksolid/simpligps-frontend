@@ -5,6 +5,7 @@
       <el-row class="searchBar">
         <el-col :span="4" class="m-b-5">
           <el-button type="primary" @click="newTrip" icon="fas fa-route p-r-10">New Trip</el-button>
+          <el-button type="primary" @click="getTripList" icon="fas fa-route p-r-10">Refresh</el-button>
         </el-col>
         <el-col :span="4" class="m-b-12">
           <TripImportButton
@@ -103,17 +104,17 @@
             >
             </el-table-column>
             <el-table-column
-              prop="client_name"
+              prop="client.company_name"
               label="Client"
               min-width="120px"
             >
             </el-table-column>
             <el-table-column
-              prop="origin_name"
+              prop="origin.name"
               label="Origin">
             </el-table-column>
             <el-table-column
-              prop="destination_name"
+              prop="destination.name"
               label="Destination"
               min-width="100px">
             </el-table-column>
@@ -122,22 +123,22 @@
               label="Stops">
             </el-table-column>
             <el-table-column
-              prop="truck_name"
+              prop="truck.name"
               label="Truck">
             </el-table-column>
             <el-table-column
-              prop="scheduled_load"
+              prop="origin.at_time"
               label="Scheduled Load"
               min-width="160px"
             >
             </el-table-column>
             <el-table-column
-              prop="scheduled_departure"
+              prop="origin.exiting"
               label="Scheduled Departure"
               min-width="160px">
             </el-table-column>
             <el-table-column
-              prop="scheduled_arrival"
+              prop="destination.at_time"
               label="Scheduled Arrival"
               min-width="160px">
             </el-table-column>

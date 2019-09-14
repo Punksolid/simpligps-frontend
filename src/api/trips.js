@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchTripList(params) {
   return request({
-    url: 'v1/trips',
+    url: 'v2/trips',
     method: 'GET',
     params: params
   })
