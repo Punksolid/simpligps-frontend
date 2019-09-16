@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import TripImportButton from '@/views/catalogs/trips/components/TripImportButton.vue'
 import Vuex from 'vuex'
 
@@ -6,16 +6,21 @@ describe('TripImportButton.vue', () => {
   let wrapper
   let store
 
+
+
   beforeEach(() => {
+    const localVue = createLocalVue()
+    localVue.use(Vuex)
     store = new Vuex.Store({
       state: {
         account: {
-          uuid: jest.fn()
+          uuid: '872309418729034871209'
         }
       }
     })
     wrapper = mount(TripImportButton, {
-      store
+      store,
+      localVue
     })
   })
 

@@ -93,11 +93,7 @@ export default {
 
       window.Echo.join(`App.Account.${this.$store.getters.account_id}`)
       .here((users) => {
-        // console.log('usuarios presentes')
-        // console.log(users)
-        console.log('usuarios')
-        console.table(users)
-        console.log(users)
+
         this.$store.dispatch('SetUsersOnline', users)
       })
       .joining((user) => {

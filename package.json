@@ -31,7 +31,7 @@
     "jsonlint": "1.6.3",
     "jszip": "3.2.1",
     "laravel-echo": "^1.5.2",
-    "luxon": "^1.13.2",
+    "luxon": "^1.17.3",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",

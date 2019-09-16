@@ -39,21 +39,7 @@
       }
     },
     mounted() {
-      // this.usersList = this.$store.account.usersOnline
 
-      // this.usersList = this.$store.getters.usersOnline
-      // eslint-disable-next-line no-undef
-      // window.Echo = new Echo({
-      //   authEndpoint: process.env.VUE_APP_BASE + 'broadcasting/auth',
-      //   broadcaster: 'pusher',
-      //   key: '535c65dd1f4182513a5f',
-      //   auth: {
-      //     headers: {
-      //       Authorization: 'Bearer ' + this.$store.getters.token
-      //     }
-      //   }
-      //   // cluster: 'mt1'
-      // })
     },
     computed: { 
       usersList: function() {
