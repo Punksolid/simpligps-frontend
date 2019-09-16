@@ -23,6 +23,9 @@
 
 <script>
   import { Col, Table, TableColumn } from 'element-ui'
+  // import Pusher from 'pusher-js'
+  // import Echo from 'laravel-echo'
+
   // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
   export default {
     name: 'OnlineUsersCard',
@@ -31,40 +34,31 @@
       'el-col': Col,
       'el-table-column': TableColumn
     },
-    props: {
-      usersCount: {
-        type: Number,
-        required: false
-      }
-    },
     data() {
       return {
-        usersList: []
       }
     },
     mounted() {
+      // this.usersList = this.$store.account.usersOnline
+
+      // this.usersList = this.$store.getters.usersOnline
       // eslint-disable-next-line no-undef
-
-      window.Echo.join(`chat.${this.$store.getters.account_id}`)
-        .joining((user) => {
-          console.log('JOINING')
-          console.log(user.name)
-          this.usersList.push({
-            id: user.id,
-            email: user.email
-          })
-        }).here((users) => {
-        console.log('usuarios presentes')
-        console.log(users)
-        this.usersList = users
-      })
-        .leaving((user) => {
-          console.log('leaving')
-          this.usersList = this.usersList.filter(function(user_element) {
-            return user_element.id !== user.id
-          })
-
-        })
+      // window.Echo = new Echo({
+      //   authEndpoint: process.env.VUE_APP_BASE + 'broadcasting/auth',
+      //   broadcaster: 'pusher',
+      //   key: '535c65dd1f4182513a5f',
+      //   auth: {
+      //     headers: {
+      //       Authorization: 'Bearer ' + this.$store.getters.token
+      //     }
+      //   }
+      //   // cluster: 'mt1'
+      // })
+    },
+    computed: { 
+      usersList: function() {
+        return this.$store.getters.usersOnline
+      }
     }
   }
 </script>

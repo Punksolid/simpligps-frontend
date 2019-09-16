@@ -6,7 +6,8 @@ const app = {
       opened: !+Cookies.get('sidebarStatus'),
       withoutAnimation: false
     },
-    device: 'desktop'
+    device: 'desktop',
+    usersOnline: []
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -32,6 +33,21 @@ const app = {
     },
     TOGGLE_DEVICE: (state, device) => {
       state.device = device
+    },
+    SET_USERS_ONLINE: (state, users) => {
+      console.log('first set')
+      state.usersOnline = users
+    },
+    ADD_USER_ONLINE: (state, user) => {
+      console.log('add user')
+      console.table(user)
+      state.usersOnline.push(user)
+    },
+    REMOVE_FROM_USERS_ONLINE: (state, user) => {
+      console.log('delete user')
+      state.usersOnline = state.usersOnline.filter(function(user_element) {
+        return user_element.id !== user.id
+      })
     }
   },
   actions: {
@@ -43,6 +59,15 @@ const app = {
     },
     ToggleDevice({ commit }, device) {
       commit('TOGGLE_DEVICE', device)
+    },
+    SetUsersOnline({ commit }, users) {
+      commit('SET_USERS_ONLINE', users)
+    },
+    AddUserOnline({ commit }, user) {
+      commit('ADD_USER_ONLINE', user)
+    },
+    RemoveUserOnline({ commit }, user) {
+      commit('REMOVE_FROM_USERS_ONLINE', user)
     }
   }
 }

@@ -29,7 +29,7 @@
 import { Navbar, Sidebar, AppMain } from './components'
 import Alerts from './components/Alerts'
 import ResizeMixin from './mixin/ResizeHandler'
-
+import Echo from 'laravel-echo'
 export default {
   name: 'Layout',
   components: {
@@ -76,6 +76,36 @@ export default {
   },
   created() {
     document.body.classList.add('sidebar-show')
+
+    window.Pusher = require('pusher-js')
+    window.Echo = new Echo({
+      authEndpoint: process.env.VUE_APP_BASE + 'broadcasting/auth',
+      broadcaster: 'pusher',
+      key: '535c65dd1f4182513a5f',
+      auth: {
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.token
+        }
+      }
+      // cluster: 'mt1'
+    })
+    
+
+      window.Echo.join(`App.Account.${this.$store.getters.account_id}`)
+      .here((users) => {
+        // console.log('usuarios presentes')
+        // console.log(users)
+        console.log('usuarios')
+        console.table(users)
+        console.log(users)
+        this.$store.dispatch('SetUsersOnline', users)
+      })
+      .joining((user) => {
+        this.$store.dispatch('AddUserOnline', user)
+      })
+      .leaving((user) => {
+          this.$store.dispatch('RemoveUserOnline', user)
+      })
     // this.refresh()
     // document.addEventListener('click', this.refresh)
   }

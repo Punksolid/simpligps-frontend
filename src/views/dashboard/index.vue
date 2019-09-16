@@ -20,6 +20,10 @@
     </el-row>
 
     <el-row type="flex" class="active-panels">
+      <el-col class="panel bg-red" :xs="24" :sm="12" :md="12" :lg="12">
+          <OnlineUsersCard></OnlineUsersCard>
+
+      </el-col>
       <el-col class="panel bg-blue" :xs="24" :sm="12" :md="12" :lg="12">
         <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-cursor"></i>Active <b>Devices</b></h3></el-col>
         <el-col class="number"><h1><span>{{ total_devices }}</span> Devices</h1></el-col>
@@ -29,11 +33,6 @@
         <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-user"></i>Active <b>Users</b></h3></el-col>
         <el-col class="number"><h1><span>{{ total_users }}</span> Users</h1></el-col>
         <el-col class="panel-footer bg-gray-light"><h3><router-link to="/users/">VIEW ALL</router-link> </h3></el-col>
-      </el-col>
-      <el-col class="panel bg-red" :xs="24" :sm="12" :md="12" :lg="12">
-        <keep-alive>
-          <OnlineUsersCard></OnlineUsersCard>
-        </keep-alive>
       </el-col>
     </el-row>
 

@@ -83,7 +83,7 @@ export default {
       })
     },
     handleAlert(notification) {
-      event.$emit('activate-alert', notification)
+      window.event.$emit('activate-alert', notification)
       // markNotificationAsRead(uuid) // todo, apply queue, get the catch and discard locally
       // this.discardNotificationByUuid(data.uuid)
     },
@@ -99,7 +99,7 @@ export default {
   },
   computed: {},
   created() {
-    event.$on('notifications-refresh', params => {
+    window.event.$on('notifications-refresh', params => {
       this.fetchNotifications()
     })
 
@@ -108,6 +108,7 @@ export default {
     // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
 
     console.log('App.Account.' + this.$store.getters.account_id)
+    
     window.Echo.private(
       'App.Account.' + this.$store.getters.account_id
     ).notification(notification => {
@@ -117,7 +118,7 @@ export default {
         message: notification.message,
         link: notification.link
       })
-      event.$emit('activate-alert', notification)
+      window.event.$emit('activate-alert', notification)
       // https://laracasts.com/series/learn-vue-2-step-by-step/episodes/13
     })
 
