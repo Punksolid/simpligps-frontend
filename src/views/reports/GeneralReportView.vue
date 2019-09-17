@@ -83,7 +83,6 @@ export default {
   methods: {
     getReport() {
       this.loading = true
-
       fetchTripsReport({
           start_date: (0 in this.form.intervalTime) ? this.form.intervalTime[0] : null,
           end_date: (1 in this.form.intervalTime) ? this.form.intervalTime[1] : null,
