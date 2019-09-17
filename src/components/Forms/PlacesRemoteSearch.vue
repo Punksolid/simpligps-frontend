@@ -1,13 +1,12 @@
 <template>
   <el-select
-
     v-model="selectedPlace"
     filterable
     remote
     :remote-method="getPlaces"
     :loading="loading"
     @change="syncPlaceEvent"
-    placeholder="No filter">
+    placeholder="Select Place">
     <el-option
       v-for="place in places"
       :key="place.value"

@@ -86,7 +86,6 @@
                 </el-option>
               </el-select>
 
-
               <el-button
                 :disabled="locks.intermediates.includes(intermediate.checkpoint_id)"
                 type="danger"
@@ -119,12 +118,10 @@
       <el-divider></el-divider>
       <el-form-item label="Destination *">
         <div class="inline-inputs dis-flex">
+          <el-date-picker
+            type="datetimerange"
+          ></el-date-picker>
         </div>
-      </el-form-item>
-      <el-form-item>
-        <el-date-picker
-          type="datetimerange"
-        ></el-date-picker>
       </el-form-item>
       <el-form-item label="Mon Type *">
         <el-input v-model="form.mon_type" placeholder="Mon Type"/>

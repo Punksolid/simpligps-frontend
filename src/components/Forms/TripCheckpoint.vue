@@ -1,10 +1,7 @@
 <template>
-  <div class="inline-inputs">
-    <el-form>
     <el-form-item>
+      <div class="inline-inputs dis-flex">
       <PlacesRemoteSearch v-model="form.place_id"/>
-    </el-form-item>
-    <el-form-item>
       <el-date-picker
         v-model="range"
         type="datetimerange"
@@ -15,13 +12,12 @@
         start-placeholder="Start date"
         end-placeholder="End date">
       </el-date-picker>
+      </div>
     </el-form-item>
-    </el-form>
-  </div>
 </template>
 
 <script>
-  import { DatePicker, Select } from 'element-ui'
+  import { DatePicker } from 'element-ui'
   import PlacesRemoteSearch from './PlacesRemoteSearch'
 
   export default {
@@ -54,12 +50,15 @@
         console.log('values')
         this.form.at_time = values[0]
         this.form.exiting = values[1]
-
       }
     }
   }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  .inline-inputs {
+    span.el-range-separator {
+      width: 7% !important;
+    }
+  }
 </style>
