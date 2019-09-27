@@ -89,7 +89,6 @@ export default {
       }
       // cluster: 'mt1'
     })
-    
 
       window.Echo.join(`App.Account.${this.$store.getters.account_id}`)
       .here((users) => {

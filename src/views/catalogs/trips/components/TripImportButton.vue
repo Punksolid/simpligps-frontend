@@ -1,25 +1,29 @@
 <template>
-  <div>
-    <el-button id="open-import" type="primary" @click="openDialog = true">Import Spreadsheet</el-button>
+  <div class="import-files">
+    <el-button id="open-import" type="primary" icon="fas fa-file-upload" @click="openDialog = true"> Import Spreadsheet</el-button>
+
     <el-dialog
       title="Import an excel file"
       :visible.sync="openDialog"
-      width="30%"
+      width="35%"
       center>
-      <span>
+      <div class="panel-body">
 <!--        <el-button id="download-layout" @click="downloadLayout()"><i class="el-icon-arrow-down"></i></el-button>-->
         <el-upload
-          class="upload-demo"
+          class="upload"
+          drag
           name="trips"
           :action="upload_url"
           :headers="headers"
           :on-error="errorResponse"
           :on-success="onSuccessUpload"
+          accept=".xlsx,.xls"
           multiple>
-          <el-button size="small" type="primary">Click to upload</el-button>
-          <div slot="tip" class="el-upload__tip">xlsx files less than 1.5MB</div>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">Drop your files here or <em>click to upload</em></div>
+          <div slot="tip" class="el-upload__tip">.xlsx files less than 1.5MB</div>
         </el-upload>
-      </span>
+
       <span v-if="errorsText">
           <el-alert
             title="No Trip Were Imported Some Errors Ocurred"
@@ -28,6 +32,7 @@
             <slot>{{ errorsText }}</slot>
           </el-alert>
       </span>
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="openDialog = false">Cancel</el-button>
         <el-button type="primary" @click="submitFile()">Submit</el-button>
@@ -93,6 +98,18 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  .import-files {
+    .panel-body {
+      * {
+        text-align: center !important;
+      }
+    }
+    .upload {
+      .el-upload {
+        display: flex !important;
+        justify-content: center
+      }
+    }
+  }
 </style>
