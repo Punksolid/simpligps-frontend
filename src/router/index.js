@@ -65,7 +65,7 @@ export const tenantProtectedRoutes = [
     component: Layout,
     redirect: '/users/list',
     name: 'Users',
-    meta: { title: 'Users', icon: 'icon-eye' },
+    meta: { title: 'Users', icon: 'icon-user' },
     children: [
       {
         path: 'list',
@@ -242,7 +242,7 @@ export const tenantProtectedRoutes = [
         path: '',
         component: () => import('@/views/notifications/index'),
         name: 'Notifications',
-        meta: { title: 'Notifications', icon: 'icon-settings', noCache: true }
+        meta: { title: 'Notifications', icon: 'icon-bell', noCache: true }
       }
     ]
   },

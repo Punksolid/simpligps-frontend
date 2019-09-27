@@ -1,39 +1,38 @@
 <template>
   <div>
-    <el-row>
-      <el-col class="panel" :xs="24" :sm="12" :lg="12">
-
-        <el-col class="panel-header"><h3><b>Dashboard</b></h3></el-col>
+    <el-row type="flex">
+      <el-col class="panel" :xs="24" :sm="12">
+        <el-col class="panel-header bg-primary"><h3><i class="fas fa-home"/><b>Dashboard</b></h3></el-col>
           <el-col class="panel-content">
 
-          <el-col :xs="12" :sm="12" :lg="12">
+          <el-col :xs="24" :sm="12">
             <img src="@/assets/dashboard.png" width="85%"/>
           </el-col>
-          <el-col :xs="12" :sm="12" :lg="12">
+          <el-col class="panel-content" :xs="24" :sm="12">
             <h2 class="m-t-5"><b>First time here?</b></h2>
             <p>Congratulations! Please, let us tell you what can be done with TRM System. Sit comfy and check it out!</p>
           </el-col>
 
         </el-col>
+      </el-col>
 
+      <el-col class="panel" :xs="24" :sm="12">
+        <el-col class="panel-header bg-primary"><h3><i class="fas fa-user"></i>Active <b>Users</b></h3></el-col>
+        <el-col class="panel-content number"><h1><span>{{ total_users }}</span> Users</h1></el-col>
+        <el-col class="panel-footer bg-gray-light"><h3><router-link to="/users/">VIEW ALL</router-link></h3></el-col>
       </el-col>
     </el-row>
 
-    <el-row type="flex" class="active-panels">
-      <el-col class="panel bg-red" :xs="24" :sm="12" :md="12" :lg="12">
-          <OnlineUsersCard></OnlineUsersCard>
+    <el-row type="flex">
 
-      </el-col>
-      <el-col class="panel bg-blue" :xs="24" :sm="12" :md="12" :lg="12">
-        <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-cursor"></i>Active <b>Devices</b></h3></el-col>
-        <el-col class="number"><h1><span>{{ total_devices }}</span> Devices</h1></el-col>
+      <OnlineUsersCard/>
+
+      <el-col class="panel" :xs="24" :sm="12">
+        <el-col class="panel-header bg-orange"><h3><i class="fas fa-location-arrow"></i>Active <b>Devices</b></h3></el-col>
+        <el-col class="panel-content number"><h1><span>{{ total_devices }}</span> Devices</h1></el-col>
         <el-col class="panel-footer bg-gray-light"><h3><router-link to="/monitoring/">VIEW ALL</router-link></h3></el-col>
       </el-col>
-      <el-col class="panel bg-red" :xs="24" :sm="12" :md="12" :lg="12">
-        <el-col class="panel-header"><h3><i data-v-3ece4f7e="" class="icon-user"></i>Active <b>Users</b></h3></el-col>
-        <el-col class="number"><h1><span>{{ total_users }}</span> Users</h1></el-col>
-        <el-col class="panel-footer bg-gray-light"><h3><router-link to="/users/">VIEW ALL</router-link> </h3></el-col>
-      </el-col>
+
     </el-row>
 
   </div>
@@ -75,9 +74,19 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .panel {
- margin: 0px 5px;
+  margin: 0px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   .panel-footer a {
     color: inherit;
+  }
+  &:before, &:after {
+    display: none !important;
+  }
+  .number h1 {
+    font-size: 3em !important;
+    line-height: 1em;
   }
 }
 .dashboard {
@@ -89,13 +98,19 @@
     line-height: 46px;
   }
 }
-@media (max-width: 768px) {
-  .active-panels {
-    flex-direction: column;
-  }
-}
-  @media (max-width:768px) {
-    .active-panels {
+  @media (max-width: 768px) {
+    .panel {
+      .el-col {
+        text-align: center;
+      }
+      .panel-header, .panel-content, .panel-footer {
+        text-align: center;
+      }
+      p {
+        text-align: center;
+      }
+    }
+    .el-row.el-row--flex {
       flex-direction: column;
     }
   }

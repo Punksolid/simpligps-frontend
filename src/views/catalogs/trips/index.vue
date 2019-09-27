@@ -3,15 +3,10 @@
     <el-row class="panel p-10">
 
       <el-row class="searchBar">
-        <el-col :span="4" class="m-b-5">
+        <el-col class="m-b-5">
           <el-button type="primary" @click="newTrip" icon="fas fa-route p-r-10">New Trip</el-button>
+          <TripImportButton @close-success="getTripList"/>
         </el-col>
-        <el-col :span="4" class="m-b-12">
-          <TripImportButton
-          @close-success="getTripList"
-          />
-        </el-col>
-
       </el-row>
 
       <CreateTrip
@@ -443,6 +438,14 @@
 </script>
 
 <style lang="scss" scoped>
+  .searchBar {
+    .el-col {
+      display: flex;
+    }
+   button:not(:last-child) {
+     margin-right: 5px;
+     }
+  }
   .triplist {
     width: 100%;
 
