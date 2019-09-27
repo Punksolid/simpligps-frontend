@@ -59,9 +59,44 @@
           </el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item label="Origin *">
-        <TripCheckpoint v-model="form.origin"></TripCheckpoint>
+        <div class="inline-inputs dis-flex">
+          <el-select
+            id="origin"
+            v-model="form.origin_id"
+            filterable
+            remote
+            :remote-method="getSearchPlaces"
+            :loading="loadings.origin"
+            placeholder="Select Origin"
+            :disabled="locks.origin"
+          >
+            <el-option
+              v-for="(place, index) in places"
+              :key="`origin-${index}-${place.id}`"
+              :label="place.name"
+              :value="place.id"
+            >
+            </el-option>
+          </el-select>
+            <datetime
+              type="datetime"
+              placeholder="Scheduled Load"
+              v-model="form.scheduled_load"
+              :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+              :disabled="locks.origin"
+              auto>
+
+          </datetime>
+          <datetime
+            type="datetime"
+            placeholder="Scheduled Departure"
+            v-model="form.scheduled_departure"
+            :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+            :disabled="locks.origin"
+            auto>
+          </datetime>
+        </div>
       </el-form-item>
 
       <el-divider>Intermediates</el-divider>
@@ -85,7 +120,18 @@
                   :value="place.id">
                 </el-option>
               </el-select>
-
+              <datetime
+                type="datetime"
+                placeholder="Check in"
+                v-model="intermediate.at_time"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                auto/>
+              <datetime
+                type="datetime"
+                placeholder="Departure Time"
+                v-model="intermediate.exiting"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+                auto/>
               <el-button
                 :disabled="locks.intermediates.includes(intermediate.checkpoint_id)"
                 type="danger"
@@ -118,11 +164,36 @@
       <el-divider></el-divider>
       <el-form-item label="Destination *">
         <div class="inline-inputs dis-flex">
-          <el-date-picker
-            type="datetimerange"
-          ></el-date-picker>
+          <el-select
+            :disabled="locks.destination"
+            v-model="form.destination_id"
+            filterable
+            remote
+            :remote-method="getSearchDestination"
+            :loading="loadings.destination"
+            placeholder="Destination">
+            <el-option
+              v-for="(place, index) in places"
+              :key="`dest-${index}-${place.id}`"
+              :label="place.name"
+              :value="place.id">
+            </el-option>
+          </el-select>
+          <datetime
+            type="datetime"
+            placeholder="Scheduled Arrival"
+            v-model="form.scheduled_arrival"
+            :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+            auto/>
+          <datetime
+            type="datetime"
+            placeholder="Scheduled Unload"
+            v-model="form.scheduled_unload"
+            :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'}"
+            auto/>
         </div>
       </el-form-item>
+
       <el-form-item label="Mon Type *">
         <el-input v-model="form.mon_type" placeholder="Mon Type"/>
       </el-form-item>
@@ -197,12 +268,10 @@
   import { fetchCarriers, searchCarriers } from '../../../api/carriers'
   import { trucksList, searchTrucks } from '@/api/trucks'
   import { trailerboxList } from '@/api/trailerbox'
-  // import { Datetime } from 'vue-datetime'
-  import { Dialog, Button, Form, FormItem, Input, Select, Divider, Option, DatePicker } from 'element-ui'
+  import { Datetime } from 'vue-datetime'
+  import { Dialog, Button, Form, FormItem, Input, Select, Divider, Option } from 'element-ui'
   import { fetchTripDetails } from '../../../api/trips'
-  import TripCheckpoint from '../../../components/Forms/TripCheckpoint'
-  import PlacesRemoteSearch from '@/components/Forms/PlacesRemoteSearch'
-  // import 'vue-datetime/dist/vue-datetime.css'
+  import 'vue-datetime/dist/vue-datetime.css'
 
   export default {
     name: 'CreateTrip',
@@ -218,8 +287,6 @@
       }
     },
     components: {
-      TripCheckpoint,
-      PlacesRemoteSearch,
       'el-dialog': Dialog,
       'el-button': Button,
       'el-form': Form,
@@ -228,7 +295,7 @@
       'el-select': Select,
       'el-divider': Divider,
       'el-option': Option,
-      'el-date-picker': DatePicker
+      datetime: Datetime
     },
     data() {
       return {
